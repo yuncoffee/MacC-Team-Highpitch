@@ -1,13 +1,13 @@
 //
-//  ContentView.swift
-//  highpitch
+//  TestView.swift
+//  Highpitch
 //
 //  Created by Yun Dongbeom on 2023/09/11.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct TestView: View {
     var body: some View {
         VStack {
             #if os(macOS)
@@ -20,21 +20,15 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, iOS")
-            #endif   
+            #endif
         }
         .padding()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct TestView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-                .previewDevice("Mac")
-                .previewDisplayName("MacOS Preview")
-            ContentView()
-                .previewDevice("iPhone 14")
-                .previewDisplayName("iPhone 14 Preview")
-        }
+        TestView()
+        TestView()
     }
 }
