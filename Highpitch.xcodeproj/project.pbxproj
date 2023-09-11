@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BCF02AAF3769006DCA63 /* HighpitchApp.swift */; };
-		A902BCF32AAF3769006DCA63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BCF22AAF3769006DCA63 /* ContentView.swift */; };
 		A902BCF52AAF376B006DCA63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A902BCF42AAF376B006DCA63 /* Assets.xcassets */; };
 		A902BCF92AAF376B006DCA63 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A902BCF82AAF376B006DCA63 /* Preview Assets.xcassets */; };
 		A902BD032AAF376B006DCA63 /* HighpitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD022AAF376B006DCA63 /* HighpitchTests.swift */; };
 		A902BD0D2AAF376B006DCA63 /* HighpitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */; };
 		A902BD0F2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */; };
 		A902BD1F2AAF3CC5006DCA63 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */; };
+		A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93102762AAF4EE9005A4737 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		A902BCED2AAF3769006DCA63 /* Highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A902BCF02AAF3769006DCA63 /* HighpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchApp.swift; sourceTree = "<group>"; };
-		A902BCF22AAF3769006DCA63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A902BCF42AAF376B006DCA63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Highpitch.entitlements; sourceTree = "<group>"; };
 		A902BCF82AAF376B006DCA63 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITests.swift; sourceTree = "<group>"; };
 		A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		A93102762AAF4EE9005A4737 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = highpitch/ContentView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				A902BCF02AAF3769006DCA63 /* HighpitchApp.swift */,
-				A902BCF22AAF3769006DCA63 /* ContentView.swift */,
 				A902BCF42AAF376B006DCA63 /* Assets.xcassets */,
 				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF72AAF376B006DCA63 /* Preview Content */,
+				A93102762AAF4EE9005A4737 /* ContentView.swift */,
 			);
 			path = Highpitch;
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A902BCF32AAF3769006DCA63 /* ContentView.swift in Sources */,
+				A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */,
 				A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
