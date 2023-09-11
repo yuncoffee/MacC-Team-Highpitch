@@ -11,7 +11,6 @@ import SwiftUI
 struct HighpitchApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
         }
     }
 }

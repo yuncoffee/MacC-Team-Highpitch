@@ -14,7 +14,6 @@
 		A902BD0D2AAF376B006DCA63 /* HighpitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */; };
 		A902BD0F2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */; };
 		A902BD1F2AAF3CC5006DCA63 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */; };
-		A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93102762AAF4EE9005A4737 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +45,6 @@
 		A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITests.swift; sourceTree = "<group>"; };
 		A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		A93102762AAF4EE9005A4737 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = highpitch/ContentView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */,
-				A902BCEF2AAF3769006DCA63 /* Highpitch22 */,
+				A902BCEF2AAF3769006DCA63 /* Highpitch */,
 				A902BD012AAF376B006DCA63 /* HighpitchTests */,
 				A902BD0B2AAF376B006DCA63 /* HighpitchUITests */,
 				A902BCEE2AAF3769006DCA63 /* Products */,
@@ -95,16 +93,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A902BCEF2AAF3769006DCA63 /* Highpitch22 */ = {
+		A902BCEF2AAF3769006DCA63 /* Highpitch */ = {
 			isa = PBXGroup;
 			children = (
-				A93102762AAF4EE9005A4737 /* ContentView.swift */,
+				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF02AAF3769006DCA63 /* HighpitchApp.swift */,
 				A902BCF42AAF376B006DCA63 /* Assets.xcassets */,
-				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF72AAF376B006DCA63 /* Preview Content */,
 			);
-			path = Highpitch22;
+			path = Highpitch;
 			sourceTree = "<group>";
 		};
 		A902BCF72AAF376B006DCA63 /* Preview Content */ = {
@@ -286,7 +283,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */,
 				A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,7 +434,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = highpitch/highpitch.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Highpitch/Highpitch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Highpitch/Preview Content\"";
@@ -463,6 +460,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = yuncoffee.highpitch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -476,7 +474,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = highpitch/highpitch.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Highpitch/Highpitch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Highpitch/Preview Content\"";
@@ -501,6 +500,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = yuncoffee.highpitch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
