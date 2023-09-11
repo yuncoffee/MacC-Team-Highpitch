@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TestView: View {
+struct ContentView: View {
     var body: some View {
         VStack {
             #if os(macOS)
@@ -28,7 +28,13 @@ struct TestView: View {
 
 struct TestView_Previews: PreviewProvider {
     static var previews: some View {
-        TestView()
-        TestView()
+        Group {
+            ContentView()
+                .previewDevice("Mac")
+                .previewDisplayName("Mac Preview")
+            ContentView()
+                .previewDevice("iPhone 14")
+                .previewDisplayName("iPhone 14 Preview")
+        }
     }
 }

@@ -14,7 +14,7 @@
 		A902BD0D2AAF376B006DCA63 /* HighpitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */; };
 		A902BD0F2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */; };
 		A902BD1F2AAF3CC5006DCA63 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */; };
-		A93102772AAF4EE9005A4737 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93102762AAF4EE9005A4737 /* TestView.swift */; };
+		A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93102762AAF4EE9005A4737 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +46,7 @@
 		A902BD0C2AAF376B006DCA63 /* HighpitchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITests.swift; sourceTree = "<group>"; };
 		A902BD0E2AAF376B006DCA63 /* HighpitchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighpitchUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		A93102762AAF4EE9005A4737 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestView.swift; path = highpitch/TestView.swift; sourceTree = SOURCE_ROOT; };
+		A93102762AAF4EE9005A4737 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = highpitch/ContentView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +102,7 @@
 				A902BCF42AAF376B006DCA63 /* Assets.xcassets */,
 				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF72AAF376B006DCA63 /* Preview Content */,
-				A93102762AAF4EE9005A4737 /* TestView.swift */,
+				A93102762AAF4EE9005A4737 /* ContentView.swift */,
 			);
 			path = Highpitch;
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93102772AAF4EE9005A4737 /* TestView.swift in Sources */,
+				A93102772AAF4EE9005A4737 /* ContentView.swift in Sources */,
 				A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
