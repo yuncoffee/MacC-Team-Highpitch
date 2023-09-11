@@ -78,7 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */,
-				A902BCEF2AAF3769006DCA63 /* Highpitch */,
+				A902BCEF2AAF3769006DCA63 /* Highpitch22 */,
 				A902BD012AAF376B006DCA63 /* HighpitchTests */,
 				A902BD0B2AAF376B006DCA63 /* HighpitchUITests */,
 				A902BCEE2AAF3769006DCA63 /* Products */,
@@ -95,16 +95,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A902BCEF2AAF3769006DCA63 /* Highpitch */ = {
+		A902BCEF2AAF3769006DCA63 /* Highpitch22 */ = {
 			isa = PBXGroup;
 			children = (
+				A93102762AAF4EE9005A4737 /* ContentView.swift */,
 				A902BCF02AAF3769006DCA63 /* HighpitchApp.swift */,
 				A902BCF42AAF376B006DCA63 /* Assets.xcassets */,
 				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF72AAF376B006DCA63 /* Preview Content */,
-				A93102762AAF4EE9005A4737 /* ContentView.swift */,
 			);
-			path = Highpitch;
+			path = Highpitch22;
 			sourceTree = "<group>";
 		};
 		A902BCF72AAF376B006DCA63 /* Preview Content */ = {
