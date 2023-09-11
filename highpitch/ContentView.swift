@@ -21,6 +21,7 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Hello, iOS")
             #endif
+            Text("Branch Test")
         }
         .padding()
     }
