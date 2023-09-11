@@ -14,6 +14,7 @@
 		A902BD032AAF376B006DCA63 /* highpitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD022AAF376B006DCA63 /* highpitchTests.swift */; };
 		A902BD0D2AAF376B006DCA63 /* highpitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0C2AAF376B006DCA63 /* highpitchUITests.swift */; };
 		A902BD0F2AAF376B006DCA63 /* highpitchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A902BD0E2AAF376B006DCA63 /* highpitchUITestsLaunchTests.swift */; };
+		A902BD1F2AAF3CC5006DCA63 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,17 +35,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A902BCED2AAF3769006DCA63 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A902BCED2AAF3769006DCA63 /* Highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A902BCF02AAF3769006DCA63 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		A902BCF22AAF3769006DCA63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A902BCF42AAF376B006DCA63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A902BCF62AAF376B006DCA63 /* highpitch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = highpitch.entitlements; sourceTree = "<group>"; };
+		A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Highpitch.entitlements; sourceTree = "<group>"; };
 		A902BCF82AAF376B006DCA63 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A902BCFE2AAF376B006DCA63 /* highpitchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = highpitchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A902BCFE2AAF376B006DCA63 /* HighpitchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HighpitchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A902BD022AAF376B006DCA63 /* highpitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchTests.swift; sourceTree = "<group>"; };
-		A902BD082AAF376B006DCA63 /* highpitchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = highpitchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A902BD082AAF376B006DCA63 /* HighpitchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HighpitchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A902BD0C2AAF376B006DCA63 /* highpitchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchUITests.swift; sourceTree = "<group>"; };
 		A902BD0E2AAF376B006DCA63 /* highpitchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +77,10 @@
 		A902BCE42AAF3769006DCA63 = {
 			isa = PBXGroup;
 			children = (
-				A902BCEF2AAF3769006DCA63 /* highpitch */,
-				A902BD012AAF376B006DCA63 /* highpitchTests */,
-				A902BD0B2AAF376B006DCA63 /* highpitchUITests */,
+				A902BD1E2AAF3CC5006DCA63 /* .swiftlint.yml */,
+				A902BCEF2AAF3769006DCA63 /* Highpitch */,
+				A902BD012AAF376B006DCA63 /* HighpitchTests */,
+				A902BD0B2AAF376B006DCA63 /* HighpitchUITests */,
 				A902BCEE2AAF3769006DCA63 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,23 +88,23 @@
 		A902BCEE2AAF3769006DCA63 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A902BCED2AAF3769006DCA63 /* highpitch.app */,
-				A902BCFE2AAF376B006DCA63 /* highpitchTests.xctest */,
-				A902BD082AAF376B006DCA63 /* highpitchUITests.xctest */,
+				A902BCED2AAF3769006DCA63 /* Highpitch.app */,
+				A902BCFE2AAF376B006DCA63 /* HighpitchTests.xctest */,
+				A902BD082AAF376B006DCA63 /* HighpitchUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A902BCEF2AAF3769006DCA63 /* highpitch */ = {
+		A902BCEF2AAF3769006DCA63 /* Highpitch */ = {
 			isa = PBXGroup;
 			children = (
 				A902BCF02AAF3769006DCA63 /* highpitchApp.swift */,
 				A902BCF22AAF3769006DCA63 /* ContentView.swift */,
 				A902BCF42AAF376B006DCA63 /* Assets.xcassets */,
-				A902BCF62AAF376B006DCA63 /* highpitch.entitlements */,
+				A902BCF62AAF376B006DCA63 /* Highpitch.entitlements */,
 				A902BCF72AAF376B006DCA63 /* Preview Content */,
 			);
-			path = highpitch;
+			path = Highpitch;
 			sourceTree = "<group>";
 		};
 		A902BCF72AAF376B006DCA63 /* Preview Content */ = {
@@ -112,30 +115,31 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A902BD012AAF376B006DCA63 /* highpitchTests */ = {
+		A902BD012AAF376B006DCA63 /* HighpitchTests */ = {
 			isa = PBXGroup;
 			children = (
 				A902BD022AAF376B006DCA63 /* highpitchTests.swift */,
 			);
-			path = highpitchTests;
+			path = HighpitchTests;
 			sourceTree = "<group>";
 		};
-		A902BD0B2AAF376B006DCA63 /* highpitchUITests */ = {
+		A902BD0B2AAF376B006DCA63 /* HighpitchUITests */ = {
 			isa = PBXGroup;
 			children = (
 				A902BD0C2AAF376B006DCA63 /* highpitchUITests.swift */,
 				A902BD0E2AAF376B006DCA63 /* highpitchUITestsLaunchTests.swift */,
 			);
-			path = highpitchUITests;
+			path = HighpitchUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A902BCEC2AAF3769006DCA63 /* highpitch */ = {
+		A902BCEC2AAF3769006DCA63 /* Highpitch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A902BD122AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitch" */;
+			buildConfigurationList = A902BD122AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "Highpitch" */;
 			buildPhases = (
+				A902BD1B2AAF3C36006DCA63 /* Swift Lint */,
 				A902BCE92AAF3769006DCA63 /* Sources */,
 				A902BCEA2AAF3769006DCA63 /* Frameworks */,
 				A902BCEB2AAF3769006DCA63 /* Resources */,
@@ -144,14 +148,14 @@
 			);
 			dependencies = (
 			);
-			name = highpitch;
+			name = Highpitch;
 			productName = highpitch;
-			productReference = A902BCED2AAF3769006DCA63 /* highpitch.app */;
+			productReference = A902BCED2AAF3769006DCA63 /* Highpitch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A902BCFD2AAF376B006DCA63 /* highpitchTests */ = {
+		A902BCFD2AAF376B006DCA63 /* HighpitchTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A902BD152AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitchTests" */;
+			buildConfigurationList = A902BD152AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "HighpitchTests" */;
 			buildPhases = (
 				A902BCFA2AAF376B006DCA63 /* Sources */,
 				A902BCFB2AAF376B006DCA63 /* Frameworks */,
@@ -162,14 +166,14 @@
 			dependencies = (
 				A902BD002AAF376B006DCA63 /* PBXTargetDependency */,
 			);
-			name = highpitchTests;
+			name = HighpitchTests;
 			productName = highpitchTests;
-			productReference = A902BCFE2AAF376B006DCA63 /* highpitchTests.xctest */;
+			productReference = A902BCFE2AAF376B006DCA63 /* HighpitchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A902BD072AAF376B006DCA63 /* highpitchUITests */ = {
+		A902BD072AAF376B006DCA63 /* HighpitchUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A902BD182AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitchUITests" */;
+			buildConfigurationList = A902BD182AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "HighpitchUITests" */;
 			buildPhases = (
 				A902BD042AAF376B006DCA63 /* Sources */,
 				A902BD052AAF376B006DCA63 /* Frameworks */,
@@ -180,9 +184,9 @@
 			dependencies = (
 				A902BD0A2AAF376B006DCA63 /* PBXTargetDependency */,
 			);
-			name = highpitchUITests;
+			name = HighpitchUITests;
 			productName = highpitchUITests;
-			productReference = A902BD082AAF376B006DCA63 /* highpitchUITests.xctest */;
+			productReference = A902BD082AAF376B006DCA63 /* HighpitchUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -208,7 +212,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A902BCE82AAF3769006DCA63 /* Build configuration list for PBXProject "highpitch" */;
+			buildConfigurationList = A902BCE82AAF3769006DCA63 /* Build configuration list for PBXProject "Highpitch" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -221,9 +225,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A902BCEC2AAF3769006DCA63 /* highpitch */,
-				A902BCFD2AAF376B006DCA63 /* highpitchTests */,
-				A902BD072AAF376B006DCA63 /* highpitchUITests */,
+				A902BCEC2AAF3769006DCA63 /* Highpitch */,
+				A902BCFD2AAF376B006DCA63 /* HighpitchTests */,
+				A902BD072AAF376B006DCA63 /* HighpitchUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -233,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A902BD1F2AAF3CC5006DCA63 /* .swiftlint.yml in Resources */,
 				A902BCF92AAF376B006DCA63 /* Preview Assets.xcassets in Resources */,
 				A902BCF52AAF376B006DCA63 /* Assets.xcassets in Resources */,
 			);
@@ -253,6 +258,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A902BD1B2AAF3C36006DCA63 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A902BCE92AAF3769006DCA63 /* Sources */ = {
@@ -286,12 +313,12 @@
 /* Begin PBXTargetDependency section */
 		A902BD002AAF376B006DCA63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A902BCEC2AAF3769006DCA63 /* highpitch */;
+			target = A902BCEC2AAF3769006DCA63 /* Highpitch */;
 			targetProxy = A902BCFF2AAF376B006DCA63 /* PBXContainerItemProxy */;
 		};
 		A902BD0A2AAF376B006DCA63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A902BCEC2AAF3769006DCA63 /* highpitch */;
+			target = A902BCEC2AAF3769006DCA63 /* Highpitch */;
 			targetProxy = A902BD092AAF376B006DCA63 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -501,7 +528,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/highpitch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/highpitch";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Highpitch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Highpitch";
 			};
 			name = Debug;
 		};
@@ -524,7 +551,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/highpitch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/highpitch";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Highpitch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Highpitch";
 			};
 			name = Release;
 		};
@@ -575,7 +602,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A902BCE82AAF3769006DCA63 /* Build configuration list for PBXProject "highpitch" */ = {
+		A902BCE82AAF3769006DCA63 /* Build configuration list for PBXProject "Highpitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A902BD102AAF376B006DCA63 /* Debug */,
@@ -584,7 +611,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A902BD122AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitch" */ = {
+		A902BD122AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "Highpitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A902BD132AAF376B006DCA63 /* Debug */,
@@ -593,7 +620,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A902BD152AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitchTests" */ = {
+		A902BD152AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "HighpitchTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A902BD162AAF376B006DCA63 /* Debug */,
@@ -602,7 +629,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A902BD182AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "highpitchUITests" */ = {
+		A902BD182AAF376B006DCA63 /* Build configuration list for PBXNativeTarget "HighpitchUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A902BD192AAF376B006DCA63 /* Debug */,
