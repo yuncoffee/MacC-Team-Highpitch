@@ -9,20 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            #if os(macOS)
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, macOS")
-            #else
-            Image(systemName: "heart")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, iOS")
-            #endif
-        }
-        .padding()
+        Text("빵빵아!옥지얌!")
     }
 }
 
