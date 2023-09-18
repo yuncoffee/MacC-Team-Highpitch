@@ -9,12 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            #if os(macOS)
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundColor(.accentColor)
+            Text("Hello, macOS")
+            #else
+            Image(systemName: "heart")
+                .imageScale(.large)
+                .foregroundColor(.accentColor)
+            Text("Hello, iOS")
+            #endif
+        }
+        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+                .previewDevice("Mac")
+                .previewDisplayName("Mac Preview")
+            ContentView()
+                .previewDevice("iPhone 14")
+                .previewDisplayName("iPhone 14 Preview")
+        }
     }
 }
