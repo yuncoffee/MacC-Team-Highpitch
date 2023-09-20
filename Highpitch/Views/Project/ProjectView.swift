@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct ProjectView: View {
+    @Binding var sidebarStatus: Int
     var body: some View {
-        PresentationView()
+        if sidebarStatus == 0 {
+            PresentationView(sidebarStatus: $sidebarStatus)
+        } else {
+            RecordView(sidebarStatus: $sidebarStatus)
+        }
     }
 }
 
 struct ProjectView_Previews: PreviewProvider {
+    @State static var sidebarStatus = 0
+    
     static var previews: some View {
-        ProjectView()
+        ProjectView(sidebarStatus: $sidebarStatus)
     }
 }
