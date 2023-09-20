@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+        
     var body: some View {
-        #if os(macOS)
-        Text("빵빵아!옥지얌!")
-        #endif
+        NavigationStack {
+            HomeView()
+        }
     }
 }
 
