@@ -146,11 +146,11 @@ extension HPButtonSize {
     var font: FoundationTypoSystemFont {
         switch self {
         case .xsmall:
-            return .footnote
+            return .caption1
         case .small:
-            return .footnote
+            return .caption1
         case .medium:
-            return .footnote
+            return .caption1
         case .large:
             return .body
         case .xlarge:
@@ -179,8 +179,8 @@ struct HPButtonContent: View, StyleConfiguration {
         configuration.label
             .systemFont(size.font, weight: .medium)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, .HPSpacing.xsmall)
-            .padding(.vertical, .HPSpacing.xxsmall)
+            .padding(.horizontal, 32)
+            .padding(.vertical, 12)
             .frame(maxWidth: .infinity, minHeight: size.rawValue)
             .background(
                 type.style.fillStyle.isLook(.fill)
@@ -192,14 +192,14 @@ struct HPButtonContent: View, StyleConfiguration {
                 : color
             )
             .cornerRadius(type.style.outlineStyle.isLook(.block)
-                          ? .HPCornerRadius.xsmall
+                          ? .HPCornerRadius.large
                           : type.style.outlineStyle.isLook(.round)
                           ? .HPCornerRadius.round
                           : 0)
             .overlay(
                 RoundedRectangle(
                     cornerRadius: type.style.outlineStyle.isLook(.block)
-                    ? .HPCornerRadius.xsmall
+                    ? .HPCornerRadius.large
                     : type.style.outlineStyle.isLook(.round)
                     ? .HPCornerRadius.round
                     : 0)
@@ -208,7 +208,7 @@ struct HPButtonContent: View, StyleConfiguration {
                     ? .clear
                     : color, lineWidth: 3)
                 .cornerRadius(type.style.outlineStyle.isLook(.block)
-                              ? .HPCornerRadius.xsmall
+                              ? .HPCornerRadius.large
                               : type.style.outlineStyle.isLook(.round)
                               ? .HPCornerRadius.round
                               : 0)

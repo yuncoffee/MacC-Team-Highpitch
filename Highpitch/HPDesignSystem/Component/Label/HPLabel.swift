@@ -17,7 +17,7 @@ struct HPLabel: View, StyleEssential, StyledLabelStyleEssential {
     var type: LabelType = .blockFill
     var size: LabelSize = .small
     var color: Color = .HPSecondary.orange
-    var fontStyle: FoundationTypoSystemFont = .footnote
+    var fontStyle: FoundationTypoSystemFont = .caption1
     var alignStyle: LabelAlignStyle = .textOnly
 
     var body: some View {

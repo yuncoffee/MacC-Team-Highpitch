@@ -29,7 +29,6 @@
 		A94334362ABC495A00FC00D9 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94334352ABC495A00FC00D9 /* HomeVM.swift */; };
 		A999B02B2AAF59670012AA3E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A999B02A2AAF59670012AA3E /* ContentView.swift */; };
 		A9CEBEA52ABC4FAD00FB87EE /* empty_thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CEBEA42ABC4FAD00FB87EE /* empty_thumbnail.png */; };
-		A9CEBEA82ABC573400FB87EE /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBEA72ABC573400FB87EE /* Color+Extension.swift */; };
 		A9CEBEAD2ABC606300FB87EE /* SystemFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBEAC2ABC606300FB87EE /* SystemFont.swift */; };
 		A9CEBEB02ABC60B700FB87EE /* PretendardVariable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9CEBEAF2ABC60B700FB87EE /* PretendardVariable.ttf */; };
 		A9CEBEBA2ABC61D000FB87EE /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9CEBEB12ABC61CF00FB87EE /* Pretendard-SemiBold.otf */; };
@@ -48,6 +47,7 @@
 		A9CEBED22ABC68A700FB87EE /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED12ABC68A700FB87EE /* HPButton.swift */; };
 		A9CEBED52ABC694900FB87EE /* HPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED42ABC694900FB87EE /* HPLabel.swift */; };
 		A9CEBED72ABC698800FB87EE /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED62ABC698800FB87EE /* Common.swift */; };
+		A9CEBED92ABC72C700FB87EE /* Strokes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED82ABC72C700FB87EE /* Strokes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +94,6 @@
 		A94334352ABC495A00FC00D9 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		A999B02A2AAF59670012AA3E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A9CEBEA42ABC4FAD00FB87EE /* empty_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_thumbnail.png; sourceTree = "<group>"; };
-		A9CEBEA72ABC573400FB87EE /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		A9CEBEAC2ABC606300FB87EE /* SystemFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemFont.swift; sourceTree = "<group>"; };
 		A9CEBEAF2ABC60B700FB87EE /* PretendardVariable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PretendardVariable.ttf; sourceTree = "<group>"; };
 		A9CEBEB12ABC61CF00FB87EE /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -114,6 +113,7 @@
 		A9CEBED12ABC68A700FB87EE /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
 		A9CEBED42ABC694900FB87EE /* HPLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPLabel.swift; sourceTree = "<group>"; };
 		A9CEBED62ABC698800FB87EE /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		A9CEBED82ABC72C700FB87EE /* Strokes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strokes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				A94334182ABB44C700FC00D9 /* String+Extension.swift */,
-				A9CEBEA72ABC573400FB87EE /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -403,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				A9CEBECA2ABC654E00FB87EE /* Space.swift */,
+				A9CEBED82ABC72C700FB87EE /* Strokes.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -609,7 +609,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A94334192ABB44C700FC00D9 /* String+Extension.swift in Sources */,
-				A9CEBEA82ABC573400FB87EE /* Color+Extension.swift in Sources */,
 				A999B02B2AAF59670012AA3E /* ContentView.swift in Sources */,
 				A94334252ABBE73300FC00D9 /* LocalProjectRepository.swift in Sources */,
 				A9CEBED72ABC698800FB87EE /* Common.swift in Sources */,
@@ -618,6 +617,7 @@
 				A94334202ABBE4FA00FC00D9 /* ProjectRepository.swift in Sources */,
 				A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */,
 				A9CEBECB2ABC654E00FB87EE /* Space.swift in Sources */,
+				A9CEBED92ABC72C700FB87EE /* Strokes.swift in Sources */,
 				A9CEBECE2ABC65D700FB87EE /* SFSymbols.swift in Sources */,
 				A9CEBEAD2ABC606300FB87EE /* SystemFont.swift in Sources */,
 				A943342D2ABBE94C00FC00D9 /* ProjectVM.swift in Sources */,

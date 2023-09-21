@@ -32,14 +32,15 @@ struct HPSystemFontModifier: ViewModifier {
 }
 
 enum FoundationTypoSystemFont {
-    case largeTtile
-    case title
-    case subTitle
+//    case largeTtile
+//    case title
     case headline
-    case subHeadline
+    case subTitle
+//    case subHeadline
     case body
-    case footnote
-    case caption
+//    case footnote
+    case caption1
+    case caption2
 }
 
 extension FoundationTypoSystemFont {
@@ -59,84 +60,60 @@ extension FoundationTypoSystemFont {
 extension FoundationTypoSystemFont {
     var fontSize: CGFloat {
         switch self {
-        case .largeTtile:
-            return 32
-        case .title:
+        case .headline:
             return 24
         case .subTitle:
-            return 20
-        case .headline:
             return 18
-        case .subHeadline:
-            return 16
         case .body:
+            return 16
+        case .caption1:
             return 14
-        case .footnote:
+        case .caption2:
             return 12
-        case .caption:
-            return 10
         }
     }
     
     var lineHeight: CGFloat {
         switch self {
-        case .largeTtile:
-            return (48 - self.fontSize) / 2
-        case .title:
-            return (36 - self.fontSize) / 2
-        case .subTitle:
-            return (28 - self.fontSize) / 2
         case .headline:
-            return (26 - self.fontSize) / 2
-        case .subHeadline:
-            return (24 - self.fontSize) / 2
+            return (32 - self.fontSize) / 2
+        case .subTitle:
+            return (27 - self.fontSize) / 2
         case .body:
-            return (20 - self.fontSize) / 2
-        case .footnote:
-            return (18 - self.fontSize) / 2
-        case .caption:
-            return (12 - self.fontSize) / 2
+            return (24 - self.fontSize) / 2
+        case .caption1:
+            return (16.8 - self.fontSize) / 2
+        case .caption2:
+            return (16.8 - self.fontSize) / 2
         }
     }
     
     var fontWeight: FoundationTypoSystemFont.FontWeight {
         switch self {
-        case .largeTtile:
-            return .bold
-        case .title:
+        case .headline:
             return .bold
         case .subTitle:
-            return .regular
-        case .headline:
-            return .regular
-        case .subHeadline:
-            return .regular
+            return .semibold
         case .body:
+            return .medium
+        case .caption1:
             return .regular
-        case .footnote:
-            return .regular
-        case .caption:
+        case .caption2:
             return .regular
         }
     }
     
     var relateTo: Font.TextStyle {
         switch self {
-        case .largeTtile:
-            return .largeTitle
-        case .title:
-            return .title
-        case .subTitle:
-            return .title3
         case .headline:
+            return .title3
+        case .subTitle:
             return .headline
-        case .subHeadline:
-            return .subheadline
         case .body:
             return .body
-        case .footnote:
-            return .footnote
-        case .caption:
+        case .caption1:
+            return .caption
+        case .caption2:
             return .caption2
         }
     }
