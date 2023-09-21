@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PresentationView: View {
     @Environment(\.dismiss) private var dismiss
-    @Binding var sidebarStatus: Int
     
     var body: some View {
         VStack(spacing: 0) {
@@ -17,7 +16,6 @@ struct PresentationView: View {
             HStack {
                 Button("<") {
 //                    print("<")
-                    sidebarStatus = 0
                     dismiss()
                 }
                 .frame(width: 120, alignment: .leading)
@@ -26,8 +24,7 @@ struct PresentationView: View {
                 Spacer()
                 Button("연습 끝내기") {
 //                    print("<")
-                    sidebarStatus = 1
-//                    dismiss()
+                    dismiss()
                 }
                 .frame(width: 120, alignment: .trailing)
             }
@@ -76,6 +73,6 @@ struct PresentationView_Previews: PreviewProvider {
     @State static var sidebarStatus = 0
     
     static var previews: some View {
-        PresentationView(sidebarStatus: $sidebarStatus)
+        PresentationView()
     }
 }

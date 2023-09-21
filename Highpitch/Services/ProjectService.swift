@@ -14,9 +14,9 @@ class ProjectService {
         self.repo = repo
     }
     
-    //인터넷 연결 체크.. 계속!
-    //로컬로
-    //노션 -> 로컬
+    // 인터넷 연결 체크.. 계속!
+    // 로컬로
+    // 노션 -> 로컬
     
 //    if(인터넷 연결){
 //        repo = RemoteRepository

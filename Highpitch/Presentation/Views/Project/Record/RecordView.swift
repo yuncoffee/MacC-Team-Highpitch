@@ -8,86 +8,105 @@
 import SwiftUI
 
 struct RecordView: View {
-    @Binding var sidebarStatus: Int
+    @State var isPresentationModeOpen = false
     
     var body: some View {
-        VStack {
-            Text("프로젝트 명")
-            HStack(spacing: 24) {
-                VStack {
-                    VStack {
-                        Text("평균 연습 소요 시간")
-                        Text("00시간 00분")
-                    }
-                    Divider()
-                    VStack {
-                        Text("총 연습 횟수")
-                        Text("00회")
-                    }
-                }
-                .frame(width: 345)
-                VStack {
-                    Text("연습 기록 다시보기")
-                    List(0...3, id: \.self) { index in
-                        HStack {
-                            Text("\(index + 1)")
-                            Text(Date().description)
-                            Text("00:00")
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
+        HStack {
+            // sidebar
+            VStack {
+                Text("연습 기록보기")
             }
-            .border(.red)
-            ZStack(alignment: .topTrailing) {
-                VStack {
-                    HStack {
-                        Rectangle().frame(width: 14, height: 14)
-                        Text("발화 속도가 빠른 구간")
+            VStack {
+                
+                HStack {
+                    Text("프로젝트 명")
+                    Button {
+                        isPresentationModeOpen.toggle()
+                    } label: {
+                        Text("연습 하러가기")
                     }
-                    HStack {
-                        Rectangle().frame(width: 14, height: 14)
-                        Text("발화 속도가 느린 구간")
-                    }
+
                 }
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Text("첫번째 연습의 발화 속도 체크")
-                        Text("평균 페이스보다 빠르거나 느리게 말한 부분을 다시 들어보며 체크해보세요.")
-                    }
-                    HStack {
-                        HStack {
-                            Image(systemName: "play")
-                            Text("00:00")
+                HStack(spacing: 24) {
+                    VStack {
+                        VStack {
+                            Text("평균 연습 소요 시간")
+                            Text("00시간 00분")
                         }
-                        HStack {
-                            ZStack(alignment: .bottomLeading) {
-                                HStack {
-                                    Rectangle()
-                                }
-                                .border(.red)
-                                .frame(height: 28)
-                                VStack(spacing: 0) {
-                                    Text("00:00")
-                                    TriangleView()
-                                        .frame(width: 16, height: 16)
-                                        .rotationEffect(.degrees(180))
-                                    Rectangle()
-                                        .frame(width:2, height: 56)
-                                }
-                                .frame(width: 40)
-                                .offset(x: -20)
-                                .border(.red)
+                        Divider()
+                        VStack {
+                            Text("총 연습 횟수")
+                            Text("00회")
+                        }
+                    }
+                    .frame(width: 345)
+                    VStack {
+                        Text("연습 기록 다시보기")
+                        List(0...3, id: \.self) { index in
+                            HStack {
+                                Text("\(index + 1)")
+                                Text(Date().description)
+                                Text("00:00")
                             }
                         }
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .border(.red)
+                ZStack(alignment: .topTrailing) {
+                    VStack {
                         HStack {
-                            Text("00:00")
+                            Rectangle().frame(width: 14, height: 14)
+                            Text("발화 속도가 빠른 구간")
+                        }
+                        HStack {
+                            Rectangle().frame(width: 14, height: 14)
+                            Text("발화 속도가 느린 구간")
                         }
                     }
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading) {
+                            Text("첫번째 연습의 발화 속도 체크")
+                            Text("평균 페이스보다 빠르거나 느리게 말한 부분을 다시 들어보며 체크해보세요.")
+                        }
+                        HStack {
+                            HStack {
+                                Image(systemName: "play")
+                                Text("00:00")
+                            }
+                            HStack {
+                                ZStack(alignment: .bottomLeading) {
+                                    HStack {
+                                        Rectangle()
+                                    }
+                                    .border(.red)
+                                    .frame(height: 28)
+                                    VStack(spacing: 0) {
+                                        Text("00:00")
+                                        TriangleView()
+                                            .frame(width: 16, height: 16)
+                                            .rotationEffect(.degrees(180))
+                                        Rectangle()
+                                            .frame(width:2, height: 56)
+                                    }
+                                    .frame(width: 40)
+                                    .offset(x: -20)
+                                    .border(.red)
+                                }
+                            }
+                            HStack {
+                                Text("00:00")
+                            }
+                        }
+                    }
+                    
                 }
-                
+                .frame(height: 280)
             }
-            .frame(height: 280)
+        }
+        .navigationDestination(isPresented: $isPresentationModeOpen) {
+            PresentationView()
+                .toolbar(.hidden, for: .automatic)
         }
     }
 }
@@ -96,7 +115,7 @@ struct RecordView_Previews: PreviewProvider {
     @State static var sidebarStatus = 0
     
     static var previews: some View {
-        RecordView(sidebarStatus: $sidebarStatus)
+        RecordView()
     }
 }
 

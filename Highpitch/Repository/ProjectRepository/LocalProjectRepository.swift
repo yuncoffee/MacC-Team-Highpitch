@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LocalProjectRepository: ProjectRepository{
+class LocalProjectRepository: ProjectRepository {
     func getProject() {
         print("hello")
     }
