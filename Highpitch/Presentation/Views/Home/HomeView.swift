@@ -12,28 +12,12 @@ struct HomeView: View {
     @State var views = ["발표 연습하기", "연습 기록보기"]
     @State var isProjectOpen = false
     @State var sidebarStatus = 0
+    @State private var isModalActive = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            // logo
-            Image(.SystemImage.mainLogo.rawValue)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 35)
-            VStack {
-                if let project = vm.projects.first {
-                    AsyncImage(url: project.thumbnail) { phase in
-                        phase.image?.resizable().scaledToFit()
-                    }
-                    .frame(width: 380, height: 180)
-                    Text(project.projectName)
-                    Text(project.createAt.description)
-                }
-                
-            }
-            // new project
+            projectLogoView()
             newProjectViewContainer()
-            // prev project
             hasProjectListViewContainer()
         }
         .padding(.top, 68)
@@ -49,6 +33,9 @@ struct HomeView: View {
             ProjectView()
                 .toolbar(.hidden, for: .automatic)
         }
+        .sheet(isPresented: $isModalActive, content: {
+            Text("HH")
+        })
         .onAppear {
             vm.updateProjects()
         }
@@ -56,12 +43,25 @@ struct HomeView: View {
 }
 
 extension HomeView {
+    // MARK: - projectLogoView
+    private func projectLogoView() -> some View {
+        Image(.SystemImage.mainLogo.rawValue)
+            .resizable()
+            .scaledToFit()
+            .frame(height: 35)
+    }
+    
     // MARK: - newProjectView
     private func newProjectViewContainer() -> some View {
         VStack(alignment: .leading) {
-            Text("새 프로젝트")
-                .systemFont(.title)
-            Text("새 프로젝트를 추가해서 제작해보세요")
+            // TextContainer
+            VStack(alignment: .leading, spacing: 12) {
+                Text("새 프로젝트")
+                    .systemFont(.title)
+                Text("새 프로젝트를 추가해서 제작해보세요")
+                    .systemFont(.subHeadline)
+                    .foregroundColor(.systemGray600)
+            }
             VStack {
                 Image(systemName: "folder.badge.plus")
                 Button {
@@ -129,6 +129,19 @@ extension HomeView {
         }
         .frame(alignment: .topLeading)
         .border(.red)
+    }
+    
+    private func projectCard() -> some View {
+        VStack {
+            if let project = vm.projects.first {
+                AsyncImage(url: project.thumbnail) { phase in
+                    phase.image?.resizable().scaledToFit()
+                }
+                .frame(width: 380, height: 180)
+                Text(project.projectName)
+                Text(project.createAt.description)
+            }
+        }
     }
 }
 

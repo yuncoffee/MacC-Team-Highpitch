@@ -47,11 +47,10 @@ enum ComponentSpaceSpacing: CGFloat {
     case large = 8.0
 }
 
-
 extension CGFloat {
     struct HPCornerRadius {
         // MARK: - CornerRadius
-        private init(){}
+        private init() {}
         /// rawValue: 2.0
         static let xxsmall = FoundationSpaceRaduis.xxsmall.rawValue
         /// rawValue: 4.0
@@ -76,7 +75,7 @@ extension CGFloat {
 extension CGFloat {
     // MARK: - Spacing
     struct HPSpacing {
-        private init(){}
+        private init() {}
         /// rawValue: 4.0
         static let xxsmall = FoundationSpaceSpacing.xxsmall.rawValue
         /// rawValue: 8.0
@@ -99,7 +98,7 @@ extension CGFloat {
 extension CGFloat {
     struct HPFrame {
         // MARK: - Frame
-        private init(){}
+        private init() {}
         /// rawValue: 24.0
         static let xxsmall = FoundationSpaceFrame.xxsmall.rawValue
         /// rawValue: 28.0
@@ -120,7 +119,7 @@ extension CGFloat {
 extension CGFloat {
     // MARK: - CFComponentSpacing
     struct HPCompoentSpacing {
-        private init(){}
+        private init() {}
         /// rawValue: 2.0
         static let small = ComponentSpaceSpacing.small.rawValue
         /// rawValue: 4.0

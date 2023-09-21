@@ -44,7 +44,10 @@
 		A9CEBEC62ABC649300FB87EE /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CEBEC52ABC649300FB87EE /* Colors.xcassets */; };
 		A9CEBEC82ABC64A500FB87EE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBEC72ABC64A500FB87EE /* Colors.swift */; };
 		A9CEBECB2ABC654E00FB87EE /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBECA2ABC654E00FB87EE /* Space.swift */; };
-		A9CEBECE2ABC65D700FB87EE /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBECD2ABC65D700FB87EE /* Symbols.swift */; };
+		A9CEBECE2ABC65D700FB87EE /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBECD2ABC65D700FB87EE /* SFSymbols.swift */; };
+		A9CEBED22ABC68A700FB87EE /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED12ABC68A700FB87EE /* HPButton.swift */; };
+		A9CEBED52ABC694900FB87EE /* HPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED42ABC694900FB87EE /* HPLabel.swift */; };
+		A9CEBED72ABC698800FB87EE /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CEBED62ABC698800FB87EE /* Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +110,10 @@
 		A9CEBEC52ABC649300FB87EE /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A9CEBEC72ABC64A500FB87EE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A9CEBECA2ABC654E00FB87EE /* Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
-		A9CEBECD2ABC65D700FB87EE /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
+		A9CEBECD2ABC65D700FB87EE /* SFSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbols.swift; sourceTree = "<group>"; };
+		A9CEBED12ABC68A700FB87EE /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
+		A9CEBED42ABC694900FB87EE /* HPLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPLabel.swift; sourceTree = "<group>"; };
+		A9CEBED62ABC698800FB87EE /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				A9CEBEC32ABC628000FB87EE /* Info.plist */,
+				A9CEBEA92ABC601B00FB87EE /* HPDesignSystem */,
 				A943342E2ABBEB0D00FC00D9 /* Utils */,
 				A94334042ABA97E400FC00D9 /* Models */,
 				A943341D2ABBE4A900FC00D9 /* Repository */,
@@ -331,7 +338,6 @@
 		A943342E2ABBEB0D00FC00D9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				A9CEBEA92ABC601B00FB87EE /* HPDesignSystem */,
 				A94334162ABB444100FC00D9 /* Resources */,
 				A94334172ABB44B500FC00D9 /* Extensions */,
 			);
@@ -341,6 +347,7 @@
 		A9CEBEA92ABC601B00FB87EE /* HPDesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				A9CEBECF2ABC689200FB87EE /* Component */,
 				A9CEBEAA2ABC603A00FB87EE /* Foundation */,
 			);
 			path = HPDesignSystem;
@@ -403,9 +410,35 @@
 		A9CEBECC2ABC65C400FB87EE /* Symbols */ = {
 			isa = PBXGroup;
 			children = (
-				A9CEBECD2ABC65D700FB87EE /* Symbols.swift */,
+				A9CEBECD2ABC65D700FB87EE /* SFSymbols.swift */,
 			);
 			path = Symbols;
+			sourceTree = "<group>";
+		};
+		A9CEBECF2ABC689200FB87EE /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				A9CEBED32ABC693F00FB87EE /* Label */,
+				A9CEBED02ABC689C00FB87EE /* Button */,
+				A9CEBED62ABC698800FB87EE /* Common.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		A9CEBED02ABC689C00FB87EE /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				A9CEBED12ABC68A700FB87EE /* HPButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		A9CEBED32ABC693F00FB87EE /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				A9CEBED42ABC694900FB87EE /* HPLabel.swift */,
+			);
+			path = Label;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -579,17 +612,20 @@
 				A9CEBEA82ABC573400FB87EE /* Color+Extension.swift in Sources */,
 				A999B02B2AAF59670012AA3E /* ContentView.swift in Sources */,
 				A94334252ABBE73300FC00D9 /* LocalProjectRepository.swift in Sources */,
+				A9CEBED72ABC698800FB87EE /* Common.swift in Sources */,
 				A9CEBEC82ABC64A500FB87EE /* Colors.swift in Sources */,
 				A94334132ABA9C9B00FC00D9 /* RecordView.swift in Sources */,
 				A94334202ABBE4FA00FC00D9 /* ProjectRepository.swift in Sources */,
 				A902BCF12AAF3769006DCA63 /* HighpitchApp.swift in Sources */,
 				A9CEBECB2ABC654E00FB87EE /* Space.swift in Sources */,
-				A9CEBECE2ABC65D700FB87EE /* Symbols.swift in Sources */,
+				A9CEBECE2ABC65D700FB87EE /* SFSymbols.swift in Sources */,
 				A9CEBEAD2ABC606300FB87EE /* SystemFont.swift in Sources */,
 				A943342D2ABBE94C00FC00D9 /* ProjectVM.swift in Sources */,
 				A943340E2ABA986700FC00D9 /* ProjectModel.swift in Sources */,
+				A9CEBED52ABC694900FB87EE /* HPLabel.swift in Sources */,
 				A94334272ABBE76A00FC00D9 /* RemoteProjectRepository.swift in Sources */,
 				A94334362ABC495A00FC00D9 /* HomeVM.swift in Sources */,
+				A9CEBED22ABC68A700FB87EE /* HPButton.swift in Sources */,
 				A94334152ABB3DF400FC00D9 /* ProjectView.swift in Sources */,
 				A94334102ABA98B200FC00D9 /* HomeView.swift in Sources */,
 				A94334092ABA984700FC00D9 /* PresentationView.swift in Sources */,

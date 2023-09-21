@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-// swiftlint:disable identifier_name
 extension View {
     func systemFont(
         _ style: FoundationTypoSystemFont,
@@ -167,4 +166,3 @@ extension FoundationTypoSystemFont.FontWeight {
         }
     }
 }
-// swiftlint:enable identifier_name
