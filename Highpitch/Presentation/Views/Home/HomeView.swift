@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject var vm = HomeVM()
     @State var views = ["발표 연습하기", "연습 기록보기"]
     @State var isProjectOpen = false
     @State var sidebarStatus = 0
@@ -19,6 +20,17 @@ struct HomeView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 35)
+            VStack {
+                if let project = vm.projects.first {
+                    AsyncImage(url: project.thumbnail) { phase in
+                        phase.image?.resizable().scaledToFit()
+                    }
+                    .frame(width: 380, height: 180)
+                    Text(project.projectName)
+                    Text(project.createAt.description)
+                }
+                
+            }
             // new project
             newProjectViewContainer()
             // prev project
@@ -37,6 +49,9 @@ struct HomeView: View {
             ProjectView()
                 .toolbar(.hidden, for: .automatic)
         }
+        .onAppear {
+            vm.updateProjects()
+        }
     }
 }
 
@@ -45,7 +60,7 @@ extension HomeView {
     private func newProjectViewContainer() -> some View {
         VStack(alignment: .leading) {
             Text("새 프로젝트")
-                .font(.largeTitle)
+                .systemFont(.title)
             Text("새 프로젝트를 추가해서 제작해보세요")
             VStack {
                 Image(systemName: "folder.badge.plus")

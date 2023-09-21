@@ -7,7 +7,9 @@
 
 import Foundation
 
-class ProjectService {
+protocol ProjectServiceable: ProjectRepository {}
+
+class ProjectService: ProjectServiceable {
     let repo: ProjectRepository
     
     init(repo: ProjectRepository) {
@@ -32,7 +34,15 @@ extension ProjectService {
 }
 
 extension ProjectService {
-    func getProject() {
-        repo.getProject()
+    func getProjects() -> [HPProject] {
+        repo.getProjects()
+    }
+    func makeNewProject() {
+        let project = HPProject(
+            projectName: "Test",
+            createAt: Date(),
+            presentationPath: Bundle.main.url(forResource: .samplePPT, withExtension: "pdf")!)
+        
+//        repo.makeNewProject(project: project)
     }
 }

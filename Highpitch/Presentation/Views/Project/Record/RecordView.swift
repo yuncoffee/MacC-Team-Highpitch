@@ -17,7 +17,6 @@ struct RecordView: View {
                 Text("연습 기록보기")
             }
             VStack {
-                
                 HStack {
                     Text("프로젝트 명")
                     Button {
@@ -25,7 +24,6 @@ struct RecordView: View {
                     } label: {
                         Text("연습 하러가기")
                     }
-
                 }
                 HStack(spacing: 24) {
                     VStack {
