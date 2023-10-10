@@ -15,6 +15,14 @@
 		1D8F7E352AD3C4BC006B5578 /* HighPitchMacCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E342AD3C4BC006B5578 /* HighPitchMacCTests.swift */; };
 		1D8F7E3F2AD3C4BC006B5578 /* HighPitchMacCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E3E2AD3C4BC006B5578 /* HighPitchMacCUITests.swift */; };
 		1D8F7E412AD3C4BC006B5578 /* HighPitchMacCUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E402AD3C4BC006B5578 /* HighPitchMacCUITestsLaunchTests.swift */; };
+		1D8F7E522AD3C575006B5578 /* MenubarExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E512AD3C575006B5578 /* MenubarExtraView.swift */; };
+		1D8F7E562AD3C67F006B5578 /* sampleAudio.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1D8F7E552AD3C67F006B5578 /* sampleAudio.m4a */; };
+		1D8F7E5A2AD3C79B006B5578 /* SpeechRecognizerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E592AD3C79B006B5578 /* SpeechRecognizerManager.swift */; };
+		1D8F7E5D2AD3C8ED006B5578 /* AppleScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E5C2AD3C8ED006B5578 /* AppleScriptsManager.swift */; };
+		1D8F7E602AD3C9A5006B5578 /* ProjectFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E5F2AD3C9A5006B5578 /* ProjectFileManager.swift */; };
+		1D8F7E622AD3CAAB006B5578 /* AudioMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E612AD3CAAB006B5578 /* AudioMediaManager.swift */; };
+		1D8F7E662AD3CD9A006B5578 /* AppleScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8F7E652AD3CD9A006B5578 /* AppleScriptModel.swift */; };
+		1D8F7E692AD3EACC006B5578 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1D8F7E682AD3EACC006B5578 /* MenuBarExtraAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,13 @@
 		1D8F7E3A2AD3C4BC006B5578 /* HighPitchMacCUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HighPitchMacCUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8F7E3E2AD3C4BC006B5578 /* HighPitchMacCUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPitchMacCUITests.swift; sourceTree = "<group>"; };
 		1D8F7E402AD3C4BC006B5578 /* HighPitchMacCUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPitchMacCUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1D8F7E512AD3C575006B5578 /* MenubarExtraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraView.swift; sourceTree = "<group>"; };
+		1D8F7E552AD3C67F006B5578 /* sampleAudio.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = sampleAudio.m4a; path = ../../../../sampleAudio.m4a; sourceTree = "<group>"; };
+		1D8F7E592AD3C79B006B5578 /* SpeechRecognizerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerManager.swift; sourceTree = "<group>"; };
+		1D8F7E5C2AD3C8ED006B5578 /* AppleScriptsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptsManager.swift; sourceTree = "<group>"; };
+		1D8F7E5F2AD3C9A5006B5578 /* ProjectFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFileManager.swift; sourceTree = "<group>"; };
+		1D8F7E612AD3CAAB006B5578 /* AudioMediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMediaManager.swift; sourceTree = "<group>"; };
+		1D8F7E652AD3CD9A006B5578 /* AppleScriptModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D8F7E692AD3EACC006B5578 /* MenuBarExtraAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,12 +114,11 @@
 		1D8F7E1E2AD3C4BA006B5578 /* HighPitchMacC */ = {
 			isa = PBXGroup;
 			children = (
-				1D8F7E1F2AD3C4BA006B5578 /* HighPitchMacCApp.swift */,
-				1D8F7E212AD3C4BA006B5578 /* ContentView.swift */,
-				1D8F7E232AD3C4BA006B5578 /* Item.swift */,
-				1D8F7E252AD3C4BC006B5578 /* Assets.xcassets */,
-				1D8F7E272AD3C4BC006B5578 /* HighPitchMacC.entitlements */,
-				1D8F7E2B2AD3C4BC006B5578 /* Info.plist */,
+				1D8F7E4D2AD3C539006B5578 /* App */,
+				1D8F7E542AD3C5C7006B5578 /* Resource */,
+				1D8F7E582AD3C76C006B5578 /* Utils */,
+				1D8F7E4E2AD3C53D006B5578 /* Models */,
+				1D8F7E4F2AD3C543006B5578 /* Presentations */,
 				1D8F7E282AD3C4BC006B5578 /* Preview Content */,
 			);
 			path = HighPitchMacC;
@@ -134,6 +149,78 @@
 			path = HighPitchMacCUITests;
 			sourceTree = "<group>";
 		};
+		1D8F7E4D2AD3C539006B5578 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E1F2AD3C4BA006B5578 /* HighPitchMacCApp.swift */,
+				1D8F7E2B2AD3C4BC006B5578 /* Info.plist */,
+				1D8F7E272AD3C4BC006B5578 /* HighPitchMacC.entitlements */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1D8F7E4E2AD3C53D006B5578 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E642AD3CD7B006B5578 /* AppleScriptModel */,
+				1D8F7E232AD3C4BA006B5578 /* Item.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1D8F7E4F2AD3C543006B5578 /* Presentations */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E532AD3C582006B5578 /* ProjectWindow */,
+				1D8F7E502AD3C55F006B5578 /* MenubarExtra */,
+			);
+			path = Presentations;
+			sourceTree = "<group>";
+		};
+		1D8F7E502AD3C55F006B5578 /* MenubarExtra */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E512AD3C575006B5578 /* MenubarExtraView.swift */,
+			);
+			path = MenubarExtra;
+			sourceTree = "<group>";
+		};
+		1D8F7E532AD3C582006B5578 /* ProjectWindow */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E212AD3C4BA006B5578 /* ContentView.swift */,
+			);
+			path = ProjectWindow;
+			sourceTree = "<group>";
+		};
+		1D8F7E542AD3C5C7006B5578 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E552AD3C67F006B5578 /* sampleAudio.m4a */,
+				1D8F7E252AD3C4BC006B5578 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		1D8F7E582AD3C76C006B5578 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E5F2AD3C9A5006B5578 /* ProjectFileManager.swift */,
+				1D8F7E5C2AD3C8ED006B5578 /* AppleScriptsManager.swift */,
+				1D8F7E612AD3CAAB006B5578 /* AudioMediaManager.swift */,
+				1D8F7E592AD3C79B006B5578 /* SpeechRecognizerManager.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1D8F7E642AD3CD7B006B5578 /* AppleScriptModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D8F7E652AD3CD9A006B5578 /* AppleScriptModel.swift */,
+			);
+			path = AppleScriptModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,6 +237,9 @@
 			dependencies = (
 			);
 			name = HighPitchMacC;
+			packageProductDependencies = (
+				1D8F7E682AD3EACC006B5578 /* MenuBarExtraAccess */,
+			);
 			productName = HighPitchMacC;
 			productReference = 1D8F7E1C2AD3C4BA006B5578 /* HighPitchMacC.app */;
 			productType = "com.apple.product-type.application";
@@ -222,6 +312,9 @@
 				Base,
 			);
 			mainGroup = 1D8F7E132AD3C4BA006B5578;
+			packageReferences = (
+				1D8F7E672AD3EACC006B5578 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+			);
 			productRefGroup = 1D8F7E1D2AD3C4BA006B5578 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -240,6 +333,7 @@
 			files = (
 				1D8F7E2A2AD3C4BC006B5578 /* Preview Assets.xcassets in Resources */,
 				1D8F7E262AD3C4BC006B5578 /* Assets.xcassets in Resources */,
+				1D8F7E562AD3C67F006B5578 /* sampleAudio.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,9 +358,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D8F7E5A2AD3C79B006B5578 /* SpeechRecognizerManager.swift in Sources */,
+				1D8F7E602AD3C9A5006B5578 /* ProjectFileManager.swift in Sources */,
+				1D8F7E5D2AD3C8ED006B5578 /* AppleScriptsManager.swift in Sources */,
 				1D8F7E222AD3C4BA006B5578 /* ContentView.swift in Sources */,
 				1D8F7E242AD3C4BA006B5578 /* Item.swift in Sources */,
+				1D8F7E522AD3C575006B5578 /* MenubarExtraView.swift in Sources */,
 				1D8F7E202AD3C4BA006B5578 /* HighPitchMacCApp.swift in Sources */,
+				1D8F7E622AD3CAAB006B5578 /* AudioMediaManager.swift in Sources */,
+				1D8F7E662AD3CD9A006B5578 /* AppleScriptModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,15 +522,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HighPitchMacC/HighPitchMacC.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HighPitchMacC/App/HighPitchMacC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HighPitchMacC/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HighPitchMacC/Info.plist;
+				INFOPLIST_FILE = HighPitchMacC/App/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -461,15 +565,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HighPitchMacC/HighPitchMacC.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HighPitchMacC/App/HighPitchMacC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HighPitchMacC/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HighPitchMacC/Info.plist;
+				INFOPLIST_FILE = HighPitchMacC/App/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transcription of your meeting in the app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -625,6 +733,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1D8F7E672AD3EACC006B5578 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1D8F7E682AD3EACC006B5578 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1D8F7E672AD3EACC006B5578 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1D8F7E142AD3C4BA006B5578 /* Project object */;
 }
