@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
 		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
+		1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D30E62B2AD6E88500623A58 /* .swiftlint.yml */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
 		1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598D2AD594BD00AE5601 /* Item.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
+		1D30E62B2AD6E88500623A58 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		1DF6598B2AD594BD00AE5601 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
+				1D30E62B2AD6E88500623A58 /* .swiftlint.yml */,
 				1DF659882AD594BD00AE5601 /* highpitch */,
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
 				1DF659A72AD594BF00AE5601 /* highpitchUITests */,
@@ -255,6 +258,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DF659AE2AD594BF00AE5601 /* Build configuration list for PBXNativeTarget "highpitch" */;
 			buildPhases = (
+				1D30E62D2AD6E89800623A58 /* Swift Lint */,
 				1DF659822AD594BD00AE5601 /* Sources */,
 				1DF659832AD594BD00AE5601 /* Frameworks */,
 				1DF659842AD594BD00AE5601 /* Resources */,
@@ -352,6 +356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */,
 				1DF659942AD594BF00AE5601 /* Preview Assets.xcassets in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
 			);
@@ -372,6 +377,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D30E62D2AD6E89800623A58 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1DF659822AD594BD00AE5601 /* Sources */ = {

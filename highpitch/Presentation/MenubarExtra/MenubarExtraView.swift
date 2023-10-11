@@ -29,7 +29,6 @@ struct MenubarExtraView: View {
                 Text("reset my String")
             }
 
-
             Button {
                 exit(0)
             } label: {

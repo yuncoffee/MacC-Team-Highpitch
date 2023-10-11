@@ -8,8 +8,8 @@
 import SwiftUI
 import SwiftData
 
-//@main
-//struct highpitchApp: App {
+// @main
+// struct highpitchApp: App {
 //    var sharedModelContainer: ModelContainer = {
 //        let schema = Schema([
 //            Item.self,
@@ -30,4 +30,4 @@ import SwiftData
 //        .modelContainer(sharedModelContainer)
 //
 //    }
-//}
+// }
