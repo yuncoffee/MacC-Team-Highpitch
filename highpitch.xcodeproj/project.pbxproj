@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
+		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
 		1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598D2AD594BD00AE5601 /* Item.swift */; };
@@ -15,6 +17,10 @@
 		1DF6599F2AD594BF00AE5601 /* highpitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6599E2AD594BF00AE5601 /* highpitchTests.swift */; };
 		1DF659A92AD594BF00AE5601 /* highpitchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659A82AD594BF00AE5601 /* highpitchUITests.swift */; };
 		1DF659AB2AD594BF00AE5601 /* highpitchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659AA2AD594BF00AE5601 /* highpitchUITestsLaunchTests.swift */; };
+		1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659BA2AD5959200AE5601 /* HighPitchApp.swift */; };
+		1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659C22AD5974C00AE5601 /* MainWindowView.swift */; };
+		1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659C42AD5992C00AE5601 /* SettingsView.swift */; };
+		1DF659C82AD5998D00AE5601 /* MenubarExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659C72AD5998D00AE5601 /* MenubarExtraView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
+		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		1DF6598B2AD594BD00AE5601 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,6 +56,10 @@
 		1DF659A42AD594BF00AE5601 /* highpitchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = highpitchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659A82AD594BF00AE5601 /* highpitchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchUITests.swift; sourceTree = "<group>"; };
 		1DF659AA2AD594BF00AE5601 /* highpitchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1DF659BA2AD5959200AE5601 /* HighPitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPitchApp.swift; sourceTree = "<group>"; };
+		1DF659C22AD5974C00AE5601 /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
+		1DF659C42AD5992C00AE5601 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1DF659C72AD5998D00AE5601 /* MenubarExtraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +87,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D30E6162AD59E0C00623A58 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E6192AD59E5E00623A58 /* SampleModel */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1D30E6192AD59E5E00623A58 /* SampleModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E61A2AD59E6C00623A58 /* SampleModel.swift */,
+			);
+			path = SampleModel;
+			sourceTree = "<group>";
+		};
+		1D30E6222AD6113C00623A58 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E6242AD6117F00623A58 /* MediaManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1D30E6292AD6E5D300623A58 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		1D30E62A2AD6E67900623A58 /* Embaded */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Embaded;
+			sourceTree = "<group>";
+		};
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
@@ -98,13 +148,13 @@
 		1DF659882AD594BD00AE5601 /* highpitch */ = {
 			isa = PBXGroup;
 			children = (
-				1DF659892AD594BD00AE5601 /* highpitchApp.swift */,
-				1DF6598B2AD594BD00AE5601 /* ContentView.swift */,
-				1DF6598D2AD594BD00AE5601 /* Item.swift */,
-				1DF6598F2AD594BF00AE5601 /* Assets.xcassets */,
-				1DF659912AD594BF00AE5601 /* highpitch.entitlements */,
-				1DF659952AD594BF00AE5601 /* Info.plist */,
-				1DF659922AD594BF00AE5601 /* Preview Content */,
+				1D30E6162AD59E0C00623A58 /* Models */,
+				1DF659BC2AD595E100AE5601 /* Presentation */,
+				1D30E6222AD6113C00623A58 /* Helpers */,
+				1D30E6292AD6E5D300623A58 /* APIs */,
+				1DF659B92AD5951900AE5601 /* Resource */,
+				1DF659B82AD5950900AE5601 /* App */,
+				1DF659B72AD594E600AE5601 /* DefaultSample */,
 			);
 			path = highpitch;
 			sourceTree = "<group>";
@@ -132,6 +182,70 @@
 				1DF659AA2AD594BF00AE5601 /* highpitchUITestsLaunchTests.swift */,
 			);
 			path = highpitchUITests;
+			sourceTree = "<group>";
+		};
+		1DF659B72AD594E600AE5601 /* DefaultSample */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659892AD594BD00AE5601 /* highpitchApp.swift */,
+				1DF6598B2AD594BD00AE5601 /* ContentView.swift */,
+				1DF6598D2AD594BD00AE5601 /* Item.swift */,
+			);
+			path = DefaultSample;
+			sourceTree = "<group>";
+		};
+		1DF659B82AD5950900AE5601 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659BA2AD5959200AE5601 /* HighPitchApp.swift */,
+				1DF659922AD594BF00AE5601 /* Preview Content */,
+				1DF659912AD594BF00AE5601 /* highpitch.entitlements */,
+				1DF659952AD594BF00AE5601 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1DF659B92AD5951900AE5601 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E62A2AD6E67900623A58 /* Embaded */,
+				1DF6598F2AD594BF00AE5601 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		1DF659BC2AD595E100AE5601 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659C62AD5998000AE5601 /* MenubarExtra */,
+				1DF659BF2AD5961A00AE5601 /* Settings */,
+				1DF659BE2AD5960100AE5601 /* MainWindow */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		1DF659BE2AD5960100AE5601 /* MainWindow */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659C22AD5974C00AE5601 /* MainWindowView.swift */,
+			);
+			path = MainWindow;
+			sourceTree = "<group>";
+		};
+		1DF659BF2AD5961A00AE5601 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659C42AD5992C00AE5601 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		1DF659C62AD5998000AE5601 /* MenubarExtra */ = {
+			isa = PBXGroup;
+			children = (
+				1DF659C72AD5998D00AE5601 /* MenubarExtraView.swift */,
+			);
+			path = MenubarExtra;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,9 +378,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */,
 				1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */,
+				1DF659C82AD5998D00AE5601 /* MenubarExtraView.swift in Sources */,
+				1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
+				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
+				1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
+				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,15 +542,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = highpitch/highpitch.entitlements;
+				CODE_SIGN_ENTITLEMENTS = highpitch/App/highpitch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"highpitch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"highpitch/App/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = highpitch/Info.plist;
+				INFOPLIST_FILE = highpitch/App/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -461,15 +581,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = highpitch/highpitch.entitlements;
+				CODE_SIGN_ENTITLEMENTS = highpitch/App/highpitch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"highpitch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"highpitch/App/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = highpitch/Info.plist;
+				INFOPLIST_FILE = highpitch/App/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
