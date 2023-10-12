@@ -10,6 +10,10 @@
 		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
 		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
 		1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D30E62B2AD6E88500623A58 /* .swiftlint.yml */; };
+		1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */; };
+		1D30E6352AD6EE3300623A58 /* AppleScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6342AD6EE3300623A58 /* AppleScriptModel.swift */; };
+		1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132302AD771A6006711B9 /* KeynoteManager.swift */; };
+		1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
 		1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598D2AD594BD00AE5601 /* Item.swift */; };
@@ -45,6 +49,10 @@
 		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		1D30E62B2AD6E88500623A58 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptManager.swift; sourceTree = "<group>"; };
+		1D30E6342AD6EE3300623A58 /* AppleScriptModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptModel.swift; sourceTree = "<group>"; };
+		1DB132302AD771A6006711B9 /* KeynoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteManager.swift; sourceTree = "<group>"; };
+		1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPI.swift; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		1DF6598B2AD594BD00AE5601 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,7 +100,8 @@
 		1D30E6162AD59E0C00623A58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1D30E6192AD59E5E00623A58 /* SampleModel */,
+				1D30E6322AD6EC0700623A58 /* DataModels */,
+				1D30E6302AD6EAE200623A58 /* PersistenceModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -109,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				1D30E6242AD6117F00623A58 /* MediaManager.swift */,
+				1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */,
+				1DB132302AD771A6006711B9 /* KeynoteManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -116,6 +127,7 @@
 		1D30E6292AD6E5D300623A58 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1DB132322AD78742006711B9 /* ReturnZero */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -125,6 +137,38 @@
 			children = (
 			);
 			path = Embaded;
+			sourceTree = "<group>";
+		};
+		1D30E6302AD6EAE200623A58 /* PersistenceModels */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E6192AD59E5E00623A58 /* SampleModel */,
+			);
+			path = PersistenceModels;
+			sourceTree = "<group>";
+		};
+		1D30E6322AD6EC0700623A58 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E6332AD6EE2200623A58 /* AppleScriptModel */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		1D30E6332AD6EE2200623A58 /* AppleScriptModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D30E6342AD6EE3300623A58 /* AppleScriptModel.swift */,
+			);
+			path = AppleScriptModel;
+			sourceTree = "<group>";
+		};
+		1DB132322AD78742006711B9 /* ReturnZero */ = {
+			isa = PBXGroup;
+			children = (
+				1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */,
+			);
+			path = ReturnZero;
 			sourceTree = "<group>";
 		};
 		1DF6597D2AD594BD00AE5601 = {
@@ -406,14 +450,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */,
+				1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */,
 				1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */,
 				1DF659C82AD5998D00AE5601 /* MenubarExtraView.swift in Sources */,
+				1D30E6352AD6EE3300623A58 /* AppleScriptModel.swift in Sources */,
 				1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */,
+				1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
+				1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,9 +623,11 @@
 				DEVELOPMENT_ASSET_PATHS = "\"highpitch/App/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = highpitch/App/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -614,9 +664,11 @@
 				DEVELOPMENT_ASSET_PATHS = "\"highpitch/App/Preview Content\"";
 				DEVELOPMENT_TEAM = V7Y39HNV38;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = highpitch/App/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

@@ -11,6 +11,8 @@ import SwiftData
 struct MainWindowView: View {
     @Environment(MediaManager.self)
     private var mediaManager
+    @Environment(KeynoteManager.self)
+    private var keynoteManager
     
     // MARK: - SwiftUI View에서만 동작
     @Query(sort: \Sample.name)
@@ -21,31 +23,35 @@ struct MainWindowView: View {
     
     var body: some View {
         @Bindable var mediaManager = mediaManager
+        @Bindable var keynoteManager = keynoteManager
         VStack {
-            Text("\(mediaManager.test)")
-            TextField("TestMyString", text: $mediaManager.myString)
-            Button {
-                let newItem = Sample(name: "Hello")
-                modelContext.insert(newItem)
-            } label: {
-                Text("add")
-            }
-            Button {
-                do {
-                    try modelContext.delete(model: Sample.self)
-                } catch {
-                    print("Error: Failed to delete")
-                }
-                
-            } label: {
-                Text("Delete")
-            }
-
-            ForEach(samples, id: \.self ) { sample in
-                Text(sample.name)
-            }
-            
-            Text("\(samples.count)")
+            Text("isKeynoteOpen: \(keynoteManager.isKeynoteProcessOpen.description)")
+            Text("MediaManager: \(mediaManager.keynoteIsOpen.description)")
+//            Text("\(mediaManager.test)")
+//            TextField("TestMyString", text: $mediaManager.myString)
+//            Button {
+//                let newItem = Sample(name: "Hello")
+//                modelContext.insert(newItem)
+//            } label: {
+//                Text("add")
+//            }
+//            Button {
+//                do {
+//                    try modelContext.delete(model: Sample.self)
+//                } catch {
+//                    print("Error: Failed to delete")
+//                }
+//                
+//            } label: {
+//                Text("Delete")
+//            }
+//            ForEach(samples, id: \.self ) { sample in
+//                Text(sample.name)
+//            }
+//            Text("\(samples.count)")
+        }
+        .onChange(of: keynoteManager.isKeynoteProcessOpen) { oldValue, newValue in
+            mediaManager.keynoteIsOpen = !newValue
         }
     }
 }

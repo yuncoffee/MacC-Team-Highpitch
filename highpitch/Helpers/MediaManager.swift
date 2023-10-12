@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import Observation
-import SwiftData
 
 @Observable
 final class MediaManager {
     var test: Int = 1
     var myString: String = ""
+    var keynoteIsOpen = true
 }
