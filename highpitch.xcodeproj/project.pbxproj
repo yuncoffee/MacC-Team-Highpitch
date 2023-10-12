@@ -114,14 +114,14 @@
 			path = SampleModel;
 			sourceTree = "<group>";
 		};
-		1D30E6222AD6113C00623A58 /* Helpers */ = {
+		1D30E6222AD6113C00623A58 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				1D30E6242AD6117F00623A58 /* MediaManager.swift */,
 				1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */,
 				1DB132302AD771A6006711B9 /* KeynoteManager.swift */,
 			);
-			path = Helpers;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		1D30E6292AD6E5D300623A58 /* APIs */ = {
@@ -197,7 +197,7 @@
 			children = (
 				1D30E6162AD59E0C00623A58 /* Models */,
 				1DF659BC2AD595E100AE5601 /* Presentation */,
-				1D30E6222AD6113C00623A58 /* Helpers */,
+				1D30E6222AD6113C00623A58 /* Managers */,
 				1D30E6292AD6E5D300623A58 /* APIs */,
 				1DF659B92AD5951900AE5601 /* Resource */,
 				1DF659B82AD5950900AE5601 /* App */,
