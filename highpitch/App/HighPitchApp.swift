@@ -11,21 +11,34 @@ import SwiftData
 @main
 struct HighpitchApp: App {
     @State private var mediaManager = MediaManager()
-    @State private var appleScriptManager = AppleScriptManager()
     #if os(macOS)
+    @State private var appleScriptManager = AppleScriptManager()
     @State private var keynoteManager = KeynoteManager()
     #endif
     // MARK: - SwiftData
     let container: ModelContainer
     
     var body: some Scene {
+        #if os(iOS)
+        WindowGroup {
+            VStack(content: {
+                Text("Placeholder")
+            })
+        }
+        #endif
+        #if os(macOS)
         WindowGroup {
             MainWindowView()
                 .environment(appleScriptManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
+                
         }
         .modelContainer(container)
+        .defaultSize(width: 1000, height: 600)
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentMinSize)
+        #endif
         #if os(macOS)
         Settings {
             SettingsView()
