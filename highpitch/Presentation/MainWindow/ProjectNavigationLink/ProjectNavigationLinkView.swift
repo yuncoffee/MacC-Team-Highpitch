@@ -6,24 +6,40 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProjectNavigationLink: View {
-        
+    @Environment(ProjectManager.self)
+    private var projectManager
+    
+//    @Query(sort: \Project.creatAt)
+//    var projects: [Project]
+    
+    // MARK: - 임시 목업 테스트용
+    var mockProject = [
+        Project(projectName: "프로젝트111", creatAt: "2", practices: []),
+        Project(projectName: "프로젝트222", creatAt: "2", practices: [])
+    ]
+    
     var body: some View {
         VStack(spacing: 0) {
             Text("프로젝트 이름")
-            ProjectLinkItem()
+            ForEach(mockProject, id: \.self) { project in
+                ProjectLinkItem(
+                    title : project.projectName, 
+                    isSelected: checkIsSelected(project.projectName)) {
+                    projectManager.current = project
+                }
+            }
         }
     }
 }
 
-//ForEach(colors, id: \.self) { color in
-//    Button(color.description) {
-//        selection = color
-//    }.background(selection == color ? Color.red : Color.cyan)
-//}
-//.border(.red, width: 2)
-
+extension ProjectNavigationLink {
+    func checkIsSelected(_ projectName: String) -> Bool {
+        projectName == projectManager.current?.projectName
+    }
+}
 
 #Preview {
     ProjectNavigationLink()

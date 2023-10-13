@@ -22,9 +22,12 @@ import SwiftUI
  */
 
 struct ProjectView: View {
+    @Environment(ProjectManager.self)
+    private var projectManager
+    
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            Text("Hello, \(projectManager.current?.projectName ?? "none")")
             PracticeView()
         }
     }

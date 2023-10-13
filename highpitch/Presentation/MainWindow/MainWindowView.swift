@@ -11,10 +11,10 @@ import SwiftData
 
 struct MainWindowView: View {
     // MARK: - 데이터 컨트롤을 위한 매니저 객체
-    @Environment(MediaManager.self)
-    private var mediaManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
+    @Environment(MediaManager.self)
+    private var mediaManager
     @Environment(ProjectManager.self)
     private var projectManager
     
@@ -44,14 +44,9 @@ struct MainWindowView: View {
             if let color = selection {
                 VStack(alignment: .leading, spacing: 0) {
                     // toolbar
-                    HStack(content: {
-                        /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
-                    })
-                    .border(.blue, width: 2)
-                    .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(Color.brown)
+                    projectToolbar
                     VStack {
-                        Text("Contents")
+                        ProjectView()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(color)
@@ -73,6 +68,20 @@ struct MainWindowView: View {
         .onChange(of: keynoteManager.isKeynoteProcessOpen) { _, newValue in
             mediaManager.keynoteIsOpen = !newValue
         }
+    }
+}
+
+extension MainWindowView {
+    @ViewBuilder
+    var projectToolbar: some View {
+        HStack {
+            if let projectName = projectManager.current?.projectName {
+                Text("\(projectName)")
+            }
+        }
+        .border(.blue, width: 2)
+        .frame(maxWidth: .infinity, minHeight: 40)
+        .background(Color.brown)
     }
 }
 

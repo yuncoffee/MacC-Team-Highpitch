@@ -66,7 +66,8 @@ struct HighpitchApp: App {
     
     init() {
         do {
-            container = try ModelContainer(for: Sample.self)
+            container = try ModelContainer(for: Sample.self, Project.self)
+            
         } catch {
             fatalError("Failed to create ModelContainer for Sample")
         }

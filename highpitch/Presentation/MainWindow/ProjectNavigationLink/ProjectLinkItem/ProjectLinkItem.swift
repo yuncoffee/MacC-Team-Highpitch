@@ -8,8 +8,21 @@
 import SwiftUI
 
 struct ProjectLinkItem: View {
+    
+    var title: String = "Placeholder"
+    var isSelected = false
+    var completion: () -> Void = {
+        print("Default Action")
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            completion()
+        } label: {
+            Text(title)
+                .background(isSelected ? Color.blue : Color.red)
+        }
+        .frame(maxWidth: .infinity, minHeight: 40)
     }
 }
 

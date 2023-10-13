@@ -354,8 +354,8 @@
 		1DF659BE2AD5960100AE5601 /* MainWindow */ = {
 			isa = PBXGroup;
 			children = (
-				1D09AF7A2AD9952D00C1400E /* ProjectNavigationLink */,
 				1DF659C22AD5974C00AE5601 /* MainWindowView.swift */,
+				1D09AF7A2AD9952D00C1400E /* ProjectNavigationLink */,
 				1D09AF5C2AD9892500C1400E /* ProjectView */,
 			);
 			path = MainWindow;
