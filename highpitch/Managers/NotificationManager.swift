@@ -6,7 +6,6 @@
 //
 
 
-
 import Foundation
 
 /// 알림 기능을 담당하는 매니저 클래스
