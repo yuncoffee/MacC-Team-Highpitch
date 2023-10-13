@@ -10,15 +10,19 @@ import SwiftUI
 import SwiftData
 
 struct MainWindowView: View {
+    // MARK: - 데이터 컨트롤을 위한 매니저 객체
     @Environment(MediaManager.self)
     private var mediaManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
+    @Environment(ProjectManager.self)
+    private var projectManager
     
     // MARK: - SwiftUI View에서만 동작
     @Query(sort: \Sample.name)
     var samples: [Sample]
     
+    // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
     var modelContext
     
@@ -30,13 +34,7 @@ struct MainWindowView: View {
         @Bindable var keynoteManager = keynoteManager
         NavigationSplitView {
             LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                Text("프로젝트 이름23")
-                ForEach(colors, id: \.self) { color in
-                    Button(color.description) {
-                        selection = color
-                    }.background(selection == color ? Color.red : Color.cyan)
-                }
-                .border(.red, width: 2)
+                ProjectNavigationLink()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .border(.yellow, width: 2)
