@@ -5,6 +5,7 @@
 //  Created by yuncoffee on 10/10/23.
 //
 
+#if os(macOS)
 import SwiftUI
 import SwiftData
 
@@ -21,36 +22,57 @@ struct MainWindowView: View {
     @Environment(\.modelContext)
     var modelContext
     
+    let colors: [Color] = [.purple, .pink, .orange]
+    @State private var selection: Color? = .purple
+
     var body: some View {
         @Bindable var mediaManager = mediaManager
         @Bindable var keynoteManager = keynoteManager
-        VStack {
-            Text("isKeynoteOpen: \(keynoteManager.isKeynoteProcessOpen.description)")
-            Text("MediaManager: \(mediaManager.keynoteIsOpen.description)")
-//            Text("\(mediaManager.test)")
-//            TextField("TestMyString", text: $mediaManager.myString)
-//            Button {
-//                let newItem = Sample(name: "Hello")
-//                modelContext.insert(newItem)
-//            } label: {
-//                Text("add")
-//            }
-//            Button {
-//                do {
-//                    try modelContext.delete(model: Sample.self)
-//                } catch {
-//                    print("Error: Failed to delete")
-//                }
-//                
-//            } label: {
-//                Text("Delete")
-//            }
-//            ForEach(samples, id: \.self ) { sample in
-//                Text(sample.name)
-//            }
-//            Text("\(samples.count)")
+        NavigationSplitView {
+            LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                Text("프로젝트 이름23")
+                ForEach(colors, id: \.self) { color in
+                    Button(color.description) {
+                        selection = color
+                    }.background(selection == color ? Color.red : Color.cyan)
+                }
+                .border(.red, width: 2)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .border(.yellow, width: 2)
+            .background(Color.blue)
+            .navigationSplitViewColumnWidth(ideal: 120, max: 300)
+        } detail: {
+            if let color = selection {
+                VStack(alignment: .leading, spacing: 0) {
+                    // toolbar
+                    HStack(content: {
+                        /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
+                    })
+                    .border(.blue, width: 2)
+                    .frame(maxWidth: .infinity, minHeight: 40)
+                    .background(Color.brown)
+                    VStack {
+                        Text("Contents")
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(color)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .border(.red, width: 2)
+                .background(Color.yellow)
+                .ignoresSafeArea()
+            } else {
+                Text("Pick a color")
+            }
         }
-        .onChange(of: keynoteManager.isKeynoteProcessOpen) { oldValue, newValue in
+        .toolbarBackground(.hidden)
+        .frame(minWidth: 1000, minHeight: 600)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .onAppear(perform: {
+            selection = colors[0]
+        })
+        .onChange(of: keynoteManager.isKeynoteProcessOpen) { _, newValue in
             mediaManager.keynoteIsOpen = !newValue
         }
     }
@@ -58,4 +80,7 @@ struct MainWindowView: View {
 
 #Preview {
     MainWindowView()
+        .environment(MediaManager())
+        .environment(KeynoteManager())
 }
+#endif
