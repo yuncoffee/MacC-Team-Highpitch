@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF672AD98A1700C1400E /* ProjectView.swift */; };
 		1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF692AD98A4000C1400E /* PracticeView.swift */; };
-		1D09AF6C2AD98AB500C1400E /* Projects.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AF6B2AD98AB500C1400E /* Projects.json */; };
 		1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */; };
 		1D09AF712AD98BB700C1400E /* SpeechRecognizerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */; };
 		1D09AF742AD98C0900C1400E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF732AD98C0900C1400E /* Date+Extension.swift */; };
@@ -81,7 +80,6 @@
 /* Begin PBXFileReference section */
 		1D09AF672AD98A1700C1400E /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		1D09AF692AD98A4000C1400E /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
-		1D09AF6B2AD98AB500C1400E /* Projects.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Projects.json; sourceTree = "<group>"; };
 		1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerManager.swift; sourceTree = "<group>"; };
 		1D09AF732AD98C0900C1400E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -506,14 +504,6 @@
 			path = MenubarExtra;
 			sourceTree = "<group>";
 		};
-		434FE59F2ADA5BF20005645F /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				1D09AF6B2AD98AB500C1400E /* Projects.json */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -626,7 +616,6 @@
 				1DF659942AD594BF00AE5601 /* Preview Assets.xcassets in Resources */,
 				434FE5A62ADA5C760005645F /* test2_json.json in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
-				1D09AF6C2AD98AB500C1400E /* Projects.json in Resources */,
 				434FE5A92ADA5C760005645F /* test1_response.txt in Resources */,
 				434FE5AA2ADA5C760005645F /* test1.m4a in Resources */,
 				434FE5AB2ADA5C760005645F /* test2.m4a in Resources */,
