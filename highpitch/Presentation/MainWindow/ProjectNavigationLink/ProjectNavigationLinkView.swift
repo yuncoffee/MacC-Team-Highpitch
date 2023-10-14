@@ -22,8 +22,13 @@ struct ProjectNavigationLink: View {
     ]
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
+                .font(Font.system(size: 16))
+                .foregroundStyle(Color("000000").opacity(0.5))
+                .padding(.top, 24)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 10)
             ForEach(mockProject, id: \.self) { project in
                 ProjectLinkItem(
                     title : project.projectName, 
@@ -31,7 +36,14 @@ struct ProjectNavigationLink: View {
                     projectManager.current = project
                 }
             }
+            .padding(.leading, 8)
+            .padding(.trailing, 12)
         }
+        .frame(
+            maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
     }
 }
 
@@ -43,4 +55,7 @@ extension ProjectNavigationLink {
 
 #Preview {
     ProjectNavigationLink()
+        .environment(ProjectManager())
+        .frame(maxWidth: 200)
+        .frame(minHeight: 860)
 }

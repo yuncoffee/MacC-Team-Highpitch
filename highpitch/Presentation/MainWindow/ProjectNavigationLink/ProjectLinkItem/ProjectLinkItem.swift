@@ -20,12 +20,23 @@ struct ProjectLinkItem: View {
             completion()
         } label: {
             Text(title)
-                .background(isSelected ? Color.blue : Color.red)
+                .font(Font.system(size: 16))
+                .bold(isSelected)
+                .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 5)
+                .background(isSelected ? Color("AC9FFF").opacity(0.3) : Color.clear)
+                .cornerRadius(7)
+                .contentShape(Rectangle())
         }
-        .frame(maxWidth: .infinity, minHeight: 40)
+        .buttonStyle(.plain)
+        
     }
 }
 
 #Preview {
-    ProjectLinkItem()
+    VStack(content: {
+        ProjectLinkItem()
+        ProjectLinkItem(isSelected: true)
+    })
 }
