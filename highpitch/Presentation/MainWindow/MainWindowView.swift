@@ -10,71 +10,114 @@ import SwiftUI
 import SwiftData
 
 struct MainWindowView: View {
-    @Environment(MediaManager.self)
-    private var mediaManager
+    // MARK: - 데이터 컨트롤을 위한 매니저 객체
     @Environment(KeynoteManager.self)
     private var keynoteManager
-    
-    // MARK: - SwiftUI View에서만 동작
-    @Query(sort: \Sample.name)
-    var samples: [Sample]
-    
+    @Environment(MediaManager.self)
+    private var mediaManager
+    @Environment(ProjectManager.self)
+    private var projectManager
+        
+    // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
     var modelContext
     
-    let colors: [Color] = [.purple, .pink, .orange]
-    @State private var selection: Color? = .purple
-
+    private var selected: Project? {
+        projectManager.current
+    }
+    
     var body: some View {
-        @Bindable var mediaManager = mediaManager
-        @Bindable var keynoteManager = keynoteManager
         NavigationSplitView {
-            LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                Text("프로젝트 이름23")
-                ForEach(colors, id: \.self) { color in
-                    Button(color.description) {
-                        selection = color
-                    }.background(selection == color ? Color.red : Color.cyan)
-                }
-                .border(.red, width: 2)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .border(.yellow, width: 2)
-            .background(Color.blue)
-            .navigationSplitViewColumnWidth(ideal: 120, max: 300)
+            navigationSidebar
         } detail: {
-            if let color = selection {
-                VStack(alignment: .leading, spacing: 0) {
-                    // toolbar
-                    HStack(content: {
-                        /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
-                    })
-                    .border(.blue, width: 2)
-                    .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(Color.brown)
-                    VStack {
-                        Text("Contents")
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(color)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .border(.red, width: 2)
-                .background(Color.yellow)
-                .ignoresSafeArea()
-            } else {
-                Text("Pick a color")
-            }
+            navigationDetails
         }
         .toolbarBackground(.hidden)
         .frame(minWidth: 1000, minHeight: 600)
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
-        .onAppear(perform: {
-            selection = colors[0]
-        })
-        .onChange(of: keynoteManager.isKeynoteProcessOpen) { _, newValue in
-            mediaManager.keynoteIsOpen = !newValue
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("FCFBFF"))
+        .onAppear {
+            setup()
         }
+    }
+}
+
+extension MainWindowView {
+    private func setup() {
+        // 쿼리해온 데이터에서 맨 앞 데이터 선택
+    }
+}
+
+// MARK: - Views
+
+extension MainWindowView {
+    // MARK: - navigationSidebar
+    @ViewBuilder
+    var navigationSidebar: some View {
+        LazyVGrid(columns: [GridItem()], alignment: .leading) {
+            ProjectNavigationLink()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+//        .background( Color("9A8ADA").opacity(0.05))
+        .navigationSplitViewColumnWidth(ideal: 120, max: 300)
+    }
+    
+    // MARK: - navigationDetails
+    @ViewBuilder
+    var navigationDetails: some View {
+        if selected != nil {
+            VStack(alignment: .leading, spacing: 0) {
+                projectToolbar
+                VStack {
+                    ProjectView()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .ignoresSafeArea()
+        } else {
+            emptyProject
+        }
+    }
+    
+    // MARK: - emptyProject
+    @ViewBuilder
+    var emptyProject: some View {
+        VStack {
+            Text("선택된 프로젝트가 없습니다.")
+        }
+    }
+    
+    // MARK: - projectToolbar
+    @ViewBuilder
+    var projectToolbar: some View {
+        ZStack {
+            if let projectName = projectManager.current?.projectName {
+                Text("\(projectName)")
+                    .font(.system(size: 16))
+                    .frame(maxWidth: .infinity)
+            }
+            HStack(spacing: 0) {
+                Button {
+                  print("키노트 열기")
+                } label: {
+                    Text("키노트 열기")
+                        .font(.system(size: 16))
+                        .frame(width: 120, height: 40)
+                        .foregroundStyle(.white)
+                        .background(Color("2f2f2f"))
+                        .cornerRadius(10)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, 32)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity, minHeight: 64)
+        .background(Color("ffffff"))
+        .border(Color("000000").opacity(0.1), width: 1, edges: [.bottom])
     }
 }
 
@@ -82,5 +125,6 @@ struct MainWindowView: View {
     MainWindowView()
         .environment(MediaManager())
         .environment(KeynoteManager())
+        .environment(ProjectManager())
 }
 #endif
