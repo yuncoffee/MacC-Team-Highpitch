@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ProjectNavigationLink: View {
+    @Environment(FileSystemManager.self)
+    private var fileSystemManager
     @Environment(ProjectManager.self)
     private var projectManager
     
@@ -29,21 +31,26 @@ struct ProjectNavigationLink: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 10)
-            ForEach(mockProject, id: \.self) { project in
-                ProjectLinkItem(
-                    title : project.projectName, 
-                    isSelected: checkIsSelected(project.projectName)) {
-                    projectManager.current = project
+            if let projects = fileSystemManager.projects {
+                ForEach(projects, id: \.id) { project in
+                    ProjectLinkItem(
+                        title : project.projectName,
+                        isSelected: checkIsSelected(project.projectName)) {
+                        projectManager.current = project
+                    }
                 }
+                .padding(.leading, 8)
+                .padding(.trailing, 12)
             }
-            .padding(.leading, 8)
-            .padding(.trailing, 12)
         }
         .frame(
             maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
             maxHeight: .infinity,
             alignment: .topLeading
         )
+        .onAppear {
+            print(fileSystemManager.projects)
+        }
     }
 }
 

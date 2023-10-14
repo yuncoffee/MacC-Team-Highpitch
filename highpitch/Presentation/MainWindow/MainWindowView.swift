@@ -50,13 +50,8 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
-        Task {
-            if let projects = fileSystemManager.loadProjects() {
-                mocks = projects
-                projectManager.current = projects[0]
-            }
-        }
-       
+        let projects = fileSystemManager.loadProjects()
+            projectManager.current = projects[0]
     }
 }
 

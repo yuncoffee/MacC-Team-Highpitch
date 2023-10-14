@@ -24,9 +24,6 @@ struct HighpitchApp: App {
     private var keynoteManager = KeynoteManager()
     #endif
     
-    // MARK: - SwiftData Container
-    let container: ModelContainer
-    
     var body: some Scene {
         #if os(iOS)
         /// iOS Sample
@@ -46,7 +43,7 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
         }
-        .modelContainer(container)
+        .modelContainer(for: [ProjectModel.self])
         .defaultSize(width: 1000, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
@@ -58,7 +55,7 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
-        .modelContainer(container)
+        .modelContainer(for: [ProjectModel.self])
         // MARK: - MenubarExtra Scene
         MenuBarExtra("MenubarExtra", systemImage: "heart") {
             MenubarExtraView()
@@ -67,20 +64,15 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
-        .modelContainer(container)
+        .modelContainer(for: [ProjectModel.self])
         #endif
     }
-    
+//    
     init() {
-        do {
-            container = try ModelContainer(for: Sample.self, Project.self, Practice.self, Utterance.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        } catch {
-            fatalError("Failed to create ModelContainer for Sample")
-        }
         setupInit()
     }
+    
 }
-
 extension HighpitchApp {
     private func setupInit() {
         #if os(macOS)

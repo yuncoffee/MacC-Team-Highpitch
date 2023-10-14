@@ -9,9 +9,11 @@ import Foundation
 
 @Observable
 final class FileSystemManager {
+    var projects: [Project]?
+    
     // MARK: 임시로 번들 데이터 가져와서 프로젝트 구성하였음
-    func loadProjects() -> [Project]? {
-        var result: [Project]?
+    func loadProjects() -> [Project] {
+        var result: [Project] = []
         
         /// --- Test1
         let TEST_ONE_KEY = Bundle.main.url(forResource: "test1", withExtension: "key")
@@ -36,46 +38,37 @@ final class FileSystemManager {
             practices: []
         )
         
-        var uttrance1 = Utterance(startAt: 10, duration: 10, message: "test")
-        
         for index in 0...1 {
             do {
                 let data = try Data(contentsOf: index == 0 ? TEST_ONE_JSON! : TEST_TWO_JSON!)
                 let decoder = JSONDecoder()
                 let jsonModel = try decoder.decode(SampleProjectJson.self, from: data)
-                let practice = Practice(
+                var practice = Practice(
                     audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
                     utterances: []
                 )
-                practice.utterances.append(uttrance1)
-                print(practice.utterances)
-                print(jsonModel)
                 
-//                jsonModel.utterances.forEach { utterance in
-//                    DispatchQueue.main.async {
-//                        practice.utterances.append(Utterance(
-//                            startAt: utterance.startAt,
-//                            duration: utterance.duration,
-//                            message: utterance.message
-//                        ))
-//                    }
-//                }
-//                
-                //                if index == 0 {
-                //                    project1.practices.append(practice)
-                //                } else {
-                //                    project2.practices.append(practice)
-                //                    project2.practices.append(practice)
-                //                }
+                jsonModel.utterances.forEach { utterance in
+                    practice.utterances.append(Utterance(
+                        startAt: utterance.startAt,
+                        duration: utterance.duration,
+                        message: utterance.message
+                    ))
+                }
+
+                if index == 0 {
+                    project1.practices.append(practice)
+                } else {
+                    project2.practices.append(practice)
+                    project2.practices.append(practice)
+                }
             } catch {
                 print("파일 또는 디코딩 에러")
             }
         }
-        
+        result.append(project1)
+        result.append(project2)
+        projects = result
         return result
     }
-    
-    //    func testProjects() -> [Project]? {
-    
-    //    }
 }
