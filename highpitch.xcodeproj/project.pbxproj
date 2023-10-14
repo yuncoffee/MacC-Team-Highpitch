@@ -23,6 +23,14 @@
 		1D09AF8C2ADA271300C1400E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AF8B2ADA271300C1400E /* Colors.xcassets */; };
 		1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF8D2ADA345E00C1400E /* View+Extension.swift */; };
 		1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF912ADA34B100C1400E /* ShapeModifier.swift */; };
+		1D09AF942ADA67BB00C1400E /* StatisticsTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF932ADA67BB00C1400E /* StatisticsTabItem.swift */; };
+		1D09AF972ADA681500C1400E /* PracticesTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF962ADA681500C1400E /* PracticesTabItem.swift */; };
+		1D09AF9C2ADA6BBB00C1400E /* AudioControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF9B2ADA6BBB00C1400E /* AudioControllerView.swift */; };
+		1D09AF9E2ADA765000C1400E /* FeedbackChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF9D2ADA765000C1400E /* FeedbackChartView.swift */; };
+		1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF9F2ADA767000C1400E /* ScriptView.swift */; };
+		1D09AFA52ADA785100C1400E /* UsagePercentChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFA42ADA785100C1400E /* UsagePercentChart.swift */; };
+		1D09AFA72ADA78A800C1400E /* UsageTopTierChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFA62ADA78A800C1400E /* UsageTopTierChart.swift */; };
+		1D09AFA92ADA78DF00C1400E /* SpeedAverageChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFA82ADA78DF00C1400E /* SpeedAverageChart.swift */; };
 		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
 		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
 		1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D30E62B2AD6E88500623A58 /* .swiftlint.yml */; };
@@ -81,6 +89,14 @@
 		1D09AF8B2ADA271300C1400E /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		1D09AF8D2ADA345E00C1400E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		1D09AF912ADA34B100C1400E /* ShapeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeModifier.swift; sourceTree = "<group>"; };
+		1D09AF932ADA67BB00C1400E /* StatisticsTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTabItem.swift; sourceTree = "<group>"; };
+		1D09AF962ADA681500C1400E /* PracticesTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticesTabItem.swift; sourceTree = "<group>"; };
+		1D09AF9B2ADA6BBB00C1400E /* AudioControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioControllerView.swift; sourceTree = "<group>"; };
+		1D09AF9D2ADA765000C1400E /* FeedbackChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackChartView.swift; sourceTree = "<group>"; };
+		1D09AF9F2ADA767000C1400E /* ScriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptView.swift; sourceTree = "<group>"; };
+		1D09AFA42ADA785100C1400E /* UsagePercentChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePercentChart.swift; sourceTree = "<group>"; };
+		1D09AFA62ADA78A800C1400E /* UsageTopTierChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageTopTierChart.swift; sourceTree = "<group>"; };
+		1D09AFA82ADA78DF00C1400E /* SpeedAverageChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedAverageChart.swift; sourceTree = "<group>"; };
 		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		1D30E62B2AD6E88500623A58 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -139,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				1D09AF672AD98A1700C1400E /* ProjectView.swift */,
+				1D09AF932ADA67BB00C1400E /* StatisticsTabItem.swift */,
+				1D09AF962ADA681500C1400E /* PracticesTabItem.swift */,
 				1D09AF642AD989DA00C1400E /* PracticeView */,
 			);
 			path = ProjectView;
@@ -148,6 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				1D09AF692AD98A4000C1400E /* PracticeView.swift */,
+				1D09AF9A2ADA6BA900C1400E /* AudioControllerView */,
+				1D09AF992ADA6B9200C1400E /* FeedbackChartView */,
+				1D09AF982ADA6B8900C1400E /* ScriptView */,
 			);
 			path = PracticeView;
 			sourceTree = "<group>";
@@ -228,6 +249,41 @@
 				1D09AF912ADA34B100C1400E /* ShapeModifier.swift */,
 			);
 			path = Modifier;
+			sourceTree = "<group>";
+		};
+		1D09AF982ADA6B8900C1400E /* ScriptView */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AF9F2ADA767000C1400E /* ScriptView.swift */,
+			);
+			path = ScriptView;
+			sourceTree = "<group>";
+		};
+		1D09AF992ADA6B9200C1400E /* FeedbackChartView */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AF9D2ADA765000C1400E /* FeedbackChartView.swift */,
+				1D09AFA12ADA77CF00C1400E /* FeedbackCharts */,
+			);
+			path = FeedbackChartView;
+			sourceTree = "<group>";
+		};
+		1D09AF9A2ADA6BA900C1400E /* AudioControllerView */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AF9B2ADA6BBB00C1400E /* AudioControllerView.swift */,
+			);
+			path = AudioControllerView;
+			sourceTree = "<group>";
+		};
+		1D09AFA12ADA77CF00C1400E /* FeedbackCharts */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AFA42ADA785100C1400E /* UsagePercentChart.swift */,
+				1D09AFA62ADA78A800C1400E /* UsageTopTierChart.swift */,
+				1D09AFA82ADA78DF00C1400E /* SpeedAverageChart.swift */,
+			);
+			path = FeedbackCharts;
 			sourceTree = "<group>";
 		};
 		1D30E6162AD59E0C00623A58 /* Models */ = {
@@ -591,25 +647,33 @@
 				1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */,
 				1D09AF742AD98C0900C1400E /* Date+Extension.swift in Sources */,
 				1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */,
+				1D09AF9C2ADA6BBB00C1400E /* AudioControllerView.swift in Sources */,
 				1D09AF832AD9963E00C1400E /* ProjectManager.swift in Sources */,
 				1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */,
 				1DF659C82AD5998D00AE5601 /* MenubarExtraView.swift in Sources */,
 				1D30E6352AD6EE3300623A58 /* AppleScript.swift in Sources */,
 				1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */,
 				1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */,
+				1D09AFA52ADA785100C1400E /* UsagePercentChart.swift in Sources */,
 				1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */,
 				1D09AF882ADA267500C1400E /* Colors.swift in Sources */,
 				1D09AF7F2AD995BE00C1400E /* ProjectLinkItem.swift in Sources */,
+				1D09AF942ADA67BB00C1400E /* StatisticsTabItem.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1D09AF7C2AD9954000C1400E /* ProjectNavigationLinkView.swift in Sources */,
+				1D09AF9E2ADA765000C1400E /* FeedbackChartView.swift in Sources */,
 				1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */,
 				1D8C5AF02AD7BB3200B01F10 /* Project.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
+				1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */,
 				1D09AF762AD98DA100C1400E /* String+Extension.swift in Sources */,
 				1D09AF712AD98BB700C1400E /* SpeechRecognizerManager.swift in Sources */,
+				1D09AF972ADA681500C1400E /* PracticesTabItem.swift in Sources */,
+				1D09AFA92ADA78DF00C1400E /* SpeedAverageChart.swift in Sources */,
 				1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */,
 				1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */,
+				1D09AFA72ADA78A800C1400E /* UsageTopTierChart.swift in Sources */,
 				1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,

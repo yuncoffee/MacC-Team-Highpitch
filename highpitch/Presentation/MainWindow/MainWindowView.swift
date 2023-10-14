@@ -65,7 +65,7 @@ extension MainWindowView {
     // MARK: - navigationDetails
     @ViewBuilder
     var navigationDetails: some View {
-        if let _selected = selected {
+        if selected != nil {
             VStack(alignment: .leading, spacing: 0) {
                 projectToolbar
                 VStack {

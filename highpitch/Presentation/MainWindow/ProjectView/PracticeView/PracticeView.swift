@@ -46,11 +46,52 @@ import SwiftUI
  */
 
 struct PracticeView: View {
+    var mock: MockHuman
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 0) {
+            /// 연습 메타데이터(연습 횟수, 연습일)
+            practiceHeader
+            ZStack(alignment: .bottom) {
+                practiceContentsContainer
+                /// 오디오 컨트롤 뷰
+                AudioControllerView()
+            }
+        }
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .border(.red, width: 2)
+        .navigationTitle(mock.name)
+        //        .navigationBarBackButtonHidden()
+        .ignoresSafeArea()
+    }
+}
+
+extension PracticeView {
+    @ViewBuilder
+    private var practiceHeader: some View {
+        HStack {
+            Text("n번째 연습")
+            Text("연습 시간")
+        }
+        .frame(maxWidth: .infinity, maxHeight: 100)
+        .border(.red, width: 2)
+    }
+    
+    @ViewBuilder
+    private var practiceContentsContainer: some View {
+        HStack(spacing: 0) {
+            /// 피드백 뷰
+            FeedbackChartView()
+            /// 스크립트 뷰
+            ScriptView()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    PracticeView()
+    @State 
+    var mockHuman = MockHuman(name: "444", ages: 40)
+    
+    return PracticeView(mock: mockHuman)
 }

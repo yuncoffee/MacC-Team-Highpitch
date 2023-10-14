@@ -43,8 +43,6 @@ struct HighpitchApp: App {
         .defaultSize(width: 1000, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
-        #endif
-        #if os(macOS)
         // MARK: - Settings Scene
         Settings {
             SettingsView()

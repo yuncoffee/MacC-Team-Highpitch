@@ -27,4 +27,3 @@ struct EdgeBorder: Shape {
         }.reduce(into: Path()) { $0.addPath($1) }
     }
 }
-
