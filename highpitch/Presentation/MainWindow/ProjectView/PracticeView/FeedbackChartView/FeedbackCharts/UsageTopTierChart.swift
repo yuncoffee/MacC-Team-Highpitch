@@ -11,6 +11,8 @@
 import SwiftUI
 
 struct UsageTopTierChart: View {
+    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterences: [])
+    
     var body: some View {
         VStack {
             Text("Hello, UsageTopTierChart!")
@@ -21,6 +23,10 @@ struct UsageTopTierChart: View {
             maxHeight: .infinity
         )
     }
+}
+
+extension UsageTopTierChart {
+    
 }
 
 #Preview {

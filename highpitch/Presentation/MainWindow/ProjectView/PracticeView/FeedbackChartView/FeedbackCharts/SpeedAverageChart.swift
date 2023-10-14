@@ -11,6 +11,8 @@
 import SwiftUI
 
 struct SpeedAverageChart: View {
+    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterences: [])
+    
     var body: some View {
         VStack {
             Text("Hello, SpeedAverageChart!")
