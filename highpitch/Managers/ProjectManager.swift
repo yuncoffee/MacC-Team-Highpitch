@@ -11,3 +11,5 @@ import Foundation
 final class ProjectManager {
     var current: Project?
 }
+
+

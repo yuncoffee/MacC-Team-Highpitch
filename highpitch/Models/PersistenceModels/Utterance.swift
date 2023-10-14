@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Utterence {
+final class Utterance {
     var startAt: Int
     var duration: Int
     var message: String

@@ -11,10 +11,10 @@ import SwiftData
 @Model
 final class Practice {
     var audioPath: URL
-    var utterences: [Utterence]
+    var utterances: [Utterance]
     
-    init(audioPath: URL, utterences: [Utterence]) {
+    init(audioPath: URL, utterances: [Utterance]) {
         self.audioPath = audioPath
-        self.utterences = utterences
+        self.utterances = utterances
     }
 }

@@ -11,11 +11,17 @@ import SwiftData
 @main
 struct HighpitchApp: App {
     // MARK: - 데이터 컨트롤을 위한 매니저 객체 선언(전역 싱글 인스턴스)
-    @State private var mediaManager = MediaManager()
-    @State private var projectManager = ProjectManager()
+    @State
+    private var fileSystemManager = FileSystemManager()
+    @State
+    private var mediaManager = MediaManager()
+    @State 
+    private var projectManager = ProjectManager()
     #if os(macOS)
-    @State private var appleScriptManager = AppleScriptManager()
-    @State private var keynoteManager = KeynoteManager()
+    @State 
+    private var appleScriptManager = AppleScriptManager()
+    @State 
+    private var keynoteManager = KeynoteManager()
     #endif
     
     // MARK: - SwiftData Container
@@ -35,6 +41,7 @@ struct HighpitchApp: App {
         WindowGroup {
             MainWindowView()
                 .environment(appleScriptManager)
+                .environment(fileSystemManager)
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)
@@ -47,6 +54,7 @@ struct HighpitchApp: App {
         Settings {
             SettingsView()
                 .environment(appleScriptManager)
+                .environment(fileSystemManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
@@ -55,6 +63,7 @@ struct HighpitchApp: App {
         MenuBarExtra("MenubarExtra", systemImage: "heart") {
             MenubarExtraView()
                 .environment(appleScriptManager)
+                .environment(fileSystemManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
@@ -64,8 +73,7 @@ struct HighpitchApp: App {
     
     init() {
         do {
-            container = try ModelContainer(for: Sample.self, Project.self)
-            
+            container = try ModelContainer(for: Sample.self, Project.self, Practice.self, Utterance.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         } catch {
             fatalError("Failed to create ModelContainer for Sample")
         }

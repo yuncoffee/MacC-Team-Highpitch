@@ -11,6 +11,8 @@ import SwiftData
 
 struct MainWindowView: View {
     // MARK: - 데이터 컨트롤을 위한 매니저 객체
+    @Environment(FileSystemManager.self)
+    private var fileSystemManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
     @Environment(MediaManager.self)
@@ -21,6 +23,9 @@ struct MainWindowView: View {
     // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
     var modelContext
+    
+    // MARK: - 쿼리 대신 임시로 사용할 프로젝트 리스트
+    @State var mocks: [Project] = []
     
     private var selected: Project? {
         projectManager.current
@@ -45,6 +50,13 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
+        Task {
+            if let projects = fileSystemManager.loadProjects() {
+                mocks = projects
+                projectManager.current = projects[0]
+            }
+        }
+       
     }
 }
 
