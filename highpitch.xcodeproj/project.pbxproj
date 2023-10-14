@@ -21,6 +21,8 @@
 		1D09AF882ADA267500C1400E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF872ADA267500C1400E /* Colors.swift */; };
 		1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF892ADA26B600C1400E /* Color+Extension.swift */; };
 		1D09AF8C2ADA271300C1400E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AF8B2ADA271300C1400E /* Colors.xcassets */; };
+		1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF8D2ADA345E00C1400E /* View+Extension.swift */; };
+		1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF912ADA34B100C1400E /* ShapeModifier.swift */; };
 		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
 		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
 		1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D30E62B2AD6E88500623A58 /* .swiftlint.yml */; };
@@ -77,6 +79,8 @@
 		1D09AF872ADA267500C1400E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1D09AF892ADA26B600C1400E /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		1D09AF8B2ADA271300C1400E /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		1D09AF8D2ADA345E00C1400E /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		1D09AF912ADA34B100C1400E /* ShapeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeModifier.swift; sourceTree = "<group>"; };
 		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		1D30E62B2AD6E88500623A58 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				1D09AF732AD98C0900C1400E /* Date+Extension.swift */,
 				1D09AF752AD98DA100C1400E /* String+Extension.swift */,
 				1D09AF892ADA26B600C1400E /* Color+Extension.swift */,
+				1D09AF8D2ADA345E00C1400E /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -206,6 +211,23 @@
 				1D09AF8B2ADA271300C1400E /* Colors.xcassets */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		1D09AF8F2ADA347D00C1400E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AF902ADA349200C1400E /* Modifier */,
+				1D09AF722AD98BEF00C1400E /* Extension */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1D09AF902ADA349200C1400E /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				1D09AF912ADA34B100C1400E /* ShapeModifier.swift */,
+			);
+			path = Modifier;
 			sourceTree = "<group>";
 		};
 		1D30E6162AD59E0C00623A58 /* Models */ = {
@@ -308,7 +330,7 @@
 				1D30E6162AD59E0C00623A58 /* Models */,
 				1DF659BC2AD595E100AE5601 /* Presentation */,
 				1D30E6222AD6113C00623A58 /* Managers */,
-				1D09AF722AD98BEF00C1400E /* Extension */,
+				1D09AF8F2ADA347D00C1400E /* Utils */,
 				1D30E6292AD6E5D300623A58 /* APIs */,
 				1DF659B92AD5951900AE5601 /* Resource */,
 				1DF659B82AD5950900AE5601 /* App */,
@@ -580,6 +602,7 @@
 				1D09AF7F2AD995BE00C1400E /* ProjectLinkItem.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1D09AF7C2AD9954000C1400E /* ProjectNavigationLinkView.swift in Sources */,
+				1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */,
 				1D8C5AF02AD7BB3200B01F10 /* Project.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
@@ -587,6 +610,7 @@
 				1D09AF712AD98BB700C1400E /* SpeechRecognizerManager.swift in Sources */,
 				1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */,
 				1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */,
+				1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
 				1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */,

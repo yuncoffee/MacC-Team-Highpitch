@@ -72,11 +72,6 @@ extension MainWindowView {
                     ProjectView()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(
-                    _selected.projectName == "프로젝트111"
-                    ? Color.green
-                    : Color.mint
-                )
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .ignoresSafeArea()
@@ -96,14 +91,33 @@ extension MainWindowView {
     // MARK: - projectToolbar
     @ViewBuilder
     var projectToolbar: some View {
-        HStack {
+        ZStack {
             if let projectName = projectManager.current?.projectName {
                 Text("\(projectName)")
+                    .font(.system(size: 16))
+                    .frame(maxWidth: .infinity)
             }
+            HStack(spacing: 0) {
+                Button {
+                  print("키노트 열기")
+                } label: {
+                    Text("키노트 열기")
+                        .font(.system(size: 16))
+                        .frame(width: 120, height: 40)
+                        .foregroundStyle(.white)
+                        .background(Color("2f2f2f"))
+                        .cornerRadius(10)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, 32)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .frame(maxWidth: .infinity)
         }
-        .border(.blue, width: 2)
-        .frame(maxWidth: .infinity, minHeight: 40)
-        .background(Color.brown)
+        .frame(maxWidth: .infinity, minHeight: 64)
+        .background(Color("ffffff"))
+        .border(Color("000000").opacity(0.1), width: 1, edges: [.bottom])
     }
 }
 
