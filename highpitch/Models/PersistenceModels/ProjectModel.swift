@@ -14,11 +14,19 @@ final class ProjectModel {
     var creatAt: String
     var keynotePath: URL?
     var practices: [Practice]
+    var keynoteCreation: String
         
-    init(projectName: String, creatAt: String, keynotePath: URL? = nil, practices: [Practice]) {
+    init(
+        projectName: String,
+        creatAt: String,
+        keynotePath: URL? = nil,
+        practices: [Practice],
+        keynoteCreation: String
+    ) {
         self.projectName = projectName
         self.creatAt = creatAt
         self.keynotePath = keynotePath
         self.practices = practices
+        self.keynoteCreation = keynoteCreation
     }
 }

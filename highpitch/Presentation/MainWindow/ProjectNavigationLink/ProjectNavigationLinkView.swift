@@ -17,12 +17,6 @@ struct ProjectNavigationLink: View {
 //    @Query(sort: \Project.creatAt)
 //    var projects: [Project]
     
-    // MARK: - 임시 목업 테스트용
-    var mockProject = [
-        Project(projectName: "프로젝트111", creatAt: "2", practices: []),
-        Project(projectName: "프로젝트222", creatAt: "2", practices: [])
-    ]
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")

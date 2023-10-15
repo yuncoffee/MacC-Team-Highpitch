@@ -34,26 +34,28 @@
 import SwiftUI
 
 struct MenubarExtraView: View {
+    @Environment(\.openWindow)
+    private var openWindow
+    
     @Environment(AppleScriptManager.self)
     private var appleScriptManager
     @Environment(FileSystemManager.self)
     private var fileSystemManager
-    @Environment(MediaManager.self)
-    private var mediaManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
+    @Environment(MediaManager.self)
+    private var mediaManager
+    @Environment(ProjectManager.self)
+    private var projectManager
     
     @State
-    private var keynoteOptions: [OpendKeynote] = []
-    
+    private var selectedProject: Project = Project()
     @State
     private var selectedkeynote: OpendKeynote = OpendKeynote()
-    
     @State
-    private var selected = "새 프로젝트"
-    
+    private var projectOptions: [Project] = []
     @State
-    private var options = ["새 프로젝트", "프로젝트 1", "프로젝트 2", "프로젝트 3"]
+    private var keynoteOptions: [OpendKeynote] = []
     
     @Binding
     var isMenuPresented: Bool
@@ -86,13 +88,38 @@ struct MenubarExtraView: View {
                 ///     - 일치하는 프로젝트 목록으로 Picker의 옵션을 구성한다.
                 /// 키노트가 열려져 있지 않다면?
                 ///     - 우선 연습 못하게 disabled 처리하자.
-
+                
+                getIsActiveKeynoteApp()
                 updateOpendKeynotes()
+                if let projects = projectManager.projects {
+                    projectOptions = projects
+                    projectOptions.append(Project())
+                    selectedProject = projects[0]
+                    
+                }
             }
+            .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
+                if newValue {
+                    updateOpendKeynotes()
+                }
+            })
             .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
                 keynoteOptions = newValue
-                selectedkeynote = newValue[0]
+                if !newValue.isEmpty {
+                    selectedkeynote = newValue[0]
+                }
+                updateCurrentProject()
             }
+            .onChange(of: projectManager.projects) { _, newValue in
+                if let projects = newValue {
+                    projectOptions = projects
+                    projectOptions.append(Project())
+                    selectedProject = projects[0]
+                }
+            }
+            .onChange(of: selectedkeynote, {
+                updateCurrentProject()
+            })
         }
     }
 }
@@ -103,6 +130,7 @@ extension MenubarExtraView {
             let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
             if case .boolResult(let isKeynoteOpen) = result {
                 // logic 2
+                print(isKeynoteOpen)
                 keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
             }
         }
@@ -110,12 +138,43 @@ extension MenubarExtraView {
     
     private func updateOpendKeynotes() {
         Task {
-            let result = await appleScriptManager.runScript(.getOpendKeynotes)
-            if case .stringArrayResult(let keynotePaths) = result {
-                let opendKeynotes = keynotePaths.map { path in
-                    OpendKeynote(path: path, creation: fileSystemManager.getCreationMetadata(path))
+//            let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
+//            if case .boolResult(let isKeynoteOpen) = result {
+//                /// 1. 현재 열려있는 키노트 리스트 설정
+//                if isKeynoteOpen {
+//                    print("isKeynoteOpen:", isKeynoteOpen)
+//
+//                }
+//            }
+            if keynoteManager.isKeynoteProcessOpen {
+                print("UPdate..?")
+                let result = await appleScriptManager.runScript(.getOpendKeynotes)
+                if case .stringArrayResult(let keynotePaths) = result {
+                    let opendKeynotes = keynotePaths.map { path in
+                        OpendKeynote(path: path, creation: fileSystemManager.getCreationMetadata(path))
+                    }
+                    keynoteManager.opendKeynotes = opendKeynotes
                 }
-                keynoteManager.opendKeynotes = opendKeynotes
+            }
+        }
+    }
+    
+    private func updateCurrentProject() {
+        if keynoteManager.opendKeynotes.isEmpty {
+            print("is Empty!")
+        } else {
+            let filtered = projectManager.projects?.filter({ project in
+                project.keynoteCreation == selectedkeynote.creation
+            })
+            if let find = filtered {
+                if !find.isEmpty {
+                    print("일치하는 프로젝트: \(find[0].projectName)")
+                    projectManager.current = find[0]
+                    selectedProject = projectOptions.first!
+                } else {
+                    print("일치하는 프로젝트가 없음")
+                    selectedProject = projectOptions.last!
+                }
             }
         }
     }
@@ -137,8 +196,14 @@ extension MenubarExtraView {
             Spacer()
             Button {
                 print("프로젝트 열기")
-                updateOpendKeynotes()
-  
+                if selectedProject.projectName != "새 프로젝트" {
+                    projectManager.current = selectedProject
+                    if !projectManager.path.isEmpty {
+                        projectManager.currentTabItem = 0
+                        projectManager.path.removeLast()
+                    }
+                    openWindow(id: "main")
+                }
             } label: {
                 Label("프로젝트 열기", systemImage: "house.fill")
                     .labelStyle(.titleOnly)
@@ -156,16 +221,20 @@ extension MenubarExtraView {
             /// 키노트가 열려있는 경우,
             VStack(alignment: .leading) {
                 Text("현재 열려있는 키노트")
-                Picker("프로젝트", selection: $selectedkeynote) {
-                    ForEach(keynoteOptions, id: \.self) { opendKeynote in
-                        Text("\(opendKeynote.getFileName())").tag(opendKeynote)
+                if !keynoteOptions.isEmpty {
+                    Picker("프로젝트", selection: $selectedkeynote) {
+                        ForEach(keynoteOptions, id: \.self) { opendKeynote in
+                            Text("\(opendKeynote.getFileName())").tag(opendKeynote)
+                        }
                     }
+                    .labelsHidden()
+                } else {
+                    Text("현재 열려 있는 키노트 파일이 없네여")
                 }
-                .labelsHidden()
                 Text("프로젝트")
-                Picker("프로젝트", selection: $selected) {
-                    ForEach(options, id: \.self) { option in
-                        Text("\(option)")
+                Picker("프로젝트", selection: $selectedProject) {
+                    ForEach(projectOptions, id: \.self) { project in
+                        Text("\(project.projectName)").tag(project)
                     }
                 }
                 .labelsHidden()
@@ -175,6 +244,10 @@ extension MenubarExtraView {
             Button {
                 if !mediaManager.isRecording {
                     print("녹음 시작")
+                    print(selectedkeynote.path)
+                    Task {
+                        let script = await appleScriptManager.runScript(.startPresentation(fileName: selectedkeynote.path))
+                    }
                 } else {
                     print("녹음 종료")
                 }
@@ -196,29 +269,48 @@ extension MenubarExtraView {
     @ViewBuilder
     private var sectionPractice: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                LazyVGrid(columns: [GridItem()], spacing: 8) {
-                    ForEach(1...5, id: \.self) { index in
-                        HStack {
-                            Text("\(index)")
-                            Spacer()
-                            Text("자세히 보기")
+            if !selectedProject.practices.isEmpty {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem()], spacing: 8) {
+                        ForEach(selectedProject.practices, id: \.self) { practice in
+                            HStack {
+                                Text("\(practice.audioPath)")
+                                Spacer()
+                                Button {
+                                    projectManager.current = selectedProject
+                                    projectManager.currentTabItem = 1
+                                    if !projectManager.path.isEmpty {
+                                        projectManager.path.removeLast()
+                                    }
+                                    DispatchQueue.main.async {
+                                        DispatchQueue.global().sync {
+                                            projectManager.path.append(practice)
+                                        }
+                                    }
+                                } label: {
+                                    Text("자세히 보기")
+                                }
+                            }
+                            .padding()
+                            .background(Color("000000").opacity(0.1))
+                            .cornerRadius(5)
                         }
-                        .padding()
-                        .background(Color("000000").opacity(0.1))
-                        .cornerRadius(5)
                     }
-                    
                 }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 24)
+            } else {
+                VStack {
+                    Text("연습 이력이 없네요...")
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 24)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding(.vertical, 8)
-            .padding(.horizontal, 24)
         }
     }
     @ViewBuilder
     private var footer: some View {
-        
-        // 프로젝트 창 열기
         // 앱 종료
         HStack {
             Spacer()

@@ -21,6 +21,10 @@ final class AppleScriptManager {
         case .getOpendKeynotes:
             let _result = getOpendKeynotes()
             result = .stringArrayResult(_result)
+
+        case .startPresentation(fileName: let fileName):
+            startPresentation(filePath: fileName)
+            result = .voidResult
         }
         return result
     }
@@ -34,11 +38,7 @@ extension AppleScriptManager {
         
         let scriptSource = """
         tell application "System Events"
-            if (name of processes) contains "Keynote" then
-                return true
-            else
-                return false
-            end if
+            set isKeynoteRunning to (name of processes) contains "Keynote"
         end tell
         """
         
@@ -74,7 +74,7 @@ extension AppleScriptManager {
         var error: NSDictionary?
         if let script = NSAppleScript(source: scriptSource) {
             if let documentList = script.executeAndReturnError(&error).coerce(toDescriptorType: typeAEList) {
-                for index in 1...documentList.numberOfItems {
+                for index in 0...documentList.numberOfItems {
                     if let aDocument = documentList.atIndex(index) {
                         if let path = aDocument.stringValue {
                             result.append(path)
@@ -85,14 +85,25 @@ extension AppleScriptManager {
         }
         return result
     }
-    
-    /// 맨 앞의 키노트의 경로(선택한 키노트 경로로)로 키노트의 생성일 구하기
-    private func getKeynoteCreation(path: String) -> String {
-        var result = ""
         
-        return result
-    }
-    
     /// 선택한 키노트 경로로 키노트 열기
+    private func startPresentation(filePath: String) {
+        let scriptSource = """
+        tell application "Keynote"
+            activate
+            open "\(filePath)"
+            tell document 1
+                start from first slide
+            end tell
+        end tell
+        """
+        if let script = NSAppleScript(source: scriptSource) {
+            var error: NSDictionary?
+            script.executeAndReturnError(&error)
+            if error != nil {
+                fatalError("This Script Has Error")
+            }
+        }
+    }
 }
 #endif

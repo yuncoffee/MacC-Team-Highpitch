@@ -38,7 +38,7 @@ struct HighpitchApp: App {
         #endif
         #if os(macOS)
         // MARK: - MainWindow Scene
-        WindowGroup {
+        Window("mainwindow", id: "main") {
             MainWindowView()
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
@@ -55,8 +55,8 @@ struct HighpitchApp: App {
             SettingsView()
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
-                .environment(mediaManager)
                 .environment(keynoteManager)
+                .environment(mediaManager)
         }
         .modelContainer(for: [ProjectModel.self])
         // MARK: - MenubarExtra Scene
@@ -64,8 +64,9 @@ struct HighpitchApp: App {
             MenubarExtraView(isMenuPresented: $isMenuPresented)
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
-                .environment(mediaManager)
                 .environment(keynoteManager)
+                .environment(mediaManager)
+                .environment(projectManager)
         }
         .menuBarExtraAccess(isPresented: $isMenuPresented)
         .modelContainer(for: [ProjectModel.self])

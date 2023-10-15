@@ -27,14 +27,16 @@ final class FileSystemManager {
             projectName: "test1",
             creatAt: Data().description,
             keynotePath: TEST_ONE_KEY,
-            practices: []
+            practices: [],
+            keynoteCreation: "2023-07-30 10:20:56 +0000"
         )
         
         var project2 = Project(
             projectName: "test2",
             creatAt: Data().description,
             keynotePath: TEST_TWO_KEY,
-            practices: []
+            practices: [], 
+            keynoteCreation: ""
         )
         
         for index in 0...1 {
