@@ -36,10 +36,18 @@ import SwiftUI
 struct MenubarExtraView: View {
     @Environment(AppleScriptManager.self)
     private var appleScriptManager
+    @Environment(FileSystemManager.self)
+    private var fileSystemManager
     @Environment(MediaManager.self)
     private var mediaManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
+    
+    @State
+    var keynoteOptions: [OpendKeynote] = []
+    
+    @State
+    var selectedkeynote: OpendKeynote = OpendKeynote()
     
     @State
     var selected = "새 프로젝트"
@@ -59,6 +67,28 @@ struct MenubarExtraView: View {
         }
         .frame(minWidth: 360, minHeight: 480, alignment: .topLeading)
         .background(Color.white)
+        .onAppear {
+            /// 현재 선택된 키노트 프로젝트를 확인한다.
+            /// 앱이 실행 되었을 경우..
+            /// 현재 키노트가 열려져 있는지 확인한다.
+            /// 키노트가 열려져 있다면?
+            ///     - 1. 열려 있는 모든 키노트에서 경로를 조회한다.
+            ///     - 2. 조회한 경로를 통해 생성일을 구한다.
+            ///     - 3. 생성일로 저장해 놓은 프로젝트를 조회한다.
+            ///     - 4.1. 일치하는 프로젝트가 있다면?
+            ///             - 그 프로젝트를 selected를 세팅한다.
+            ///     - 4.2. 일치하는 프로젝트가 없다면?
+            ///             - 새 프로젝트를 selected에 세팅한다.
+            ///     - 일치하는 프로젝트 목록으로 Picker의 옵션을 구성한다.
+            /// 키노트가 열려져 있지 않다면?
+            ///     - 우선 연습 못하게 disabled 처리하자.
+
+            updateOpendKeynotes()
+        }
+        .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
+            keynoteOptions = newValue
+            selectedkeynote = newValue[0]
+        }
     }
 }
 
@@ -69,6 +99,18 @@ extension MenubarExtraView {
             if case .boolResult(let isKeynoteOpen) = result {
                 // logic 2
                 keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
+            }
+        }
+    }
+    
+    private func updateOpendKeynotes() {
+        Task {
+            let result = await appleScriptManager.runScript(.getOpendKeynotes)
+            if case .stringArrayResult(let keynotePaths) = result {
+                let opendKeynotes = keynotePaths.map { path in
+                    OpendKeynote(path: path, creation: fileSystemManager.getCreationMetadata(path))
+                }
+                keynoteManager.opendKeynotes = opendKeynotes
             }
         }
     }
@@ -90,6 +132,8 @@ extension MenubarExtraView {
             Spacer()
             Button {
                 print("프로젝트 열기")
+                updateOpendKeynotes()
+  
             } label: {
                 Label("프로젝트 열기", systemImage: "house.fill")
                     .labelStyle(.titleOnly)
@@ -106,6 +150,13 @@ extension MenubarExtraView {
             // 현재 선택 된 프로젝트 정보 출력 출력
             /// 키노트가 열려있는 경우,
             VStack(alignment: .leading) {
+                Text("현재 열려있는 키노트")
+                Picker("프로젝트", selection: $selectedkeynote) {
+                    ForEach(keynoteOptions, id: \.self) { opendKeynote in
+                        Text("\(opendKeynote.getFileName())").tag(opendKeynote)
+                    }
+                }
+                .labelsHidden()
                 Text("프로젝트")
                 Picker("프로젝트", selection: $selected) {
                     ForEach(options, id: \.self) { option in

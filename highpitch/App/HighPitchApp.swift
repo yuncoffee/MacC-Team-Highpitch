@@ -65,7 +65,6 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
         }
         .modelContainer(for: [ProjectModel.self])
-        .defaultSize(width: .infinity, height: .infinity)
         .menuBarExtraStyle(.window)
         .commandsRemoved()
         #endif
