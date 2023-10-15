@@ -12,3 +12,9 @@ struct Practice: Codable {
     var audioPath: URL
     var utterances: [Utterance]
 }
+
+extension Practice: Hashable {
+    static func == (lhs: Practice, rhs: Practice) -> Bool {
+        lhs.id == rhs.id
+    }
+}

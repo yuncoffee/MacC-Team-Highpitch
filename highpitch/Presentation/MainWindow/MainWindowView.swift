@@ -24,9 +24,6 @@ struct MainWindowView: View {
     @Environment(\.modelContext)
     var modelContext
     
-    // MARK: - 쿼리 대신 임시로 사용할 프로젝트 리스트
-    @State var mocks: [Project] = []
-    
     private var selected: Project? {
         projectManager.current
     }
@@ -51,6 +48,7 @@ extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
         let projects = fileSystemManager.loadProjects()
+            projectManager.projects = projects
             projectManager.current = projects[0]
     }
 }
@@ -130,6 +128,7 @@ extension MainWindowView {
 
 #Preview {
     MainWindowView()
+        .environment(FileSystemManager())
         .environment(MediaManager())
         .environment(KeynoteManager())
         .environment(ProjectManager())

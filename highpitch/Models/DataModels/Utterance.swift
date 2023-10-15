@@ -13,3 +13,5 @@ struct Utterance: Codable {
     var duration: Int
     var message: String
 }
+
+extension Utterance: Hashable {}

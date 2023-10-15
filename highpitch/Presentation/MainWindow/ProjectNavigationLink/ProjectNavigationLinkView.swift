@@ -13,7 +13,7 @@ struct ProjectNavigationLink: View {
     private var fileSystemManager
     @Environment(ProjectManager.self)
     private var projectManager
-    
+        
 //    @Query(sort: \Project.creatAt)
 //    var projects: [Project]
     
@@ -31,11 +31,14 @@ struct ProjectNavigationLink: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 10)
-            if let projects = fileSystemManager.projects {
+            if let projects = projectManager.projects {
                 ForEach(projects, id: \.id) { project in
                     ProjectLinkItem(
                         title : project.projectName,
                         isSelected: checkIsSelected(project.projectName)) {
+                            if !projectManager.path.isEmpty {
+                                projectManager.path.removeLast()
+                        }
                         projectManager.current = project
                     }
                 }
@@ -48,9 +51,6 @@ struct ProjectNavigationLink: View {
             maxHeight: .infinity,
             alignment: .topLeading
         )
-        .onAppear {
-            print(fileSystemManager.projects)
-        }
     }
 }
 

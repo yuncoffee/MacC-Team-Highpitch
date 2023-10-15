@@ -67,7 +67,6 @@ struct HighpitchApp: App {
         .modelContainer(for: [ProjectModel.self])
         #endif
     }
-//    
     init() {
         setupInit()
     }

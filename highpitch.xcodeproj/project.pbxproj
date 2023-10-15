@@ -331,12 +331,12 @@
 			isa = PBXGroup;
 			children = (
 				1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */,
+				1D09AFB02ADAD08E00C1400E /* FileSystemManager.swift */,
 				1DB132302AD771A6006711B9 /* KeynoteManager.swift */,
 				1D30E6242AD6117F00623A58 /* MediaManager.swift */,
 				1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */,
 				1D09AF822AD9963E00C1400E /* ProjectManager.swift */,
 				1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */,
-				1D09AFB02ADAD08E00C1400E /* FileSystemManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

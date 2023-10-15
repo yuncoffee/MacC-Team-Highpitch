@@ -9,7 +9,6 @@ import Foundation
 
 @Observable
 final class FileSystemManager {
-    var projects: [Project]?
     
     // MARK: 임시로 번들 데이터 가져와서 프로젝트 구성하였음
     func loadProjects() -> [Project] {
@@ -68,7 +67,7 @@ final class FileSystemManager {
         }
         result.append(project1)
         result.append(project2)
-        projects = result
+        
         return result
     }
 }
