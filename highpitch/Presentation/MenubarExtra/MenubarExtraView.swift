@@ -32,6 +32,11 @@ struct MenubarExtraView: View {
     
     var body: some View {
         VStack {
+            // 현재 선택 된 프로젝트 정보 출력 출력
+            // 선택 된 프로젝트로 연습 하기 || 연습 그만하기
+            // 프로젝트의 연습 목록
+            // 프로젝트 창 열기
+            // 앱 종료
             Button {
                 getIsActiveKeynoteApp()
             } label: {
@@ -43,6 +48,8 @@ struct MenubarExtraView: View {
                 Text("앱 종료하기")
             }
         }
+        .frame(minWidth: 360, minHeight: 480)
+        .background(Color.white)
     }
 }
 
@@ -60,5 +67,8 @@ extension MenubarExtraView {
 
 #Preview {
     MenubarExtraView()
+        .environment(AppleScriptManager())
+        .environment(MediaManager())
+        .environment(KeynoteManager())
 }
 #endif

@@ -57,7 +57,7 @@ struct HighpitchApp: App {
         }
         .modelContainer(for: [ProjectModel.self])
         // MARK: - MenubarExtra Scene
-        MenuBarExtra("MenubarExtra", systemImage: "heart") {
+        MenuBarExtra("MenubarExtra", image: .menubarextra) {
             MenubarExtraView()
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
@@ -65,6 +65,9 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
         }
         .modelContainer(for: [ProjectModel.self])
+        .defaultSize(width: .infinity, height: .infinity)
+        .menuBarExtraStyle(.window)
+        .commandsRemoved()
         #endif
     }
     init() {
