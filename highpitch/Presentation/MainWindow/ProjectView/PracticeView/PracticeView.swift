@@ -80,7 +80,7 @@ extension PracticeView {
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
             /// 피드백 뷰
-            FeedbackChartView()
+            FeedbackChartView(practice: $practice)
             /// 스크립트 뷰
             ScriptView(practice: $practice)
         }
