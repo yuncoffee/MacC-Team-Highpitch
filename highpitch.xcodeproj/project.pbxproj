@@ -44,6 +44,7 @@
 		1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E62E2AD6EA7500623A58 /* AppleScriptManager.swift */; };
 		1D30E6352AD6EE3300623A58 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6342AD6EE3300623A58 /* AppleScript.swift */; };
 		1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */; };
+		1D7A3EDB2ADC1F6F0084E962 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1D7A3EDA2ADC1F6F0084E962 /* MenuBarExtraAccess */; };
 		1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AEF2AD7BB3200B01F10 /* ProjectModel.swift */; };
 		1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */; };
 		1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */; };
@@ -159,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D7A3EDB2ADC1F6F0084E962 /* MenuBarExtraAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +549,9 @@
 			dependencies = (
 			);
 			name = highpitch;
+			packageProductDependencies = (
+				1D7A3EDA2ADC1F6F0084E962 /* MenuBarExtraAccess */,
+			);
 			productName = highpitch;
 			productReference = 1DF659862AD594BD00AE5601 /* highpitch.app */;
 			productType = "com.apple.product-type.application";
@@ -619,6 +624,9 @@
 				Base,
 			);
 			mainGroup = 1DF6597D2AD594BD00AE5601;
+			packageReferences = (
+				1D7A3ED92ADC1F6F0084E962 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+			);
 			productRefGroup = 1DF659872AD594BD00AE5601 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1116,6 +1124,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1D7A3ED92ADC1F6F0084E962 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1D7A3EDA2ADC1F6F0084E962 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1D7A3ED92ADC1F6F0084E962 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1DF6597E2AD594BD00AE5601 /* Project object */;
 }
