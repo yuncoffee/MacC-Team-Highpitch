@@ -16,8 +16,8 @@ struct FeedbackChartView: View {
             Text("피드백")
             ScrollView {
                 UsagePercentChart(data: $practice)
-                UsageTopTierChart()
-                SpeedAverageChart()
+                UsageTopTierChart(data: $practice)
+                SpeedAverageChart(data: $practice)
             }
             .padding(.bottom, 64)
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)

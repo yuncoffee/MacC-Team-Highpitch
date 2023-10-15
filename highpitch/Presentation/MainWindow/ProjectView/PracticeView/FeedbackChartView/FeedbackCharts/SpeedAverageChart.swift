@@ -9,13 +9,22 @@
  꺽은선 차트
  */
 import SwiftUI
+import Charts
 
 struct SpeedAverageChart: View {
-    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterances: [])
+    @Binding
+    var data: Practice
     
     var body: some View {
         VStack {
-            Text("Hello, SpeedAverageChart!")
+            Chart {
+                ForEach(getEPM()) {
+                    LineMark(
+                        x: .value("문장 번호", $0.index),
+                        y: .value("EPM", $0.EPMValue)
+                    )
+                }
+            }
         }
         .frame(
             maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
@@ -24,37 +33,39 @@ struct SpeedAverageChart: View {
         )    }
 }
 
-// swiftlint:disable identifier_name
 struct EPMData: Identifiable {
     var id = UUID()
     var index: Int
-    var EPM: String
+    var EPMValue: Double
 }
 
 extension SpeedAverageChart {
     
     // MARK: EPM 지수를 리턴합니다.
     func getEPM() -> [EPMData] {
-        let fillerWordList = FillerWordList()
-        // index에 맞게 fillerword 사용 횟수를 확인합니다.
-        var fillerCount = [Int](repeating: 0, count: 22)
+        // 문장별 EPM을 저장합니다.
+        var EPMCount = [Double](repeating: 0.0, count: data.utterances.count)
         var messagesArray: [[String]] = []
         for utterence in data.utterances {
             messagesArray.append(utterence.message.components(separatedBy: " "))
         }
-        for messageArray in messagesArray {
-            for message in messageArray {
-                for index in 0..<fillerWordList.defaultList.count {
-                    if fillerWordList.defaultList[index] == message {
-                        fillerCount[index] += 1
-                    }
-                }
+        for sentenceNum in 0..<messagesArray.count {
+            for word in messagesArray[sentenceNum] {
+                EPMCount[sentenceNum] += Double(word.count)
             }
+            EPMCount[sentenceNum] /= Double(data.utterances[sentenceNum].duration)
+            EPMCount[sentenceNum] *= 60000.0
         }
-        return []
+        // EPMData를 따르는 결과를 반환합니다.
+        var EPMResult: [EPMData] = []
+        for index in 0..<EPMCount.count {
+            EPMResult.append(EPMData(index: index, EPMValue: EPMCount[index]))
+        }
+        return EPMResult
     }
 }
 
 #Preview {
-    SpeedAverageChart()
+    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+    return SpeedAverageChart(data: $practice)
 }
