@@ -12,7 +12,8 @@ import SwiftUI
 import Charts
 
 struct UsagePercentChart: View {
-    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterences: [])
+    @Binding
+    var data: Practice
     
     var body: some View {
         VStack {
@@ -32,7 +33,7 @@ struct UsagePercentChart: View {
 }
 
 extension UsagePercentChart {
-    
+    // swiftlint:disable identifier_name
     // MARK: 습관어 사용 비율을 리턴합니다.
     /// 비율 연산 과정이 추가되어야 합니다. (습관어 사용 횟수 / ???)
     func getFillerRate() -> Int {
@@ -40,7 +41,7 @@ extension UsagePercentChart {
         // index에 맞게 fillerword 사용 횟수를 확인합니다.
         var fillerCount = [Int](repeating: 0, count: 22)
         var messagesArray: [[String]] = []
-        for utterence in data.utterences {
+        for utterence in data.utterances {
             messagesArray.append(utterence.message.components(separatedBy: " "))
         }
         for messageArray in messagesArray {
@@ -60,6 +61,6 @@ extension UsagePercentChart {
     }
 }
 
-#Preview {
-    UsagePercentChart()
-}
+//#Preview {
+//    UsagePercentChart()
+//}

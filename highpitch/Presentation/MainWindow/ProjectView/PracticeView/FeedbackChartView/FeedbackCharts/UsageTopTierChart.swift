@@ -11,7 +11,7 @@
 import SwiftUI
 
 struct UsageTopTierChart: View {
-    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterences: [])
+    var data = Practice(audioPath: NSURL.fileURL(withPath: ""), utterances: [])
     
     var body: some View {
         VStack {
@@ -33,7 +33,7 @@ extension UsageTopTierChart {
         // index에 맞게 fillerword 사용 횟수를 확인합니다.
         var fillerCount = [Int](repeating: 0, count: 22)
         var messagesArray: [[String]] = []
-        for utterence in data.utterences {
+        for utterence in data.utterances {
             messagesArray.append(utterence.message.components(separatedBy: " "))
         }
         for messageArray in messagesArray {
