@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import MenuBarExtraAccess
 
 @main
 struct HighpitchApp: App {
@@ -22,6 +23,8 @@ struct HighpitchApp: App {
     private var appleScriptManager = AppleScriptManager()
     @State 
     private var keynoteManager = KeynoteManager()
+    @State
+    private var isMenuPresented: Bool = false
     #endif
     
     var body: some Scene {
@@ -58,12 +61,13 @@ struct HighpitchApp: App {
         .modelContainer(for: [ProjectModel.self])
         // MARK: - MenubarExtra Scene
         MenuBarExtra("MenubarExtra", image: .menubarextra) {
-            MenubarExtraView()
+            MenubarExtraView(isMenuPresented: $isMenuPresented)
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
+        .menuBarExtraAccess(isPresented: $isMenuPresented)
         .modelContainer(for: [ProjectModel.self])
         .menuBarExtraStyle(.window)
         .commandsRemoved()

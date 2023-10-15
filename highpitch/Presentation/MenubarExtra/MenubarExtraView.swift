@@ -44,50 +44,55 @@ struct MenubarExtraView: View {
     private var keynoteManager
     
     @State
-    var keynoteOptions: [OpendKeynote] = []
+    private var keynoteOptions: [OpendKeynote] = []
     
     @State
-    var selectedkeynote: OpendKeynote = OpendKeynote()
+    private var selectedkeynote: OpendKeynote = OpendKeynote()
     
     @State
-    var selected = "새 프로젝트"
+    private var selected = "새 프로젝트"
     
     @State
-    var options = ["새 프로젝트", "프로젝트 1", "프로젝트 2", "프로젝트 3"]
+    private var options = ["새 프로젝트", "프로젝트 1", "프로젝트 2", "프로젝트 3"]
+    
+    @Binding
+    var isMenuPresented: Bool
     
     var body: some View {
-        VStack(spacing: 0) {
-            header
-            Divider()
-            sectionProject
-            Divider()
-            sectionPractice
-            Divider()
-            footer
-        }
-        .frame(minWidth: 360, minHeight: 480, alignment: .topLeading)
-        .background(Color.white)
-        .onAppear {
-            /// 현재 선택된 키노트 프로젝트를 확인한다.
-            /// 앱이 실행 되었을 경우..
-            /// 현재 키노트가 열려져 있는지 확인한다.
-            /// 키노트가 열려져 있다면?
-            ///     - 1. 열려 있는 모든 키노트에서 경로를 조회한다.
-            ///     - 2. 조회한 경로를 통해 생성일을 구한다.
-            ///     - 3. 생성일로 저장해 놓은 프로젝트를 조회한다.
-            ///     - 4.1. 일치하는 프로젝트가 있다면?
-            ///             - 그 프로젝트를 selected를 세팅한다.
-            ///     - 4.2. 일치하는 프로젝트가 없다면?
-            ///             - 새 프로젝트를 selected에 세팅한다.
-            ///     - 일치하는 프로젝트 목록으로 Picker의 옵션을 구성한다.
-            /// 키노트가 열려져 있지 않다면?
-            ///     - 우선 연습 못하게 disabled 처리하자.
+        if isMenuPresented {
+            VStack(spacing: 0) {
+                header
+                Divider()
+                sectionProject
+                Divider()
+                sectionPractice
+                Divider()
+                footer
+            }
+            .frame(minWidth: 360, minHeight: 480, alignment: .topLeading)
+            .background(Color.white)
+            .onAppear {
+                /// 현재 선택된 키노트 프로젝트를 확인한다.
+                /// 앱이 실행 되었을 경우..
+                /// 현재 키노트가 열려져 있는지 확인한다.
+                /// 키노트가 열려져 있다면?
+                ///     - 1. 열려 있는 모든 키노트에서 경로를 조회한다.
+                ///     - 2. 조회한 경로를 통해 생성일을 구한다.
+                ///     - 3. 생성일로 저장해 놓은 프로젝트를 조회한다.
+                ///     - 4.1. 일치하는 프로젝트가 있다면?
+                ///             - 그 프로젝트를 selected를 세팅한다.
+                ///     - 4.2. 일치하는 프로젝트가 없다면?
+                ///             - 새 프로젝트를 selected에 세팅한다.
+                ///     - 일치하는 프로젝트 목록으로 Picker의 옵션을 구성한다.
+                /// 키노트가 열려져 있지 않다면?
+                ///     - 우선 연습 못하게 disabled 처리하자.
 
-            updateOpendKeynotes()
-        }
-        .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
-            keynoteOptions = newValue
-            selectedkeynote = newValue[0]
+                updateOpendKeynotes()
+            }
+            .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
+                keynoteOptions = newValue
+                selectedkeynote = newValue[0]
+            }
         }
     }
 }
@@ -230,7 +235,8 @@ extension MenubarExtraView {
 }
 
 #Preview {
-    MenubarExtraView()
+    @State var value: Bool = true
+    return MenubarExtraView(isMenuPresented: $value)
         .environment(AppleScriptManager())
         .environment(MediaManager())
         .environment(KeynoteManager())
