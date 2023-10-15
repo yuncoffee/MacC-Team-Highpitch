@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct FeedbackChartView: View {
+    @Binding
+    var practice: Practice
+    
     var body: some View {
         VStack(spacing: 0) {
             Text("피드백")
             ScrollView {
-                UsagePercentChart()
-                UsageTopTierChart()
-                SpeedAverageChart()
+                UsagePercentChart(data: $practice)
+                UsageTopTierChart(data: $practice)
+                SpeedAverageChart(data: $practice)
             }
             .padding(.bottom, 64)
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
@@ -25,5 +28,6 @@ struct FeedbackChartView: View {
 }
 
 #Preview {
-    FeedbackChartView()
+    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+    return FeedbackChartView(practice: $practice)
 }
