@@ -12,4 +12,7 @@ import Foundation
 final class MediaManager {
     /// 샘플 코드
     var keynoteIsOpen = true
+    
+    /// 음성 녹음 진행 중인 여부 확인용
+    var isRecording = false
 }

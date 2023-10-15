@@ -71,7 +71,7 @@ struct HighpitchApp: App {
         #endif
     }
     init() {
-        setupInit()
+//        setupInit()
     }
     
 }
