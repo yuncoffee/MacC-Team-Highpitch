@@ -49,6 +49,8 @@ identifier_name:
     - end
     - vm
     - app
+    - lhs
+    - rhs
   allowed_symbols: ["_"]
 opt_in_rules:
   - missing_docs

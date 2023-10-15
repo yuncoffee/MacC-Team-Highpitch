@@ -8,31 +8,29 @@
 import SwiftUI
 
 struct PracticesTabItem: View {
-    @Binding 
-    var mocks: [MockHuman]
+    @Environment(ProjectManager.self)
+    private var projectManager
     
     var body: some View {
-        NavigationStack {
-            List(mocks) { mock in
-                VStack {
-                    Text("연습카드")
-                    NavigationLink(mock.name, value: mock)
+        @Bindable var projectManager = projectManager
+        NavigationStack(path: $projectManager.path) {
+            if let project = projectManager.current {
+                List(Array(project.practices), id: \.id)  { practice in
+                    VStack {
+                        Text("연습카드")
+                        NavigationLink("연습 상세보기", value: practice)
+                    }
                 }
-             }
-            .navigationDestination(for: MockHuman.self) { mock in
-                PracticeView(mock: mock)
+                .navigationDestination(for: Practice.self) { practice in
+                    PracticeView(practice: practice)
+                }
+                .navigationTitle("Practice")
             }
-            .navigationTitle("mock")
         }
     }
 }
 
 #Preview {
-    @State
-    var mocks = [
-        MockHuman(name: "111", ages: 10),
-        MockHuman(name: "222", ages: 20),
-        MockHuman(name: "333", ages: 30)
-    ]
-    return PracticesTabItem(mocks: $mocks)
+    PracticesTabItem()
+        .environment(ProjectManager())
 }

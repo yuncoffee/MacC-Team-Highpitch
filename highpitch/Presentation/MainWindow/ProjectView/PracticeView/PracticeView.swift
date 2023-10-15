@@ -46,7 +46,7 @@ import SwiftUI
  */
 
 struct PracticeView: View {
-    var mock: MockHuman
+    @State var practice: Practice
 
     var body: some View {
         VStack(spacing: 0) {
@@ -55,12 +55,11 @@ struct PracticeView: View {
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
-                AudioControllerView()
+                AudioControllerView(practice: $practice)
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
         .border(.red, width: 2)
-        .navigationTitle(mock.name)
         //        .navigationBarBackButtonHidden()
         .ignoresSafeArea()
     }
@@ -83,15 +82,15 @@ extension PracticeView {
             /// 피드백 뷰
             FeedbackChartView()
             /// 스크립트 뷰
-            ScriptView()
+            ScriptView(practice: $practice)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-#Preview {
-    @State 
-    var mockHuman = MockHuman(name: "444", ages: 40)
-    
-    return PracticeView(mock: mockHuman)
-}
+// #Preview {
+//    @State
+//    var mockHuman = MockHuman(name: "444", ages: 40)
+//    
+//    return PracticeView(mock: mockHuman)
+// }

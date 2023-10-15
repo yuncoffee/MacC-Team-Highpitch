@@ -13,6 +13,9 @@ struct AudioControllerView: View {
     @State
     private var isEditing = false
     
+    @Binding
+    var practice: Practice
+    
     var body: some View {
         VStack {
             Slider(
@@ -25,6 +28,7 @@ struct AudioControllerView: View {
             Text("\(speed)")
                 .foregroundColor(isEditing ? .red : .blue)
             HStack {
+                Text("File: \(practice.audioPath)")
                 Button {
                  print("prev")
                 } label: {
@@ -48,5 +52,6 @@ struct AudioControllerView: View {
 }
 
 #Preview {
-    AudioControllerView()
+    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+    return AudioControllerView(practice: $practice)
 }

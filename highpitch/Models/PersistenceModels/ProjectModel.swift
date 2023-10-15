@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Project {
+final class ProjectModel {
     var projectName: String
     var creatAt: String
     var keynotePath: URL?

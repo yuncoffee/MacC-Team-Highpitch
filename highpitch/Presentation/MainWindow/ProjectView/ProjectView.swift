@@ -32,19 +32,7 @@ struct ProjectView: View {
     private var projectManager
 
     @State 
-    private var currentTabItem = 1 {
-        didSet {
-            print(currentTabItem)
-        }
-    }
-    
-    @State 
-    var mocks = [
-        MockHuman(name: "111", ages: 10),
-        MockHuman(name: "222", ages: 20),
-        MockHuman(name: "333", ages: 30)
-    ]
-    
+    private var currentTabItem = 1
     var body: some View {
         VStack(spacing: 0) {
             tabBar
@@ -69,7 +57,6 @@ extension ProjectView {
         HStack(spacing: 24) {
             ForEach(Array(labels.enumerated()), id: \.1.self) { index, label in
                 Button {
-                    print("Tab Click: \(index)")
                     currentTabItem = index
                 } label: {
                     Text(label)
@@ -95,14 +82,14 @@ extension ProjectView {
     }
     
     @ViewBuilder
-    private var tabBarContentContainer: some View {
+    private var tabBarContentContainer: some View {  
         VStack {
             if currentTabItem == 0 {
                 // 컨텐츠 1 - 전체 연습통계
                 StatisticsTabItem()
             } else {
                 // 컨텐츠 2 - 연습 회차별 피드백
-                PracticesTabItem(mocks: $mocks)
+                PracticesTabItem()
             }
         }
         .border(.red, width: 2)
@@ -113,4 +100,5 @@ extension ProjectView {
 
 #Preview {
     ProjectView()
+        .environment(ProjectManager())
 }

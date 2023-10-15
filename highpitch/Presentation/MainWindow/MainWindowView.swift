@@ -11,6 +11,8 @@ import SwiftData
 
 struct MainWindowView: View {
     // MARK: - 데이터 컨트롤을 위한 매니저 객체
+    @Environment(FileSystemManager.self)
+    private var fileSystemManager
     @Environment(KeynoteManager.self)
     private var keynoteManager
     @Environment(MediaManager.self)
@@ -45,6 +47,9 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
+        let projects = fileSystemManager.loadProjects()
+            projectManager.projects = projects
+            projectManager.current = projects[0]
     }
 }
 
@@ -123,6 +128,7 @@ extension MainWindowView {
 
 #Preview {
     MainWindowView()
+        .environment(FileSystemManager())
         .environment(MediaManager())
         .environment(KeynoteManager())
         .environment(ProjectManager())
