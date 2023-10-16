@@ -20,10 +20,10 @@ struct ProjectNavigationLink: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
-                .font(Font.system(size: 16))
-                .foregroundStyle(Color("000000").opacity(0.5))
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
                 .padding(.top, 24)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 12)
                 .padding(.bottom, 10)
             if let projects = projectManager.projects {
                 ForEach(projects, id: \.id) { project in
@@ -56,6 +56,7 @@ extension ProjectNavigationLink {
 
 #Preview {
     ProjectNavigationLink()
+        .environment(FileSystemManager())
         .environment(ProjectManager())
         .frame(maxWidth: 200)
         .frame(minHeight: 860)

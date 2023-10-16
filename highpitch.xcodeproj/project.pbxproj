@@ -43,6 +43,7 @@
 		1D0ECD702ADCE8FA00B95A74 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECD6F2ADCE8FA00B95A74 /* Typography.swift */; };
 		1D0ECD722ADD13C900B95A74 /* FontResource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D0ECD712ADD13C900B95A74 /* FontResource.xcassets */; };
 		1D0ECD752ADD9B3D00B95A74 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECD742ADD9B3D00B95A74 /* Space.swift */; };
+		1D0ECD7A2ADDA35400B95A74 /* HPTopToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECD792ADDA35400B95A74 /* HPTopToolbar.swift */; };
 		1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E61A2AD59E6C00623A58 /* SampleModel.swift */; };
 		1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30E6242AD6117F00623A58 /* MediaManager.swift */; };
 		1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D30E62B2AD6E88500623A58 /* .swiftlint.yml */; };
@@ -130,6 +131,7 @@
 		1D0ECD6F2ADCE8FA00B95A74 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		1D0ECD712ADD13C900B95A74 /* FontResource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FontResource.xcassets; sourceTree = "<group>"; };
 		1D0ECD742ADD9B3D00B95A74 /* Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
+		1D0ECD792ADDA35400B95A74 /* HPTopToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPTopToolbar.swift; sourceTree = "<group>"; };
 		1D30E61A2AD59E6C00623A58 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		1D30E6242AD6117F00623A58 /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		1D30E62B2AD6E88500623A58 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		1D09AF842ADA260200C1400E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				1D0ECD762ADDA31400B95A74 /* Components */,
 				1D09AF852ADA265100C1400E /* Foundation */,
 			);
 			path = DesignSystem;
@@ -347,6 +350,30 @@
 				1D0ECD742ADD9B3D00B95A74 /* Space.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		1D0ECD762ADDA31400B95A74 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1D0ECD782ADDA33A00B95A74 /* Core */,
+				1D0ECD772ADDA32600B95A74 /* Common */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1D0ECD772ADDA32600B95A74 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1D0ECD792ADDA35400B95A74 /* HPTopToolbar.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		1D0ECD782ADDA33A00B95A74 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		1D30E6162AD59E0C00623A58 /* Models */ = {
@@ -766,6 +793,7 @@
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */,
+				1D0ECD7A2ADDA35400B95A74 /* HPTopToolbar.swift in Sources */,
 				1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */,
 				1D0ECD752ADD9B3D00B95A74 /* Space.swift in Sources */,
 				1D09AF762AD98DA100C1400E /* String+Extension.swift in Sources */,

@@ -19,13 +19,16 @@ struct ProjectLinkItem: View {
         Button {
             completion()
         } label: {
+            let weight: FoundationTypoSystemFont.FontWeight = if isSelected { .bold } else { .medium }
+            let color: Color = if isSelected { .HPTextStyle.darker } else { .HPTextStyle.base }
+            let backgroundColor: Color = if isSelected { .HPPrimary.lightness } else { .clear }
             Text(title)
-                .font(Font.system(size: 16))
-                .bold(isSelected)
+                .systemFont(.body, weight: weight)
+                .foregroundStyle(color)
                 .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 5)
-                .background(isSelected ? Color("AC9FFF").opacity(0.3) : Color.clear)
+                .background(backgroundColor)
                 .cornerRadius(7)
                 .contentShape(Rectangle())
         }

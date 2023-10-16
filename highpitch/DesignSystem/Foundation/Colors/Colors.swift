@@ -34,23 +34,23 @@ extension Color {
         private init() {}
         /// #FFFFFF, 1
         static let systemWhite = Color.gray0
-        /// #FFFFFF, 1
+        /// #FEFFFF, 1 - None
         static let system100 = Color.gray100
-        /// #FFFFFF, 1
+        /// #F2F3F5, 1
         static let system200 = Color.gray200
-        /// #FFFFFF, 1
+        /// #FFFFFF, 1 - None
         static let system300 = Color.gray300
-        /// #FFFFFF, 1
+        /// #BFBFBF, 1
         static let system400 = Color.gray400
-        /// #FFFFFF, 1
+        /// #FFFFFF, 1 - None
         static let system500 = Color.gray500
-        /// #FFFFFF, 1
+        /// #A6A6A6, 1
         static let system600 = Color.gray600
-        /// #FFFFFF, 1
+        /// #FFFFFF, 1 - None
         static let system700 = Color.gray700
-        /// #FFFFFF, 1
+        /// #808080, 1
         static let system800 = Color.gray800
-        /// #FFFFFF, 1
+        /// #FFFFFF, 1 - None
         static let system900 = Color.gray900
         /// #000000, 1
         static let systemBlack = Color.gray1000
@@ -62,7 +62,7 @@ extension Color {
     /// 세컨더리 컬러를 위해 사용되는 네임스페이스 - Point
     struct HPSecondary {
         private init() {}
-        /// #FFFFFF, 1
+        /// #2E2E2E, 1
         static let base = Color.secondary500
     }
 }
@@ -122,5 +122,8 @@ extension Color {
         static let highlight = Color.highlight
         /// #F4F9EB, 1
         static let appropriateSpeed = Color.appropriatespeed
+        /// #FAF9FD, 1
+        static let mainWindowSidebarBackground = Color("FAF9FD")
+        static let mainWindowDetailsBackground = Color("FCFBFF")
     }
 }
