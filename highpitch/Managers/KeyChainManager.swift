@@ -1,10 +1,10 @@
 import Foundation
 import Security
 
-enum KeyChainValue: String{
+enum KeyChainValue: String {
     case rzToken = "rzToken"
 }
-enum KeyChainError: Error{
+enum KeyChainError: Error {
     case convertDataErr
     case invalidItemFormat
     case unowned(OSStatus)
@@ -12,7 +12,7 @@ enum KeyChainError: Error{
 struct KeychainManager {
     private let service = Bundle.main.bundleIdentifier!
     
-    func save(data: Encodable, forKey key: KeyChainValue) throws {
+    func save(data: Encodable, forKey forkey: KeyChainValue) throws {
         let encoder = JSONEncoder()
         guard let saveData = try? encoder.encode(data) else{
             throw KeyChainError.convertDataErr
@@ -23,7 +23,7 @@ struct KeychainManager {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: key.rawValue,
+            kSecAttrAccount: forkey.rawValue,
             kSecValueData: saveData
         ]
 
@@ -33,7 +33,7 @@ struct KeychainManager {
             let updateQuery: [String: Any] = [
                 kSecClass as String: kSecClassGenericPassword,
                 kSecAttrService as String: service,
-                kSecAttrAccount as String: key.rawValue
+                kSecAttrAccount as String: forkey.rawValue
             ]
             let attributesToUpdate: [String: Any] = [
                 kSecValueData as String: saveData
@@ -45,22 +45,22 @@ struct KeychainManager {
         }
     }
 
-    func load(forKey key: KeyChainValue) throws -> Codable {
+    func load(forKey forkey: KeyChainValue) throws -> Codable {
         let decoder = JSONDecoder()
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: key.rawValue,
+            kSecAttrAccount: forkey.rawValue,
             kSecReturnData: true
         ]
 
         var data: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &data)
 
-        guard status == errSecSuccess else{
+        guard status == errSecSuccess else {
             throw KeyChainError.unowned(status)
         }
-        guard let data = data as? Data else{
+        guard let data = data as? Data else {
             throw KeyChainError.invalidItemFormat
         }
         guard let data = try? decoder.decode(TokenData.self, from: data) else{
@@ -72,11 +72,11 @@ struct KeychainManager {
         return data
     }
 
-    func delete(forKey key: KeyChainValue) {
+    func delete(forKey forkey: KeyChainValue) {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: key.rawValue
+            kSecAttrAccount: forkey.rawValue
         ]
 
         let status = SecItemDelete(query as CFDictionary)
