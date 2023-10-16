@@ -8,6 +8,9 @@
 import Foundation
 import SwiftData
 
+/// 샘플 모델
+///
+/// 활용.. 어떻게..할지..
 @Model
 final class Sample {
     var name: String

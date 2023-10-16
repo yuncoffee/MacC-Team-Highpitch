@@ -5,6 +5,10 @@
 //  Created by yuncoffee on 10/10/23.
 //
 
+/**
+ 사용자화 기능 필요
+ */
+
 import SwiftUI
 import SwiftData
 
@@ -17,7 +21,6 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            Text("\(mediaStore.myString)")
             Text("\(samples.isEmpty ? "none" : samples[0].name)")
         }
         .frame(minWidth: 200, minHeight: 200)

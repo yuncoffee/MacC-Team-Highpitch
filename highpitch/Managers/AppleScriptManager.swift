@@ -4,9 +4,10 @@
 //
 //  Created by yuncoffee on 10/11/23.
 //
-
+#if os(macOS)
 import Foundation
 
+/// 애플 스크립트를 담당하는 매니저 클래스
 @Observable
 final class AppleScriptManager {
     /// AppleScript 실행함수
@@ -50,3 +51,4 @@ extension AppleScriptManager {
         return result
     }
 }
+#endif

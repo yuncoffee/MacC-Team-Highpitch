@@ -10,51 +10,68 @@ import SwiftData
 
 @main
 struct HighpitchApp: App {
-    @State private var mediaManager = MediaManager()
-    @State private var appleScriptManager = AppleScriptManager()
+    // MARK: - 데이터 컨트롤을 위한 매니저 객체 선언(전역 싱글 인스턴스)
+    @State
+    private var fileSystemManager = FileSystemManager()
+    @State
+    private var mediaManager = MediaManager()
+    @State 
+    private var projectManager = ProjectManager()
     #if os(macOS)
-    @State private var keynoteManager = KeynoteManager()
+    @State 
+    private var appleScriptManager = AppleScriptManager()
+    @State 
+    private var keynoteManager = KeynoteManager()
     #endif
-    // MARK: - SwiftData
-    let container: ModelContainer
     
     var body: some Scene {
+        #if os(iOS)
+        /// iOS Sample
+        WindowGroup {
+            VStack(content: {
+                Text("Placeholder")
+            })
+        }
+        #endif
+        #if os(macOS)
+        // MARK: - MainWindow Scene
         WindowGroup {
             MainWindowView()
                 .environment(appleScriptManager)
-                .environment(mediaManager)
+                .environment(fileSystemManager)
                 .environment(keynoteManager)
+                .environment(mediaManager)
+                .environment(projectManager)
         }
-        .modelContainer(container)
-        #if os(macOS)
+        .modelContainer(for: [ProjectModel.self])
+        .defaultSize(width: 1000, height: 600)
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentMinSize)
+        // MARK: - Settings Scene
         Settings {
             SettingsView()
                 .environment(appleScriptManager)
+                .environment(fileSystemManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
-        .modelContainer(container)
-        
+        .modelContainer(for: [ProjectModel.self])
+        // MARK: - MenubarExtra Scene
         MenuBarExtra("MenubarExtra", systemImage: "heart") {
             MenubarExtraView()
                 .environment(appleScriptManager)
+                .environment(fileSystemManager)
                 .environment(mediaManager)
                 .environment(keynoteManager)
         }
-        .modelContainer(container)
+        .modelContainer(for: [ProjectModel.self])
         #endif
     }
-    
     init() {
-        do {
-            container = try ModelContainer(for: Sample.self)
-        } catch {
-            fatalError("Failed to create ModelContainer for Sample")
-        }
         setupInit()
     }
+    
 }
-
 extension HighpitchApp {
     private func setupInit() {
         #if os(macOS)
