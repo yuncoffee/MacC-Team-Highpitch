@@ -14,5 +14,9 @@ final class ProjectManager {
     var projects: [Project]?
     var current: Project?
     var currentTabItem = 1
-    var path: NavigationPath = .init()
+    var path: NavigationPath = .init() {
+        didSet {
+            print("path:", path)
+        }
+    }
 }

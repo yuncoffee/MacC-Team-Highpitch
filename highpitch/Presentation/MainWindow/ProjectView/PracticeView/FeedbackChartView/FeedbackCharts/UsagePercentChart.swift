@@ -8,6 +8,7 @@
 /**
  막대 차트
  */
+
 import SwiftUI
 import Charts
 
@@ -32,11 +33,11 @@ struct UsagePercentChart: View {
     }
 }
 
+// swiftlint:disable identifier_name
 extension UsagePercentChart {
     
     // MARK: 습관어 사용 비율을 리턴합니다.
     // 비율 연산 과정이 추가되어야 합니다. (습관어 사용 횟수 / ???)
-    // swiftlint:disable identifier_name
     func getFillerRate() -> Double {
         let fillerWordList = FillerWordList()
         // index에 맞게 fillerword 사용 횟수를 확인합니다.
@@ -56,9 +57,8 @@ extension UsagePercentChart {
         var ret = 0; for i in fillerCount { ret += i }
         return Double(ret)
     }
-    // swiftlint:disable identifier_name
-    
 }
+// swiftlint:enable identifier_name
 
 #Preview {
     @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])

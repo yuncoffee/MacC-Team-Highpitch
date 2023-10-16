@@ -7,18 +7,11 @@
 
 import Foundation
 
-@Observable
-final class OpendKeynote: Identifiable, Equatable, Hashable {
+struct OpendKeynote: Identifiable, Equatable, Hashable {
     
     var id = UUID()
     var path = ""
     var creation = ""
-    
-    init(id: UUID = UUID(), path: String = "", creation: String = "") {
-        self.id = id
-        self.path = path
-        self.creation = creation
-    }
     
     static func == (lhs: OpendKeynote, rhs: OpendKeynote) -> Bool {
         lhs.id == rhs.id

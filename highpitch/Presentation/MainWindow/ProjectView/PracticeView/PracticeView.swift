@@ -46,7 +46,11 @@ import SwiftUI
  */
 
 struct PracticeView: View {
-    @State var practice: Practice
+    @Environment(ProjectManager.self)
+    private var projectManager
+    
+    @State 
+    var practice: Practice
 
     var body: some View {
         VStack(spacing: 0) {
@@ -62,6 +66,12 @@ struct PracticeView: View {
         .border(.red, width: 2)
         //        .navigationBarBackButtonHidden()
         .ignoresSafeArea()
+//        .onAppear {
+//            print(projectManager.current)
+//        }
+//        .onChange(of: projectManager.current) { oldValue, newValue in
+//            print(newValue)
+//        }
     }
 }
 
