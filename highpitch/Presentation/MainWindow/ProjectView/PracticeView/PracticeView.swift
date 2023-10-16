@@ -66,12 +66,12 @@ struct PracticeView: View {
         .border(.red, width: 2)
         //        .navigationBarBackButtonHidden()
         .ignoresSafeArea()
-//        .onAppear {
-//            print(projectManager.current)
-//        }
-//        .onChange(of: projectManager.current) { oldValue, newValue in
-//            print(newValue)
-//        }
+        .onAppear {
+            print(projectManager.current)
+        }
+        .onChange(of: projectManager.current) { oldValue, newValue in
+            print(newValue)
+        }
     }
 }
 

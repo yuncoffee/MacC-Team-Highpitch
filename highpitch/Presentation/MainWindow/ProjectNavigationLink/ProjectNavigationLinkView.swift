@@ -29,7 +29,7 @@ struct ProjectNavigationLink: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 10)
                 .onTapGesture {
-                    let newItem = ProjectModel(projectName: "1", creatAt: "2", keynoteCreation: "3")
+                    let newItem = ProjectModel(projectName: Date.now.formatted(), creatAt: "2", keynoteCreation: "3")
                     modelContext.insert(newItem)
                 }
             ForEach(projects, id: \.id) { project in
@@ -44,6 +44,9 @@ struct ProjectNavigationLink: View {
                     .contextMenu {
                         Button("Delete") {
                             modelContext.delete(project)
+                        }
+                        Button("Add Practice"){
+                            project.practices.append(PracticeModel(practiceName: Date.now.formatted(), creatAt: "2"))
                         }
                     }
             }
