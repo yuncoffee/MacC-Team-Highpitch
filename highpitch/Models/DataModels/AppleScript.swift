@@ -16,4 +16,6 @@ enum AppleScriptResult {
 
 enum CustomAppleScript {
     case isActiveKeynoteApp
+    case getOpendKeynotes
+    case startPresentation(fileName: String)
 }

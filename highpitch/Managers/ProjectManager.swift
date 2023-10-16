@@ -13,5 +13,6 @@ final class ProjectManager {
     // MARK: - 임시 샘플 프로젝트들 저장
     var projects: [Project]?
     var current: Project?
+    var currentTabItem = 1
     var path: NavigationPath = .init()
 }

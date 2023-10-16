@@ -31,8 +31,6 @@ struct ProjectView: View {
     @Environment(ProjectManager.self)
     private var projectManager
 
-    @State 
-    private var currentTabItem = 1
     var body: some View {
         VStack(spacing: 0) {
             tabBar
@@ -42,7 +40,7 @@ struct ProjectView: View {
             /// [임시] currnetTabItem을 0로 실행 후
             /// 최초 버튼 클릭 시 NavigationStackView가 무거운지 상태는 변경되지만 뷰 갱신이 안됨.
             /// 이후 한번 더 클릭 시는 뷰가 잘 갱신되긴함. 그래서 우선 1로 렌더링 후 0으로 변경 하였음.
-            currentTabItem = 0
+            projectManager.currentTabItem = 0
         }
     }
 }
@@ -57,7 +55,7 @@ extension ProjectView {
         HStack(spacing: 24) {
             ForEach(Array(labels.enumerated()), id: \.1.self) { index, label in
                 Button {
-                    currentTabItem = index
+                    projectManager.currentTabItem = index
                 } label: {
                     Text(label)
                         .padding(.top, 24)
@@ -65,7 +63,7 @@ extension ProjectView {
                         .padding(.horizontal, 10)
                         .frame(maxHeight: .infinity)
                         .border(
-                            currentTabItem == index
+                            projectManager.currentTabItem == index
                             ? Color("AC9FFF").opacity(0.75)
                             : .clear,
                             width: 3,
@@ -84,7 +82,7 @@ extension ProjectView {
     @ViewBuilder
     private var tabBarContentContainer: some View {  
         VStack {
-            if currentTabItem == 0 {
+            if projectManager.currentTabItem == 0 {
                 // 컨텐츠 1 - 전체 연습통계
                 StatisticsTabItem()
             } else {
