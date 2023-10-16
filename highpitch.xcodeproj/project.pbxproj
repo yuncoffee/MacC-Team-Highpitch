@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10C7D1B02ADCD42F008691CD /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */; };
+		10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */; };
+		10C7D1B42ADCD566008691CD /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10C7D1B32ADCD566008691CD /* SecretKey.plist */; };
 		11EF719B2ADADBA400D991E6 /* FillerWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719A2ADADBA400D991E6 /* FillerWordList.swift */; };
 		1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF672AD98A1700C1400E /* ProjectView.swift */; };
 		1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF692AD98A4000C1400E /* PracticeView.swift */; };
@@ -89,6 +92,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		10C7D1B32ADCD566008691CD /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
 		11EF719A2ADADBA400D991E6 /* FillerWordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordList.swift; sourceTree = "<group>"; };
 		1D09AF672AD98A1700C1400E /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		1D09AF692AD98A4000C1400E /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
@@ -212,6 +218,7 @@
 				1D09AF752AD98DA100C1400E /* String+Extension.swift */,
 				1D09AF892ADA26B600C1400E /* Color+Extension.swift */,
 				1D09AF8D2ADA345E00C1400E /* View+Extension.swift */,
+				10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -346,6 +353,7 @@
 				1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */,
 				1D09AF822AD9963E00C1400E /* ProjectManager.swift */,
 				1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */,
+				10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -409,6 +417,7 @@
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
+				10C7D1B32ADCD566008691CD /* SecretKey.plist */,
 				1D30E62B2AD6E88500623A58 /* .swiftlint.yml */,
 				1DF659882AD594BD00AE5601 /* highpitch */,
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
@@ -647,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D09AF8C2ADA271300C1400E /* Colors.xcassets in Resources */,
+				10C7D1B42ADCD566008691CD /* SecretKey.plist in Resources */,
 				434FE5A82ADA5C760005645F /* test1_json.json in Resources */,
 				1D09AFB52ADAD5E300C1400E /* test2.json in Resources */,
 				434FE5A72ADA5C760005645F /* test2_response.txt in Resources */,
@@ -708,6 +718,7 @@
 			files = (
 				1D30E6252AD6117F00623A58 /* MediaManager.swift in Sources */,
 				1D09AF742AD98C0900C1400E /* Date+Extension.swift in Sources */,
+				10C7D1B02ADCD42F008691CD /* Bundle+Extension.swift in Sources */,
 				1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */,
 				1D09AF9C2ADA6BBB00C1400E /* AudioControllerView.swift in Sources */,
 				1D09AF832AD9963E00C1400E /* ProjectManager.swift in Sources */,
@@ -746,6 +757,7 @@
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
 				1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */,
 				1D09AF792AD994D400C1400E /* HPButton.swift in Sources */,
+				10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */,
 				1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */,
 				1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */,
 				1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */,
