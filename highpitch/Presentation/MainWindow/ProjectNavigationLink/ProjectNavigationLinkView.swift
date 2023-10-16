@@ -14,8 +14,10 @@ struct ProjectNavigationLink: View {
     @Environment(ProjectManager.self)
     private var projectManager
         
-//    @Query(sort: \Project.creatAt)
-//    var projects: [Project]
+    //
+    
+    @Query(sort: \ProjectModel.creatAt)
+    var projects: [ProjectModel]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
