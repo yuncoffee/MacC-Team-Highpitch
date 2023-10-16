@@ -92,9 +92,9 @@ struct MenubarExtraView: View {
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
                 if let projects = projectManager.projects {
-                    projectOptions = projects
+//                    projectOptions = projects
                     projectOptions.append(Project())
-                    selectedProject = projects[0]
+//                    selectedProject = projects[0]
                     
                 }
             }
@@ -112,9 +112,9 @@ struct MenubarExtraView: View {
             }
             .onChange(of: projectManager.projects) { _, newValue in
                 if let projects = newValue {
-                    projectOptions = projects
+//                    projectOptions = projects
                     projectOptions.append(Project())
-                    selectedProject = projects[0]
+//                    selectedProject = projects[0]
                 }
             }
             .onChange(of: selectedkeynote, {
@@ -155,26 +155,26 @@ extension MenubarExtraView {
         if keynoteManager.opendKeynotes.isEmpty {
             print("is Empty!")
         } else {
-            let filtered = projectManager.projects?.filter({ project in
-                project.keynoteCreation == selectedkeynote.creation
-            })
-            if let find = filtered {
-                if !find.isEmpty {
-                    print("일치하는 프로젝트: \(find[0].projectName)")
-                    projectManager.current = find[0]
-                    selectedProject = projectOptions.first!
-                } else {
-                    print("일치하는 프로젝트가 없음")
-                    selectedProject = projectOptions.last!
-                }
-            }
+//            let filtered = projectManager.projects?.filter({ project in
+//                project.keynoteCreation == selectedkeynote.creation
+//            })
+//            if let find = filtered {
+//                if !find.isEmpty {
+//                    print("일치하는 프로젝트: \(find[0].projectName)")
+//                    projectManager.current = find[0]
+//                    selectedProject = projectOptions.first!
+//                } else {
+//                    print("일치하는 프로젝트가 없음")
+//                    selectedProject = projectOptions.last!
+//                }
+//            }
         }
     }
     
     private func openSelectedProject() {
         print("프로젝트 열기")
         if selectedProject.projectName != "새 프로젝트" {
-            projectManager.current = selectedProject
+//            projectManager.current = selectedProject
             if !projectManager.path.isEmpty {
                 projectManager.currentTabItem = 0
                 projectManager.path.removeLast()
@@ -199,7 +199,7 @@ extension MenubarExtraView {
     }
     
     private func openSelectedPractice(practice: Practice) {
-        projectManager.current = selectedProject
+//        projectManager.current = selectedProject
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()

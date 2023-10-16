@@ -24,7 +24,7 @@ struct MainWindowView: View {
     @Environment(\.modelContext)
     var modelContext
     
-    private var selected: Project? {
+    private var selected: ProjectModel? {
         projectManager.current
     }
     
@@ -48,8 +48,8 @@ extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
         let projects = fileSystemManager.loadProjects()
-            projectManager.projects = projects
-            projectManager.current = projects[0]
+//            projectManager.projects = projects
+//            projectManager.current = projects[0]
     }
 }
 

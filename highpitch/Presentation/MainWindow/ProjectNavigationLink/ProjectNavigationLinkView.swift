@@ -13,9 +13,10 @@ struct ProjectNavigationLink: View {
     private var fileSystemManager
     @Environment(ProjectManager.self)
     private var projectManager
-        
-    //
     
+    //
+    @Environment(\.modelContext)
+    var modelContext
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
@@ -27,20 +28,27 @@ struct ProjectNavigationLink: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 10)
-            if let projects = projectManager.projects {
-                ForEach(projects, id: \.id) { project in
-                    ProjectLinkItem(
-                        title : project.projectName,
-                        isSelected: checkIsSelected(project.projectName)) {
-                            if !projectManager.path.isEmpty {
-                                projectManager.path.removeLast()
+                .onTapGesture {
+                    let newItem = ProjectModel(projectName: "1", creatAt: "2", keynoteCreation: "3")
+                    modelContext.insert(newItem)
+                }
+            ForEach(projects, id: \.id) { project in
+                ProjectLinkItem(
+                    title : project.projectName,
+                    isSelected: checkIsSelected(project.projectName)) {
+                        if !projectManager.path.isEmpty {
+                            projectManager.path.removeLast()
                         }
                         projectManager.current = project
                     }
-                }
-                .padding(.leading, 8)
-                .padding(.trailing, 12)
+                    .contextMenu {
+                        Button("Delete") {
+                            modelContext.delete(project)
+                        }
+                    }
             }
+            .padding(.leading, 8)
+            .padding(.trailing, 12)
         }
         .frame(
             maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
