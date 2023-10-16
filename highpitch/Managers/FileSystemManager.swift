@@ -59,8 +59,8 @@ final class FileSystemManager {
 
                 if index == 0 {
                     project1.practices.append(practice)
-                } else {
                     project2.practices.append(practice)
+                } else {
                     project2.practices.append(practice)
                 }
             } catch {

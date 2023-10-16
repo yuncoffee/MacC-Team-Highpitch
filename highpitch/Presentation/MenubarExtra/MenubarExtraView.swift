@@ -251,7 +251,7 @@ extension MenubarExtraView {
                 Text("현재 열려있는 키노트")
                 if !keynoteOptions.isEmpty {
                     Picker("프로젝트", selection: $selectedkeynote) {
-                        ForEach(keynoteOptions, id: \.self) { opendKeynote in
+                        ForEach(keynoteOptions, id: \.id) { opendKeynote in
                             Text("\(opendKeynote.getFileName())").tag(opendKeynote)
                         }
                     }
