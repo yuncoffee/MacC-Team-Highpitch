@@ -22,6 +22,8 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Text("\(samples.isEmpty ? "none" : samples[0].name)")
+            Text("Sample")
+                .systemFont(.largeTitle)
         }
         .frame(minWidth: 200, minHeight: 200)
     }
@@ -29,4 +31,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environment(MediaManager())
 }
