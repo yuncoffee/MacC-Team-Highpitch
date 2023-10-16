@@ -11,6 +11,7 @@ import SwiftUI
 extension Color {
     /// 메인 컬러를 위해 사용되는 네임스페이스
     struct HPPrimary {
+        private init() {}
         /// #6A4AEC, 1
         static let dark = Color.primary600
         /// #8A6DFF, 1
@@ -30,6 +31,7 @@ extension Color {
 extension Color {
     /// 시스템 그레이 컬러를 위해 사용되는 네임스페이스 - Primary
     struct HPGray {
+        private init() {}
         /// #FFFFFF, 1
         static let systemWhite = Color.gray0
         /// #FFFFFF, 1
@@ -59,6 +61,7 @@ extension Color {
 extension Color {
     /// 세컨더리 컬러를 위해 사용되는 네임스페이스 - Point
     struct HPSecondary {
+        private init() {}
         /// #FFFFFF, 1
         static let base = Color.secondary500
     }
@@ -68,6 +71,7 @@ extension Color {
 extension Color {
     /// 테리터리 컬러를 위해 사용되는 네임스페이스 - Sub
     struct HPTeritiery {
+        private init() {}
         /// #2E2E2E, 1
         static let base = Color.teritiery500
     }
@@ -77,6 +81,7 @@ extension Color {
 extension Color {
     /// 레드 컬러를 위해 사용되는 네임스페이스
     struct HPRed {
+        private init() {}
         /// #EF5555, 1
         static let base = Color.red500
     }
@@ -86,6 +91,7 @@ extension Color {
 extension Color {
     /// 텍스트 컬러를 위해 사용되는 네임스페이스
     struct HPTextStyle {
+        private init() {}
         /// #000000, 1
         static let darkness = Color.gray1000
         /// #000000, 0.85
@@ -107,6 +113,7 @@ extension Color {
 extension Color {
     /// 특정 컴포넌트용 컬러를 위해 사용되는 네임스페이스
     struct HPComponent {
+        private init() {}
         /// #000000, 0.1
         static let stroke = Color.stroke
         /// #000000, 0.25

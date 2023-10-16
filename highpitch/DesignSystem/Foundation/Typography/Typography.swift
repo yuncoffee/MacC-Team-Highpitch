@@ -36,8 +36,8 @@ enum FoundationTypoSystemFont {
     case largeTitle
     case title
     case subTitle
-    case headline
-    case subHeadline
+//    case headline
+//    case subHeadline
     case body
     case footnote
     case caption
@@ -59,42 +59,42 @@ extension FoundationTypoSystemFont {
     var fontSize: CGFloat {
         switch self {
         case .largeTitle:
-            return 32
+            return 22
         case .title:
-            return 24
-        case .subTitle:
             return 20
-        case .headline:
+        case .subTitle:
             return 18
-        case .subHeadline:
-            return 16
+//        case .headline:
+//            return 18
+//        case .subHeadline:
+//            return 16
         case .body:
-            return 14
+            return 16
         case .footnote:
-            return 12
+            return 14
         case .caption:
-            return 10
+            return 12
         }
     }
     
     var lineHeight: CGFloat {
         switch self {
         case .largeTitle:
-            return (48 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
         case .title:
-            return (36 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
         case .subTitle:
-            return (28 - self.fontSize) / 2
-        case .headline:
-            return (26 - self.fontSize) / 2
-        case .subHeadline:
-            return (24 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+//        case .headline:
+//            return (26 - self.fontSize) / 2
+//        case .subHeadline:
+//            return (24 - self.fontSize) / 2
         case .body:
-            return (20 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
         case .footnote:
-            return (18 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
         case .caption:
-            return (12 - self.fontSize) / 2
+            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
         }
     }
     
@@ -105,17 +105,17 @@ extension FoundationTypoSystemFont {
         case .title:
             return .bold
         case .subTitle:
-            return .regular
-        case .headline:
-            return .regular
-        case .subHeadline:
-            return .regular
+            return .bold
+//        case .headline:
+//            return .regular
+//        case .subHeadline:
+//            return .regular
         case .body:
-            return .regular
+            return .medium
         case .footnote:
-            return .regular
+            return .medium
         case .caption:
-            return .regular
+            return .medium
         }
     }
     
@@ -127,10 +127,10 @@ extension FoundationTypoSystemFont {
             return .title
         case .subTitle:
             return .title3
-        case .headline:
-            return .headline
-        case .subHeadline:
-            return .subheadline
+//        case .headline:
+//            return .headline
+//        case .subHeadline:
+//            return .subheadline
         case .body:
             return .body
         case .footnote:
