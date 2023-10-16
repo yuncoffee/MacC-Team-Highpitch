@@ -2,68 +2,22 @@ import Foundation
 import Security
 
 
-enum RZError: String,Error{
-    case NetworkErr
-    case JsonParsingErr
-    case FileNonExist
+enum RZError: String, Error {
+    case networkErr
+    case jsonParsingErr
+    case fileNonExist
 }
-struct TokenData: Codable{
+struct TokenData: Codable {
     var token:String
     var expried:Date
 }
-struct Result1{
+struct Result1 {
     let utternces:[Utterance]
 }
-struct Utterance: Codable {
-    let startAt: Int
-    let duration: Int
-    let msg: String
-    let spk: Int
-}
-
-
-
-//1. auth
-//2. 토큰 발급 받기
-//3. 파일 + 세팅
-//4. 오디오 결과값 받기
-// 서비스의 역할 = 오디오 -> 오디오 결과값 받기
-//1. 인증 받기
-    // 토큰 없음 -> 토큰 저장 keychichain 조회 했을 때 없음
-    // 토큰 만료 -> 토큰 업데이트 api 호출 했을 때 만료 exception 발생하면 토큰 재 등록
-    // 인증 -> 다음 단계
-//func
-    //1. auth throws -> token 반환
-    //2. isAuth throws -> bool 인증이 되었는지 확인 및 업데이트
-
-//2. 파일 확인 및 transcribeId 호출
-    // 인증 확인
-    // 경로에 파일 있는지 확인 -> 없으면 exception 던짐
-    // 파일의 transcribeId 있는지 확인
-        // 없으면 토큰과 함께 api 호출 -> transcribeId 받음
-        // 오디오 파일 + transcribeId swiftData로 저장
-//func
-    // 1. 파일 확인 func
-    // 2. settranscribe throws -> transcribeId 반환
-    // 3. 오디오 파일 + transcribeId 저장 func
-//3. transcribeId로 transcribe 모델 반환
-    // 인증 확인
-    // transcribeId로 api 호출
-    // transcribing중이면
-    // stream으로 계속 호출하면서 완료 됬는지 알려줌
-    // 완료 되면 transcribe 호출
-//func
-    // transcribe api 호출 func
-    // transcribing 중인지 확인하는 func
-
-// 사용자가 파일을 전달 -> transcribe 정보 리턴
-    //exception
-        // 파일 없음
-        // 네트워크 exception
 struct ReturnzeroAPI {
     let keyChainManager = KeychainManager()
-    let ReturnZero_CLIENT_ID = Bundle().returnZeroClientId
-    let ReturnZero_CLIENT_SECRET = Bundle().returnZeroClientSecret
+    let returnZero_CLIENT_ID = Bundle().returnZeroClientId
+    let returnZero_CLIENT_SECRET = Bundle().returnZeroClientSecret
     let authUrl = "https://openapi.vito.ai/v1/authenticate"
     let tranUrl = "https://openapi.vito.ai/v1/transcribe"
     
@@ -80,7 +34,7 @@ struct ReturnzeroAPI {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
-        let bodyData = "client_id=\( ReturnZero_CLIENT_ID)&client_secret=\(ReturnZero_CLIENT_SECRET)"
+        let bodyData = "client_id=\( returnZero_CLIENT_ID)&client_secret=\(returnZero_CLIENT_SECRET)"
 
         request.httpBody = bodyData.data(using: .utf8)
         
@@ -88,21 +42,21 @@ struct ReturnzeroAPI {
         let (data,response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else{
-            throw RZError.NetworkErr
+            throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
               let token = jsonObject["access_token"] as? String,
               let expired = jsonObject["expire_at"] as? Double
         else{
             print("err")
-            throw RZError.JsonParsingErr
+            throw RZError.jsonParsingErr
         }
         return TokenData(token: token, expried: Date(timeIntervalSince1970: expired))
     }
     
     private func isAuth() async throws -> String{
          guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else{
-             throw RZError.NetworkErr
+             throw RZError.networkErr
          }
          if(Date.now.compare(token.expried).rawValue < 0){
              return token.token
@@ -122,7 +76,7 @@ struct ReturnzeroAPI {
     private  func setTranscribe(filePath: String) async throws ->String {
         let apiUrl = tranUrl
         let filePath = filePath
-        if(!fileExists(atPath: filePath)) {throw RZError.FileNonExist}
+        if(!fileExists(atPath: filePath)) {throw RZError.fileNonExist}
         let jwtToken = try await isAuth()
         // 설정(config) JSON 데이터
         let config: [String: Any] = [
@@ -175,11 +129,11 @@ struct ReturnzeroAPI {
         let (data,response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else{
-            throw RZError.NetworkErr
+            throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
               let transcribeId = jsonObject["id"] as? String else{
-            throw RZError.JsonParsingErr
+            throw RZError.jsonParsingErr
         }
         return transcribeId
 
@@ -188,7 +142,7 @@ struct ReturnzeroAPI {
     private func getTranscribe(transId: String) async throws -> [Utterance]?{
         let jwtToken = try await isAuth()
         guard let url = URL(string: tranUrl + "/" + "\(transId)") else{
-            throw RZError.JsonParsingErr
+            throw RZError.jsonParsingErr
         }
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
@@ -201,27 +155,27 @@ struct ReturnzeroAPI {
             let (data,response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else{
-                throw RZError.NetworkErr
+                throw RZError.networkErr
             }
             guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else{
-                throw RZError.JsonParsingErr
+                throw RZError.jsonParsingErr
             }
             guard let status = jsonObject["status"] as? String else{
-                throw RZError.JsonParsingErr
+                throw RZError.jsonParsingErr
             }
             if(status == "completed"){
                 guard let results = jsonObject["results"] as? [String: Any],
                       let utterances = results["utterances"] as? [[String: Any]] else {
-                    throw RZError.JsonParsingErr
+                    throw RZError.jsonParsingErr
                 }
                 var utteranceList = try utterances.map { utterance in
                     guard let startAt = utterance["start_at"] as? Int,
                            let duration = utterance["duration"] as? Int,
-                           let msg = utterance["msg"] as? String,
-                          let spk = utterance["spk"] as? Int else{
-                        throw RZError.JsonParsingErr
+                           let message = utterance["msg"] as? String
+                    else{
+                        throw RZError.jsonParsingErr
                     }
-                    return Utterance(startAt: startAt, duration: duration, msg: msg, spk: spk)
+                    return Utterance(startAt: startAt, duration: duration, message: message)
                 }
                 return utteranceList
             }
@@ -240,6 +194,6 @@ struct ReturnzeroAPI {
             elapsedTime += end.timeIntervalSince(start)
             try await Task.sleep(nanoseconds: 3_000_000_000) // 3초 간격으로 API 호출
         }
-        throw RZError.NetworkErr
+        throw RZError.networkErr
     }
 }
