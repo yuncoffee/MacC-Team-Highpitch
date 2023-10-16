@@ -13,7 +13,6 @@ struct ScriptView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("내 발표 다시보기")
             List(practice.utterances, id: \.id) { utterance in
                 HStack {
                     Text("\(utterance.message)")

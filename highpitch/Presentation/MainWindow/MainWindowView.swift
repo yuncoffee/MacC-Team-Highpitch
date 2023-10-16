@@ -70,6 +70,13 @@ extension MainWindowView {
     // MARK: - navigationDetails
     @ViewBuilder
     var navigationDetails: some View {
+        Text("SwiftUI ")
+            .foregroundColor(.red)
+        + Text("is ")
+            .foregroundColor(.orange)
+            .fontWeight(.black)
+        + Text("awesome")
+            .foregroundColor(.blue)
         if selected != nil {
             VStack(alignment: .leading, spacing: 0) {
                 projectToolbar
