@@ -51,8 +51,13 @@ struct ProjectNavigationLink: View {
                             modelContext.delete(project)
                         }
                         Button("Add Practice") {
+                            var utterance1 = UtteranceModel(startAt: 1000, duration: 1000, message: "안녕하세요 반갑습니다")
+                            var utterance2 = UtteranceModel(startAt: 2000, duration: 2000, message: "안녕히가세요")
+                            var tempUtterance = [utterance1, utterance2]
+                            var tempModel = PracticeModel(practiceName: Date.now.formatted(), creatAt: "2", utterances: tempUtterance)
+                            
                             project.practices.append(
-                                PracticeModel(practiceName: Date.now.formatted(), creatAt: "2")
+                                tempModel
                             )
                         }
                         Button("녹음 시작") {

@@ -292,7 +292,7 @@ extension MenubarExtraView {
     @ViewBuilder
     private var sectionPractice: some View {
         VStack(spacing: 0) {
-            if selectedProject != nil && !selectedProject.practices.isEmpty {
+            if !selectedProject.practices.isEmpty {
                 ScrollView {
                     LazyVGrid(columns: [GridItem()], spacing: 8) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
