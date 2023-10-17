@@ -45,8 +45,14 @@ struct ProjectNavigationLink: View {
                         Button("Delete") {
                             modelContext.delete(project)
                         }
-                        Button("Add Practice"){
+                        Button("Add Practice") {
                             project.practices.append(PracticeModel(practiceName: Date.now.formatted(), creatAt: "2"))
+                        }
+                        Button("녹음 시작") {
+                            
+                        }
+                        Button("녹음 종료 및 연습 저장") {
+                            
                         }
                     }
             }

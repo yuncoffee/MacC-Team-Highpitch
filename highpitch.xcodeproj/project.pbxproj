@@ -71,7 +71,6 @@
 		434FE5A92ADA5C760005645F /* test1_response.txt in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A32ADA5C750005645F /* test1_response.txt */; };
 		434FE5AA2ADA5C760005645F /* test1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A42ADA5C750005645F /* test1.m4a */; };
 		434FE5AB2ADA5C760005645F /* test2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A52ADA5C760005645F /* test2.m4a */; };
-		439D24622ADD16590078D4AE /* ProjectModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 439D24602ADD16590078D4AE /* ProjectModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,7 +159,6 @@
 		434FE5A32ADA5C750005645F /* test1_response.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1_response.txt; sourceTree = "<group>"; };
 		434FE5A42ADA5C750005645F /* test1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.m4a; sourceTree = "<group>"; };
 		434FE5A52ADA5C760005645F /* test2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.m4a; sourceTree = "<group>"; };
-		439D24612ADD16590078D4AE /* ProjectModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProjectModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,7 +415,6 @@
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
-				439D24602ADD16590078D4AE /* ProjectModel.xcdatamodeld */,
 				1D30E62B2AD6E88500623A58 /* .swiftlint.yml */,
 				1DF659882AD594BD00AE5601 /* highpitch */,
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
@@ -746,7 +743,6 @@
 				1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */,
 				1D09AF762AD98DA100C1400E /* String+Extension.swift in Sources */,
 				1D09AF712AD98BB700C1400E /* SpeechRecognizerManager.swift in Sources */,
-				439D24622ADD16590078D4AE /* ProjectModel.xcdatamodeld in Sources */,
 				1D09AF972ADA681500C1400E /* PracticesTabItem.swift in Sources */,
 				1D09AFA92ADA78DF00C1400E /* SpeedAverageChart.swift in Sources */,
 				1DF659C32AD5974C00AE5601 /* MainWindowView.swift in Sources */,
@@ -1159,19 +1155,6 @@
 			productName = MenuBarExtraAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		439D24602ADD16590078D4AE /* ProjectModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				439D24612ADD16590078D4AE /* ProjectModel.xcdatamodel */,
-			);
-			currentVersion = 439D24612ADD16590078D4AE /* ProjectModel.xcdatamodel */;
-			path = ProjectModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 1DF6597E2AD594BD00AE5601 /* Project object */;
 }

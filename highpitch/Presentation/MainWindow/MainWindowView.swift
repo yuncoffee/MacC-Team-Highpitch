@@ -19,10 +19,12 @@ struct MainWindowView: View {
     private var mediaManager
     @Environment(ProjectManager.self)
     private var projectManager
-        
+    
     // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
     var modelContext
+    @Query(sort: \ProjectModel.creatAt)
+    var asddsa: [ProjectModel]
     
     private var selected: ProjectModel? {
         projectManager.current
@@ -47,9 +49,9 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
-//        let projects = fileSystemManager.loadProjects()
-//            projectManager.projects = projects
-//            projectManager.current = projects[0]
+        //        let projects = fileSystemManager.loadProjects()
+        //            projectManager.projects = projects
+        //            projectManager.current = projects[0]
     }
 }
 
@@ -63,7 +65,7 @@ extension MainWindowView {
             ProjectNavigationLink()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-//        .background( Color("9A8ADA").opacity(0.05))
+        //        .background( Color("9A8ADA").opacity(0.05))
         .navigationSplitViewColumnWidth(ideal: 120, max: 300)
     }
     
@@ -104,7 +106,9 @@ extension MainWindowView {
             }
             HStack(spacing: 0) {
                 Button {
-                  print("키노트 열기")
+                    print("키노트 열기")
+                    modelContext.insert(ProjectModel(projectName: "키노트열기", creatAt: "키노트열기", keynoteCreation: "키노트열기"))
+                    
                 } label: {
                     Text("키노트 열기")
                         .font(.system(size: 16))
