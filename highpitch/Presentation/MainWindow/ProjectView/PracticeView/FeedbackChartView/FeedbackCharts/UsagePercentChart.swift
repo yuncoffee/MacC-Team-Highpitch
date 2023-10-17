@@ -88,6 +88,7 @@ struct UsagePercentChart: View {
                 )
             }
         }
+        .padding(.bottom, .HPSpacing.xxlarge)
         .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,

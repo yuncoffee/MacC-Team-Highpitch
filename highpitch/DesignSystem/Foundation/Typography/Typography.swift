@@ -41,6 +41,7 @@ enum FoundationTypoSystemFont {
     case body
     case footnote
     case caption
+    case caption2
     
     enum FontWeight {
         case ultraLight
@@ -59,20 +60,22 @@ extension FoundationTypoSystemFont {
     var fontSize: CGFloat {
         switch self {
         case .largeTitle:
-            return 22
+            return 24
         case .title:
-            return 20
+            return 22
         case .subTitle:
-            return 18
+            return 20
 //        case .headline:
 //            return 18
 //        case .subHeadline:
 //            return 16
         case .body:
-            return 16
+            return 18
         case .footnote:
-            return 14
+            return 16
         case .caption:
+            return 14
+        case .caption2:
             return 12
         }
     }
@@ -80,21 +83,23 @@ extension FoundationTypoSystemFont {
     var lineHeight: CGFloat {
         switch self {
         case .largeTitle:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
         case .title:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
         case .subTitle:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
 //        case .headline:
 //            return (26 - self.fontSize) / 2
 //        case .subHeadline:
 //            return (24 - self.fontSize) / 2
         case .body:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
         case .footnote:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
         case .caption:
-            return ((self.fontSize + self.fontSize/2) - self.fontSize) / 2
+            return ((self.fontSize*1.48) - self.fontSize) / 2
+        case .caption2:
+            return ((self.fontSize*1.48) - self.fontSize) / 2
         }
     }
     
@@ -113,8 +118,10 @@ extension FoundationTypoSystemFont {
         case .body:
             return .medium
         case .footnote:
-            return .medium
+            return .regular
         case .caption:
+            return .regular
+        case .caption2:
             return .medium
         }
     }
@@ -136,6 +143,8 @@ extension FoundationTypoSystemFont {
         case .footnote:
             return .footnote
         case .caption:
+            return .caption
+        case .caption2:
             return .caption2
         }
     }
