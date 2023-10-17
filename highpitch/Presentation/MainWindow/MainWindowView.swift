@@ -68,7 +68,7 @@ extension MainWindowView {
         LazyVGrid(columns: [GridItem()], alignment: .leading) {
             ProjectNavigationLink()
         }
-        .padding(.top, 32)
+        .padding(.top, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.HPComponent.mainWindowSidebarBackground)
         .navigationSplitViewColumnWidth(ideal: idealWidth, max: maxWidth)

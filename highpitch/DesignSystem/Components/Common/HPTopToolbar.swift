@@ -30,7 +30,7 @@ struct HPTopToolbar: View {
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
-                    .padding(.leading, 32)
+                    .padding(.leading, .HPSpacing.medium)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
@@ -51,7 +51,7 @@ struct HPTopToolbar: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .padding(.trailing, 32)
+                .padding(.trailing, .HPSpacing.medium)
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .frame(maxWidth: .infinity)

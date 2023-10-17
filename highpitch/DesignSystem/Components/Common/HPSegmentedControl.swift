@@ -40,8 +40,9 @@ struct HPSegmentedControl: View {
                         }
                         Text(options[index])
                             .systemFont(.footnote, weight: .semibold)
+                            // TODO: - Padding
                             .padding(.vertical, 5)
-                            .padding(.horizontal, 16)
+                            .padding(.horizontal, .HPSpacing.xsmall)
                             .foregroundStyle(forgroundColor)
                             .frame(minHeight: 33)
                             .background(backgroundColor)
@@ -55,7 +56,7 @@ struct HPSegmentedControl: View {
                 .foregroundColor(.white)
             }
         }
-        .padding(4)
+        .padding(.HPSpacing.xxxxsmall)
         .background(Color.HPGray.system200)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }

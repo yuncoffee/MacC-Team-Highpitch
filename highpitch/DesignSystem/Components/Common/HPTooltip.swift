@@ -28,7 +28,7 @@ struct HPTooltip: View {
         .buttonStyle(.plain)
         .popover(isPresented: $isPopoverActive, content: {
             Text("ㅋㅋ")
-                .padding(16)
+                .padding(.HPSpacing.xsmall)
         })
     }
 }

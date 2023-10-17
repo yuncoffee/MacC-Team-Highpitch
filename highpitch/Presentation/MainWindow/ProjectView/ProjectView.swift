@@ -46,7 +46,7 @@ extension ProjectView {
     @ViewBuilder
     private var tabBar: some View {
         let labels = ["전체 연습 통계", "연습 회차별 피드백"]
-        HStack(spacing: 24) {
+        HStack(spacing: .HPSpacing.small) {
             ForEach(Array(labels.enumerated()), id: \.1.self) { index, label in
                 Button {
                     projectManager.currentTabItem = index
@@ -58,8 +58,9 @@ extension ProjectView {
                     Text(label)
                         .systemFont(.body)
                         .foregroundStyle(labelForgroundColor)
-                        .padding(.top, 24)
-                        .padding(.bottom, 16)
+                        .padding(.top, .HPSpacing.small)
+                        .padding(.bottom, .HPSpacing.xsmall)
+                        // TODO: - Padding
                         .padding(.horizontal, 10)
                         .frame(maxHeight: .infinity)
                         .border(
@@ -72,7 +73,7 @@ extension ProjectView {
                 .buttonStyle(.plain)
             }
         }
-        .padding(.horizontal, 64)
+        .padding(.horizontal, .HPSpacing.xxxlarge)
         .frame(maxWidth: .infinity , minHeight: 60, maxHeight: 60, alignment: .bottomLeading)
         .background(Color.HPGray.systemWhite)
         .border(Color.HPPrimary.light.opacity(0.25), width: 1, edges: [.bottom])
@@ -89,8 +90,9 @@ extension ProjectView {
                 PracticesTabItem()
             }
         }
-        .padding(.top, 28)
-        .padding(.horizontal, 64)
+        .padding(.top, .HPSpacing.small + .HPSpacing.xxxxsmall)
+        .padding(.horizontal, .HPSpacing.xxxlarge)
+        // TODO: - Padding
         .padding(.bottom, 38)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }

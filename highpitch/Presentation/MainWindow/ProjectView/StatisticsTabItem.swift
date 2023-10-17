@@ -11,9 +11,12 @@ struct StatisticsTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
 
-    @State var selectedGraph = "평균 레벨 추이"
-    @State var graphOptions = ["평균 레벨 추이", "필러워드", "말 빠르기"]
-    @State private var selectedSegment = 0
+    @State 
+    private var selectedGraph = "평균 레벨 추이"
+    @State
+    private var graphOptions = ["평균 레벨 추이", "필러워드", "말 빠르기"]
+    @State
+    private var selectedSegment = 0
     
     var body: some View {
         let practiceCount = Optional(1)// projectManager.current?.practices.count
@@ -28,11 +31,12 @@ struct StatisticsTabItem: View {
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.base)
                 }
-                .padding(.bottom, 12)
-                HStack(spacing: 16) {
+                .padding(.bottom, .HPSpacing.xxsmall)
+                HStack(spacing: .HPSpacing.xsmall) {
                     averageLevelCard
                     bestLvelPracticeCard
                 }
+                // TODO: - Padding
                 .padding(.bottom, 18)
                 /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
                 averageGraph
@@ -61,15 +65,15 @@ extension StatisticsTabItem {
         let MAX_LEVEL = 5.description
         /// 결과 요약
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
                 HStack(spacing: 2) {
                     Text("총 평균 레벨")
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.darker)
                     HPTooltip(tooltipContent: "도움말 컨텐츠")
-                        .offset(y: -8)
+                        .offset(y: -.HPSpacing.xxxsmall)
                 }
-                HStack(alignment: .bottom, spacing: 12) {
+                HStack(alignment: .bottom, spacing: .HPSpacing.xxsmall) {
                     HStack(alignment: .firstTextBaseline, spacing: 0) {
                         Text("LV. ")
                             .systemFont(.body)
@@ -87,13 +91,14 @@ extension StatisticsTabItem {
                     }
                 }
             }
+            // TODO: - Padding
             .padding(.vertical, 18)
-            .padding(.leading, 36)
-            .padding(.trailing, 12)
+            .padding(.leading, .HPSpacing.xxsmall * 3)
+            .padding(.trailing, .HPSpacing.xxsmall)
             .frame(minHeight:96, maxHeight: 96, alignment: .leading)
             .background(Color.HPGray.systemWhite)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
+            .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
         }
     }
     
@@ -105,7 +110,7 @@ extension StatisticsTabItem {
         let speed: String = 138.description
         let MAX_LEVEL = 5.description
         /// 최고 카드
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
             HStack(spacing: 2) {
                 HStack(spacing: 0) {
                     Text("내 최고 연습 회차는")
@@ -127,7 +132,7 @@ extension StatisticsTabItem {
                 }
                 .buttonStyle(.plain)
             }
-            HStack(alignment: .bottom, spacing: 12) {
+            HStack(alignment: .bottom, spacing: .HPSpacing.xxsmall) {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
                     Text("LV. ")
                         .systemFont(.body)
@@ -145,9 +150,10 @@ extension StatisticsTabItem {
                 }
             }
         }
+        // TODO: - Padding
         .padding(.vertical, 18)
-        .padding(.trailing, 12)
-        .padding(.leading, 36)
+        .padding(.leading, .HPSpacing.xxsmall * 3)
+        .padding(.trailing, .HPSpacing.xxsmall)
         .frame(maxWidth: .infinity, minHeight:96, maxHeight: 96, alignment: .leading)
         .background(Color.HPGray.systemWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -165,9 +171,9 @@ extension StatisticsTabItem {
             .frame(alignment: .top)
             graphContainer
         }
-        .padding(.vertical, 16)
-        .padding(.leading, 32)
-        .padding(.trailing, 24)
+        .padding(.vertical, .HPSpacing.xsmall)
+        .padding(.leading, .HPSpacing.medium)
+        .padding(.trailing, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.HPGray.systemWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))

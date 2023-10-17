@@ -26,7 +26,8 @@ struct ProjectLinkItem: View {
                 .systemFont(.body, weight: weight)
                 .foregroundStyle(color)
                 .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, .HPSpacing.xxxsmall + .HPSpacing.xxsmall)
+                // TODO: - Padding
                 .padding(.vertical, 5)
                 .background(backgroundColor)
                 .cornerRadius(7)
