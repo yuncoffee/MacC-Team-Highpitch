@@ -29,17 +29,15 @@ struct HighpitchApp: App {
     
     //
     
-//    @State var container: ModelContainer = {
-//        do {
-//            let container = try ModelContainer(for: ProjectModel.self, configurations: Model)
-//            return container
-//        }
-//        catch {
-//            fatalError("Failed to create container")
-//        }
-//    }()
-//    
-//    @State var container1 = try ModelContainer(for: [ProjectModel.self, PracticeModel.self, UtteranceModel.self])
+    let container: ModelContainer = {
+        do {
+            let container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
+            return container
+        }
+        catch {
+            fatalError("Failed to create container")
+        }
+    }()
     
     var body: some Scene {
         #if os(iOS)
@@ -60,7 +58,7 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
         }
-        .modelContainer(for: ProjectModel.self)
+        .modelContainer(container)
         .defaultSize(width: 1000, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
@@ -72,7 +70,7 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
                 .environment(mediaManager)
         }
-        // .modelContainer(for: ProjectModel.self)
+        .modelContainer(container)
         // MARK: - MenubarExtra Scene
         MenuBarExtra("MenubarExtra", image: .menubarextra) {
             MenubarExtraView(isMenuPresented: $isMenuPresented)
@@ -83,7 +81,7 @@ struct HighpitchApp: App {
                 .environment(projectManager)
         }
         .menuBarExtraAccess(isPresented: $isMenuPresented)
-        // .modelContainer(for: ProjectModel.self)
+        .modelContainer(container)
         .menuBarExtraStyle(.window)
         .commandsRemoved()
             
