@@ -14,7 +14,7 @@ struct AudioControllerView: View {
     private var isEditing = false
     
     @Binding
-    var practice: Practice
+    var practice: PracticeModel
     
     var body: some View {
         VStack {
@@ -28,7 +28,12 @@ struct AudioControllerView: View {
             Text("\(speed)")
                 .foregroundColor(isEditing ? .red : .blue)
             HStack {
-                Text("File: \(practice.audioPath)")
+                if let urlString = practice.audioPath?.absoluteString {
+                    Text("URL: \(urlString)")
+                } else {
+                    Text("유효하지 않은 URL")
+                }
+                // Text(practice.audioPath!.absoluteString)
                 Button {
                  print("prev")
                 } label: {
@@ -51,7 +56,7 @@ struct AudioControllerView: View {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return AudioControllerView(practice: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return AudioControllerView(practice: $practice)
+//}

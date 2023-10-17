@@ -14,7 +14,7 @@ import Charts
 
 struct UsagePercentChart: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     
     var body: some View {
         VStack {
@@ -127,7 +127,7 @@ extension UsagePercentChart {
     // swiftlint:enable identifier_name
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return UsagePercentChart(data: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return UsagePercentChart(data: $practice)
+//}

@@ -13,7 +13,7 @@ import Charts
 
 struct SpeedAverageChart: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     
     var body: some View {
         VStack {
@@ -206,7 +206,7 @@ extension SpeedAverageChart {
     
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return SpeedAverageChart(data: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return SpeedAverageChart(data: $practice)
+//}

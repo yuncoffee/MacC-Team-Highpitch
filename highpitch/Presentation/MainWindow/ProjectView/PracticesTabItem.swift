@@ -21,7 +21,7 @@ struct PracticesTabItem: View {
                         NavigationLink("연습 상세보기", value: practice)
                     }
                 }
-                .navigationDestination(for: Practice.self) { practice in
+                .navigationDestination(for: PracticeModel.self) { practice in
                     PracticeView(practice: practice)
                 }
                 .navigationTitle("Practice")
