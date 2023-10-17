@@ -165,7 +165,6 @@ extension UsageTopTierChart {
         for index in fillerCnt where index.value > 0 {
             radiusContainer.append(Double(index.value) * 2.0 * 3.1415926535 / Double(sumValue))
         }
-        print(radiusContainer)
         var returnContainer: [FillerCountOffset] = []
         var temp = 0.0
         for index in 0..<radiusContainer.count {

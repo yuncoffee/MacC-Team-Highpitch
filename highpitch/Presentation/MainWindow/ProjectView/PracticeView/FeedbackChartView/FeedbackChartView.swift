@@ -19,12 +19,13 @@ struct FeedbackChartView: View {
                 UsageTopTierChart(data: $practice)
                 FillerWordDetail(data: $practice)
                 SpeedAverageChart(data: $practice)
+                FastSentReplay(data: $practice)
             }
             .padding(.bottom, 64)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .border(.blue)
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
