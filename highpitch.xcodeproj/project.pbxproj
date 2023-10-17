@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		10C7D1B02ADCD42F008691CD /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */; };
 		10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */; };
+		10C7D1F82ADD8E6A008691CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1F72ADD8E6A008691CD /* AuthManager.swift */; };
+		10C7D1F92ADD8F1C008691CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1F72ADD8E6A008691CD /* AuthManager.swift */; };
+		10C7D1FA2ADD9457008691CD /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */; };
+		10C7D1FD2ADE12B3008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
+		10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
+		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
+		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		11EF719B2ADADBA400D991E6 /* FillerWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719A2ADADBA400D991E6 /* FillerWordList.swift */; };
 		1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF672AD98A1700C1400E /* ProjectView.swift */; };
 		1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF692AD98A4000C1400E /* PracticeView.swift */; };
@@ -101,6 +108,9 @@
 /* Begin PBXFileReference section */
 		10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		10C7D1F72ADD8E6A008691CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		10C7D1FC2ADE12B3008691CD /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
+		10C7D1FF2ADE2201008691CD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		11EF719A2ADADBA400D991E6 /* FillerWordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordList.swift; sourceTree = "<group>"; };
 		1D09AF672AD98A1700C1400E /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		1D09AF692AD98A4000C1400E /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
@@ -416,6 +426,8 @@
 				1D09AF822AD9963E00C1400E /* ProjectManager.swift */,
 				1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */,
 				10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */,
+				10C7D1F72ADD8E6A008691CD /* AuthManager.swift */,
+				10C7D1FF2ADE2201008691CD /* AudioManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -464,6 +476,7 @@
 				1D09AFBA2ADAF2AD00C1400E /* Project.swift */,
 				1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */,
 				1D7A3EDC2ADCC51B0084E962 /* MyModel.swift */,
+				10C7D1FC2ADE12B3008691CD /* TokenData.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -806,6 +819,7 @@
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
+				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */,
 				1D0ECD7A2ADDA35400B95A74 /* HPTopToolbar.swift in Sources */,
@@ -820,10 +834,12 @@
 				1D30E62F2AD6EA7500623A58 /* AppleScriptManager.swift in Sources */,
 				1D09AFA72ADA78A800C1400E /* UsageTopTierChart.swift in Sources */,
 				1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */,
+				10C7D1FD2ADE12B3008691CD /* TokenData.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
 				1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */,
 				1D09AF792AD994D400C1400E /* HPButton.swift in Sources */,
+				10C7D1F82ADD8E6A008691CD /* AuthManager.swift in Sources */,
 				1D0ECD702ADCE8FA00B95A74 /* Typography.swift in Sources */,
 				10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */,
 				1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */,
@@ -837,7 +853,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */,
+				10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */,
 				1DF6599F2AD594BF00AE5601 /* highpitchTests.swift in Sources */,
+				10C7D1FA2ADD9457008691CD /* KeychainManager.swift in Sources */,
+				10C7D1F92ADD8F1C008691CD /* AuthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1001,6 +1021,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = highpitch/App/Info.plist;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 사용 허가";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1050,6 +1071,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = highpitch/App/Info.plist;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 사용 허가";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
