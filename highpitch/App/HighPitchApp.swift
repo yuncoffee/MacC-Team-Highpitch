@@ -57,8 +57,8 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)
+                .modelContainer(container)
         }
-        .modelContainer(container)
         .defaultSize(width: 1000, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentMinSize)
@@ -69,8 +69,8 @@ struct HighpitchApp: App {
                 .environment(fileSystemManager)
                 .environment(keynoteManager)
                 .environment(mediaManager)
+                .modelContainer(container)
         }
-        .modelContainer(container)
         // MARK: - MenubarExtra Scene
         MenuBarExtra("MenubarExtra", image: .menubarextra) {
             MenubarExtraView(isMenuPresented: $isMenuPresented)
@@ -79,9 +79,9 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)
+                .modelContainer(container)
         }
         .menuBarExtraAccess(isPresented: $isMenuPresented)
-        .modelContainer(container)
         .menuBarExtraStyle(.window)
         .commandsRemoved()
             

@@ -31,6 +31,7 @@ struct ProjectNavigationLink: View {
                 .onTapGesture {
                     let newItem = ProjectModel(projectName: Date.now.formatted(), creatAt: "2", keynoteCreation: "3")
                     modelContext.insert(newItem)
+                    print("NavigationView: \(projects.count)")
                 }
             ForEach(projects, id: \.id) { project in
                 ProjectLinkItem(
