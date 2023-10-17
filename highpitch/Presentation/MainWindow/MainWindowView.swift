@@ -26,20 +26,24 @@ struct MainWindowView: View {
     @Query(sort: \ProjectModel.creatAt)
     var asddsa: [ProjectModel]
     
+    @State
+    private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+    
     private var selected: ProjectModel? {
         projectManager.current
     }
     
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             navigationSidebar
         } detail: {
             navigationDetails
         }
         .toolbarBackground(.hidden)
+        .navigationTitle("Sidebar")
         .frame(minWidth: 1000, minHeight: 600)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("FCFBFF"))
+        .background(Color.HPComponent.mainWindowSidebarBackground)
         .onAppear {
             setup()
         }
@@ -61,12 +65,15 @@ extension MainWindowView {
     // MARK: - navigationSidebar
     @ViewBuilder
     var navigationSidebar: some View {
+        let idealWidth: CGFloat = 200
+        let maxWidth: CGFloat = 300
         LazyVGrid(columns: [GridItem()], alignment: .leading) {
             ProjectNavigationLink()
         }
+        .padding(.top, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        //        .background( Color("9A8ADA").opacity(0.05))
-        .navigationSplitViewColumnWidth(ideal: 120, max: 300)
+        .background(Color.HPComponent.mainWindowSidebarBackground)
+        .navigationSplitViewColumnWidth(ideal: idealWidth, max: maxWidth)
     }
     
     // MARK: - navigationDetails
@@ -81,6 +88,7 @@ extension MainWindowView {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(Color.HPComponent.mainWindowDetailsBackground)
             .ignoresSafeArea()
         } else {
             emptyProject
@@ -98,35 +106,9 @@ extension MainWindowView {
     // MARK: - projectToolbar
     @ViewBuilder
     var projectToolbar: some View {
-        ZStack {
-            if let projectName = projectManager.current?.projectName {
-                Text("\(projectName)")
-                    .font(.system(size: 16))
-                    .frame(maxWidth: .infinity)
-            }
-            HStack(spacing: 0) {
-                Button {
-                    print("키노트 열기")
-                    modelContext.insert(ProjectModel(projectName: "키노트열기", creatAt: "키노트열기", keynoteCreation: "키노트열기"))
-                    
-                } label: {
-                    Text("키노트 열기")
-                        .font(.system(size: 16))
-                        .frame(width: 120, height: 40)
-                        .foregroundStyle(.white)
-                        .background(Color("2f2f2f"))
-                        .cornerRadius(10)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .padding(.trailing, 32)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            .frame(maxWidth: .infinity)
+        if let projectName = projectManager.current?.projectName {
+            HPTopToolbar(title: projectName)
         }
-        .frame(maxWidth: .infinity, minHeight: 64)
-        .background(Color("ffffff"))
-        .border(Color("000000").opacity(0.1), width: 1, edges: [.bottom])
     }
 }
 

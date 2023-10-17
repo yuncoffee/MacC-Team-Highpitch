@@ -21,12 +21,6 @@ import SwiftUI
  말 빠르기 그래프
  */
 
-struct MockHuman: Hashable, Identifiable {
-    var id = UUID()
-    var name: String
-    var ages: Int
-}
-
 struct ProjectView: View {
     @Environment(ProjectManager.self)
     private var projectManager
@@ -52,20 +46,25 @@ extension ProjectView {
     @ViewBuilder
     private var tabBar: some View {
         let labels = ["전체 연습 통계", "연습 회차별 피드백"]
-        HStack(spacing: 24) {
+        HStack(spacing: .HPSpacing.small) {
             ForEach(Array(labels.enumerated()), id: \.1.self) { index, label in
                 Button {
                     projectManager.currentTabItem = index
                 } label: {
+                    let selected = projectManager.currentTabItem == index
+                    let labelForgroundColor: Color = if selected { 
+                        .HPTextStyle.darkness } else { .HPTextStyle.base }
+                    let decorationColor: Color = if selected { .HPSecondary.base } else { .clear }
                     Text(label)
-                        .padding(.top, 24)
-                        .padding(.bottom, 16)
+                        .systemFont(.body)
+                        .foregroundStyle(labelForgroundColor)
+                        .padding(.top, .HPSpacing.small)
+                        .padding(.bottom, .HPSpacing.xsmall)
+                        // TODO: - Padding
                         .padding(.horizontal, 10)
                         .frame(maxHeight: .infinity)
                         .border(
-                            projectManager.currentTabItem == index
-                            ? Color("AC9FFF").opacity(0.75)
-                            : .clear,
+                            decorationColor,
                             width: 3,
                             edges: [.bottom]
                         )
@@ -74,9 +73,10 @@ extension ProjectView {
                 .buttonStyle(.plain)
             }
         }
-        .padding(.horizontal, 64)
+        .padding(.horizontal, .HPSpacing.xxxlarge)
         .frame(maxWidth: .infinity , minHeight: 60, maxHeight: 60, alignment: .bottomLeading)
-        .border(Color("AC9FFF").opacity(0.25), width: 1, edges: [.bottom])
+        .background(Color.HPGray.systemWhite)
+        .border(Color.HPPrimary.light.opacity(0.25), width: 1, edges: [.bottom])
     }
     
     @ViewBuilder
@@ -90,9 +90,11 @@ extension ProjectView {
                 PracticesTabItem()
             }
         }
-        .border(.red, width: 2)
-        .background(Color.blue)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.top, .HPSpacing.small + .HPSpacing.xxxxsmall)
+        .padding(.horizontal, .HPSpacing.xxxlarge)
+        // TODO: - Padding
+        .padding(.bottom, 38)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 

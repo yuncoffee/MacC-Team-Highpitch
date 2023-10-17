@@ -21,12 +21,14 @@ struct ProjectNavigationLink: View {
     var projects: [ProjectModel]
     
     var body: some View {
+        // TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
-                .font(Font.system(size: 16))
-                .foregroundStyle(Color("000000").opacity(0.5))
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                .padding(.top, .HPSpacing.small)
+                .padding(.horizontal, .HPSpacing.xxsmall)
+            // TODO: - Padding
                 .padding(.bottom, 10)
                 .onTapGesture {
                     let newItem = ProjectModel(projectName: Date.now.formatted(), creatAt: "2", keynoteCreation: "3")
@@ -76,6 +78,7 @@ extension ProjectNavigationLink {
 
 #Preview {
     ProjectNavigationLink()
+        .environment(FileSystemManager())
         .environment(ProjectManager())
         .frame(maxWidth: 200)
         .frame(minHeight: 860)
