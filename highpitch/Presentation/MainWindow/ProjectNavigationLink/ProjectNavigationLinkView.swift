@@ -18,12 +18,14 @@ struct ProjectNavigationLink: View {
 //    var projects: [Project]
     
     var body: some View {
+        // TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
-                .font(Font.system(size: 16))
-                .foregroundStyle(Color("000000").opacity(0.5))
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                .padding(.top, .HPSpacing.small)
+                .padding(.horizontal, .HPSpacing.xxsmall)
+            // TODO: - Padding
                 .padding(.bottom, 10)
             if let projects = projectManager.projects {
                 ForEach(projects, id: \.id) { project in
@@ -36,8 +38,8 @@ struct ProjectNavigationLink: View {
                         projectManager.current = project
                     }
                 }
-                .padding(.leading, 8)
-                .padding(.trailing, 12)
+                .padding(.leading, .HPSpacing.xxxsmall)
+                .padding(.trailing, .HPSpacing.xxsmall)
             }
         }
         .frame(
@@ -56,6 +58,7 @@ extension ProjectNavigationLink {
 
 #Preview {
     ProjectNavigationLink()
+        .environment(FileSystemManager())
         .environment(ProjectManager())
         .frame(maxWidth: 200)
         .frame(minHeight: 860)
