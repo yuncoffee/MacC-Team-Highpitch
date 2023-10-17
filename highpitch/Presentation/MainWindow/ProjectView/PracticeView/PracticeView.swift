@@ -52,7 +52,9 @@ struct PracticeView: View {
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
-            practiceHeader
+            let title = "n번째 연습"
+            let date = "날짜짜짜"
+            HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
@@ -60,7 +62,7 @@ struct PracticeView: View {
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
-        .border(.red, width: 2)
+        .background(Color.HPComponent.mainWindowDetailsBackground)
         .ignoresSafeArea()
 //        .onAppear {
 //            print(projectManager.current)
@@ -73,16 +75,6 @@ struct PracticeView: View {
 
 extension PracticeView {
     @ViewBuilder
-    private var practiceHeader: some View {
-        HStack {
-            Text("n번째 연습")
-            Text("연습 시간")
-        }
-        .frame(maxWidth: .infinity, maxHeight: 100)
-        .border(.red, width: 2)
-    }
-    
-    @ViewBuilder
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
             /// 피드백 뷰
@@ -90,6 +82,7 @@ extension PracticeView {
             /// 스크립트 뷰
             ScriptView(practice: $practice)
         }
+        .padding(.top, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
