@@ -2,13 +2,24 @@ import Foundation
 import Security
 
 enum KeyChainValue: String {
+    case authToken = "authToken"
     case rzToken = "rzToken"
+    
+    func getReturnType() -> Codable.Type {
+        switch self {
+        case .authToken:
+            return String.self as! Codable.Type
+        case .rzToken:
+            return TokenData.self as! Codable.Type
+        }
+    }
 }
 enum KeyChainError: Error {
     case convertDataErr
     case invalidItemFormat
     case unowned(OSStatus)
 }
+
 struct KeychainManager {
     private let service = Bundle.main.bundleIdentifier!
     
@@ -63,7 +74,7 @@ struct KeychainManager {
         guard let data = data as? Data else {
             throw KeyChainError.invalidItemFormat
         }
-        guard let data = try? decoder.decode(TokenData.self, from: data) else{
+        guard let data = try? decoder.decode(forkey.getReturnType(), from: data) else{
             throw KeyChainError.invalidItemFormat
         }
 //        guard let data = String(data: data, encoding: .utf8) else{

@@ -13,32 +13,58 @@ struct ProjectNavigationLink: View {
     private var fileSystemManager
     @Environment(ProjectManager.self)
     private var projectManager
-        
-//    @Query(sort: \Project.creatAt)
-//    var projects: [Project]
+    
+    //
+    @Environment(\.modelContext)
+    var modelContext
+    @Query(sort: \ProjectModel.creatAt)
+    var projects: [ProjectModel]
     
     var body: some View {
+        // TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
-                .font(Font.system(size: 16))
-                .foregroundStyle(Color("000000").opacity(0.5))
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                .padding(.top, .HPSpacing.small)
+                .padding(.horizontal, .HPSpacing.xxsmall)
+            // TODO: - Padding
                 .padding(.bottom, 10)
-            if let projects = projectManager.projects {
-                ForEach(projects, id: \.id) { project in
-                    ProjectLinkItem(
-                        title : project.projectName,
-                        isSelected: checkIsSelected(project.projectName)) {
-                            if !projectManager.path.isEmpty {
-                                projectManager.path.removeLast()
+                .onTapGesture {
+                    let newItem = ProjectModel(
+                        projectName: Date.now.formatted(), creatAt: "2", keynoteCreation: "3"
+                    )
+                    modelContext.insert(newItem)
+                    print("NavigationView: \(projects.count)")
+                }
+            ForEach(projects, id: \.id) { project in
+                ProjectLinkItem(
+                    title : project.projectName,
+                    isSelected: checkIsSelected(project.projectName)) {
+                        if !projectManager.path.isEmpty {
+                            projectManager.path.removeLast()
                         }
                         projectManager.current = project
                     }
-                }
-                .padding(.leading, 8)
-                .padding(.trailing, 12)
+                    .contextMenu {
+                        Button("Delete") {
+                            modelContext.delete(project)
+                        }
+                        Button("Add Practice") {
+                            project.practices.append(
+                                PracticeModel(practiceName: Date.now.formatted(), creatAt: "2")
+                            )
+                        }
+                        Button("녹음 시작") {
+                            
+                        }
+                        Button("녹음 종료 및 연습 저장") {
+                            
+                        }
+                    }
             }
+            .padding(.leading, 8)
+            .padding(.trailing, 12)
         }
         .frame(
             maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
@@ -56,6 +82,7 @@ extension ProjectNavigationLink {
 
 #Preview {
     ProjectNavigationLink()
+        .environment(FileSystemManager())
         .environment(ProjectManager())
         .frame(maxWidth: 200)
         .frame(minHeight: 860)
