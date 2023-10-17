@@ -47,6 +47,7 @@
  */
 #if os(macOS)
 import SwiftUI
+import SwiftData
 
 struct MenubarExtraView: View {
     @Environment(\.openWindow)
@@ -64,16 +65,22 @@ struct MenubarExtraView: View {
     private var projectManager
     
     @State
-    private var selectedProject: Project = Project()
+    private var selectedProject: ProjectModel = ProjectModel(projectName: "d", creatAt: "d", keynoteCreation: "dd")
     @State
     private var selectedkeynote: OpendKeynote = OpendKeynote()
-    @State
-    private var projectOptions: [Project] = []
+//    @State
+//    private var projectOptions: [Project] = []
     @State
     private var keynoteOptions: [OpendKeynote] = []
     
     @Binding
     var isMenuPresented: Bool
+    
+    //
+    @Environment(\.modelContext)
+    var modelContext
+    @Query(sort: \ProjectModel.creatAt)
+    var projectModels: [ProjectModel]
     
     var body: some View {
         if isMenuPresented {
@@ -91,11 +98,8 @@ struct MenubarExtraView: View {
             .onAppear {
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
-                if let projects = projectManager.projects {
-//                    projectOptions = projects
-                    projectOptions.append(Project())
-//                    selectedProject = projects[0]
-                    
+                if projectModels.count > 0 {
+                    selectedProject = projectModels[0]
                 }
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
@@ -110,12 +114,12 @@ struct MenubarExtraView: View {
                 }
                 updateCurrentProject()
             }
-            .onChange(of: projectManager.projects) { _, newValue in
-                if let projects = newValue {
+            .onChange(of: projectModels) { _, newValue in
+//                if let projects = newValue {
 //                    projectOptions = projects
-                    projectOptions.append(Project())
+//                    projectOptions.append(Project())
 //                    selectedProject = projects[0]
-                }
+//                }
             }
             .onChange(of: selectedkeynote, {
                 updateCurrentProject()
@@ -155,26 +159,26 @@ extension MenubarExtraView {
         if keynoteManager.opendKeynotes.isEmpty {
             print("is Empty!")
         } else {
-//            let filtered = projectManager.projects?.filter({ project in
-//                project.keynoteCreation == selectedkeynote.creation
-//            })
-//            if let find = filtered {
-//                if !find.isEmpty {
-//                    print("일치하는 프로젝트: \(find[0].projectName)")
-//                    projectManager.current = find[0]
-//                    selectedProject = projectOptions.first!
-//                } else {
-//                    print("일치하는 프로젝트가 없음")
-//                    selectedProject = projectOptions.last!
-//                }
-//            }
+            if(projectModels.count > 1) {
+                let filtered = projectModels.filter({ project in
+                    project.keynoteCreation == selectedkeynote.creation
+                })
+                if !filtered.isEmpty {
+                    print("일치하는 프로젝트: \(filtered[0].projectName)")
+                    projectManager.current = filtered[0]
+                    selectedProject = projectModels.first!
+                } else {
+                    print("일치하는 프로젝트가 없음")
+                    selectedProject = projectModels.last!
+                }
+            }
         }
     }
     
     private func openSelectedProject() {
         print("프로젝트 열기")
         if selectedProject.projectName != "새 프로젝트" {
-//            projectManager.current = selectedProject
+            projectManager.current = selectedProject
             if !projectManager.path.isEmpty {
                 projectManager.currentTabItem = 0
                 projectManager.path.removeLast()
@@ -199,7 +203,7 @@ extension MenubarExtraView {
     }
     
     private func openSelectedPractice(practice: Practice) {
-//        projectManager.current = selectedProject
+        projectManager.current = selectedProject
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()
@@ -261,7 +265,7 @@ extension MenubarExtraView {
                 }
                 Text("프로젝트")
                 Picker("프로젝트", selection: $selectedProject) {
-                    ForEach(projectOptions, id: \.self) { project in
+                    ForEach(projectModels, id: \.self) { project in
                         Text("\(project.projectName)").tag(project)
                     }
                 }
@@ -288,15 +292,15 @@ extension MenubarExtraView {
     @ViewBuilder
     private var sectionPractice: some View {
         VStack(spacing: 0) {
-            if !selectedProject.practices.isEmpty {
+            if selectedProject != nil && !selectedProject.practices.isEmpty {
                 ScrollView {
                     LazyVGrid(columns: [GridItem()], spacing: 8) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
                             HStack {
-                                Text("\(practice.audioPath)")
+                                // Text("\(practice.audioPath)")
                                 Spacer()
                                 Button {
-                                    openSelectedPractice(practice: practice)
+                                    // openSelectedPractice(practice: practice)
                                 } label: {
                                     Text("자세히 보기")
                                 }
