@@ -17,6 +17,8 @@
 		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		11EF719B2ADADBA400D991E6 /* FillerWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719A2ADADBA400D991E6 /* FillerWordList.swift */; };
+		11EF719D2ADE3F0E00D991E6 /* FillerWordDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */; };
+		11EF719F2ADEAA2C00D991E6 /* FastSentReplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */; };
 		1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF672AD98A1700C1400E /* ProjectView.swift */; };
 		1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF692AD98A4000C1400E /* PracticeView.swift */; };
 		1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */; };
@@ -114,6 +116,8 @@
 		10C7D1FC2ADE12B3008691CD /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		10C7D1FF2ADE2201008691CD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		11EF719A2ADADBA400D991E6 /* FillerWordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordList.swift; sourceTree = "<group>"; };
+		11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetail.swift; sourceTree = "<group>"; };
+		11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSentReplay.swift; sourceTree = "<group>"; };
 		1D09AF672AD98A1700C1400E /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		1D09AF692AD98A4000C1400E /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
 		1D09AF6D2AD98B0100C1400E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -352,8 +356,10 @@
 			children = (
 				1D09AFA42ADA785100C1400E /* UsagePercentChart.swift */,
 				1D09AFA62ADA78A800C1400E /* UsageTopTierChart.swift */,
+				11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */,
 				1D09AFA82ADA78DF00C1400E /* SpeedAverageChart.swift */,
 				11EF719A2ADADBA400D991E6 /* FillerWordList.swift */,
+				11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */,
 			);
 			path = FeedbackCharts;
 			sourceTree = "<group>";
@@ -800,6 +806,7 @@
 				1D09AF742AD98C0900C1400E /* Date+Extension.swift in Sources */,
 				10C7D1B02ADCD42F008691CD /* Bundle+Extension.swift in Sources */,
 				1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */,
+				11EF719F2ADEAA2C00D991E6 /* FastSentReplay.swift in Sources */,
 				1D09AF9C2ADA6BBB00C1400E /* AudioControllerView.swift in Sources */,
 				1D09AF832AD9963E00C1400E /* ProjectManager.swift in Sources */,
 				1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */,
@@ -820,6 +827,7 @@
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1D09AF7C2AD9954000C1400E /* ProjectNavigationLinkView.swift in Sources */,
 				1D7A3EDD2ADCC51B0084E962 /* MyModel.swift in Sources */,
+				11EF719D2ADE3F0E00D991E6 /* FillerWordDetail.swift in Sources */,
 				1D09AF9E2ADA765000C1400E /* FeedbackChartView.swift in Sources */,
 				1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */,
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,
