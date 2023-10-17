@@ -23,28 +23,30 @@ struct UsageTopTierChart: View {
                 Text("이번 연습에서 자주 언급된 습관어에요.")
             }
             Spacer()
-            ZStack {
-                Text("\(getFillerTypeCount())가지\n")
-                + Text("습관어")
-                Chart {
-                    ForEach(getFillerCount()) { each in
-                        SectorMark(
-                            angle: .value("filler count", each.value),
-                            innerRadius: .ratio(0.6),
-                            outerRadius: .ratio(1.0),
-                            angularInset: 0
-                        )
-                        .foregroundStyle(each.color!)
+            if (useFillerWord()) {
+                ZStack {
+                    Text("\(getFillerTypeCount())가지\n")
+                    + Text("습관어")
+                    Chart {
+                        ForEach(getFillerCount()) { each in
+                            SectorMark(
+                                angle: .value("filler count", each.value),
+                                innerRadius: .ratio(0.6),
+                                outerRadius: .ratio(1.0),
+                                angularInset: 0
+                            )
+                            .foregroundStyle(each.color!)
+                        }
                     }
-                }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: 300
-                )
-                ForEach(fillerWordOffset(size: 180)) { each in
-                    Text("\(fillerWordList.defaultList[each.index])\n\(each.value)회")
-                        .multilineTextAlignment(.center)
-                        .offset(each.offset)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: 300
+                    )
+                    ForEach(fillerWordOffset(size: 180)) { each in
+                        Text("\(fillerWordList.defaultList[each.index])\n\(each.value)회")
+                            .multilineTextAlignment(.center)
+                            .offset(each.offset)
+                    }
                 }
             }
         }
@@ -74,9 +76,25 @@ struct FillerCountOffset: Identifiable {
 
 extension UsageTopTierChart {
     
+    // 습관어를 사용했는지 반환합니다.
+    func useFillerWord() -> Bool {
+        var messagesArray: [[String]] = []
+        for utterence in data.utterances {
+            messagesArray.append(utterence.message.components(separatedBy: " "))
+        }
+        for messageArray in messagesArray {
+            for message in messageArray {
+                for index in 0..<fillerWordList.defaultList.count
+                where fillerWordList.defaultList[index] == message {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
     // 습관어 사용 횟수를 '순서대로' 반환합니다.
     func getFillerCount() -> [FillerCountData] {
-        let fillerWordList = FillerWordList()
         // index에 맞게 fillerword 사용 횟수를 확인합니다.
         var fillerCount: [FillerCountData] = []
         for index in 0..<fillerWordList.defaultList.count {
@@ -114,7 +132,6 @@ extension UsageTopTierChart {
     // 사용된 습관어의 종류 수를 반환합니다.
     func getFillerTypeCount() -> Int {
         var fillerTypeCnt = 0
-        let fillerWordList = FillerWordList()
         // index에 맞게 fillerword 사용 횟수를 확인합니다.
         var fillerCount: [FillerCountData] = []
         for index in 0..<fillerWordList.defaultList.count {

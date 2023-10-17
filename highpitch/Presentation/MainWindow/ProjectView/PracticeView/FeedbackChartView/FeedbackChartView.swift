@@ -17,6 +17,7 @@ struct FeedbackChartView: View {
             ScrollView {
                 UsagePercentChart(data: $practice)
                 UsageTopTierChart(data: $practice)
+                FillerWordDetail(data: $practice)
                 SpeedAverageChart(data: $practice)
             }
             .padding(.bottom, 64)
