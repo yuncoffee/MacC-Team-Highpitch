@@ -95,9 +95,9 @@ struct UsagePercentChart: View {
 }
 
 extension UsagePercentChart {
-    // swiftlint:disable identifier_name
     
     // 습관어 사용 비율을 반환합니다.
+    // swiftlint:disable identifier_name
     func getFillerRate() -> Double {
         let fillerWordList = FillerWordList()
         

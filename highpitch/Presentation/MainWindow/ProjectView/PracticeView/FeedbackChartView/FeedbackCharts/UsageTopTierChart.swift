@@ -22,6 +22,7 @@ struct UsageTopTierChart: View {
                 Text("습관어 종류 및 횟수")
                 Text("이번 연습에서 자주 언급된 습관어에요.")
             }
+            Spacer()
             ZStack {
                 Text("\(getFillerTypeCount())가지\n")
                 + Text("습관어")
@@ -40,8 +41,11 @@ struct UsageTopTierChart: View {
                     maxWidth: .infinity,
                     maxHeight: 300
                 )
-                
-                
+                ForEach(fillerWordOffset(size: 180)) { each in
+                    Text("\(fillerWordList.defaultList[each.index])\n\(each.value)회")
+                        .multilineTextAlignment(.center)
+                        .offset(each.offset)
+                }
             }
         }
         .frame(
@@ -52,11 +56,20 @@ struct UsageTopTierChart: View {
     }
 }
 
+// 각 습관어의 사용 횟수를 기록하기 위한 구조체입니다.
 struct FillerCountData: Identifiable {
     var id = UUID()
     var index: Int
     var value: Int
     var color: Color?
+}
+
+// donut chart의 annotation offset을 설정하기 위한 구조체입니다.
+struct FillerCountOffset: Identifiable {
+    var id = UUID()
+    var index: Int
+    var value: Int
+    var offset: CGSize
 }
 
 extension UsageTopTierChart {
@@ -124,6 +137,33 @@ extension UsageTopTierChart {
             fillerTypeCnt += 1
         }
         return fillerTypeCnt
+    }
+    
+    // annotation의 offset을 반환합니다.
+    func fillerWordOffset(size: Int) -> [FillerCountOffset] {
+        var fillerCnt = getFillerCount()
+        var sumValue = 0
+        for index in fillerCnt { sumValue += index.value }
+        var radiusContainer: [Double] = []
+        for index in fillerCnt where index.value > 0 {
+            radiusContainer.append(Double(index.value) * 2.0 * 3.1415926535 / Double(sumValue))
+        }
+        print(radiusContainer)
+        var returnContainer: [FillerCountOffset] = []
+        var temp = 0.0
+        for index in 0..<radiusContainer.count {
+            returnContainer.append(
+                FillerCountOffset(
+                    index: fillerCnt[index].index, value: fillerCnt[index].value,
+                    offset:
+                        CGSize(
+                            width: Double(size) * cos((temp + radiusContainer[index] / 2) - 3.1415926535 / 2),
+                            height: 
+                                Double(size) * sin((temp + radiusContainer[index] / 2) - 3.1415926535 / 2)))
+                        )
+            temp += radiusContainer[index]
+        }
+        return returnContainer
     }
 }
 
