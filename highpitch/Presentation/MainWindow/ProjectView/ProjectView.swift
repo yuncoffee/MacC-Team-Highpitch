@@ -74,6 +74,7 @@ extension ProjectView {
         }
         .padding(.horizontal, 64)
         .frame(maxWidth: .infinity , minHeight: 60, maxHeight: 60, alignment: .bottomLeading)
+        .background(Color.HPGray.systemWhite)
         .border(Color.HPPrimary.light.opacity(0.25), width: 1, edges: [.bottom])
     }
     
@@ -88,7 +89,10 @@ extension ProjectView {
                 PracticesTabItem()
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.top, 28)
+        .padding(.horizontal, 64)
+        .padding(.bottom, 38)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 

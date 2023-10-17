@@ -123,7 +123,9 @@ extension Color {
         /// #F4F9EB, 1
         static let appropriateSpeed = Color.appropriatespeed
         /// #FAF9FD, 1
-        static let mainWindowSidebarBackground = Color("FAF9FD")
+        static let mainWindowSidebarBackground = Color("F8F5FF")
         static let mainWindowDetailsBackground = Color("FCFBFF")
+        static let shadowColor = Color("9A8ADA").opacity(0.07)
+        static let shadowBlackColor = Color("000000").opacity(0.1)
     }
 }

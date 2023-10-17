@@ -86,6 +86,7 @@ extension MainWindowView {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(Color.HPComponent.mainWindowDetailsBackground)
             .ignoresSafeArea()
         } else {
             emptyProject
