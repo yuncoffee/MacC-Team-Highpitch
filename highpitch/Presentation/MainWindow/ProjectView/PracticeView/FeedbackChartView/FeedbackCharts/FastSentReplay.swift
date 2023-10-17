@@ -13,16 +13,18 @@ struct FastSentReplay: View {
     @State var disclosureToggle = false
     
     var body: some View {
-        Text("빠르게 말한 구간 듣기")
-            .onTapGesture {
-                disclosureToggle.toggle()
-            }
-        if disclosureToggle {
-            ForEach(outOfRangeEPM()) { each in
-                Text("\(each.message)")
-                    .onTapGesture {
-                        print(each.index)
-                    }
+        if outOfRangeEPM().count != 0 {
+            Text("빠르게 말한 구간 듣기")
+                .onTapGesture {
+                    disclosureToggle.toggle()
+                }
+            if disclosureToggle {
+                ForEach(outOfRangeEPM()) { each in
+                    Text("\(each.message)")
+                        .onTapGesture {
+                            print(each.index)
+                        }
+                }
             }
         }
     }
