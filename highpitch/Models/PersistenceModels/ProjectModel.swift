@@ -23,30 +23,3 @@ class ProjectModel {
         self.keynoteCreation = keynoteCreation
     }
 }
-
-@Model
-class PracticeModel {
-    var practiceName: String
-    var creatAt: String
-    var audioPath: URL?
-    @Relationship(deleteRule: .cascade) var utterances = [UtteranceModel]()
-    
-    init(practiceName: String, creatAt: String, audioPath: URL? = nil) {
-        self.practiceName = practiceName
-        self.creatAt = creatAt
-        self.audioPath = audioPath
-    }
-}
-
-@Model
-class UtteranceModel {
-    var startAt: Int
-    var duration: Int
-    var message: String
-        
-    init(startAt: Int, duration: Int, message: String) {
-        self.startAt = startAt
-        self.duration = duration
-        self.message = message
-    }
-}
