@@ -7,13 +7,7 @@ enum RZError: String, Error {
     case jsonParsingErr
     case fileNonExist
 }
-struct TokenData: Codable {
-    var token:String
-    var expried:Date
-}
-struct Result1 {
-    let utternces:[Utterance]
-}
+
 struct ReturnzeroAPI {
     let keyChainManager = KeychainManager()
     let returnZero_CLIENT_ID = Bundle().returnZeroClientId
@@ -22,13 +16,12 @@ struct ReturnzeroAPI {
     let tranUrl = "https://openapi.vito.ai/v1/transcribe"
     
     
-    
-    func getResult(filePath: String)async throws -> [Utterance]{
+    func getResult(filePath: String)async throws -> [Utterance] {
         let id = try await setTranscribe(filePath: filePath)
         return try await waitForAPIResult(transId: id)
     }
     
-     private func getToken() async throws -> TokenData{
+     private func getToken() async throws -> TokenData {
         var request = URLRequest(url: URL(string: authUrl)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -38,30 +31,29 @@ struct ReturnzeroAPI {
 
         request.httpBody = bodyData.data(using: .utf8)
         
-        
         let (data,response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else{
+              httpResponse.statusCode == 200 else {
             throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
               let token = jsonObject["access_token"] as? String,
               let expired = jsonObject["expire_at"] as? Double
-        else{
+        else {
             print("err")
             throw RZError.jsonParsingErr
         }
         return TokenData(token: token, expried: Date(timeIntervalSince1970: expired))
     }
     
-    private func isAuth() async throws -> String{
-         guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else{
+    private func isAuth() async throws -> String {
+         guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else {
              throw RZError.networkErr
          }
-         if(Date.now.compare(token.expried).rawValue < 0){
+         if(Date.now.compare(token.expried).rawValue < 0) {
              return token.token
          }
-         else{
+         else {
              let accessToken = try await getToken()
              try keyChainManager.save(data: accessToken, forKey: .rzToken)
              return accessToken.token
@@ -139,7 +131,7 @@ struct ReturnzeroAPI {
 
     }
     // 파일 경로 -> 트랜스크라이브만 반환
-    private func getTranscribe(transId: String) async throws -> [Utterance]?{
+    private func getTranscribe(transId: String) async throws -> [Utterance]? {
         let jwtToken = try await isAuth()
         guard let url = URL(string: tranUrl + "/" + "\(transId)") else{
             throw RZError.jsonParsingErr
@@ -168,18 +160,18 @@ struct ReturnzeroAPI {
                       let utterances = results["utterances"] as? [[String: Any]] else {
                     throw RZError.jsonParsingErr
                 }
-                var utteranceList = try utterances.map { utterance in
+                let utteranceList = try utterances.map { utterance in
                     guard let startAt = utterance["start_at"] as? Int,
                            let duration = utterance["duration"] as? Int,
                            let message = utterance["msg"] as? String
-                    else{
+                    else {
                         throw RZError.jsonParsingErr
                     }
                     return Utterance(startAt: startAt, duration: duration, message: message)
                 }
                 return utteranceList
             }
-            else{
+            else {
                 return nil
             }
         }
