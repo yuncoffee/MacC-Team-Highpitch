@@ -33,6 +33,10 @@ struct MainWindowView: View {
         projectManager.current
     }
     
+    private var testSelected: Project? {
+        projectManager.testCurrent
+    }
+    
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             navigationSidebar
@@ -53,9 +57,9 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
         // 쿼리해온 데이터에서 맨 앞 데이터 선택
-        //        let projects = fileSystemManager.loadProjects()
-        //            projectManager.projects = projects
-        //            projectManager.current = projects[0]
+                let projects = fileSystemManager.loadProjects()
+                    projectManager.testProjects = projects
+                    projectManager.testCurrent = projects[0]
     }
 }
 
@@ -79,7 +83,7 @@ extension MainWindowView {
     // MARK: - navigationDetails
     @ViewBuilder
     var navigationDetails: some View {
-        if selected != nil {
+        if testSelected != nil {
             VStack(alignment: .leading, spacing: 0) {
                 projectToolbar
                 VStack {

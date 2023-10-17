@@ -14,7 +14,7 @@ struct PracticesTabItem: View {
     var body: some View {
         @Bindable var projectManager = projectManager
         NavigationStack(path: $projectManager.path) {
-            if let project = projectManager.current {
+            if let project = projectManager.testCurrent {
                 List(Array(project.practices), id: \.id) { practice in
                     VStack {
                         Text("연습카드")

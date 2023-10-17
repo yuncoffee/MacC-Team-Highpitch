@@ -15,4 +15,6 @@ final class ProjectManager {
     var current: ProjectModel?
     var currentTabItem = 1
     var path: NavigationPath = .init()
+    var testCurrent: Project?
+    var testProjects: [Project]?
 }

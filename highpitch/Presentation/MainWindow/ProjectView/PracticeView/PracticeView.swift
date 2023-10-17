@@ -45,10 +45,7 @@ import SwiftUI
  10초 뒤로 구현
  */
 
-struct PracticeView: View {
-    @Environment(ProjectManager.self)
-    private var projectManager
-    
+struct PracticeView: View {    
     @State 
     var practice: Practice
 
@@ -64,14 +61,13 @@ struct PracticeView: View {
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
         .border(.red, width: 2)
-        //        .navigationBarBackButtonHidden()
         .ignoresSafeArea()
-        .onAppear {
-            print(projectManager.current)
-        }
-        .onChange(of: projectManager.current) { oldValue, newValue in
-            print(newValue)
-        }
+//        .onAppear {
+//            print(projectManager.current)
+//        }
+//        .onChange(of: projectManager.current) { oldValue, newValue in
+//            print(newValue)
+//        }
     }
 }
 
@@ -98,9 +94,9 @@ extension PracticeView {
     }
 }
 
-// #Preview {
-//    @State
-//    var mockHuman = MockHuman(name: "444", ages: 40)
-//    
-//    return PracticeView(mock: mockHuman)
-// }
+ #Preview {
+    @State
+    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+    
+    return PracticeView(practice: practice)
+ }
