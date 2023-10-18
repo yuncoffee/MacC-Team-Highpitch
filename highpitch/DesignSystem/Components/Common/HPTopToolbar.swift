@@ -34,7 +34,7 @@ struct HPTopToolbar: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            VStack {
+            VStack(spacing: 0) {
                 Text("\(title)")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPTextStyle.darkness)

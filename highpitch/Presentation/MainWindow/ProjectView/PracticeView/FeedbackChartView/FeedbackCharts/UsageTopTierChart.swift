@@ -35,9 +35,20 @@ struct UsageTopTierChart: View {
         VStack(alignment:.leading, spacing: 0) {
             header
             GeometryReader { geometry in
+                let breakPoint: (chartSize: CGFloat, offset: CGFloat) = if geometry.size.width < 320 {
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/3)
+                } else if geometry.size.width < 500 {
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/2.3)
+                } else if geometry.size.width > 999 {
+                    (chartSize: maxHeight, offset: geometry.size.height/1.7)
+                } else {
+                    (chartSize: maxHeight * 0.6, offset: geometry.size.height/2)
+                }
+                
                 if (useFillerWord()) {
                     ZStack {
                         VStack(spacing: 0) {
+                            Text("width: \(geometry.size.width)")
                             Text("\(getFillerTypeCount())가지")
                                 .systemFont(.title)
                                 .foregroundStyle(Color.HPPrimary.base)
@@ -62,12 +73,12 @@ struct UsageTopTierChart: View {
                         .chartAngleSelection(value: $selectedIndex)
                         .scaledToFit()
                         .frame(
-                            maxWidth: maxHeight * 0.6,
-                            maxHeight: maxHeight * 0.6,
+                            maxWidth: breakPoint.chartSize,
+                            maxHeight: breakPoint.chartSize,
                             alignment: .center
                         )
                         ForEach(
-                            Array(fillerWordOffset(size: geometry.size.height/2).enumerated()),
+                            Array(fillerWordOffset(size: breakPoint.offset).enumerated()),
                             id: \.self.1.id) { index, each in
                             VStack(spacing: .HPSpacing.xxxxsmall) {
                                 Text("\(fillerWordList.defaultList[each.index])")

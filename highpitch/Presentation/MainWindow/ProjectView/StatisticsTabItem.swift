@@ -20,10 +20,10 @@ struct StatisticsTabItem: View {
     
     var body: some View {
         let practiceCount = Optional(1)// projectManager.current?.practices.count
-        VStack(alignment:.leading) {
+        VStack(alignment:.leading, spacing: 0) {
             if let practiceCount = practiceCount {
                 let practiceDuration = "2023.01.01 ~ 2023.01.07"
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 0) {
                     Text("총 \(practiceCount)번의 연습에 대한 결과예요")
                         .systemFont(.largeTitle)
                         .foregroundStyle(Color.HPTextStyle.darker)
@@ -31,21 +31,17 @@ struct StatisticsTabItem: View {
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.base)
                 }
-                .padding(.bottom, .HPSpacing.xxsmall)
+                .padding(.bottom, .HPSpacing.xsmall)
                 HStack(spacing: .HPSpacing.xsmall) {
                     averageLevelCard
                     bestLvelPracticeCard
                 }
-                // TODO: - Padding
-                .padding(.bottom, 18)
+                .padding(.bottom, .HPSpacing.xxsmall)
                 /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
                 averageGraph
             } else {
                 emptyView
             }
-        }
-        .onChange(of: selectedGraph) { oldValue, newValue in
-            print(newValue)
         }
     }
 }
@@ -65,7 +61,7 @@ extension StatisticsTabItem {
         let MAX_LEVEL = 5.description
         /// 결과 요약
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
+            VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 2) {
                     Text("총 평균 레벨")
                         .systemFont(.body)
@@ -91,10 +87,8 @@ extension StatisticsTabItem {
                     }
                 }
             }
-            // TODO: - Padding
-            .padding(.vertical, 18)
-            .padding(.leading, .HPSpacing.xxsmall * 3)
-            .padding(.trailing, .HPSpacing.xxsmall)
+            .padding(.vertical, .HPSpacing.xsmall)
+            .padding(.horizontal, .HPSpacing.medium)
             .frame(minHeight:96, maxHeight: 96, alignment: .leading)
             .background(Color.HPGray.systemWhite)
             .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -110,7 +104,7 @@ extension StatisticsTabItem {
         let speed: String = 138.description
         let MAX_LEVEL = 5.description
         /// 최고 카드
-        VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 2) {
                 HStack(spacing: 0) {
                     Text("내 최고 연습 회차는")

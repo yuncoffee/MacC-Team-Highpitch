@@ -36,6 +36,7 @@ extension FeedbackChartView {
             Text("연습 요약보기")
                 .systemFont(.largeTitle)
                 .foregroundStyle(Color.HPTextStyle.darker)
+                .background(Color.blue)
             Text("이번 연습에서 사용한 습관어")
                 .systemFont(.subTitle)
                 .foregroundStyle(Color.HPTextStyle.darker)

@@ -152,10 +152,6 @@ extension UsagePercentChart {
         // nn%, 늘었어요, 적절했어요 로직 추가되어야 합니다.
         // 지난 연습과 상위 10% 결과 반환하는 로직 추가되어야 합니다.
         // 지난 연습과 상위 10% 결과를 바탕으로 높이를 연산하는 로직 추가되어야 합니다.
-        Text("습관어 사용 비율")
-            .systemFont(.subTitle)
-            .foregroundStyle(Color.HPTextStyle.darker)
-            .padding(.bottom, .HPSpacing.xxxsmall)
         Group {
             Text("지난 연습 대비 습관어 사용 비율이 ")
             + Text("nn% 늘었어요.")

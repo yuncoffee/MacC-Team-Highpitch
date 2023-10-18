@@ -29,6 +29,7 @@ struct HPSystemFontModifier: ViewModifier {
                 relativeTo: style.relateTo)
             )
             .lineSpacing(style.lineHeight)
+            .padding(.vertical, (style.fontSize*2 - style.fontSize*1.48)/2)
     }
 }
 
@@ -83,23 +84,23 @@ extension FoundationTypoSystemFont {
     var lineHeight: CGFloat {
         switch self {
         case .largeTitle:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
         case .title:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
         case .subTitle:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
 //        case .headline:
 //            return (26 - self.fontSize) / 2
 //        case .subHeadline:
 //            return (24 - self.fontSize) / 2
         case .body:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
         case .footnote:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
         case .caption:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return (self.fontSize*1.68 - self.fontSize)/2
         case .caption2:
-            return ((self.fontSize*1.48) - self.fontSize) / 2
+            return ((self.fontSize*1.68) - self.fontSize) / 2
         }
     }
     
