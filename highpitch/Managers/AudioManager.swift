@@ -4,12 +4,8 @@
 //
 //  Created by musung on 10/17/23.
 //
-/*
-import AVFoundation
 
-enum AudioError: Error {
-    case audioNotFoundErr
-}
+import AVFoundation
 
 class AudioRecorderManager: NSObject, AVAudioPlayerDelegate {
     /// 음성메모 녹음 관련 프로퍼티
@@ -17,7 +13,6 @@ class AudioRecorderManager: NSObject, AVAudioPlayerDelegate {
     
     /// 음성메모 재생 관련 프로퍼티
     var audioPlayer: AVAudioPlayer?
-    
 }
 
 // MARK: - 음성메모 녹음 관련 메서드
@@ -98,6 +93,5 @@ extension AudioRecorderManager {
     func getDuration() -> Double {
         return audioPlayer?.duration ?? 0
     }
-    
 }
-*/
+

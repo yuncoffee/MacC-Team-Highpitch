@@ -1,7 +1,6 @@
 import Foundation
 import Security
 
-
 enum RZError: String, Error {
     case networkErr
     case jsonParsingErr
@@ -52,20 +51,19 @@ struct ReturnzeroAPI {
          }
          if(Date.now.compare(token.expried).rawValue < 0) {
              return token.token
-         }
-         else {
+         } else {
              let accessToken = try await getToken()
              try keyChainManager.save(data: accessToken, forKey: .rzToken)
              return accessToken.token
          }
     }
-    //파일이 있는지, 확장자 체크하는 로직
+
     private func fileExists(atPath path: String) -> Bool {
         let fileManager = FileManager.default
         return fileManager.fileExists(atPath: path)
     }
     
-    private  func setTranscribe(filePath: String) async throws ->String {
+    private  func setTranscribe(filePath: String) async throws -> String {
         let apiUrl = tranUrl
         let filePath = filePath
         if(!fileExists(atPath: filePath)) {throw RZError.fileNonExist}
@@ -99,8 +97,8 @@ struct ReturnzeroAPI {
         // 파일 데이터 추가
         if let fileData = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            body.append("Content-Disposition: form-data; name=\"file\"; filename=\"fight.m4a\"\r\n".data(using: .utf8)!)
-                                                       // ************* filename=\"파일이름.확장자\"~~로 수정
+            body.append("Content-Disposition: form-data; name=\"file\"; filename=\"fight.m4a\"\r\n"
+                .data(using: .utf8)!)
             body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
             body.append(fileData)
             body.append("\r\n".data(using: .utf8)!)
@@ -120,11 +118,11 @@ struct ReturnzeroAPI {
         
         let (data,response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else{
+              httpResponse.statusCode == 200 else {
             throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-              let transcribeId = jsonObject["id"] as? String else{
+              let transcribeId = jsonObject["id"] as? String else {
             throw RZError.jsonParsingErr
         }
         return transcribeId
@@ -133,7 +131,7 @@ struct ReturnzeroAPI {
     // 파일 경로 -> 트랜스크라이브만 반환
     private func getTranscribe(transId: String) async throws -> [Utterance]? {
         let jwtToken = try await isAuth()
-        guard let url = URL(string: tranUrl + "/" + "\(transId)") else{
+        guard let url = URL(string: tranUrl + "/" + "\(transId)") else {
             throw RZError.jsonParsingErr
         }
             var request = URLRequest(url: url)
@@ -146,16 +144,16 @@ struct ReturnzeroAPI {
             
             let (data,response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else{
+                  httpResponse.statusCode == 200 else {
                 throw RZError.networkErr
             }
             guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else{
                 throw RZError.jsonParsingErr
             }
-            guard let status = jsonObject["status"] as? String else{
+            guard let status = jsonObject["status"] as? String else {
                 throw RZError.jsonParsingErr
             }
-            if(status == "completed"){
+            if(status == "completed") {
                 guard let results = jsonObject["results"] as? [String: Any],
                       let utterances = results["utterances"] as? [[String: Any]] else {
                     throw RZError.jsonParsingErr
