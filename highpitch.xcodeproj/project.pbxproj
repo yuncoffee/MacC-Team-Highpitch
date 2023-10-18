@@ -368,8 +368,8 @@
 				1D09AFA62ADA78A800C1400E /* UsageTopTierChart.swift */,
 				11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */,
 				1D09AFA82ADA78DF00C1400E /* SpeedAverageChart.swift */,
-				11EF719A2ADADBA400D991E6 /* FillerWordList.swift */,
 				11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */,
+				11EF719A2ADADBA400D991E6 /* FillerWordList.swift */,
 			);
 			path = FeedbackCharts;
 			sourceTree = "<group>";
