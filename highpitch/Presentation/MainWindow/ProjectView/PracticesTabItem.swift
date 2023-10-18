@@ -40,7 +40,7 @@ struct PracticesTabItem: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    PracticesTabItem()
 //        .environment(ProjectManager())
-//}
+// }

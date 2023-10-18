@@ -212,7 +212,7 @@ extension UsagePercentChart {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return UsagePercentChart(data: $practice)
-}
+// #Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return UsagePercentChart(data: $practice)
+// }

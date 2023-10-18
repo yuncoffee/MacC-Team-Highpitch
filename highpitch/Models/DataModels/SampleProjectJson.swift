@@ -16,10 +16,12 @@ struct SampleProjectJson: Codable {
         var duration: Int
         var message: String
         
+        // swiftlint: disable nesting
         enum CodingKeys: String, CodingKey {
             case startAt = "start_at"
             case duration = "duration"
             case message = "msg"
         }
+        // swiftlint: enable nesting
     }
 }

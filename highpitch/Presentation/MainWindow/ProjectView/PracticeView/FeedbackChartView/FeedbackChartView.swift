@@ -47,8 +47,8 @@ extension FeedbackChartView {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return FeedbackChartView(practice: $practice)
-}
+//
+// #Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return FeedbackChartView(practice: $practice)
+// }

@@ -40,7 +40,7 @@ struct AuthManager {
        }
        return token
    }
-    func login(userId: String, userPw: String)async throws{
+    func login(userId: String, userPw: String)async throws {
         let token = try await getToken(userId: userId, userPw: userPw)
         try keychainManager.save(data: token, forKey: .authToken)
     }

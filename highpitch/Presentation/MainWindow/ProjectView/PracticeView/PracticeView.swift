@@ -55,7 +55,9 @@ struct PracticeView: View {
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
-            practiceHeader
+            let title = "n번째 연습"
+            let date = "날짜짜짜"
+            HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
@@ -66,16 +68,22 @@ struct PracticeView: View {
         .background(Color.HPComponent.mainWindowDetailsBackground)
         .ignoresSafeArea()
         .onAppear {
-            print(projectManager.current)
             practice.utterances.sort { $0.startAt < $1.startAt }
-        }
-        .onChange(of: projectManager.current) { oldValue, newValue in
-            print(newValue)
         }
     }
 }
 
 extension PracticeView {
+    @ViewBuilder
+    private var practiceHeader: some View {
+        HStack {
+            Text("n번째 연습")
+            Text("연습 시간")
+        }
+        .frame(maxWidth: .infinity, maxHeight: 100)
+        .border(.red, width: 2)
+    }
+    
     @ViewBuilder
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
@@ -89,9 +97,9 @@ extension PracticeView {
     }
 }
 
- #Preview {
-    @State
-    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    
-    return PracticeView(practice: practice)
- }
+// #Preview {
+//    @State
+//    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    
+//    return PracticeView(practice: practice)
+// }
