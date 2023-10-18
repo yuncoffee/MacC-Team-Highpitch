@@ -48,6 +48,8 @@ import SwiftUI
 struct PracticeView: View {
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(MediaManager.self)
+    private var mediaManager
     
     @State 
     var practice: PracticeModel
@@ -55,8 +57,8 @@ struct PracticeView: View {
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
-            let title = "n번째 연습"
-            let date = "날짜짜짜"
+            let title = practice.practiceName.description
+            let date = practice.creatAt.description
             HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
@@ -74,16 +76,6 @@ struct PracticeView: View {
 }
 
 extension PracticeView {
-    @ViewBuilder
-    private var practiceHeader: some View {
-        HStack {
-            Text("n번째 연습")
-            Text("연습 시간")
-        }
-        .frame(maxWidth: .infinity, maxHeight: 100)
-        .border(.red, width: 2)
-    }
-    
     @ViewBuilder
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {

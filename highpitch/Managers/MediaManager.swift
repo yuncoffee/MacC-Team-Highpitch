@@ -25,6 +25,7 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     var audioRecorder: AVAudioRecorder?
     
     /// 음성메모 재생 관련 프로퍼티
+    /// audioPlayer.currentTime을 통해서 음성 이동하기
     var audioPlayer: AVAudioPlayer?
     
     var fileName: String = ""
