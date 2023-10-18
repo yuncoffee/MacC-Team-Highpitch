@@ -20,10 +20,12 @@ struct FastSentReplay: View {
                 }
             if disclosureToggle {
                 ForEach(outOfRangeEPM()) { each in
-                    Text("\(each.message)")
-                        .onTapGesture {
-                            print(each.index)
-                        }
+                    if each.value > 400.0 {
+                        Text("\(each.message)")
+                            .onTapGesture {
+                                print(each.index)
+                            }
+                    }
                 }
             }
         }
@@ -90,12 +92,6 @@ extension FastSentReplay {
         }
         // 문장별 EPM에서 기준값 이상이 되지 않는 값은 제거합니다.
         var returnEPMCount = EPMCount.sorted(by: {$0.value > $1.value})
-        
-        // MARK: 용팔이가 수정해줘 용팔이가 수정해줘 용팔이가 수정해줘
-        while returnEPMCount.last!.value < 400.0 {
-            _ = returnEPMCount.popLast()
-        }
-        // MARK: 용팔이가 수정해줘 용팔이가 수정해줘 용팔이가 수정해줘
         return returnEPMCount
     }
 }

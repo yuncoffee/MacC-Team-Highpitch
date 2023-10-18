@@ -31,7 +31,13 @@ struct ScriptView: View {
     }
 }
 
-//#Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return ScriptView(practice: $practice)
-//}
+// message, startAt, 
+struct SentenceData: Identifiable {
+    var id = UUID()
+    
+}
+
+extension ScriptView {
+    
+    
+}
