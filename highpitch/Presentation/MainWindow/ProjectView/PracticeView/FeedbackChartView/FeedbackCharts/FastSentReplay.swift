@@ -49,7 +49,7 @@ extension FastSentReplay {
         var tempString = ""
         var tempStartAt = -1
         var tempDuration = 0
-        for utterence in data.utterances {
+        for utterence in data.utterances.sorted() {
             if (tempString != "") {
                 tempString += " "
             }
