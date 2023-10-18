@@ -15,6 +15,29 @@ extension View {
     ) -> some View {
         modifier(HPSystemFontModifier(style: style, weight: weight))
     }
+    
+    func styledFont(
+        _ style: HPStyledFont,
+        weight: FoundationTypoSystemFont.FontWeight? = nil
+    ) -> some View {
+        modifier(HPStyledFontModifier(style: style, weight: weight))
+    }
+}
+
+struct HPStyledFontModifier: ViewModifier {
+    var style: HPStyledFont
+    var weight: FoundationTypoSystemFont.FontWeight?
+    
+    func body(content: Content) -> some View {
+        content
+            .font(Font.custom(
+                weight?.fontName ?? style.fontWeight.fontName,
+                size: style.fontSize,
+                relativeTo: style.relateTo)
+            )
+            .lineSpacing(style.lineHeight)
+            .padding(.vertical, (style.fontSize*2 - style.fontSize*1.48)/2)
+    }
 }
 
 struct HPSystemFontModifier: ViewModifier {
@@ -30,6 +53,37 @@ struct HPSystemFontModifier: ViewModifier {
             )
             .lineSpacing(style.lineHeight)
             .padding(.vertical, (style.fontSize*2 - style.fontSize*1.48)/2)
+    }
+}
+
+enum HPStyledFont {
+    case largeTitleLv
+}
+
+extension HPStyledFont {
+    var fontSize: CGFloat {
+        switch self {
+        case .largeTitleLv:
+            28
+        }
+    }
+    var lineHeight: CGFloat {
+        switch self {
+        case .largeTitleLv:
+            ((self.fontSize*1.68) - self.fontSize) / 2
+        }
+    }
+    var fontWeight: FoundationTypoSystemFont.FontWeight {
+        switch self {
+        case .largeTitleLv:
+            .bold
+        }
+    }
+    var relateTo: Font.TextStyle {
+        switch self {
+        case .largeTitleLv:
+            .largeTitle
+        }
     }
 }
 
