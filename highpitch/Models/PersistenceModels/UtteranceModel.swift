@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class UtteranceModel {
+class UtteranceModel: Comparable {
     var startAt: Int
     var duration: Int
     var message: String
@@ -18,5 +18,9 @@ class UtteranceModel {
         self.startAt = startAt
         self.duration = duration
         self.message = message
+    }
+    
+    static func < (lhs: UtteranceModel, rhs: UtteranceModel) -> Bool {
+        return lhs.startAt < rhs.startAt
     }
 }
