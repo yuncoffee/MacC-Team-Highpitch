@@ -88,6 +88,8 @@
 		434FE5A92ADA5C760005645F /* test1_response.txt in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A32ADA5C750005645F /* test1_response.txt */; };
 		434FE5AA2ADA5C760005645F /* test1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A42ADA5C750005645F /* test1.m4a */; };
 		434FE5AB2ADA5C760005645F /* test2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A52ADA5C760005645F /* test2.m4a */; };
+		43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */; };
+		43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,6 +191,8 @@
 		434FE5A32ADA5C750005645F /* test1_response.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1_response.txt; sourceTree = "<group>"; };
 		434FE5A42ADA5C750005645F /* test1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.m4a; sourceTree = "<group>"; };
 		434FE5A52ADA5C760005645F /* test2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.m4a; sourceTree = "<group>"; };
+		43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModel.swift; sourceTree = "<group>"; };
+		43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtteranceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -467,6 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				1D8C5AEF2AD7BB3200B01F10 /* ProjectModel.swift */,
+				43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */,
+				43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */,
 				1D30E6192AD59E5E00623A58 /* SampleModel */,
 			);
 			path = PersistenceModels;
@@ -829,6 +835,8 @@
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
+				43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */,
+				43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */,
 				1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */,
 				1D0ECD7A2ADDA35400B95A74 /* HPTopToolbar.swift in Sources */,
 				1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */,

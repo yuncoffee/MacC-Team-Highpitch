@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScriptView: View {
     @Binding
-    var practice: Practice
+    var practice: PracticeModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -31,7 +31,7 @@ struct ScriptView: View {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return ScriptView(practice: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return ScriptView(practice: $practice)
+//}

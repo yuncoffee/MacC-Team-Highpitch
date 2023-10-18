@@ -50,7 +50,7 @@ struct PracticeView: View {
     private var projectManager
     
     @State 
-    var practice: Practice
+    var practice: PracticeModel
 
     var body: some View {
         VStack(spacing: 0) {

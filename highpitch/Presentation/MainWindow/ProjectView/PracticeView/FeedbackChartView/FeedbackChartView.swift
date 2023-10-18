@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FeedbackChartView: View {
     @Binding
-    var practice: Practice
+    var practice: PracticeModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,7 +29,7 @@ struct FeedbackChartView: View {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return FeedbackChartView(practice: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return FeedbackChartView(practice: $practice)
+//}
