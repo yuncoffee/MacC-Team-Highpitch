@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 class PracticeModel {
+    var uuid: UUID = UUID()
     var practiceName: String
     var creatAt: String
     var audioPath: URL?

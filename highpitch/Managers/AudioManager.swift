@@ -6,17 +6,13 @@
 //
 
 import AVFoundation
-enum AudioError: Error {
-    case audioNotFoundErr
-}
 
 class AudioRecorderManager: NSObject, AVAudioPlayerDelegate {
-/// 음성메모 녹음 관련 프로퍼티
-var audioRecorder: AVAudioRecorder?
-
-/// 음성메모 재생 관련 프로퍼티
-var audioPlayer: AVAudioPlayer?
-
+    /// 음성메모 녹음 관련 프로퍼티
+    var audioRecorder: AVAudioRecorder?
+    
+    /// 음성메모 재생 관련 프로퍼티
+    var audioPlayer: AVAudioPlayer?
 }
 
 // MARK: - 음성메모 녹음 관련 메서드
@@ -25,12 +21,12 @@ extension AudioRecorderManager {
         //MARK: 파일 이름 전략은 추후에 확정
         let fileURL = getPath(fileName: "test")
         let settings = [
-        AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-        AVSampleRateKey: 12000,
-        AVNumberOfChannelsKey: 1,
-        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
-
+        
         do {
             audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
             audioRecorder?.record()
@@ -38,11 +34,11 @@ extension AudioRecorderManager {
             print("녹음 중 오류 발생: \(error.localizedDescription)")
         }
     }
-
+    
     func stopRecording() {
         audioRecorder?.stop()
     }
-
+    
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -74,11 +70,11 @@ extension AudioRecorderManager {
     func stopPlaying() {
         audioPlayer?.stop()
     }
-
+    
     func pausePlaying() {
         audioPlayer?.pause()
     }
-
+    
     func resumePlaying() {
         audioPlayer?.play()
     }
@@ -97,5 +93,5 @@ extension AudioRecorderManager {
     func getDuration() -> Double {
         return audioPlayer?.duration ?? 0
     }
-
 }
+
