@@ -13,7 +13,7 @@ struct ScriptView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            List(practice.utterances, id: \.id) { utterance in
+            List(practice.utterances.sorted(), id: \.id) { utterance in
                 HStack {
                     Text("\(utterance.message)")
                     Spacer()

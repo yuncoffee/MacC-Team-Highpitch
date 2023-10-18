@@ -68,6 +68,7 @@ struct PracticeView: View {
         .ignoresSafeArea()
         .onAppear {
             print(projectManager.current)
+            practice.utterances.sort { $0.startAt < $1.startAt }
         }
         .onChange(of: projectManager.current) { oldValue, newValue in
             print(newValue)
