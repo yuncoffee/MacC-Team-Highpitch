@@ -135,7 +135,7 @@ extension MenubarExtraView {
             let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
             if case .boolResult(let isKeynoteOpen) = result {
                 // logic 2
-//                print(isKeynoteOpen)
+                //                print(isKeynoteOpen)
                 keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
             }
         }
@@ -199,7 +199,6 @@ extension MenubarExtraView {
             
             // 녹음파일 저장할 fileName 정하고, 녹음 시작!!!
             mediaManager.fileName = mediaManager.currentDateTimeString()
-            print("mediaManager.fileName = ", mediaManager.fileName)
             mediaManager.startRecording()
         } else {
             print("녹음 종료")
@@ -208,15 +207,13 @@ extension MenubarExtraView {
             // 녹음 중지!
             mediaManager.stopRecording()
             // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
-            print("After Recording mediaManager.fileName = ", mediaManager.fileName)
+            // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
             // ReturnZero API를 이용해서 UtteranceModel완성
             Task {
-                print("mediaManager.getPath =", mediaManager.getPath(fileName: mediaManager.fileName).path())
-                // 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다
+                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
                 var tempUtterances: [Utterance] = try await ReturnzeroAPI()
                     .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-                // 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다
-                print("mediaManager.getPath = ", mediaManager.getPath(fileName: mediaManager.fileName).absoluteString)
+                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
                 var newUtteranceModels: [UtteranceModel] = []
                 
                 for tempUtterance in tempUtterances {
@@ -393,7 +390,7 @@ extension MenubarExtraView {
 // MARK: Date.now() -> String으로 변환하는 함수들
 extension MenubarExtraView {
     
-    //MediaManager밑에 있는 fileName을 통해서 연습하기 탭에 띄울 날짜 생성
+    // MediaManager밑에 있는 fileName을 통해서 연습하기 탭에 띄울 날짜 생성
     func fileNameDateToPracticeDate(input: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -410,7 +407,7 @@ extension MenubarExtraView {
         }
     }
     
-    //MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
+    // MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
     func fileNameDateToCreateAtDate(input: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyyMMddHHmmss"
