@@ -133,10 +133,7 @@ extension ScriptView {
                     duration: tempDuration,
                     message: tempString
                 ))
-                tempString = ""
-                tempStartAt = -1
-                tempDuration = 0
-                temp = 0
+                tempString = ""; tempStartAt = -1; tempDuration = 0; temp = 0
             }
         }
         var returnData: [WordData] = []
