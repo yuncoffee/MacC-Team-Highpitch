@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PracticesTabItem: View {
     @Environment(ProjectManager.self)
@@ -15,12 +16,21 @@ struct PracticesTabItem: View {
         @Bindable var projectManager = projectManager
         NavigationStack(path: $projectManager.path) {
             if let project = projectManager.current {
-                List(Array(project.practices), id: \.id) { practice in
-                    VStack {
-                        Text("연습카드")
-                        NavigationLink("연습 상세보기", value: practice)
+                List {
+                    ForEach(Array(project.practices.enumerated()).reversed(), id: \.element.id) { index, practice in
+                        VStack {
+                            let reversedIndex = project.practices.count - index
+                            Text(practice.creatAt)
+                            NavigationLink("\(index)번째 연습 상세보기", value: practice)
+                        }
                     }
-                }
+                    // MARK: 연습 삭제하기 버튼 임시로 만들었습니다. 순서 상관없이 인덱스 0번째꺼 지우는 코드니깐 나중에 수정 필요!!
+                    .contextMenu {
+                        Button("delete") {
+                            projectManager.current?.practices.remove(at: 0)
+                        }
+                    }
+                 }
                 .navigationDestination(for: PracticeModel.self) { practice in
                     PracticeView(practice: practice)
                 }
@@ -30,7 +40,7 @@ struct PracticesTabItem: View {
     }
 }
 
-#Preview {
-    PracticesTabItem()
-        .environment(ProjectManager())
-}
+//#Preview {
+//    PracticesTabItem()
+//        .environment(ProjectManager())
+//}

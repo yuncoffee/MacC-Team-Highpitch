@@ -21,14 +21,14 @@ struct ProjectNavigationLink: View {
     var projects: [ProjectModel]
     
     var body: some View {
-        // TODO: - Padding
+//    TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
             Text("프로젝트 이름")
                 .systemFont(.body, weight: .semibold)
                 .foregroundStyle(Color.HPTextStyle.darker)
                 .padding(.top, .HPSpacing.small)
                 .padding(.horizontal, .HPSpacing.xxsmall)
-            // TODO: - Padding
+//        TODO: - Padding
                 .padding(.bottom, 10)
                 .onTapGesture {
                     let newItem = ProjectModel(
@@ -46,17 +46,17 @@ struct ProjectNavigationLink: View {
                         }
                         projectManager.current = project
                     }
-                    // 기능 Test를 위해서 임시로 만든 contextMenu !!!!
+                // == 기능 Test를 위해서 임시로 만든 contextMenu (나중에 기능 완성되면 삭제가능)==!!!!
                     .contextMenu {
                         Button("Delete") {
                             modelContext.delete(project)
                         }
                         Button("Add Practice") {
-                            /// --- Test1
+                            /// --- Test 1 연습
                             let TEST_ONE_KEY = Bundle.main.url(forResource: "test1", withExtension: "key")
                             let TEST_ONE_M4A = Bundle.main.url(forResource: "test1", withExtension: "m4a")
                             let TEST_ONE_JSON = Bundle.main.url(forResource: "test1", withExtension: "json")
-                            /// --- Test2
+                            /// --- Test 2 연습
                             let TEST_TWO_KEY = Bundle.main.url(forResource: "test2", withExtension: "key")
                             let TEST_TWO_M4A = Bundle.main.url(forResource: "test2", withExtension: "m4a")
                             let TEST_TWO_JSON = Bundle.main.url(forResource: "test2", withExtension: "json")
