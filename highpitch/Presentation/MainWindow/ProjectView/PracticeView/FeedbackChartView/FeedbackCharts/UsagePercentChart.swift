@@ -42,7 +42,7 @@ enum EnumFillerUsagePercent: CaseIterable {
 
 struct UsagePercentChart: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     
     var body: some View {
         let maxHeight: CGFloat = 500 / 3 * 2

@@ -47,6 +47,7 @@
  */
 #if os(macOS)
 import SwiftUI
+import SwiftData
 
 struct MenubarExtraView: View {
     @Environment(\.openWindow)
@@ -64,16 +65,22 @@ struct MenubarExtraView: View {
     private var projectManager
     
     @State
-    private var selectedProject: Project = Project()
+    private var selectedProject: ProjectModel = ProjectModel(projectName: "d", creatAt: "d", keynoteCreation: "dd")
     @State
     private var selectedkeynote: OpendKeynote = OpendKeynote()
-    @State
-    private var projectOptions: [Project] = []
+//    @State
+//    private var projectOptions: [Project] = []
     @State
     private var keynoteOptions: [OpendKeynote] = []
     
     @Binding
     var isMenuPresented: Bool
+    
+    //
+    @Environment(\.modelContext)
+    var modelContext
+    @Query(sort: \ProjectModel.creatAt)
+    var projectModels: [ProjectModel]
     
     var body: some View {
         if isMenuPresented {
@@ -91,11 +98,8 @@ struct MenubarExtraView: View {
             .onAppear {
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
-                if let projects = projectManager.projects {
-//                    projectOptions = projects
-                    projectOptions.append(Project())
-//                    selectedProject = projects[0]
-                    
+                if projectModels.count > 0 {
+                    selectedProject = projectModels[0]
                 }
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
@@ -110,12 +114,12 @@ struct MenubarExtraView: View {
                 }
                 updateCurrentProject()
             }
-            .onChange(of: projectManager.projects) { _, newValue in
-                if let projects = newValue {
+            .onChange(of: projectModels) { _, newValue in
+//                if let projects = newValue {
 //                    projectOptions = projects
-                    projectOptions.append(Project())
+//                    projectOptions.append(Project())
 //                    selectedProject = projects[0]
-                }
+//                }
             }
             .onChange(of: selectedkeynote, {
                 updateCurrentProject()
@@ -131,7 +135,7 @@ extension MenubarExtraView {
             let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
             if case .boolResult(let isKeynoteOpen) = result {
                 // logic 2
-//                print(isKeynoteOpen)
+                //                print(isKeynoteOpen)
                 keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
             }
         }
@@ -155,26 +159,26 @@ extension MenubarExtraView {
         if keynoteManager.opendKeynotes.isEmpty {
             print("is Empty!")
         } else {
-//            let filtered = projectManager.projects?.filter({ project in
-//                project.keynoteCreation == selectedkeynote.creation
-//            })
-//            if let find = filtered {
-//                if !find.isEmpty {
-//                    print("일치하는 프로젝트: \(find[0].projectName)")
-//                    projectManager.current = find[0]
-//                    selectedProject = projectOptions.first!
-//                } else {
-//                    print("일치하는 프로젝트가 없음")
-//                    selectedProject = projectOptions.last!
-//                }
-//            }
+            if(projectModels.count > 1) {
+                let filtered = projectModels.filter({ project in
+                    project.keynoteCreation == selectedkeynote.creation
+                })
+                if !filtered.isEmpty {
+                    print("일치하는 프로젝트: \(filtered[0].projectName)")
+                    projectManager.current = filtered[0]
+                    selectedProject = projectModels.first!
+                } else {
+                    print("일치하는 프로젝트가 없음")
+                    selectedProject = projectModels.last!
+                }
+            }
         }
     }
     
     private func openSelectedProject() {
         print("프로젝트 열기")
         if selectedProject.projectName != "새 프로젝트" {
-//            projectManager.current = selectedProject
+            projectManager.current = selectedProject
             if !projectManager.path.isEmpty {
                 projectManager.currentTabItem = 0
                 projectManager.path.removeLast()
@@ -192,14 +196,51 @@ extension MenubarExtraView {
             }
             mediaManager.isRecording.toggle()
             isMenuPresented.toggle()
+            
+            // 녹음파일 저장할 fileName 정하고, 녹음 시작!!!
+            mediaManager.fileName = mediaManager.currentDateTimeString()
+            mediaManager.startRecording()
         } else {
             print("녹음 종료")
             mediaManager.isRecording.toggle()
+            
+            // 녹음 중지!
+            mediaManager.stopRecording()
+            // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
+            // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
+            // ReturnZero API를 이용해서 UtteranceModel완성
+            Task {
+                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
+                var tempUtterances: [Utterance] = try await ReturnzeroAPI()
+                    .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
+                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
+                var newUtteranceModels: [UtteranceModel] = []
+                
+                for tempUtterance in tempUtterances {
+                    newUtteranceModels.append(
+                        UtteranceModel(
+                            startAt: tempUtterance.startAt,
+                            duration: tempUtterance.duration,
+                            message: tempUtterance.message
+                        )
+                    )
+                }
+                
+                // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
+                var newPracticeModel = PracticeModel(
+                    practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                    creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
+                    audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+                    utterances: newUtteranceModels
+                )
+                selectedProject.practices.append(newPracticeModel)
+            }
+            
         }
     }
     
-    private func openSelectedPractice(practice: Practice) {
-//        projectManager.current = selectedProject
+    private func openSelectedPractice(practice: PracticeModel) {
+        projectManager.current = selectedProject
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()
@@ -261,7 +302,7 @@ extension MenubarExtraView {
                 }
                 Text("프로젝트")
                 Picker("프로젝트", selection: $selectedProject) {
-                    ForEach(projectOptions, id: \.self) { project in
+                    ForEach(projectModels, id: \.self) { project in
                         Text("\(project.projectName)").tag(project)
                     }
                 }
@@ -293,7 +334,7 @@ extension MenubarExtraView {
                     LazyVGrid(columns: [GridItem()], spacing: 8) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
                             HStack {
-                                Text("\(practice.audioPath)")
+                                Text(practice.practiceName)
                                 Spacer()
                                 Button {
                                     openSelectedPractice(practice: practice)
@@ -345,3 +386,42 @@ extension MenubarExtraView {
         .frame(maxWidth: 360, maxHeight: 480)
 }
 #endif
+
+// MARK: Date.now() -> String으로 변환하는 함수들
+extension MenubarExtraView {
+    
+    // MediaManager밑에 있는 fileName을 통해서 연습하기 탭에 띄울 날짜 생성
+    func fileNameDateToPracticeDate(input: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: input) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "YYYY.MM.dd (E) HH:mm:ss"
+            
+            let dateString = outputFormatter.string(from: date)
+            
+            return dateString
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
+    // MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
+    func fileNameDateToCreateAtDate(input: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: input) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+            
+            let formattedDate = outputFormatter.string(from: date)
+            
+            return formattedDate
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
+}

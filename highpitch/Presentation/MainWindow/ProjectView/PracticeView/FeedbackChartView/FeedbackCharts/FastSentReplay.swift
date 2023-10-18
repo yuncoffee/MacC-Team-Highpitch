@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FastSentReplay: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     @State var disclosureToggle = false
     
     var body: some View {
@@ -20,10 +20,12 @@ struct FastSentReplay: View {
                 }
             if disclosureToggle {
                 ForEach(outOfRangeEPM()) { each in
-                    Text("\(each.message)")
-                        .onTapGesture {
-                            print(each.index)
-                        }
+                    if each.value > 400.0 {
+                        Text("\(each.message)")
+                            .onTapGesture {
+                                print(each.index)
+                            }
+                    }
                 }
             }
         }
@@ -43,11 +45,11 @@ extension FastSentReplay {
     // 각 문장별 EPM을 '순서대로' 반환합니다.
     func outOfRangeEPM() -> [SentenceEPM] {
         // 길이가 짧은 문장을 합칩니다.
-        var addedData: [Utterance] = []
+        var addedData: [UtteranceModel] = []
         var tempString = ""
         var tempStartAt = -1
         var tempDuration = 0
-        for utterence in data.utterances {
+        for utterence in data.utterances.sorted() {
             if (tempString != "") {
                 tempString += " "
             }
@@ -61,7 +63,7 @@ extension FastSentReplay {
                     tempStartAt = utterence.startAt
                 }
             } else {
-                addedData.append(Utterance(
+                addedData.append(UtteranceModel(
                     startAt: tempStartAt == -1 ? utterence.startAt : tempStartAt,
                     duration: tempDuration,
                     message: tempString
@@ -90,14 +92,11 @@ extension FastSentReplay {
         }
         // 문장별 EPM에서 기준값 이상이 되지 않는 값은 제거합니다.
         var returnEPMCount = EPMCount.sorted(by: {$0.value > $1.value})
-        while returnEPMCount.last!.value < 400.0 {
-            _ = returnEPMCount.popLast()
-        }
         return returnEPMCount
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return FastSentReplay(data: $practice)
-}
+//#Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return FastSentReplay(data: $practice)
+//}

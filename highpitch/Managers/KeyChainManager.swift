@@ -37,7 +37,7 @@ struct KeychainManager {
             kSecAttrAccount: forkey.rawValue,
             kSecValueData: saveData
         ]
-
+        
         let status = SecItemAdd(query as CFDictionary, nil)
         if status == errSecDuplicateItem {
             // 이미 존재하는 경우, 업데이트합니다.
@@ -55,7 +55,7 @@ struct KeychainManager {
             }
         }
     }
-
+    
     func load(forKey forkey: KeyChainValue) throws -> Codable {
         let decoder = JSONDecoder()
         let query: [CFString: Any] = [
@@ -64,10 +64,11 @@ struct KeychainManager {
             kSecAttrAccount: forkey.rawValue,
             kSecReturnData: true
         ]
-
+        
         var data: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &data)
-
+        print(status)
+        // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
         guard status == errSecSuccess else {
             throw KeyChainError.unowned(status)
         }
@@ -82,16 +83,16 @@ struct KeychainManager {
 //        }
         return data
     }
-
+    
     func delete(forKey forkey: KeyChainValue) {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: forkey.rawValue
         ]
-
+        
         let status = SecItemDelete(query as CFDictionary)
-
+        
         if status != errSecSuccess {
             print("Failed to delete data from Keychain")
         }

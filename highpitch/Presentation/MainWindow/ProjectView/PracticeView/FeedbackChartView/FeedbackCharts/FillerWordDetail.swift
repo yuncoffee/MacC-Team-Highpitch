@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FillerWordDetail: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     let fillerWordList = FillerWordList()
     @State var disclosureToggle = false
     
@@ -87,7 +87,7 @@ extension FillerWordDetail {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return FillerWordDetail(data: $practice)
-}
+// #Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return FillerWordDetail(data: $practice)
+// }

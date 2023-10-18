@@ -45,16 +45,17 @@ import SwiftUI
  10초 뒤로 구현
  */
 
-struct PracticeView: View {    
+struct PracticeView: View {
+    @Environment(ProjectManager.self)
+    private var projectManager
+    
     @State 
-    var practice: Practice
+    var practice: PracticeModel
 
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
-            let title = "n번째 연습"
-            let date = "날짜짜짜"
-            HPTopToolbar(title: title, subTitle: date)
+            practiceHeader
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
@@ -64,12 +65,13 @@ struct PracticeView: View {
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
         .background(Color.HPComponent.mainWindowDetailsBackground)
         .ignoresSafeArea()
-//        .onAppear {
-//            print(projectManager.current)
-//        }
-//        .onChange(of: projectManager.current) { oldValue, newValue in
-//            print(newValue)
-//        }
+        .onAppear {
+            print(projectManager.current)
+            practice.utterances.sort { $0.startAt < $1.startAt }
+        }
+        .onChange(of: projectManager.current) { oldValue, newValue in
+            print(newValue)
+        }
     }
 }
 
@@ -80,7 +82,7 @@ extension PracticeView {
             /// 피드백 뷰
             FeedbackChartView(practice: $practice)
             /// 스크립트 뷰
-            ScriptView(practice: $practice)
+            ScriptView(data: $practice)
         }
         .padding(.top, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

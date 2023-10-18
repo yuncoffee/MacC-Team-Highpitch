@@ -13,7 +13,7 @@ import Charts
 
 struct UsageTopTierChart: View {
     @Binding
-    var data: Practice
+    var data: PracticeModel
     let fillerWordList = FillerWordList()
     
     @State
@@ -264,7 +264,7 @@ extension UsageTopTierChart {
     }
 }
 
-#Preview {
-    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-    return UsageTopTierChart(data: $practice)
-}
+// #Preview {
+//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
+//    return UsageTopTierChart(data: $practice)
+// }
