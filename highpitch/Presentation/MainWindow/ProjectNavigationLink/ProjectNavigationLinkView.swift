@@ -46,19 +46,51 @@ struct ProjectNavigationLink: View {
                         }
                         projectManager.current = project
                     }
+                    // 기능 Test를 위해서 임시로 만든 contextMenu !!!!
                     .contextMenu {
                         Button("Delete") {
                             modelContext.delete(project)
                         }
                         Button("Add Practice") {
-                            var utterance1 = UtteranceModel(startAt: 1000, duration: 1000, message: "안녕하세요 반갑습니다")
-                            var utterance2 = UtteranceModel(startAt: 2000, duration: 2000, message: "안녕히가세요")
-                            var tempUtterance = [utterance1, utterance2]
-                            var tempModel = PracticeModel(practiceName: Date.now.formatted(), creatAt: "2", utterances: tempUtterance)
+                            /// --- Test1
+                            let TEST_ONE_KEY = Bundle.main.url(forResource: "test1", withExtension: "key")
+                            let TEST_ONE_M4A = Bundle.main.url(forResource: "test1", withExtension: "m4a")
+                            let TEST_ONE_JSON = Bundle.main.url(forResource: "test1", withExtension: "json")
+                            /// --- Test2
+                            let TEST_TWO_KEY = Bundle.main.url(forResource: "test2", withExtension: "key")
+                            let TEST_TWO_M4A = Bundle.main.url(forResource: "test2", withExtension: "m4a")
+                            let TEST_TWO_JSON = Bundle.main.url(forResource: "test2", withExtension: "json")
                             
-                            project.practices.append(
-                                tempModel
-                            )
+                            for index in 0...1 {
+                                do {
+                                    let data = try Data(contentsOf: index == 0 ? TEST_ONE_JSON! : TEST_TWO_JSON!)
+                                    let decoder = JSONDecoder()
+                                    let jsonModel = try decoder.decode(SampleProjectJson.self, from: data)
+                                    var practice = PracticeModel(
+                                        practiceName: "연습 \(index)", creatAt: "2023-10-18",
+                                        audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
+                                        utterances: []
+                                    )
+                                    
+                                    var tempUtterance: [UtteranceModel] = []
+                                    
+                                    jsonModel.utterances.forEach { utterance in
+                                        tempUtterance.append(UtteranceModel(
+                                            startAt: utterance.startAt,
+                                            duration: utterance.duration,
+                                            message: utterance.message
+                                        ))
+                                    }
+                                    
+                                    practice.utterances = tempUtterance
+                                    
+                                    project.practices.append(practice)
+                                    
+                                } catch {
+                                    print("파일 또는 디코딩 에러")
+                                }
+                            }
+                            
                         }
                         Button("녹음 시작") {
                             

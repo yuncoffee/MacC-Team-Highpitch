@@ -90,11 +90,12 @@ extension FastSentReplay {
         }
         // 문장별 EPM에서 기준값 이상이 되지 않는 값은 제거합니다.
         var returnEPMCount = EPMCount.sorted(by: {$0.value > $1.value})
-        if !returnEPMCount.isEmpty {
-            while returnEPMCount.last!.value < 400.0 {
-                _ = returnEPMCount.popLast()
-            }
+        
+        // MARK: 용팔이가 수정해줘 용팔이가 수정해줘 용팔이가 수정해줘
+        while returnEPMCount.last!.value < 400.0 {
+            _ = returnEPMCount.popLast()
         }
+        // MARK: 용팔이가 수정해줘 용팔이가 수정해줘 용팔이가 수정해줘
         return returnEPMCount
     }
 }
