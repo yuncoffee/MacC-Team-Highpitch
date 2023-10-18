@@ -239,7 +239,7 @@ extension MenubarExtraView {
         }
     }
     
-    private func openSelectedPractice(practice: Practice) {
+    private func openSelectedPractice(practice: PracticeModel) {
         projectManager.current = selectedProject
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
@@ -334,10 +334,10 @@ extension MenubarExtraView {
                     LazyVGrid(columns: [GridItem()], spacing: 8) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
                             HStack {
-                                // Text("\(practice.audioPath)")
+                                Text(practice.practiceName)
                                 Spacer()
                                 Button {
-                                    // openSelectedPractice(practice: practice)
+                                    openSelectedPractice(practice: practice)
                                 } label: {
                                     Text("자세히 보기")
                                 }
