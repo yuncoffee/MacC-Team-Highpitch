@@ -23,7 +23,7 @@ class UtteranceModel: Comparable {
     static func < (lhs: UtteranceModel, rhs: UtteranceModel) -> Bool {
         return lhs.startAt < rhs.startAt
     }
-    
+
     static func == (lhs: UtteranceModel, rhs: UtteranceModel) -> Bool {
         return lhs.startAt == rhs.startAt
     }
