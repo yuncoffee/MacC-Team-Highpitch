@@ -31,36 +31,11 @@ struct PracticesTabItem: View {
                     }
                  }
                 .navigationDestination(for: PracticeModel.self) { practice in
-                    PracticeView(practice: sortPractice(oldPractice: practice))
+                    PracticeView(practice: practice)
                 }
                 .navigationTitle("Practice")
             }
         }
-    }
-}
-
-extension PracticesTabItem {
-    func sortPractice(oldPractice: PracticeModel) -> PracticeModel {
-        var returnPractice = oldPractice
-        
-        var items = oldPractice.utterances.map { model in
-            Utterance(startAt: model.startAt, duration: model.duration, message: model.message)
-        }
-        
-        items.sort(by: {$0.startAt < $1.startAt})
-        
-        var items2 = items.map { utterance in
-            UtteranceModel(startAt: utterance.startAt, duration: utterance.duration, message: utterance.message)
-        }
-//        for item in items2 {
-//            print(item.message)
-//        }
-//        returnPractice.utterances = items2
-//        returnPractice.utterances.removeAll()
-//        returnPractice.utterances = oldPractice.utterances.sorted(by: {$0.startAt < $1.startAt})
-        // return returnPractice
-        
-        return oldPractice
     }
 }
 

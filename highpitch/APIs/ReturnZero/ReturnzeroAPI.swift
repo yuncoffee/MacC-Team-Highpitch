@@ -15,7 +15,6 @@ struct ReturnzeroAPI {
     let authUrl = "https://openapi.vito.ai/v1/authenticate"
     let tranUrl = "https://openapi.vito.ai/v1/transcribe"
     
-    
     func getResult(filePath: String)async throws -> [Utterance] {
         let id = try await setTranscribe(filePath: filePath)
         return try await waitForAPIResult(transId: id)
@@ -47,6 +46,7 @@ struct ReturnzeroAPI {
     }
     
     private func isAuth() async throws -> String {
+        // 여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다
          guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else {
              throw RZError.networkErr
          }

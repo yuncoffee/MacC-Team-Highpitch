@@ -196,9 +196,49 @@ extension MenubarExtraView {
             }
             mediaManager.isRecording.toggle()
             isMenuPresented.toggle()
+            
+            // 녹음파일 저장할 fileName 정하고, 녹음 시작!!!
+            mediaManager.fileName = mediaManager.currentDateTimeString()
+            print("mediaManager.fileName = ", mediaManager.fileName)
+            mediaManager.startRecording()
         } else {
             print("녹음 종료")
             mediaManager.isRecording.toggle()
+            
+            // 녹음 중지!
+            mediaManager.stopRecording()
+            // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
+            print("After Recording mediaManager.fileName = ", mediaManager.fileName)
+            // ReturnZero API를 이용해서 UtteranceModel완성
+            Task {
+                print("mediaManager.getPath =", mediaManager.getPath(fileName: mediaManager.fileName).path())
+                // 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다
+                var tempUtterances: [Utterance] = try await ReturnzeroAPI()
+                    .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
+                // 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다 문제는 여기다
+                print("mediaManager.getPath = ", mediaManager.getPath(fileName: mediaManager.fileName).absoluteString)
+                var newUtteranceModels: [UtteranceModel] = []
+                
+                for tempUtterance in tempUtterances {
+                    newUtteranceModels.append(
+                        UtteranceModel(
+                            startAt: tempUtterance.startAt,
+                            duration: tempUtterance.duration,
+                            message: tempUtterance.message
+                        )
+                    )
+                }
+                
+                // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
+                var newPracticeModel = PracticeModel(
+                    practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                    creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
+                    audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+                    utterances: newUtteranceModels
+                )
+                selectedProject.practices.append(newPracticeModel)
+            }
+            
         }
     }
     
@@ -349,3 +389,42 @@ extension MenubarExtraView {
         .frame(maxWidth: 360, maxHeight: 480)
 }
 #endif
+
+// MARK: Date.now() -> String으로 변환하는 함수들
+extension MenubarExtraView {
+    
+    //MediaManager밑에 있는 fileName을 통해서 연습하기 탭에 띄울 날짜 생성
+    func fileNameDateToPracticeDate(input: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: input) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "YYYY.MM.dd (E) HH:mm:ss"
+            
+            let dateString = outputFormatter.string(from: date)
+            
+            return dateString
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
+    //MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
+    func fileNameDateToCreateAtDate(input: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: input) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+            
+            let formattedDate = outputFormatter.string(from: date)
+            
+            return formattedDate
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
+}

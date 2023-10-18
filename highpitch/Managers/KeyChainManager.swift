@@ -67,16 +67,20 @@ struct KeychainManager {
 
         var data: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &data)
-
+        print(status)
+        // 여기다!!!!!!!!
         guard status == errSecSuccess else {
             throw KeyChainError.unowned(status)
         }
+        print("check here 10")
         guard let data = data as? Data else {
             throw KeyChainError.invalidItemFormat
         }
+        print("check here 11")
         guard let data = try? decoder.decode(forkey.getReturnType(), from: data) else{
             throw KeyChainError.invalidItemFormat
         }
+        print("check here 12")
 //        guard let data = String(data: data, encoding: .utf8) else{
 //            throw KeyChainError.invalidItemFormat
 //        }
