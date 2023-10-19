@@ -17,20 +17,13 @@ enum PracticeLevel {
 
 @Observable
 final class PracticeManager {
-    var current: [PracticeModel]?
-    
-    func getLevel() -> PracticeLevel {
-        PracticeLevel.level1
-    }
+    var practices: [PracticeModel]?
+    var current: PracticeModel?
 }
 
 extension PracticeManager {
-    private func calcSpeedRate(accEPMs: Double) {
-        let average = accEPMs / Double(current?.count ?? 1)
-        let standard = (min: 336, max: 377)
-    }
-    
-    private func calcFillerWordRate(accEPMs: Double) {
-        
+    func getPracticeDetail() {
+        var fillerWordList = FillerWordList().defaultList
+        var utterances = current?.utterances
     }
 }

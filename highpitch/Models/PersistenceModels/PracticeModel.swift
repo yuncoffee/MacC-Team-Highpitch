@@ -10,11 +10,12 @@ import SwiftData
 
 @Model
 class PracticeModel {
-    var uuid: UUID = UUID()
     var practiceName: String
     var creatAt: String
     var audioPath: URL?
     @Relationship(deleteRule: .cascade) var utterances: [UtteranceModel]
+    @Relationship(deleteRule: .cascade) var words: [WordModel] = []
+    @Relationship(deleteRule: .cascade) var sentences: [SentenceModel] = []
     
     init(practiceName: String, creatAt: String, audioPath: URL? = nil, utterances: [UtteranceModel]) {
         self.practiceName = practiceName
