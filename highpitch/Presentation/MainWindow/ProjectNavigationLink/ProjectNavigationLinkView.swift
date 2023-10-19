@@ -67,7 +67,7 @@ struct ProjectNavigationLink: View {
                                     let decoder = JSONDecoder()
                                     let jsonModel = try decoder.decode(SampleProjectJson.self, from: data)
                                     var practice = PracticeModel(
-                                        practiceName: "연습 \(index)", creatAt: "2023-10-18",
+                                        practiceName: "연습 \(index)", creatAt: formattedDate(),
                                         audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
                                         utterances: []
                                     )
@@ -114,6 +114,15 @@ struct ProjectNavigationLink: View {
 extension ProjectNavigationLink {
     func checkIsSelected(_ projectName: String) -> Bool {
         projectName == projectManager.current?.projectName
+    }
+    
+    func formattedDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+        
+        let currentDate = Date()
+        
+        return dateFormatter.string(from: currentDate)
     }
 }
 

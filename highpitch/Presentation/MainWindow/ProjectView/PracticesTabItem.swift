@@ -21,8 +21,10 @@ struct PracticesTabItem: View {
                         HStack {
                             VStack(alignment:.leading, spacing: 0) {
                                 // let reversedIndex = project.practices.count - index
-                                Text(practice.creatAt)
+                                Text(fileNameDateToPracticeDate(input: practice.creatAt))
                                 NavigationLink("\(index + 1)번째 연습 상세보기", value: practice)
+                                    .border(Color.yellow, width: 2)
+                                Text("1시간 30분 48초 소요")
                             }
                             .background(Color.blue)
                             .border(Color.red, width: 2)
@@ -114,4 +116,22 @@ extension PracticesTabItem {
             .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
         }
     }
+    
+    func fileNameDateToPracticeDate(input: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+        
+        if let date = inputFormatter.date(from: input) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "YYYY.MM.dd (E) HH:mm:ss"
+            outputFormatter.locale = Locale(identifier: "ko_KR")
+            
+            let dateString = outputFormatter.string(from: date)
+            
+            return dateString
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
 }
