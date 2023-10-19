@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct StatisticsTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
@@ -181,6 +183,7 @@ extension StatisticsTabItem {
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
     }
     
+    // MARK: - 그래프 아이템들
     @ViewBuilder
     var graphContainer: some View {
         if selectedSegment == 0 {

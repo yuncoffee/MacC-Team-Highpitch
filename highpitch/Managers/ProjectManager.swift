@@ -17,4 +17,6 @@ final class ProjectManager {
     var path: NavigationPath = .init()
     var testCurrent: Project?
     var testProjects: [Project]?
+    // MARK: PracticeManager
+    var practiceManager: PracticeManager = PracticeManager()
 }
