@@ -59,9 +59,8 @@ extension ProjectView {
                         .systemFont(.body)
                         .foregroundStyle(labelForgroundColor)
                         .padding(.top, .HPSpacing.small)
-                        .padding(.bottom, .HPSpacing.xsmall)
-                        // TODO: - Padding
-                        .padding(.horizontal, 10)
+                        .padding(.bottom, .HPSpacing.xxxsmall)
+                        .padding(.horizontal, .HPSpacing.xxxsmall)
                         .frame(maxHeight: .infinity)
                         .border(
                             decorationColor,
@@ -92,8 +91,7 @@ extension ProjectView {
         }
         .padding(.top, .HPSpacing.small + .HPSpacing.xxxxsmall)
         .padding(.horizontal, .HPSpacing.xxxlarge)
-        // TODO: - Padding
-        .padding(.bottom, 38)
+        .padding(.bottom, .HPSpacing.large)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }

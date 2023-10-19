@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct StatisticsTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
@@ -20,10 +22,10 @@ struct StatisticsTabItem: View {
     
     var body: some View {
         let practiceCount = Optional(1)// projectManager.current?.practices.count
-        VStack(alignment:.leading) {
+        VStack(alignment:.leading, spacing: 0) {
             if let practiceCount = practiceCount {
                 let practiceDuration = "2023.01.01 ~ 2023.01.07"
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 0) {
                     Text("총 \(practiceCount)번의 연습에 대한 결과예요")
                         .systemFont(.largeTitle)
                         .foregroundStyle(Color.HPTextStyle.darker)
@@ -31,21 +33,17 @@ struct StatisticsTabItem: View {
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.base)
                 }
-                .padding(.bottom, .HPSpacing.xxsmall)
+                .padding(.bottom, .HPSpacing.xsmall)
                 HStack(spacing: .HPSpacing.xsmall) {
                     averageLevelCard
                     bestLvelPracticeCard
                 }
-                // TODO: - Padding
-                .padding(.bottom, 18)
+                .padding(.bottom, .HPSpacing.xxsmall)
                 /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
                 averageGraph
             } else {
                 emptyView
             }
-        }
-        .onChange(of: selectedGraph) { oldValue, newValue in
-            print(newValue)
         }
     }
 }
@@ -65,7 +63,7 @@ extension StatisticsTabItem {
         let MAX_LEVEL = 5.description
         /// 결과 요약
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
+            VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 2) {
                     Text("총 평균 레벨")
                         .systemFont(.body)
@@ -73,29 +71,28 @@ extension StatisticsTabItem {
                     HPTooltip(tooltipContent: "도움말 컨텐츠")
                         .offset(y: -.HPSpacing.xxxsmall)
                 }
-                HStack(alignment: .bottom, spacing: .HPSpacing.xxsmall) {
+                HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
                     HStack(alignment: .firstTextBaseline, spacing: 0) {
                         Text("LV. ")
-                            .systemFont(.body)
+                            .systemFont(.caption, weight: .semibold)
                             .foregroundStyle(Color.HPPrimary.base)
                         Text("\(projectLevel)")
-                            .systemFont(.largeTitle, weight: .semibold)
+                            .styledFont(.largeTitleLv)
                             .foregroundStyle(Color.HPPrimary.base)
                         Text("/\(MAX_LEVEL)")
-                            .systemFont(.body)
+                            .systemFont(.caption, weight: .semibold)
                             .foregroundStyle(Color.HPTextStyle.light)
                     }
                     .frame(alignment: .bottom)
                     HStack(spacing: 0) {
                         HPStyledLabel(content: "상위 \(tier)%")
                     }
+                    .frame(alignment: .center)
                 }
             }
-            // TODO: - Padding
-            .padding(.vertical, 18)
-            .padding(.leading, .HPSpacing.xxsmall * 3)
-            .padding(.trailing, .HPSpacing.xxsmall)
-            .frame(minHeight:96, maxHeight: 96, alignment: .leading)
+            .padding(.vertical, .HPSpacing.xsmall)
+            .padding(.horizontal, .HPSpacing.medium)
+            .frame(minHeight: 100, maxHeight: 100, alignment: .leading)
             .background(Color.HPGray.systemWhite)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
@@ -110,13 +107,13 @@ extension StatisticsTabItem {
         let speed: String = 138.description
         let MAX_LEVEL = 5.description
         /// 최고 카드
-        VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 2) {
                 HStack(spacing: 0) {
                     Text("내 최고 연습 회차는")
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.darker)
-                    Text("\(practiceCount)번째 연습")
+                    Text(" \(practiceCount)번째 연습")
                         .systemFont(.body, weight: .bold)
                         .foregroundStyle(Color.HPPrimary.base)
                     Text("이에요")
@@ -128,20 +125,23 @@ extension StatisticsTabItem {
                     print("자세히보기 클릭했슴다")
                 } label: {
                     Label("자세히보기", systemImage: "chevron.right")
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPTextStyle.light)
                         .labelStyle(TextWithIconLabelStyle())
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
             }
-            HStack(alignment: .bottom, spacing: .HPSpacing.xxsmall) {
+            HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
                     Text("LV. ")
-                        .systemFont(.body)
-                        .foregroundStyle(Color.HPPrimary.base)
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPPrimary.dark)
                     Text("\(projectLevel)")
-                        .systemFont(.largeTitle, weight: .semibold)
+                        .styledFont(.largeTitleLv)
                         .foregroundStyle(Color.HPPrimary.base)
                     Text("/\(MAX_LEVEL)")
-                        .systemFont(.body)
+                        .systemFont(.caption, weight: .semibold)
                         .foregroundStyle(Color.HPTextStyle.light)
                 }
                 .frame(alignment: .bottom)
@@ -149,11 +149,10 @@ extension StatisticsTabItem {
                     HPStyledLabel(content: "습관어 \(filler)회 | 발화 속도 \(speed)EPM")
                 }
             }
+            .frame(alignment: .center)
         }
-        // TODO: - Padding
-        .padding(.vertical, 18)
-        .padding(.leading, .HPSpacing.xxsmall * 3)
-        .padding(.trailing, .HPSpacing.xxsmall)
+        .padding(.vertical, .HPSpacing.xsmall)
+        .padding(.horizontal, .HPSpacing.medium)
         .frame(maxWidth: .infinity, minHeight:96, maxHeight: 96, alignment: .leading)
         .background(Color.HPGray.systemWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -164,7 +163,12 @@ extension StatisticsTabItem {
     var averageGraph: some View {
         VStack(spacing: 16) {
             HStack(alignment: .top, spacing: 0) {
-                HPSegmentedControl(selectedSegment: $selectedSegment, options: graphOptions)
+                HStack(spacing: .HPSpacing.small) {
+                    Text("회차별 연습 차트")
+                        .systemFont(.subTitle)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                    HPSegmentedControl(selectedSegment: $selectedSegment, options: graphOptions)
+                }
                 Spacer()
                 HPTooltip(tooltipContent: "도움말 컨텐츠")
             }
@@ -173,13 +177,13 @@ extension StatisticsTabItem {
         }
         .padding(.vertical, .HPSpacing.xsmall)
         .padding(.leading, .HPSpacing.medium)
-        .padding(.trailing, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.HPGray.systemWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
     }
     
+    // MARK: - 그래프 아이템들
     @ViewBuilder
     var graphContainer: some View {
         if selectedSegment == 0 {

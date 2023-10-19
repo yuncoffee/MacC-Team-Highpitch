@@ -167,8 +167,7 @@ struct ReturnzeroAPI {
                 return Utterance(startAt: startAt, duration: duration, message: message)
             }
             return utteranceList
-        }
-        else {
+        } else {
             return nil
         }
     }

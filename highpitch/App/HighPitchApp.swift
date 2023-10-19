@@ -33,8 +33,7 @@ struct HighpitchApp: App {
         do {
             let container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
             return container
-        }
-        catch {
+        } catch {
             fatalError("Failed to create container")
         }
     }()

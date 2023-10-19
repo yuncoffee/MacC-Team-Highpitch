@@ -48,6 +48,8 @@ import SwiftUI
 struct PracticeView: View {
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(MediaManager.self)
+    private var mediaManager
     
     @State 
     var practice: PracticeModel
@@ -55,7 +57,9 @@ struct PracticeView: View {
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
-            practiceHeader
+            let title = practice.practiceName.description
+            let date = practice.creatAt.description
+            HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
@@ -63,30 +67,15 @@ struct PracticeView: View {
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
-        .border(.red, width: 2)
-        //        .navigationBarBackButtonHidden()
+        .background(Color.HPComponent.mainWindowDetailsBackground)
         .ignoresSafeArea()
         .onAppear {
-            print(projectManager.current)
             practice.utterances.sort { $0.startAt < $1.startAt }
-        }
-        .onChange(of: projectManager.current) { oldValue, newValue in
-            print(newValue)
         }
     }
 }
 
 extension PracticeView {
-    @ViewBuilder
-    private var practiceHeader: some View {
-        HStack {
-            Text("n번째 연습")
-            Text("연습 시간")
-        }
-        .frame(maxWidth: .infinity, maxHeight: 100)
-        .border(.red, width: 2)
-    }
-    
     @ViewBuilder
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
@@ -95,13 +84,14 @@ extension PracticeView {
             /// 스크립트 뷰
             ScriptView(data: $practice)
         }
+        .padding(.top, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 // #Preview {
 //    @State
-//    var mockHuman = MockHuman(name: "444", ages: 40)
+//    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
 //    
-//    return PracticeView(mock: mockHuman)
+//    return PracticeView(practice: practice)
 // }

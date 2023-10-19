@@ -34,10 +34,17 @@ struct HPTopToolbar: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            Text("\(title)")
-                .systemFont(.body)
-                .foregroundStyle(Color.HPTextStyle.darkness)
-                .frame(maxWidth: .infinity)
+            VStack(spacing: 0) {
+                Text("\(title)")
+                    .systemFont(.body)
+                    .foregroundStyle(Color.HPTextStyle.darkness)
+                if let subTitle {
+                    Text("\(subTitle)")
+                        .systemFont(.caption)
+                        .foregroundStyle(Color.HPTextStyle.light)
+                }
+            }
+            .frame(maxWidth: .infinity)
             HStack(spacing: 0) {
                 Button {
                   print("키노트 열기")

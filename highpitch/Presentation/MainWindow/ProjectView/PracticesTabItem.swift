@@ -33,6 +33,7 @@ struct PracticesTabItem: View {
                  }
                 .navigationDestination(for: PracticeModel.self) { practice in
                     PracticeView(practice: practice)
+                        .environment(MediaManager())
                 }
                 .navigationTitle("Practice")
             }
@@ -40,7 +41,7 @@ struct PracticesTabItem: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    PracticesTabItem()
 //        .environment(ProjectManager())
-//}
+// }

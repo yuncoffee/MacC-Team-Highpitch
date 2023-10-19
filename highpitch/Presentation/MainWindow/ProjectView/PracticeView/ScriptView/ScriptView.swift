@@ -73,6 +73,7 @@ struct ScriptView: View {
                 }
                 .frame(minWidth: 436, maxWidth: 436, alignment: .topLeading)
             }
+            .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

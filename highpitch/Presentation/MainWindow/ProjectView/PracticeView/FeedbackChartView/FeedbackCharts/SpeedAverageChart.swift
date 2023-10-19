@@ -110,12 +110,20 @@ extension SpeedAverageChart {
             }
             EPMCount[sentenceNum] /= Double(addedData[sentenceNum].duration)
             EPMCount[sentenceNum] *= 60000.0
+            
         }
+        
+        var acculate: Double = 0
         // EPMData를 따르는 결과를 반환합니다.
         var EPMResult: [EPMData] = []
         for index in 0..<EPMCount.count {
+//            print("EPMCount[index]:", EPMCount[index])
+            acculate += EPMCount[index]
             EPMResult.append(EPMData(index: index + 1, EPMValue: EPMCount[index]))
         }
+        
+        print("acculate:", (acculate/Double(EPMCount.count)))
+        
         return EPMResult
     }
     

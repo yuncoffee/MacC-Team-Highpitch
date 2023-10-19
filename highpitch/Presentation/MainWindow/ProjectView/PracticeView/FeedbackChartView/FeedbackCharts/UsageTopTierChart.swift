@@ -16,45 +16,123 @@ struct UsageTopTierChart: View {
     var data: PracticeModel
     let fillerWordList = FillerWordList()
     
+    @State
+    var selectedIndex: Double?
+    
+    @State
+    var cumulativeRangesForStyles: [(index: Int, range: Range<Double>)]?
+    
+    var selectedStyle: (name: String, selected: Int)? {
+        if let selectedIndex = selectedIndex {
+            let _selected = cumulativeRangesForStyles?.firstIndex(where: { $0.range.contains(selectedIndex) })
+            return (name: self.fillerWordList.defaultList[_selected ?? 0], selected: Int(_selected ?? 0))
+        }
+        return nil
+    }
+
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
-                Text("습관어 종류 및 횟수")
-                Text("이번 연습에서 자주 언급된 습관어에요.")
-            }
-            Spacer()
-            if (useFillerWord()) {
-                ZStack {
-                    Text("\(getFillerTypeCount())가지\n")
-                    + Text("습관어")
-                    Chart {
-                        ForEach(getFillerCount()) { each in
-                            SectorMark(
-                                angle: .value("filler count", each.value),
-                                innerRadius: .ratio(0.6),
-                                outerRadius: .ratio(1.0),
-                                angularInset: 0
-                            )
-                            .foregroundStyle(each.color!)
+        let maxHeight: CGFloat = 500
+        VStack(alignment:.leading, spacing: 0) {
+            header
+            GeometryReader { geometry in
+                let breakPoint: (chartSize: CGFloat, offset: CGFloat) = if geometry.size.width < 320 {
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/3)
+                } else if geometry.size.width < 500 {
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/2.3)
+                } else if geometry.size.width > 999 {
+                    (chartSize: maxHeight, offset: geometry.size.height/1.7)
+                } else {
+                    (chartSize: maxHeight * 0.6, offset: geometry.size.height/2)
+                }
+                
+                if (useFillerWord()) {
+                    ZStack {
+                        VStack(spacing: 0) {
+                            Text("width: \(geometry.size.width)")
+                            Text("\(getFillerTypeCount())가지")
+                                .systemFont(.title)
+                                .foregroundStyle(Color.HPPrimary.base)
+                            Text("습관어")
+                                .systemFont(.footnote)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        }
+                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { index, each in
+                            if let color = each.color {
+                                SectorMark(
+                                    angle: .value("count", each.value),
+                                    innerRadius: .ratio(0.618),
+                                    outerRadius: .ratio(1),
+                                    angularInset: 1.5
+                                )
+                                .cornerRadius(2)
+                                .foregroundStyle(color)
+                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
+                            }
+                        }
+                        .chartLegend(alignment: .center, spacing: 18)
+                        .chartAngleSelection(value: $selectedIndex)
+                        .scaledToFit()
+                        .frame(
+                            maxWidth: breakPoint.chartSize,
+                            maxHeight: breakPoint.chartSize,
+                            alignment: .center
+                        )
+                        ForEach(
+                            Array(fillerWordOffset(size: breakPoint.offset).enumerated()),
+                            id: \.self.1.id) { index, each in
+                            VStack(spacing: .HPSpacing.xxxxsmall) {
+                                Text("\(fillerWordList.defaultList[each.index])")
+                                    .systemFont(index == 0 ? .title : .body)
+                                    .multilineTextAlignment(.center)
+                                Text("\(each.value)회")
+                                    .systemFont(.footnote)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .foregroundStyle(Color.HPTextStyle.dark)
+                            .offset(each.offset)
                         }
                     }
                     .frame(
                         maxWidth: .infinity,
-                        maxHeight: 300
+                        maxHeight: geometry.size.height,
+                        alignment: .center
                     )
-                    ForEach(fillerWordOffset(size: 180)) { each in
-                        Text("\(fillerWordList.defaultList[each.index])\n\(each.value)회")
-                            .multilineTextAlignment(.center)
-                            .offset(each.offset)
-                    }
                 }
             }
+            
         }
+        .padding(.bottom, .HPSpacing.large)
+        .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,
-            minHeight: 500,
-            maxHeight: .infinity
+            minHeight: maxHeight,
+            maxHeight: maxHeight,
+            alignment: .topLeading
         )
+        .onAppear {
+            var cumulative = 0.0
+            cumulativeRangesForStyles = getFillerCount().enumerated().map {
+                let newCumulative = cumulative + Double($1.value)
+                let result = (index: $0, range: cumulative ..< newCumulative)
+                cumulative = newCumulative
+                return result
+            }
+        }
+    }
+}
+
+extension UsageTopTierChart {
+    @ViewBuilder
+    var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("습관어 종류 및 횟수")
+                .systemFont(.subTitle)
+                .foregroundStyle(Color.HPTextStyle.darker)
+            Text("이번 연습에서 자주 언급된 습관어에요.")
+                .systemFont(.body)
+                .foregroundStyle(Color.HPTextStyle.dark)
+        }
+        .padding(.bottom, .HPSpacing.large)
     }
 }
 
@@ -67,11 +145,13 @@ struct FillerCountData: Identifiable {
 }
 
 // donut chart의 annotation offset을 설정하기 위한 구조체입니다.
-struct FillerCountOffset: Identifiable {
+struct FillerCountOffset: Identifiable, Hashable {
     var id = UUID()
     var index: Int
     var value: Int
     var offset: CGSize
+    
+    func hash(into hasher: inout Hasher) {}
 }
 
 extension UsageTopTierChart {
@@ -157,13 +237,14 @@ extension UsageTopTierChart {
     }
     
     // annotation의 offset을 반환합니다.
-    func fillerWordOffset(size: Int) -> [FillerCountOffset] {
-        var fillerCnt = getFillerCount()
+    func fillerWordOffset(size: CGFloat) -> [FillerCountOffset] {
+        let fillerCnt = getFillerCount()
         var sumValue = 0
         for index in fillerCnt { sumValue += index.value }
         var radiusContainer: [Double] = []
+        
         for index in fillerCnt where index.value > 0 {
-            radiusContainer.append(Double(index.value) * 2.0 * 3.1415926535 / Double(sumValue))
+            radiusContainer.append(Double(index.value) * 2.0 * CGFloat.pi / Double(sumValue))
         }
         var returnContainer: [FillerCountOffset] = []
         var temp = 0.0
@@ -173,9 +254,9 @@ extension UsageTopTierChart {
                     index: fillerCnt[index].index, value: fillerCnt[index].value,
                     offset:
                         CGSize(
-                            width: Double(size) * cos((temp + radiusContainer[index] / 2) - 3.1415926535 / 2),
-                            height: 
-                                Double(size) * sin((temp + radiusContainer[index] / 2) - 3.1415926535 / 2)))
+                            width: Double(size) * cos((temp + radiusContainer[index] / 2) - CGFloat.pi / 2),
+                            height:
+                                Double(size) * sin((temp + radiusContainer[index] / 2) - CGFloat.pi / 2)))
                         )
             temp += radiusContainer[index]
         }

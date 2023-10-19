@@ -65,7 +65,11 @@ struct MenubarExtraView: View {
     private var projectManager
     
     @State
-    private var selectedProject: ProjectModel = ProjectModel(projectName: "d", creatAt: "d", keynoteCreation: "dd")
+    private var selectedProject: ProjectModel = ProjectModel(
+        projectName: "d",
+        creatAt: "d",
+        keynoteCreation: "dd"
+    )
     @State
     private var selectedkeynote: OpendKeynote = OpendKeynote()
 //    @State

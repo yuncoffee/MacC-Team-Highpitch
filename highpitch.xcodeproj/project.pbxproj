@@ -71,6 +71,8 @@
 		1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */; };
 		1DBF14512ADE1DC100B28CED /* LabelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14502ADE1DC100B28CED /* LabelModifier.swift */; };
 		1DBF14542ADE574F00B28CED /* HPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14532ADE574F00B28CED /* HPSegmentedControl.swift */; };
+		1DBF14592ADF55B600B28CED /* FillerWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14582ADF55B500B28CED /* FillerWord.swift */; };
+		1DBF145C2AE0A75700B28CED /* PracticeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF145B2AE0A75600B28CED /* PracticeManager.swift */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
 		1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598D2AD594BD00AE5601 /* Item.swift */; };
@@ -171,6 +173,8 @@
 		1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPI.swift; sourceTree = "<group>"; };
 		1DBF14502ADE1DC100B28CED /* LabelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModifier.swift; sourceTree = "<group>"; };
 		1DBF14532ADE574F00B28CED /* HPSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPSegmentedControl.swift; sourceTree = "<group>"; };
+		1DBF14582ADF55B500B28CED /* FillerWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWord.swift; sourceTree = "<group>"; };
+		1DBF145B2AE0A75600B28CED /* PracticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeManager.swift; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		1DF6598B2AD594BD00AE5601 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -450,6 +454,7 @@
 				10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */,
 				10C7D1F72ADD8E6A008691CD /* AuthManager.swift */,
 				10C7D1FF2ADE2201008691CD /* AudioManager.swift */,
+				1DBF145B2AE0A75600B28CED /* PracticeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 				1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */,
 				1D7A3EDC2ADCC51B0084E962 /* MyModel.swift */,
 				10C7D1FC2ADE12B3008691CD /* TokenData.swift */,
+				1DBF14582ADF55B500B28CED /* FillerWord.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -841,8 +847,10 @@
 				1D09AF942ADA67BB00C1400E /* StatisticsTabItem.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1D09AF7C2AD9954000C1400E /* ProjectNavigationLinkView.swift in Sources */,
+				1DBF14592ADF55B600B28CED /* FillerWord.swift in Sources */,
 				1D7A3EDD2ADCC51B0084E962 /* MyModel.swift in Sources */,
 				11EF719D2ADE3F0E00D991E6 /* FillerWordDetail.swift in Sources */,
+				1DBF145C2AE0A75700B28CED /* PracticeManager.swift in Sources */,
 				1D09AF9E2ADA765000C1400E /* FeedbackChartView.swift in Sources */,
 				1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */,
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,

@@ -18,7 +18,7 @@ class AudioRecorderManager: NSObject, AVAudioPlayerDelegate {
 // MARK: - 음성메모 녹음 관련 메서드
 extension AudioRecorderManager {
     func startRecording() {
-        //MARK: 파일 이름 전략은 추후에 확정
+        // MARK: 파일 이름 전략은 추후에 확정
         let fileURL = getPath(fileName: "test")
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -94,4 +94,3 @@ extension AudioRecorderManager {
         return audioPlayer?.duration ?? 0
     }
 }
-

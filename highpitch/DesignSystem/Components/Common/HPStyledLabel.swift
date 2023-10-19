@@ -12,10 +12,10 @@ struct HPStyledLabel: View {
     
     var body: some View {
         Text("\(content)")
-            .systemFont(.footnote, weight: .semibold)
+            .systemFont(.caption2, weight: .semibold)
             .foregroundStyle(Color.HPPrimary.base)
             .padding(4)
-            .background(Color.HPPrimary.light.opacity(0.1))
+            .background(Color.HPComponent.mainWindowSidebarBackground)
             .clipShape(
                 RoundedRectangle(cornerRadius: 4)
             )
