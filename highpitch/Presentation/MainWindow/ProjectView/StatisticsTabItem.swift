@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct StatisticsTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
@@ -36,7 +34,7 @@ struct StatisticsTabItem: View {
                 .padding(.bottom, .HPSpacing.xsmall)
                 HStack(spacing: .HPSpacing.xsmall) {
                     averageLevelCard
-                    bestLvelPracticeCard
+                    bestLevelPracticeCard
                 }
                 .padding(.bottom, .HPSpacing.xxsmall)
                 /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
@@ -100,7 +98,7 @@ extension StatisticsTabItem {
     }
     
     @ViewBuilder
-    var bestLvelPracticeCard: some View {
+    var bestLevelPracticeCard: some View {
         let projectLevel = 4.5.description
         let practiceCount = 8.description
         let filler: String = 12.description
