@@ -235,7 +235,7 @@ extension MenubarExtraView {
                     practiceName: "\(selectedProject.practices.count + 1)번째 연습",
                     creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
                     audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
-                    utterances: newUtteranceModels
+                    utterances: newUtteranceModels, summary: PracticeSummaryModel()
                 )
                 selectedProject.practices.append(newPracticeModel)
             }

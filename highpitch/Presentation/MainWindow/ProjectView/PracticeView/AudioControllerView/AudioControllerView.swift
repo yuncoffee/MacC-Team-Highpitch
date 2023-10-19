@@ -177,7 +177,7 @@ extension AudioControllerView {
 }
 
 #Preview {
-    @State var practice = PracticeModel(practiceName: "", creatAt: "", utterances: [])
+    @State var practice = PracticeModel(practiceName: "", creatAt: "", utterances: [], summary: PracticeSummaryModel())
     return AudioControllerView(practice: $practice)
         .environment(MediaManager())
         .environment(ProjectManager())

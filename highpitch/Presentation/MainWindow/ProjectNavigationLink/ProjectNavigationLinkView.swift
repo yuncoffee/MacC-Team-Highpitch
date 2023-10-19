@@ -69,7 +69,7 @@ struct ProjectNavigationLink: View {
                                     var practice = PracticeModel(
                                         practiceName: "연습 \(index)", creatAt: "2023-10-18",
                                         audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
-                                        utterances: []
+                                        utterances: [], summary: PracticeSummaryModel()
                                     )
                                     
                                     var tempUtterance: [UtteranceModel] = []

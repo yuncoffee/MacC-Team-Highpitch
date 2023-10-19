@@ -12,11 +12,11 @@ import SwiftData
 class SentenceModel {
     var index: Int
     var sentence: String
-    var startAt: Int
-    var endAt: Int
+    var startAt: Int?
+    var endAt: Int?
     var epmValue: Double?
     
-    init(index: Int, sentence: String, startAt: Int, endAt: Int, epmValue: Double? = nil) {
+    init(index: Int, sentence: String, startAt: Int? = nil, endAt: Int? = nil, epmValue: Double? = nil) {
         self.index = index
         self.epmValue = epmValue
         self.sentence = sentence

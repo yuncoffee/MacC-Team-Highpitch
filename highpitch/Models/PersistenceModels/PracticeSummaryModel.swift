@@ -15,7 +15,6 @@ class PracticeSummaryModel {
     var wordCount: Int
     var fillerWordCount: Int
     var fastSpeechTime: Int
-    var speechTime: Int
     var eachFillerWordCount: [FillerWordModel]
     var fastSentenceIndex: [Int]
     var fastSpeechRate: Double?
@@ -29,7 +28,6 @@ class PracticeSummaryModel {
         wordCount: Int = 0,
         fillerWordCount: Int = 0,
         fastSpeechTime: Int = 0,
-        speechTime: Int = 0,
         eachFillerWordCount: [FillerWordModel] = [],
         fastSentenceIndex: [Int] = [],
         fastSpeechRate: Double? = nil,
@@ -42,7 +40,6 @@ class PracticeSummaryModel {
         self.wordCount = wordCount
         self.fillerWordCount = fillerWordCount
         self.fastSpeechTime = fastSpeechTime
-        self.speechTime = speechTime
         self.eachFillerWordCount = eachFillerWordCount
         self.fastSentenceIndex = fastSentenceIndex
         self.fastSpeechRate = fastSpeechRate
