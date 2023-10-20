@@ -7,14 +7,6 @@
 
 import Foundation
 
-enum PracticeLevel {
-    case level1
-    case level2
-    case level3
-    case level4
-    case level5
-}
-
 @Observable
 final class PracticeManager {
     var practices: [PracticeModel]?
@@ -50,6 +42,11 @@ extension PracticeManager {
         Double(current!.summary.fillerWordCount * 100) / Double(current!.summary.wordCount)
         current!.summary.epmAverage =
         Double(current!.summary.syllableSum * 60000) / Double(current!.summary.durationSum)
+        current!.summary.level = 0
+        current!.summary.level! += 5 - min(ceil(current!.summary.fillerWordPercentage! / 0.03), 4)
+        current!.summary.level! += (abs(current!.summary.epmAverage! - 356.7) < 20.7 ?
+                                    5 : 4 - min(ceil((abs(current!.summary.epmAverage! - 356.7) - 20.7) / 25.0), 3))
+        current!.summary.level! /= 2.0
     }
     
     func getPracticeDetail() {
@@ -63,7 +60,7 @@ extension PracticeManager {
             var sentenceDuration: [Int] = [0]
             
             for (index, utterance) in current.utterances.sorted().enumerated() {
-                var messageLenght = utterance.message.components(separatedBy: " ").count
+                let messageLenght = utterance.message.components(separatedBy: " ").count
                 for (index, word) in utterance.message.components(separatedBy: " ").enumerated() {
                     
                     // word와 관련한 값을 업데이트합니다.
