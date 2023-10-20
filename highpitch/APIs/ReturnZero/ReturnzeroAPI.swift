@@ -20,7 +20,6 @@ struct ReturnzeroAPI {
     }
     
     private func getToken() async throws -> TokenData {
-        print("here 3")
         var request = URLRequest(url: URL(string: authUrl)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -29,12 +28,10 @@ struct ReturnzeroAPI {
         let bodyData = "client_id=\( returnZero_CLIENT_ID)&client_secret=\(returnZero_CLIENT_SECRET)"
         
         request.httpBody = bodyData.data(using: .utf8)
-        print("here 4")
         let (data,response) = try await URLSession.shared.data(for: request)
-        print("here 5")
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-            print("here 6")
+            print(response)
             throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -47,22 +44,8 @@ struct ReturnzeroAPI {
         return TokenData(token: token, expried: Date(timeIntervalSince1970: expired))
     }
     
-//    private func isAuth() async throws -> String {
-//        // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-//        guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else {
-//            throw RZError.networkErr
-//        }
-//        if(Date.now.compare(token.expried).rawValue < 0) {
-//            return token.token
-//        } else {
-//            let accessToken = try await getToken()
-//            try keyChainManager.save(data: accessToken, forKey: .rzToken)
-//            return accessToken.token
-//        }
-//    }
     private func isAuth() async throws -> String {
-        // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-        do{
+        do {
             if let token = try keyChainManager.load(forKey: .rzToken) as? TokenData {
                 if(Date.now.compare(token.expried).rawValue < 0) {
                     return token.token
@@ -73,7 +56,7 @@ struct ReturnzeroAPI {
                 }
             }
             throw RZError.networkErr
-        }catch {
+        } catch {
             print("here")
             let accessToken = try await getToken()
             try keyChainManager.save(data: accessToken, forKey: .rzToken)

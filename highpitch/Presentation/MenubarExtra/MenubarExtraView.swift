@@ -165,15 +165,19 @@ extension MenubarExtraView {
         } else {
             if(projectModels.count > 1) {
                 let filtered = projectModels.filter({ project in
-                    project.keynoteCreation == selectedkeynote.creation
+                    project.creatAt == selectedkeynote.creation
                 })
                 if !filtered.isEmpty {
                     print("일치하는 프로젝트: \(filtered[0].projectName)")
                     projectManager.current = filtered[0]
+                    //
                     selectedProject = projectModels.first!
+                    print("일치: ", selectedProject.projectName)
                 } else {
                     print("일치하는 프로젝트가 없음")
+                    //
                     selectedProject = projectModels.last!
+                    print("불일치: ", selectedProject.projectName)
                 }
             }
         }
@@ -214,30 +218,35 @@ extension MenubarExtraView {
             // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
             // ReturnZero API를 이용해서 UtteranceModel완성
             Task {
-                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-                var tempUtterances: [Utterance] = try await ReturnzeroAPI()
-                    .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-                // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-                var newUtteranceModels: [UtteranceModel] = []
-                
-                for tempUtterance in tempUtterances {
-                    newUtteranceModels.append(
-                        UtteranceModel(
-                            startAt: tempUtterance.startAt,
-                            duration: tempUtterance.duration,
-                            message: tempUtterance.message
+                do {
+                    var tempUtterances: [Utterance] = try await ReturnzeroAPI()
+                        .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
+                    print(tempUtterances)
+                    
+                    var newUtteranceModels: [UtteranceModel] = []
+                    
+                    for tempUtterance in tempUtterances {
+                        newUtteranceModels.append(
+                            UtteranceModel(
+                                startAt: tempUtterance.startAt,
+                                duration: tempUtterance.duration,
+                                message: tempUtterance.message
+                            )
                         )
+                    }
+                    
+                    // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
+                    var newPracticeModel = PracticeModel(
+                        practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                        creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
+                        audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+                        utterances: newUtteranceModels
                     )
+                    selectedProject.practices.append(newPracticeModel)
+                    
+                } catch {
+                    print(error.localizedDescription)
                 }
-                
-                // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
-                var newPracticeModel = PracticeModel(
-                    practiceName: "\(selectedProject.practices.count + 1)번째 연습",
-                    creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
-                    audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
-                    utterances: newUtteranceModels
-                )
-                selectedProject.practices.append(newPracticeModel)
             }
             
         }
