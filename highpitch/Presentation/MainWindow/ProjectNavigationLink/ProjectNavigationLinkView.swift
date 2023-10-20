@@ -20,6 +20,8 @@ struct ProjectNavigationLink: View {
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
+    var practiceManager = PracticeManager()
+    
     var body: some View {
 //    TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
@@ -83,8 +85,9 @@ struct ProjectNavigationLink: View {
                                     }
                                     
                                     practice.utterances = tempUtterance
-                                    
                                     project.practices.append(practice)
+                                    practiceManager.current = practice
+                                    practiceManager.getPracticeDetail()                              
                                     
                                 } catch {
                                     print("파일 또는 디코딩 에러")

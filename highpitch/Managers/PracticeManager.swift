@@ -17,7 +17,8 @@ extension PracticeManager {
     
     // 해당 단어가 습관어인지 확인합니다.
     func isFillerWord(word: String) -> Bool {
-        for (index, fillerWord) in FillerWordList().defaultList.enumerated() where fillerWord == word {
+        for (index, fillerWord) in current!.summary.eachFillerWordCount.enumerated() where
+        word.last! == "." ? fillerWord.fillerWord + "." == word : fillerWord.fillerWord == word {
             // fillerWordCount, eachFillerWordCount를 업데이트합니다.
             current!.summary.fillerWordCount += 1
             current!.summary.eachFillerWordCount[index].count += 1
@@ -26,12 +27,11 @@ extension PracticeManager {
         return false
     }
     
-    // eachFillerWordCount와 sentences를 초기화합니다.
+    // eachFillerWordCount를 초기화합니다.
     func initializer() {
         for fillerWord in FillerWordList().defaultList {
             current!.summary.eachFillerWordCount.append(FillerWordModel(fillerWord: fillerWord, count: 0))
         }
-        current!.sentences.append(SentenceModel(index: 0, sentence: ""))
     }
     
     // summary에 들어가는 data를 업데이트합니다.
@@ -44,8 +44,7 @@ extension PracticeManager {
         Double(current!.summary.syllableSum * 60000) / Double(current!.summary.durationSum)
         current!.summary.level = 0
         current!.summary.level! += 5 - min(ceil(current!.summary.fillerWordPercentage! / 0.03), 4)
-        current!.summary.level! += (abs(current!.summary.epmAverage! - 356.7) < 20.7 ?
-                                    5 : 4 - min(ceil((abs(current!.summary.epmAverage! - 356.7) - 20.7) / 25.0), 3))
+        current!.summary.level! += (abs(current!.summary.epmAverage! - 356.7) < 20.7 ?  5 : 4 - min(ceil((abs(current!.summary.epmAverage! - 356.7) - 20.7) / 25.0), 3))
         current!.summary.level! /= 2.0
     }
     
@@ -58,6 +57,7 @@ extension PracticeManager {
             var sentenceIndex = 0; var wordIndex = 0
             var sentenceSyllable: [Int] = [0]
             var sentenceDuration: [Int] = [0]
+            var tempSentences: [SentenceModel] = []
             
             for (index, utterance) in current.utterances.sorted().enumerated() {
                 let messageLenght = utterance.message.components(separatedBy: " ").count
@@ -81,13 +81,14 @@ extension PracticeManager {
                         index: wordIndex,
                         word: index == messageLenght - 1 ? word : word + " "))
                     
-                    if sentenceIndex == current.sentences.count {
-                        current.sentences.append(SentenceModel(
-                            index: sentenceIndex, sentence: word,
+                    if sentenceIndex == tempSentences.count {
+                        tempSentences.append(SentenceModel(
+                            index: sentenceIndex,
+                            sentence: word,
                             startAt: utterance.startAt
                         ))
                     } else {
-                        current.sentences[sentenceIndex].sentence += (" " + word)
+                        tempSentences[sentenceIndex].sentence += (" " + word)
                     }
                     
                     // 다음 단어로 넘깁니다.
@@ -95,7 +96,7 @@ extension PracticeManager {
                 }
                 
                 // duration 및 endAt을 업데이트합니다.
-                current.sentences[sentenceIndex].endAt = utterance.startAt + utterance.duration
+                tempSentences[sentenceIndex].endAt = utterance.startAt + utterance.duration
                 if sentenceIndex == sentenceDuration.count - 1 { sentenceDuration.append(0) }
                 sentenceDuration[sentenceIndex] += utterance.duration
                 current.summary.durationSum += utterance.duration
@@ -104,14 +105,15 @@ extension PracticeManager {
                 if sentenceSyllable[sentenceIndex] > 15 || index == current.utterances.count - 1 {
                     
                     // EPM을 업데이트합니다.
-                    current.sentences[sentenceIndex].epmValue =
+                    tempSentences[sentenceIndex].epmValue =
                     Double(sentenceSyllable[sentenceIndex] * 60000) / Double(sentenceDuration[sentenceIndex])
                     
                     // sentence와 관련한 값을 업데이트합니다.
-                    if current.sentences[sentenceIndex].epmValue! >= 422.4 {
+                    if tempSentences[sentenceIndex].epmValue! >= 422.4 {
                         current.summary.fastSpeechTime += sentenceDuration[sentenceIndex]
                         current.summary.fastSentenceIndex.append(sentenceIndex)
                     }
+                    current.sentences.append(tempSentences[sentenceIndex])
                     
                     // 다음 문장으로 넘깁니다.
                     sentenceIndex += 1
