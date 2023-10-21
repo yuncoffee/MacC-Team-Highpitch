@@ -108,6 +108,7 @@ extension MenubarExtraContent {
                         .labelStyle(.iconOnly)
                         .systemFont(.body)
                         .foregroundStyle(Color.HPGray.system600)
+                        .rotationEffect(isDetilsActive ? .degrees(90) : .zero)
                 }
                 .buttonStyle(.plain)
             }
@@ -171,7 +172,7 @@ extension MenubarExtraContent {
             .border(.HPComponent.stroke, width: 1, edges: [.bottom])
             if !selectedProject.practices.isEmpty {
                 ScrollView {
-                    LazyVGrid(columns: [GridItem()], spacing: 8) {
+                    LazyVGrid(columns: [GridItem()], spacing: 0) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
                             PracticeResultCell(practice: practice) {
                                 openSelectedPractice(practice: practice)
@@ -179,8 +180,7 @@ extension MenubarExtraContent {
                         }
                     }
                 }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 24)
+                .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
             } else {
                 VStack {
                     Text("연습 이력이 없네요...")

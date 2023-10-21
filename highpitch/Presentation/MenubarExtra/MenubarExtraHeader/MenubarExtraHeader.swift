@@ -58,7 +58,7 @@ struct MenubarExtraHeader: View {
                     (
                         label:"연습 시작",
                         image: "play.fill",
-                        color: Color.HPPrimary.base
+                        color: Color.HPPrimary.dark
                     )
                 } else {
                     (
@@ -76,20 +76,20 @@ struct MenubarExtraHeader: View {
 //                    labels.func
                 } label: {
                     Label(labels.label, systemImage: labels.image)
-                        .systemFont(.body)
+                        .systemFont(.caption2)
                         .foregroundStyle(labels.color)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
+                        .labelStyle(VerticalIconWithTextLabelStyle())
+                        .frame(height: 24)
                 }
                 .buttonStyle(.plain)
                 Button {
                     stopPractice()
                 } label: {
-                    Label("연습 끝내기", systemImage: "stop.fill")
-                        .systemFont(.body)
-                        .foregroundStyle(Color.HPGray.system800)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
+                    Label("끝내기", systemImage: "stop.fill")
+                        .systemFont(.caption2)
+                        .foregroundStyle(Color.HPSecondary.base)
+                        .labelStyle(VerticalIconWithTextLabelStyle())
+                        .frame(height: 24)
                 }
                 .buttonStyle(.plain)
             }

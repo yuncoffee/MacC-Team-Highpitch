@@ -13,28 +13,51 @@ struct PracticeResultCell: View {
     
     var body: some View {
         HStack {
-            Text(practice.practiceName)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    Circle()
+                        .frame(width: 8)
+                        .foregroundStyle(practice.isVisited ? .clear : .HPRed.base)
+                    Text("\(practice.index)번째 연습의 피드백이 생성되었어요")
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                }
+                Text("\(practice.practiceName) •  \(practice.creatAt)")
+                    .systemFont(.caption2)
+                    .foregroundStyle(Color.HPTextStyle.base)
+                    .offset(x: 16)
+            }
             Spacer()
-            Button {
-                completion()
-            } label: {
-                Text("자세히 보기")
+            VStack {
+                Button {
+                    completion()
+                } label: {
+                    Label("확인하기", systemImage: "chevron.right")
+                        .labelStyle(TextWithIconLabelStyle())
+                        .systemFont(.caption)
+                        .foregroundStyle(Color.HPTextStyle.base)
+                }
+                .buttonStyle(.plain)
             }
         }
-        .background(Color("000000").opacity(0.1))
-        .cornerRadius(5)
+        .padding(.vertical, .HPSpacing.xxsmall)
+        .padding(.trailing, .HPSpacing.xxxsmall)
+        .border(.HPComponent.stroke, width: 1, edges: [.bottom])
     }
 }
 
-//#Preview {
-//    @State var practice = PracticeModel(
-//        practiceName: "",
-//        creatAt: "",
-//        utterances: [],
-//        summary: PracticeSummaryModel()
-//    )
-//    
-//    return PracticeResultCell(practice: practice) {
-//        print("Hello")
-//    }
-//}
+#Preview {
+    @State var practice = PracticeModel(
+        practiceName: "1234",
+        index: 0,
+        isVisited: true, 
+        creatAt: "3423",
+        utterances: [],
+        summary: PracticeSummaryModel()
+    )
+    
+    return PracticeResultCell(practice: practice) {
+        print("Hello")
+    }
+    .padding(8)
+}
