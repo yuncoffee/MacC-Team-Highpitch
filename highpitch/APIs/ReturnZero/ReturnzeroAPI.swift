@@ -28,10 +28,10 @@ struct ReturnzeroAPI {
         let bodyData = "client_id=\( returnZero_CLIENT_ID)&client_secret=\(returnZero_CLIENT_SECRET)"
         
         request.httpBody = bodyData.data(using: .utf8)
-        
         let (data,response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
+            print(response)
             throw RZError.networkErr
         }
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -45,13 +45,19 @@ struct ReturnzeroAPI {
     }
     
     private func isAuth() async throws -> String {
-        // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-        guard let token = try keyChainManager.load(forKey: .rzToken) as? TokenData else {
+        do{
+            if let token = try keyChainManager.load(forKey: .rzToken) as? TokenData {
+                if(Date.now.compare(token.expried).rawValue < 0) {
+                    return token.token
+                } else {
+                    let accessToken = try await getToken()
+                    try keyChainManager.save(data: accessToken, forKey: .rzToken)
+                    return accessToken.token
+                }
+            }
             throw RZError.networkErr
-        }
-        if(Date.now.compare(token.expried).rawValue < 0) {
-            return token.token
-        } else {
+        }catch {
+            print("here")
             let accessToken = try await getToken()
             try keyChainManager.save(data: accessToken, forKey: .rzToken)
             return accessToken.token

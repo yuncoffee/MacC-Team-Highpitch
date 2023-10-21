@@ -135,9 +135,20 @@ struct MenubarExtraView: View {
                 if projectModels.count > 0 {
                     selectedProject = projectModels[0]
                 }
+//                do {
+//                    try modelContext.delete(model: ProjectModel.self)
+//                    try modelContext.delete(model: PracticeModel.self)
+//                    try modelContext.delete(model: UtteranceModel.self)
+//                    try modelContext.delete(model: WordModel.self)
+//                    try modelContext.delete(model: SentenceModel.self)
+//                    try modelContext.delete(model: PracticeSummaryModel.self)
+//                    try modelContext.delete(model: FillerWordModel.self)
+//                } catch {
+//
                 // MARK: 녹음 중일 경우 처리하기
 //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 //                    isRecording.toggle()
+
 //                }
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
@@ -198,10 +209,14 @@ extension MenubarExtraView {
                 if !filtered.isEmpty {
                     print("일치하는 프로젝트: \(filtered[0].projectName)")
                     projectManager.current = filtered[0]
+                    //
                     selectedProject = projectModels.first!
+                    print("일치: ", selectedProject.projectName)
                 } else {
                     print("일치하는 프로젝트가 없음")
+                    //
                     selectedProject = projectModels.last!
+                    print("불일치: ", selectedProject.projectName)
                 }
             }
         }

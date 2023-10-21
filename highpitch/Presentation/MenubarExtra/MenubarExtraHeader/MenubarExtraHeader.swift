@@ -150,6 +150,8 @@ extension MenubarExtraHeader {
             // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
             let newPracticeModel = PracticeModel(
                 practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                index: selectedProject.practices.count,
+                isVisited: false,
                 creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
                 audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
                 utterances: newUtteranceModels,
