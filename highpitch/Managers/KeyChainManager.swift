@@ -68,7 +68,7 @@ struct KeychainManager {
         var data: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &data)
         print(status)
-        // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
+        
         guard status == errSecSuccess else {
             throw KeyChainError.unowned(status)
         }

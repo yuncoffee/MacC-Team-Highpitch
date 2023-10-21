@@ -209,10 +209,14 @@ extension MenubarExtraView {
                 if !filtered.isEmpty {
                     print("일치하는 프로젝트: \(filtered[0].projectName)")
                     projectManager.current = filtered[0]
+                    //
                     selectedProject = projectModels.first!
+                    print("일치: ", selectedProject.projectName)
                 } else {
                     print("일치하는 프로젝트가 없음")
+                    //
                     selectedProject = projectModels.last!
+                    print("불일치: ", selectedProject.projectName)
                 }
             }
         }
