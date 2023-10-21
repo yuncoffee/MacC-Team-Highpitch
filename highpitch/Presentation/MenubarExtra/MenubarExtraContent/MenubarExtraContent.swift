@@ -35,22 +35,53 @@ struct MenubarExtraContent: View {
     private var isDetilsActive = false
     
     @State
-    private var selectedKeynoteName = "새 프로젝트로 생성"
+    private var selectedKeynoteName = "음성으로만 연습하기"
     
     @State
-    private var keynoteNameOptions: [String] = []
+    private var keynoteNameOptions: [String] = ["음성으로만 연습하기"]
+    
+    @State
+    private var selectedProjectName = "새 프로젝트로 생성"
+    
+    @State
+    private var projectNameOptions: [String] = ["새 프로젝트로 생성"]
     
     var body: some View {
         VStack(spacing: 0) {
             sectionProject
             sectionPractice
         }
-        .onChange(of: keynoteOptions) { _, newValue in
-            keynoteNameOptions = newValue.map {$0.getFileName()}
+        .onAppear {
+            projectNameOptions.append(contentsOf: projectModels.map {$0.projectName})
+            keynoteNameOptions.append(contentsOf: keynoteOptions.map {$0.getFileName()})
         }
+        /// 키노트 리스트 변경
+        .onChange(of: keynoteOptions) { _, newValue in
+            var temp = ["음성으로만 연습하기"]
+            temp.append(contentsOf: newValue.map {$0.getFileName()})
+            keynoteNameOptions = temp
+        }
+        /// 키노트 변경
         .onChange(of: selectedKeynoteName) { _, newValue in
+            if newValue == "음성으로만 연습하기" {
+                return
+            }
             let filtered = keynoteOptions.filter {$0.getFileName() == newValue}
             selectedKeynote = filtered[0]
+        }
+        /// 프로젝트 모델 변경
+        .onChange(of: projectModels) { _, newValue in
+            var temp = ["새 프로젝트로 생성"]
+            temp.append(contentsOf: newValue.map {$0.projectName})
+            projectNameOptions = temp
+        }
+        /// 프로젝트 변경
+        .onChange(of: selectedProjectName) { _, newValue in
+            if newValue == "새 프로젝트로 생성" {
+                return
+            }
+            let filtered = projectModels.filter {$0.projectName == newValue}
+            selectedProject = filtered[0]
         }
     }
 }
@@ -97,15 +128,9 @@ extension MenubarExtraContent {
                         }
                     }
                     HStack {
-                        Text("발표 연습을 진행 할 키노트")
-                            .systemFont(.caption2, weight: .semibold)
-                            .foregroundStyle(Color.HPTextStyle.darker)
+                        Text("해당 연습을 저장할 프로젝트")
                         Spacer()
-                        if !keynoteOptions.isEmpty {
-                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
-                        } else {
-                            Text("음성으로만 연습할래요?")
-                        }
+                        HPMenu(selected: $selectedProjectName, options: $projectNameOptions)
                     }
 //                    VStack(alignment: .leading) {
 //                        Picker("프로젝트", selection: $selectedProject) {
