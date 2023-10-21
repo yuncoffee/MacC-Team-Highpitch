@@ -12,7 +12,11 @@ import SwiftUI
 final class ProjectManager {
     // MARK: - 임시 샘플 프로젝트들 저장
     var projects: [ProjectModel]?
-    var current: ProjectModel?
+    var current: ProjectModel? {
+        didSet {
+            self.practiceManager.practices = current?.practices
+        }
+    }
     var currentTabItem = 1
     var path: NavigationPath = .init()
     var testCurrent: Project?
