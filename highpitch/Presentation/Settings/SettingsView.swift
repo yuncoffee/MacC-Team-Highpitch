@@ -15,23 +15,21 @@ import SwiftData
 struct SettingsView: View {
     @Environment(MediaManager.self)
     private var mediaStore
-    
-    @Query(sort: \Sample.name)
-    var samples: [Sample]
-    
+
     var body: some View {
         VStack {
-            Text("\(samples.isEmpty ? "none" : samples[0].name)")
-            Text("Sample")
-                .systemFont(.largeTitle)
-            Text("SwiftUI ")
-                .foregroundColor(.red)
-            + Text("is ")
-                .foregroundColor(.orange)
-                .fontWeight(.black)
-            + Text("awesome")
-                .foregroundColor(.blue)
-                .foregroundStyle(Color.HPPrimary.base)
+            Text("ㅋㅋ")
+//            Text("\(samples.isEmpty ? "none" : samples[0].name)")
+//            Text("Sample")
+//                .systemFont(.largeTitle)
+//            Text("SwiftUI ")
+//                .foregroundColor(.red)
+//            + Text("is ")
+//                .foregroundColor(.orange)
+//                .fontWeight(.black)
+//            + Text("awesome")
+//                .foregroundColor(.blue)
+//                .foregroundStyle(Color.HPPrimary.base)
             
         }
         .frame(minWidth: 200, minHeight: 200)
