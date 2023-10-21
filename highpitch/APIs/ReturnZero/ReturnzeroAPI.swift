@@ -45,7 +45,7 @@ struct ReturnzeroAPI {
     }
     
     private func isAuth() async throws -> String {
-        do {
+        do{
             if let token = try keyChainManager.load(forKey: .rzToken) as? TokenData {
                 if(Date.now.compare(token.expried).rawValue < 0) {
                     return token.token
@@ -56,7 +56,7 @@ struct ReturnzeroAPI {
                 }
             }
             throw RZError.networkErr
-        } catch {
+        }catch {
             print("here")
             let accessToken = try await getToken()
             try keyChainManager.save(data: accessToken, forKey: .rzToken)
