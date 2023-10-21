@@ -544,13 +544,6 @@
 			path = MenubarExtraHeader;
 			sourceTree = "<group>";
 		};
-		1DBF145E2AE137EC00B28CED /* MenubarExtraFooter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MenubarExtraFooter;
-			sourceTree = "<group>";
-		};
 		1DBF145F2AE137F800B28CED /* MenubarExtraContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,7 +681,6 @@
 				1DF659C72AD5998D00AE5601 /* MenubarExtraView.swift */,
 				1DBF145D2AE137B000B28CED /* MenubarExtraHeader */,
 				1DBF145F2AE137F800B28CED /* MenubarExtraContent */,
-				1DBF145E2AE137EC00B28CED /* MenubarExtraFooter */,
 			);
 			path = MenubarExtra;
 			sourceTree = "<group>";
