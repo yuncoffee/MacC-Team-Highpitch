@@ -26,15 +26,15 @@ struct PracticeResultCell: View {
     }
 }
 
-#Preview {
-    @State var practice = PracticeModel(
-        practiceName: "",
-        creatAt: "",
-        utterances: [],
-        summary: PracticeSummaryModel()
-    )
-    
-    return PracticeResultCell(practice: practice) {
-        print("Hello")
-    }
-}
+//#Preview {
+//    @State var practice = PracticeModel(
+//        practiceName: "",
+//        creatAt: "",
+//        utterances: [],
+//        summary: PracticeSummaryModel()
+//    )
+//    
+//    return PracticeResultCell(practice: practice) {
+//        print("Hello")
+//    }
+//}
