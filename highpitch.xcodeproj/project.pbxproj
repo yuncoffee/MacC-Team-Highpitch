@@ -72,7 +72,7 @@
 		1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */; };
 		1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */; };
 		1D95F0AF2AE3BEF000E563EA /* PracticeResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */; };
-		1D95F0B12AE3C23900E563EA /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D95F0B02AE3C23900E563EA /* SecretKey.plist */; };
+		1D95F0B32AE3C35D00E563EA /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D95F0B22AE3C35D00E563EA /* SecretKey.plist */; };
 		1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132302AD771A6006711B9 /* KeynoteManager.swift */; };
 		1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */; };
 		1DBF14512ADE1DC100B28CED /* LabelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14502ADE1DC100B28CED /* LabelModifier.swift */; };
@@ -182,7 +182,7 @@
 		1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utterance.swift; sourceTree = "<group>"; };
 		1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeResultCell.swift; sourceTree = "<group>"; };
-		1D95F0B02AE3C23900E563EA /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
+		1D95F0B22AE3C35D00E563EA /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
 		1DB132302AD771A6006711B9 /* KeynoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteManager.swift; sourceTree = "<group>"; };
 		1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPI.swift; sourceTree = "<group>"; };
 		1DBF14502ADE1DC100B28CED /* LabelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModifier.swift; sourceTree = "<group>"; };
@@ -596,7 +596,7 @@
 				1DF659B82AD5950900AE5601 /* App */,
 				1D09AF842ADA260200C1400E /* DesignSystem */,
 				1DF659B72AD594E600AE5601 /* DefaultSample */,
-				1D95F0B02AE3C23900E563EA /* SecretKey.plist */,
+				1D95F0B22AE3C35D00E563EA /* SecretKey.plist */,
 			);
 			path = highpitch;
 			sourceTree = "<group>";
@@ -813,11 +813,11 @@
 				434FE5A82ADA5C760005645F /* test1_json.json in Resources */,
 				1D09AFB52ADAD5E300C1400E /* test2.json in Resources */,
 				434FE5A72ADA5C760005645F /* test2_response.txt in Resources */,
+				1D95F0B32AE3C35D00E563EA /* SecretKey.plist in Resources */,
 				1D30E62C2AD6E88500623A58 /* .swiftlint.yml in Resources */,
 				1DF659942AD594BF00AE5601 /* Preview Assets.xcassets in Resources */,
 				1D09AFB32ADAD5D800C1400E /* test1.json in Resources */,
 				434FE5A62ADA5C760005645F /* test2_json.json in Resources */,
-				1D95F0B12AE3C23900E563EA /* SecretKey.plist in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
 				1D09AFBF2ADBA71C00C1400E /* test1.key in Resources */,
 				434FE5A92ADA5C760005645F /* test1_response.txt in Resources */,

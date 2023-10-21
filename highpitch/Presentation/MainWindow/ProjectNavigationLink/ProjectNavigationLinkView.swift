@@ -90,8 +90,7 @@ struct ProjectNavigationLink: View {
                                     practice.utterances = tempUtterance
                                     project.practices.append(practice)
                                     practiceManager.current = practice
-                                    practiceManager.getPracticeDetail()                              
-                                    
+                                    practiceManager.getPracticeDetail()         
                                 } catch {
                                     print("파일 또는 디코딩 에러")
                                 }

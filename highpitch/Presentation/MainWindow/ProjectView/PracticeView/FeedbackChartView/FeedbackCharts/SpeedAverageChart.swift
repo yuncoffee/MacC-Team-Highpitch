@@ -49,9 +49,9 @@ struct SpeedAverageChart: View {
             .chartYAxis {AxisMarks(position: .leading)}
             .chartYScale(domain: [
                 min(288, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).first!.epmValue ?? 0),
+                    0 }).first?.epmValue ?? 0),
                 max(422.4, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).last!.epmValue ?? 0)
+                    0 }).last?.epmValue ?? 0)
             ])
             
             .frame(
@@ -64,6 +64,7 @@ struct SpeedAverageChart: View {
             minHeight: 500,
             maxHeight: .infinity
         )    }
+        
 }
 
 // #Preview {
