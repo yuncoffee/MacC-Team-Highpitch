@@ -15,6 +15,14 @@ struct PracticesTabItem: View {
     var body: some View {
         @Bindable var projectManager = projectManager
         NavigationStack(path: $projectManager.path) {
+            
+            HStack {
+                Spacer()
+                Text("편집하기")
+                    .systemFont(.footnote, weight: .semibold)
+                    .foregroundStyle(Color("8B6DFF"))
+            }
+            
             if let project = projectManager.current {
                 List {
                     ForEach(Array(project.practices.enumerated()).reversed(), id: \.element.id) { index, practice in
@@ -44,16 +52,17 @@ struct PracticesTabItem: View {
                             VStack {
                                 Text("자세히 보기")
                                 HStack {
-                                    EachPracticeDetailBox(title: "평균 레벨",measure: "LV.4.5",unit: "/5")
-                                    EachPracticeDetailBox(title: "습관어",measure: "12",unit: "회")
+                                    AverageLevelBox(measure: "4.5")
+                                    FillerWordBox(measure: "12")
                                     // 구분선
                                     Rectangle()
                                         .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
                                         .frame(width: 1, height: 52) // 너비와 높이를 조절
                                         .padding(.vertical, 5) // 원하는 간격으로 조절
-                                    EachPracticeDetailBox(title: "발화 속도",measure: "138",unit: "EPM")
+                                    SpeechSpeedBox(measure: "138")
                                 }
                             }
+                            .padding(.horizontal, 32)
                         }
                         .frame(minWidth: 672, minHeight: 136, maxHeight: 136)
                         .border(Color.red, width: 2)
@@ -75,6 +84,7 @@ struct PracticesTabItem: View {
             }
         }
     }
+    
 }
 
 // #Preview {
@@ -103,26 +113,74 @@ extension PracticesTabItem {
     
 }
 
-struct EachPracticeDetailBox: View {
-    var title = ""
+struct AverageLevelBox: View {
     var measure = ""
-    var unit = ""
     
     var body: some View {
         /// 결과 요약
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title)
+        VStack(alignment: .center, spacing: 0) {
+            Text("평균 레벨")
                 .systemFont(.caption, weight: .semibold)
                 .foregroundStyle(Color.text900)
-            HStack {
-                Text(measure)
-                    .systemFont(.caption, weight: .semibold)
+            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                Text("LV.")
+                    .systemFont(.body, weight: .semibold)
                     .foregroundStyle(Color.primary600)
-                Text(unit)
-                    .systemFont(.caption, weight: .semibold)
+                Text(measure)
+                    .font(.custom("Pretendard-Bold", size: 24))
+                    .foregroundStyle(Color.primary600)
+                Text("/5")
+                    .systemFont(.body, weight: .medium)
                     .foregroundStyle(Color.text500)
             }
         }
+        .frame(width: 123, height: 80)
         .background(Color.HPComponent.mainWindowSidebarBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
+
+struct FillerWordBox: View {
+    var measure = ""
+    
+    var body: some View {
+        /// 결과 요약
+        VStack(alignment: .center, spacing: 0) {
+            Text("습관어")
+                .systemFont(.caption, weight: .semibold)
+                .foregroundStyle(Color.text900)
+            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                Text(measure)
+                    .systemFont(.largeTitle, weight: .bold)
+                    .foregroundStyle(Color.primary600)
+                Text("회")
+                    .systemFont(.body, weight: .medium)
+                    .foregroundStyle(Color.text500)
+            }
+        }
+        .frame(width: 123, height: 80)
+    }
+}
+
+struct SpeechSpeedBox: View {
+    var measure = ""
+    
+    var body: some View {
+        /// 결과 요약
+        VStack(alignment: .center, spacing: 0) {
+            Text("발화 속도")
+                .systemFont(.caption, weight: .semibold)
+                .foregroundStyle(Color.text900)
+            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                Text(measure)
+                    .systemFont(.largeTitle, weight: .bold)
+                    .foregroundStyle(Color.primary600)
+                Text("EPM")
+                    .systemFont(.body, weight: .medium)
+                    .foregroundStyle(Color.text500)
+            }
+        }
+        .frame(width: 123, height: 80)
+    }
+}
+
