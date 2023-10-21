@@ -20,6 +20,8 @@ struct ProjectNavigationLink: View {
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
+    var practiceManager = PracticeManager()
+    
     var body: some View {
 //    TODO: - Padding
         VStack(alignment: .leading, spacing: 10) {
@@ -69,7 +71,7 @@ struct ProjectNavigationLink: View {
                                     var practice = PracticeModel(
                                         practiceName: "연습 \(index)", creatAt: "2023-10-18",
                                         audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
-                                        utterances: []
+                                        utterances: [], summary: PracticeSummaryModel()
                                     )
                                     
                                     var tempUtterance: [UtteranceModel] = []
@@ -83,8 +85,9 @@ struct ProjectNavigationLink: View {
                                     }
                                     
                                     practice.utterances = tempUtterance
-                                    
                                     project.practices.append(practice)
+                                    practiceManager.current = practice
+                                    practiceManager.getPracticeDetail()                              
                                     
                                 } catch {
                                     print("파일 또는 디코딩 에러")

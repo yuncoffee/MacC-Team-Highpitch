@@ -64,6 +64,7 @@ struct MenubarExtraView: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
+    // MARK: 샘플 임시 데이터
     @State
     private var selectedProject: ProjectModel = ProjectModel(
         projectName: "d",
@@ -71,16 +72,25 @@ struct MenubarExtraView: View {
         keynoteCreation: "dd"
     )
     @State
-    private var selectedkeynote: OpendKeynote = OpendKeynote()
-//    @State
-//    private var projectOptions: [Project] = []
+    private var selectedKeynote: OpendKeynote = OpendKeynote()
+    
     @State
     private var keynoteOptions: [OpendKeynote] = []
+    
+    @State
+    private var isRecording = false {
+        didSet {
+            if isRecording {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    isRecording = false
+                }
+            }
+        }
+    }
     
     @Binding
     var isMenuPresented: Bool
     
-    //
     @Environment(\.modelContext)
     var modelContext
     @Query(sort: \ProjectModel.creatAt)
@@ -88,23 +98,47 @@ struct MenubarExtraView: View {
     
     var body: some View {
         if isMenuPresented {
-            VStack(spacing: 0) {
-                header
-                Divider()
-                sectionProject
-                Divider()
-                sectionPractice
-                Divider()
-                footer
+            ZStack {
+                Text("HH")
+                    .frame(width: 45, height: 1)
+                    .popover(isPresented: $isRecording,
+                             arrowEdge: .bottom
+                    ) {
+                        Text("HHHH!!!!!!!!!!!!!")
+                            .padding()
+                    }
+                    .frame(alignment: .center)
+                VStack(spacing: 0) {
+                    MenubarExtraHeader(
+                        selectedProject: $selectedProject,
+                        selectedKeynote: $selectedKeynote,
+                        isMenuPresented: $isMenuPresented
+                    )
+                    MenubarExtraContent(
+                        selectedProject: $selectedProject,
+                        selectedKeynote: $selectedKeynote,
+                        keynoteOptions: $keynoteOptions,
+                        isMenuPresented: $isMenuPresented
+                    )
+                }
+                .frame(
+                    width: isRecording ? 0 : 400,
+                    height: isRecording ? 0 : 440,
+                    alignment: .top
+                )
+                .background(Color.HPGray.systemWhite)
             }
-            .frame(minWidth: 360, minHeight: 480, alignment: .topLeading)
-            .background(Color.white)
+            .frame(alignment: .top)
             .onAppear {
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
                 if projectModels.count > 0 {
                     selectedProject = projectModels[0]
                 }
+                // MARK: 녹음 중일 경우 처리하기
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                    isRecording.toggle()
+//                }
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
                 if newValue {
@@ -112,20 +146,14 @@ struct MenubarExtraView: View {
                 }
             })
             .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
+                print(newValue)
                 keynoteOptions = newValue
                 if !newValue.isEmpty {
-                    selectedkeynote = newValue[0]
+                    selectedKeynote = newValue[0]
                 }
                 updateCurrentProject()
             }
-            .onChange(of: projectModels) { _, newValue in
-//                if let projects = newValue {
-//                    projectOptions = projects
-//                    projectOptions.append(Project())
-//                    selectedProject = projects[0]
-//                }
-            }
-            .onChange(of: selectedkeynote, {
+            .onChange(of: selectedKeynote, {
                 updateCurrentProject()
             })
         }
@@ -165,7 +193,7 @@ extension MenubarExtraView {
         } else {
             if(projectModels.count > 1) {
                 let filtered = projectModels.filter({ project in
-                    project.creatAt == selectedkeynote.creation
+                    project.keynoteCreation == selectedKeynote.creation
                 })
                 if !filtered.isEmpty {
                     print("일치하는 프로젝트: \(filtered[0].projectName)")
@@ -182,212 +210,6 @@ extension MenubarExtraView {
             }
         }
     }
-    
-    private func openSelectedProject() {
-        print("프로젝트 열기")
-        if selectedProject.projectName != "새 프로젝트" {
-            projectManager.current = selectedProject
-            if !projectManager.path.isEmpty {
-                projectManager.currentTabItem = 0
-                projectManager.path.removeLast()
-            }
-            openWindow(id: "main")
-        }
-    }
-    
-    private func startPractice() {
-        if !mediaManager.isRecording {
-            print("녹음 시작")
-            print(selectedkeynote.path)
-            Task {
-                await appleScriptManager.runScript(.startPresentation(fileName: selectedkeynote.path))
-            }
-            mediaManager.isRecording.toggle()
-            isMenuPresented.toggle()
-            
-            // 녹음파일 저장할 fileName 정하고, 녹음 시작!!!
-            mediaManager.fileName = mediaManager.currentDateTimeString()
-            mediaManager.startRecording()
-        } else {
-            print("녹음 종료")
-            mediaManager.isRecording.toggle()
-            
-            // 녹음 중지!
-            mediaManager.stopRecording()
-            // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
-            // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
-            // ReturnZero API를 이용해서 UtteranceModel완성
-            Task {
-                do {
-                    var tempUtterances: [Utterance] = try await ReturnzeroAPI()
-                        .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-                    print(tempUtterances)
-                    
-                    var newUtteranceModels: [UtteranceModel] = []
-                    
-                    for tempUtterance in tempUtterances {
-                        newUtteranceModels.append(
-                            UtteranceModel(
-                                startAt: tempUtterance.startAt,
-                                duration: tempUtterance.duration,
-                                message: tempUtterance.message
-                            )
-                        )
-                    }
-                    
-                    // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
-                    var newPracticeModel = PracticeModel(
-                        practiceName: "\(selectedProject.practices.count + 1)번째 연습",
-                        creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
-                        audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
-                        utterances: newUtteranceModels
-                    )
-                    selectedProject.practices.append(newPracticeModel)
-                    
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-            
-        }
-    }
-    
-    private func openSelectedPractice(practice: PracticeModel) {
-        projectManager.current = selectedProject
-        projectManager.currentTabItem = 1
-        if !projectManager.path.isEmpty {
-            projectManager.path.removeLast()
-        }
-        // MARK: - 뷰 갱신 하는 방법으로 변경해야함.!!!
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-            projectManager.path.append(practice)
-        }
-    }
-    
-    private func quitApp() {
-        exit(0)
-    }
-}
-
-// MARK: - Views
-extension MenubarExtraView {
-    @ViewBuilder
-    private var header: some View {
-        HStack {
-            Button {
-                print("앱 열기")
-            } label: {
-                Label("홈", systemImage: "house.fill")
-                    .labelStyle(.iconOnly)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(.plain)
-            Spacer()
-            Button {
-                openSelectedProject()
-            } label: {
-                Label("프로젝트 열기", systemImage: "house.fill")
-                    .labelStyle(.titleOnly)
-            }
-            
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 24)
-    }
-    
-    @ViewBuilder
-    private var sectionProject: some View {
-        // 프로젝트의 연습 목록
-        HStack(alignment: .bottom) {
-            // 현재 선택 된 프로젝트 정보 출력 출력
-            /// 키노트가 열려있는 경우,
-            VStack(alignment: .leading) {
-                Text("현재 열려있는 키노트")
-                if !keynoteOptions.isEmpty {
-                    Picker("프로젝트", selection: $selectedkeynote) {
-                        ForEach(keynoteOptions, id: \.id) { opendKeynote in
-                            Text("\(opendKeynote.getFileName())").tag(opendKeynote)
-                        }
-                    }
-                    .labelsHidden()
-                } else {
-                    Text("현재 열려 있는 키노트 파일이 없네여")
-                }
-                Text("프로젝트")
-                Picker("프로젝트", selection: $selectedProject) {
-                    ForEach(projectModels, id: \.self) { project in
-                        Text("\(project.projectName)").tag(project)
-                    }
-                }
-                .labelsHidden()
-            }
-            Spacer()
-            // 선택 된 프로젝트로 연습 하기 || 연습 그만하기
-            Button {
-                startPractice()
-            } label: {
-                let label = if !mediaManager.isRecording {
-                    (text: "연습 시작하기", icon: "play.fill")
-                } else {
-                    (text: "연습 종료하기", icon: "stop.circle.fill")
-                }
-                Label(label.text, systemImage: label.icon)
-            }
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 24)
-        .frame(minHeight: 32)
-    }
-    
-    @ViewBuilder
-    private var sectionPractice: some View {
-        VStack(spacing: 0) {
-            if !selectedProject.practices.isEmpty {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem()], spacing: 8) {
-                        ForEach(selectedProject.practices, id: \.self) { practice in
-                            HStack {
-                                Text(practice.practiceName)
-                                Spacer()
-                                Button {
-                                    openSelectedPractice(practice: practice)
-                                } label: {
-                                    Text("자세히 보기")
-                                }
-                            }
-                            .padding()
-                            .background(Color("000000").opacity(0.1))
-                            .cornerRadius(5)
-                        }
-                    }
-                }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 24)
-            } else {
-                VStack {
-                    Text("연습 이력이 없네요...")
-                }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 24)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-        }
-    }
-    @ViewBuilder
-    private var footer: some View {
-        // 앱 종료
-        HStack {
-            Spacer()
-            Button {
-                quitApp()
-            } label: {
-                Text("앱 종료하기")
-            }
-        }
-        .frame(minHeight: 32)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 24)
-    }
 }
 
 #Preview {
@@ -402,24 +224,6 @@ extension MenubarExtraView {
 
 // MARK: Date.now() -> String으로 변환하는 함수들
 extension MenubarExtraView {
-    
-    // MediaManager밑에 있는 fileName을 통해서 연습하기 탭에 띄울 날짜 생성
-    func fileNameDateToPracticeDate(input: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyyMMddHHmmss"
-        
-        if let date = inputFormatter.date(from: input) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "YYYY.MM.dd (E) HH:mm:ss"
-            
-            let dateString = outputFormatter.string(from: date)
-            
-            return dateString
-        } else {
-            return "Invalid Date"
-        }
-    }
-    
     // MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
     func fileNameDateToCreateAtDate(input: String) -> String {
         let inputFormatter = DateFormatter()
@@ -436,5 +240,4 @@ extension MenubarExtraView {
             return "Invalid Date"
         }
     }
-    
 }
