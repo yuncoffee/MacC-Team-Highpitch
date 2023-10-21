@@ -32,12 +32,25 @@ struct MenubarExtraContent: View {
     var projectModels: [ProjectModel]
     
     @State
-    var isDetilsActive = false
+    private var isDetilsActive = false
+    
+    @State
+    private var selectedKeynoteName = "새 프로젝트로 생성"
+    
+    @State
+    private var keynoteNameOptions: [String] = []
     
     var body: some View {
         VStack(spacing: 0) {
             sectionProject
             sectionPractice
+        }
+        .onChange(of: keynoteOptions) { _, newValue in
+            keynoteNameOptions = newValue.map {$0.getFileName()}
+        }
+        .onChange(of: selectedKeynoteName) { _, newValue in
+            let filtered = keynoteOptions.filter {$0.getFileName() == newValue}
+            selectedKeynote = filtered[0]
         }
     }
 }
@@ -69,6 +82,10 @@ extension MenubarExtraContent {
             // 현재 선택 된 프로젝트 정보 출력 출력
             /// 키노트가 열려있는 경우,
             if isDetilsActive {
+                HPMenu(
+                    selected: $selectedKeynoteName,
+                    options: $keynoteNameOptions
+                )
                 VStack(alignment: .leading) {
     //                Text("현재 열려있는 키노트")
                     if !keynoteOptions.isEmpty {
@@ -81,18 +98,6 @@ extension MenubarExtraContent {
                     } else {
                         Text("현재 열려 있는 키노트 파일이 없네여")
                     }
-                    Menu("Actions") {
-                        Button("Duplicate", action:{})
-                        Button("Rename", action: {})
-                        Button("Delete…", action: {})
-                        Menu("Copy") {
-                            Button("Copy", action: {})
-                            Button("Copy Formatted", action: {})
-                            Button("Copy Library Path", action: {})
-                        }
-                    }
-                    .menuStyle(MenubarExtraMenuStyle())
-    //                Text("프로젝트")
                     Picker("프로젝트", selection: $selectedProject) {
                         ForEach(projectModels, id: \.self) { project in
                             Text("\(project.projectName)").tag(project)
@@ -176,7 +181,8 @@ extension MenubarExtraContent {
     )
     
     return MenubarExtraContent(
-        selectedProject: $selectedProject, selectedKeynote: $selectedKeynote,
+        selectedProject: $selectedProject, 
+        selectedKeynote: $selectedKeynote,
         keynoteOptions: $keynoteOptions,
         isMenuPresented: $isMenuPresented)
 }

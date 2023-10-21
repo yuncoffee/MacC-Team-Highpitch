@@ -16,7 +16,6 @@
 		10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
 		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
-		10C7D23D2ADF7230008691CD /* PlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D23C2ADF7230008691CD /* PlayBar.swift */; };
 		1172F1032AE1326000D6B0B9 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1022AE1326000D6B0B9 /* WordModel.swift */; };
 		1172F1072AE1335100D6B0B9 /* SentenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1062AE1335100D6B0B9 /* SentenceModel.swift */; };
 		1172F1092AE1442900D6B0B9 /* PracticeSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */; };
@@ -521,6 +520,14 @@
 			path = DataModels;
 			sourceTree = "<group>";
 		};
+		1DA23C802AE361A000050194 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				10C7D23C2ADF7230008691CD /* PlayBar.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		1DB132322AD78742006711B9 /* ReturnZero */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +567,7 @@
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
 				1DF659A72AD594BF00AE5601 /* highpitchUITests */,
 				1DF659872AD594BD00AE5601 /* Products */,
+				1DA23C802AE361A000050194 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -898,7 +906,6 @@
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,
-				10C7D23D2ADF7230008691CD /* PlayBar.swift in Sources */,
 				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */,
