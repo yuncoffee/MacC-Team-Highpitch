@@ -176,9 +176,9 @@ extension AudioControllerView {
     }
 }
 
-#Preview {
-    @State var practice = PracticeModel(practiceName: "", creatAt: "", utterances: [], summary: PracticeSummaryModel())
-    return AudioControllerView(practice: $practice)
-        .environment(MediaManager())
-        .environment(ProjectManager())
-}
+// #Preview {
+//    @State var practice = PracticeModel(practiceName: "", index: 0, isVisited: <#Bool#>, creatAt: "", utterances: [], summary: PracticeSummaryModel())
+//    return AudioControllerView(practice: $practice)
+//        .environment(MediaManager())
+//        .environment(ProjectManager())
+// }
