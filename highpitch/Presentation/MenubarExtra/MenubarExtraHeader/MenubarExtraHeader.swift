@@ -24,6 +24,7 @@ struct MenubarExtraHeader: View {
     var selectedKeynote: OpendKeynote
     @Binding
     var isMenuPresented: Bool
+    var practiceManager = PracticeManager()
     
     var body: some View {
         HStack(spacing: 0) {
@@ -57,14 +58,12 @@ struct MenubarExtraHeader: View {
                     (
                         label:"연습 시작",
                         image: "play.fill",
-//                        func: playPractice(),
                         color: Color.HPPrimary.base
                     )
                 } else {
                     (
                         label:"일시 정지",
                         image: "pause.fill",
-//                        func: pausePractice(),
                         color: Color.HPGray.system800
                     )
                 }
@@ -105,15 +104,15 @@ extension MenubarExtraHeader {
     // MARK: - 연습 시자기.
     private func playPractice() {
         print("..?")
-//        Task {
-//            await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
-//        }
-//        mediaManager.isRecording.toggle()
-//        isMenuPresented.toggle()
+        Task {
+            await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
+        }
+        mediaManager.isRecording.toggle()
+        isMenuPresented.toggle()
         
-        // 녹음파일 저장할 fileName 정하고, 녹음 시작!!!
-//        mediaManager.fileName = mediaManager.currentDateTimeString()
-//        mediaManager.startRecording()
+//         녹음파일 저장할 fileName 정하고, 녹음 시작!!!
+        mediaManager.fileName = mediaManager.currentDateTimeString()
+        mediaManager.startRecording()
     }
     // MARK: - 연습 일시중지
     private func pausePractice() {
@@ -135,6 +134,8 @@ extension MenubarExtraHeader {
             let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
+            print(#file, #line, tempUtterances)
+            
             var newUtteranceModels: [UtteranceModel] = []
             
             for tempUtterance in tempUtterances {
@@ -158,6 +159,11 @@ extension MenubarExtraHeader {
                 summary: PracticeSummaryModel()
             )
             selectedProject.practices.append(newPracticeModel)
+            practiceManager.current = newPracticeModel
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                practiceManager.getPracticeDetail()
+            }
+//            practiceManager.getPracticeDetail()
         }
     }
     
