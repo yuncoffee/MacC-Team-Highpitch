@@ -105,6 +105,17 @@ struct MenubarExtraView: View {
                 if projectModels.count > 0 {
                     selectedProject = projectModels[0]
                 }
+//                do {
+//                    try modelContext.delete(model: ProjectModel.self)
+//                    try modelContext.delete(model: PracticeModel.self)
+//                    try modelContext.delete(model: UtteranceModel.self)
+//                    try modelContext.delete(model: WordModel.self)
+//                    try modelContext.delete(model: SentenceModel.self)
+//                    try modelContext.delete(model: PracticeSummaryModel.self)
+//                    try modelContext.delete(model: FillerWordModel.self)
+//                } catch {
+//                    
+//                }
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
                 if newValue {
@@ -233,6 +244,8 @@ extension MenubarExtraView {
                 // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
                 var newPracticeModel = PracticeModel(
                     practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                    index: selectedProject.practices.count,
+                    isVisited: false,
                     creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
                     audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
                     utterances: newUtteranceModels, summary: PracticeSummaryModel()
