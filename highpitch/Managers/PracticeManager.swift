@@ -57,6 +57,7 @@ extension PracticeManager {
             var sentenceIndex = 0; var wordIndex = 0
             var sentenceSyllable: [Int] = [0]
             var sentenceDuration: [Int] = [0]
+            var tempWords: [WordModel] = []
             var tempSentences: [SentenceModel] = []
             
             for (index, utterance) in current.utterances.sorted().enumerated() {
@@ -75,11 +76,11 @@ extension PracticeManager {
                     }
                     
                     // words, sentences의 sentence를 업데이트합니다.
-                    current.words.append(WordModel(
+                    tempWords.append(WordModel(
                         isFillerWord: isFillerWord(word: word),
                         sentenceIndex: sentenceIndex,
                         index: wordIndex,
-                        word: index == messageLenght - 1 ? word : word + " "))
+                        word: word + " "))
                     
                     if sentenceIndex == tempSentences.count {
                         tempSentences.append(SentenceModel(
@@ -113,6 +114,9 @@ extension PracticeManager {
                         current.summary.fastSpeechTime += sentenceDuration[sentenceIndex]
                         current.summary.fastSentenceIndex.append(sentenceIndex)
                     }
+                    _ = tempWords.last!.word.popLast()
+                    for tempWord in tempWords { current.words.append(tempWord) }
+                    tempWords.removeAll()
                     current.sentences.append(tempSentences[sentenceIndex])
                     
                     // 다음 문장으로 넘깁니다.

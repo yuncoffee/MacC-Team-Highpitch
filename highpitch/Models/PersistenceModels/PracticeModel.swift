@@ -11,6 +11,8 @@ import SwiftData
 @Model
 class PracticeModel {
     var practiceName: String
+    var index: Int
+    var isVisited: Bool
     var creatAt: String
     var audioPath: URL?
     @Relationship(deleteRule: .cascade) var utterances: [UtteranceModel]
@@ -20,6 +22,8 @@ class PracticeModel {
     
     init(
         practiceName: String,
+        index: Int,
+        isVisited: Bool,
         creatAt: String,
         audioPath: URL? = nil,
         utterances: [UtteranceModel],
@@ -28,6 +32,8 @@ class PracticeModel {
         summary: PracticeSummaryModel
     ) {
         self.practiceName = practiceName
+        self.index = index
+        self.isVisited = isVisited
         self.creatAt = creatAt
         self.audioPath = audioPath
         self.utterances = utterances
