@@ -55,6 +55,9 @@ struct MenubarExtraContent: View {
             projectNameOptions.append(contentsOf: projectModels.map {$0.projectName})
             keynoteNameOptions.append(contentsOf: keynoteOptions.map {$0.getFileName()})
         }
+        .onChange(of: selectedKeynote, { _, newValue in
+            selectedKeynoteName = newValue.getFileName()
+        })
         /// 키노트 리스트 변경
         .onChange(of: keynoteOptions) { _, newValue in
             var temp = ["음성으로만 연습하기"]
@@ -94,7 +97,7 @@ extension MenubarExtraContent {
             HStack(spacing: 0) {
                 Text("파일 설정")
                     .systemFont(.caption, weight: .semibold)
-                    .foregroundStyle(Color.HPTextStyle.dark)
+                    .foregroundStyle(Color.HPTextStyle.base)
                 Spacer()
                 Button {
                     withAnimation {
@@ -129,17 +132,11 @@ extension MenubarExtraContent {
                     }
                     HStack {
                         Text("해당 연습을 저장할 프로젝트")
+                            .systemFont(.caption2, weight: .semibold)
+                            .foregroundStyle(Color.HPTextStyle.darker)
                         Spacer()
                         HPMenu(selected: $selectedProjectName, options: $projectNameOptions)
                     }
-//                    VStack(alignment: .leading) {
-//                        Picker("프로젝트", selection: $selectedProject) {
-//                            ForEach(projectModels, id: \.self) { project in
-//                                Text("\(project.projectName)").tag(project)
-//                            }
-//                        }
-//                        .labelsHidden()
-//                    }
                 }
                 .padding(.top, .HPSpacing.xxxsmall)
                 .padding(.bottom, .HPSpacing.xsmall)
@@ -155,22 +152,30 @@ extension MenubarExtraContent {
     @ViewBuilder
     private var sectionPractice: some View {
         VStack(spacing: 0) {
+            HStack {
+                Text("\(10)개 확인하지 않음")
+                    .foregroundStyle(Color.HPTextStyle.dark)
+                    .systemFont(.caption2, weight: .semibold)
+                Spacer()
+                Button {
+                    print("모두 읽음 !")
+                } label: {
+                    Text("모두 읽음")
+                        .foregroundStyle(Color.HPPrimary.base)
+                        .systemFont(.caption2, weight: .semibold)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.vertical, .HPSpacing.xxsmall)
+            .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+            .border(.HPComponent.stroke, width: 1, edges: [.bottom])
             if !selectedProject.practices.isEmpty {
                 ScrollView {
                     LazyVGrid(columns: [GridItem()], spacing: 8) {
                         ForEach(selectedProject.practices, id: \.self) { practice in
-                            HStack {
-                                Text(practice.practiceName)
-                                Spacer()
-                                Button {
-                                    openSelectedPractice(practice: practice)
-                                } label: {
-                                    Text("자세히 보기")
-                                }
+                            PracticeResultCell(practice: practice) {
+                                openSelectedPractice(practice: practice)
                             }
-                            .padding()
-                            .background(Color("000000").opacity(0.1))
-                            .cornerRadius(5)
                         }
                     }
                 }
