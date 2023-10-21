@@ -16,6 +16,7 @@
 		10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
 		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
+		11294CF72AE3C38000B5EB48 /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11294CF62AE3C38000B5EB48 /* SecretKey.plist */; };
 		1172F1032AE1326000D6B0B9 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1022AE1326000D6B0B9 /* WordModel.swift */; };
 		1172F1072AE1335100D6B0B9 /* SentenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1062AE1335100D6B0B9 /* SentenceModel.swift */; };
 		1172F1092AE1442900D6B0B9 /* PracticeSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */; };
@@ -99,7 +100,6 @@
 		434FE5AB2ADA5C760005645F /* test2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A52ADA5C760005645F /* test2.m4a */; };
 		43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */; };
 		43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */; };
-		437B1E9E2ADFCFC600433C1C /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 437B1E9D2ADFCFC600433C1C /* SecretKey.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +126,7 @@
 		10C7D1FC2ADE12B3008691CD /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		10C7D1FF2ADE2201008691CD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		10C7D23C2ADF7230008691CD /* PlayBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBar.swift; sourceTree = "<group>"; };
+		11294CF62AE3C38000B5EB48 /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
 		1172F1022AE1326000D6B0B9 /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
 		1172F1062AE1335100D6B0B9 /* SentenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceModel.swift; sourceTree = "<group>"; };
 		1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSummaryModel.swift; sourceTree = "<group>"; };
@@ -212,7 +213,6 @@
 		434FE5A52ADA5C760005645F /* test2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.m4a; sourceTree = "<group>"; };
 		43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModel.swift; sourceTree = "<group>"; };
 		43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtteranceModel.swift; sourceTree = "<group>"; };
-		437B1E9D2ADFCFC600433C1C /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +577,7 @@
 		1DF659882AD594BD00AE5601 /* highpitch */ = {
 			isa = PBXGroup;
 			children = (
+				11294CF62AE3C38000B5EB48 /* SecretKey.plist */,
 				1D30E6162AD59E0C00623A58 /* Models */,
 				1DF659BC2AD595E100AE5601 /* Presentation */,
 				1D30E6222AD6113C00623A58 /* Managers */,
@@ -586,7 +587,6 @@
 				1DF659B82AD5950900AE5601 /* App */,
 				1D09AF842ADA260200C1400E /* DesignSystem */,
 				1DF659B72AD594E600AE5601 /* DefaultSample */,
-				437B1E9D2ADFCFC600433C1C /* SecretKey.plist */,
 			);
 			path = highpitch;
 			sourceTree = "<group>";
@@ -806,7 +806,7 @@
 				1DF659942AD594BF00AE5601 /* Preview Assets.xcassets in Resources */,
 				1D09AFB32ADAD5D800C1400E /* test1.json in Resources */,
 				434FE5A62ADA5C760005645F /* test2_json.json in Resources */,
-				437B1E9E2ADFCFC600433C1C /* SecretKey.plist in Resources */,
+				11294CF72AE3C38000B5EB48 /* SecretKey.plist in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
 				1D09AFBF2ADBA71C00C1400E /* test1.key in Resources */,
 				434FE5A92ADA5C760005645F /* test1_response.txt in Resources */,
