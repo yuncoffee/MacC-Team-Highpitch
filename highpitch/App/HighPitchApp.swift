@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import MenuBarExtraAccess
+import SettingsAccess
 
 @main
 struct HighpitchApp: App {
@@ -88,12 +89,12 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)
+                .openSettingsAccess()
                 .modelContainer(container)
         }
         .menuBarExtraAccess(isPresented: $isMenuPresented)
         .menuBarExtraStyle(.window)
         .commandsRemoved()
-            
         #endif
     }
     
