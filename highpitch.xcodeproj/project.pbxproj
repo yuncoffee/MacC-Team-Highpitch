@@ -17,6 +17,10 @@
 		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D23D2ADF7230008691CD /* PlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D23C2ADF7230008691CD /* PlayBar.swift */; };
+		1172F1032AE1326000D6B0B9 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1022AE1326000D6B0B9 /* WordModel.swift */; };
+		1172F1072AE1335100D6B0B9 /* SentenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1062AE1335100D6B0B9 /* SentenceModel.swift */; };
+		1172F1092AE1442900D6B0B9 /* PracticeSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */; };
+		118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118D56382AE15572003072E9 /* FillerWordModel.swift */; };
 		11EF719B2ADADBA400D991E6 /* FillerWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719A2ADADBA400D991E6 /* FillerWordList.swift */; };
 		11EF719D2ADE3F0E00D991E6 /* FillerWordDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */; };
 		11EF719F2ADEAA2C00D991E6 /* FastSentReplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */; };
@@ -71,7 +75,6 @@
 		1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */; };
 		1DBF14512ADE1DC100B28CED /* LabelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14502ADE1DC100B28CED /* LabelModifier.swift */; };
 		1DBF14542ADE574F00B28CED /* HPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14532ADE574F00B28CED /* HPSegmentedControl.swift */; };
-		1DBF14592ADF55B600B28CED /* FillerWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14582ADF55B500B28CED /* FillerWord.swift */; };
 		1DBF145C2AE0A75700B28CED /* PracticeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF145B2AE0A75600B28CED /* PracticeManager.swift */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
@@ -120,6 +123,10 @@
 		10C7D1FC2ADE12B3008691CD /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		10C7D1FF2ADE2201008691CD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		10C7D23C2ADF7230008691CD /* PlayBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBar.swift; sourceTree = "<group>"; };
+		1172F1022AE1326000D6B0B9 /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
+		1172F1062AE1335100D6B0B9 /* SentenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceModel.swift; sourceTree = "<group>"; };
+		1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSummaryModel.swift; sourceTree = "<group>"; };
+		118D56382AE15572003072E9 /* FillerWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordModel.swift; sourceTree = "<group>"; };
 		11EF719A2ADADBA400D991E6 /* FillerWordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordList.swift; sourceTree = "<group>"; };
 		11EF719C2ADE3F0E00D991E6 /* FillerWordDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetail.swift; sourceTree = "<group>"; };
 		11EF719E2ADEAA2C00D991E6 /* FastSentReplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSentReplay.swift; sourceTree = "<group>"; };
@@ -173,7 +180,6 @@
 		1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPI.swift; sourceTree = "<group>"; };
 		1DBF14502ADE1DC100B28CED /* LabelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModifier.swift; sourceTree = "<group>"; };
 		1DBF14532ADE574F00B28CED /* HPSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPSegmentedControl.swift; sourceTree = "<group>"; };
-		1DBF14582ADF55B500B28CED /* FillerWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWord.swift; sourceTree = "<group>"; };
 		1DBF145B2AE0A75600B28CED /* PracticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeManager.swift; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
@@ -490,6 +496,10 @@
 				1D8C5AEF2AD7BB3200B01F10 /* ProjectModel.swift */,
 				43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */,
 				43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */,
+				1172F1022AE1326000D6B0B9 /* WordModel.swift */,
+				1172F1062AE1335100D6B0B9 /* SentenceModel.swift */,
+				1172F1082AE1442900D6B0B9 /* PracticeSummaryModel.swift */,
+				118D56382AE15572003072E9 /* FillerWordModel.swift */,
 				1D30E6192AD59E5E00623A58 /* SampleModel */,
 			);
 			path = PersistenceModels;
@@ -506,7 +516,6 @@
 				1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */,
 				1D7A3EDC2ADCC51B0084E962 /* MyModel.swift */,
 				10C7D1FC2ADE12B3008691CD /* TokenData.swift */,
-				1DBF14582ADF55B500B28CED /* FillerWord.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -833,6 +842,7 @@
 				1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */,
 				1DF659C82AD5998D00AE5601 /* MenubarExtraView.swift in Sources */,
 				1D09AFBB2ADAF2AD00C1400E /* Project.swift in Sources */,
+				1172F1092AE1442900D6B0B9 /* PracticeSummaryModel.swift in Sources */,
 				1D30E6352AD6EE3300623A58 /* AppleScript.swift in Sources */,
 				1D0ECD7E2ADE05D500B95A74 /* HPStyledLabel.swift in Sources */,
 				1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */,
@@ -842,12 +852,13 @@
 				1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */,
 				1D09AF882ADA267500C1400E /* Colors.swift in Sources */,
 				11EF719B2ADADBA400D991E6 /* FillerWordList.swift in Sources */,
+				1172F1032AE1326000D6B0B9 /* WordModel.swift in Sources */,
+				1172F1072AE1335100D6B0B9 /* SentenceModel.swift in Sources */,
 				1D09AF7F2AD995BE00C1400E /* ProjectLinkItem.swift in Sources */,
 				1DBF14542ADE574F00B28CED /* HPSegmentedControl.swift in Sources */,
 				1D09AF942ADA67BB00C1400E /* StatisticsTabItem.swift in Sources */,
 				1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */,
 				1D09AF7C2AD9954000C1400E /* ProjectNavigationLinkView.swift in Sources */,
-				1DBF14592ADF55B600B28CED /* FillerWord.swift in Sources */,
 				1D7A3EDD2ADCC51B0084E962 /* MyModel.swift in Sources */,
 				11EF719D2ADE3F0E00D991E6 /* FillerWordDetail.swift in Sources */,
 				1DBF145C2AE0A75700B28CED /* PracticeManager.swift in Sources */,
@@ -856,6 +867,7 @@
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
+				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,
 				10C7D23D2ADF7230008691CD /* PlayBar.swift in Sources */,
 				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
