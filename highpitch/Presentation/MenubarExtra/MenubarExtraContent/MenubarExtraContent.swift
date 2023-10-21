@@ -59,9 +59,7 @@ extension MenubarExtraContent {
     @ViewBuilder
     private var sectionProject: some View {
         // 프로젝트의 연습 목록
-        VStack(
-            alignment: .leading,
-            spacing: .HPSpacing.xsmall) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
                 Text("파일 설정")
                     .systemFont(.caption, weight: .semibold)
@@ -79,39 +77,54 @@ extension MenubarExtraContent {
                 }
                 .buttonStyle(.plain)
             }
+            .padding(.vertical, .HPSpacing.xxsmall)
+            .padding(.horizontal, .HPSpacing.small)
+            .frame(maxHeight: 45)
+            .border(.HPComponent.stroke, width: isDetilsActive ? 1 : 0, edges: [.bottom])
             // 현재 선택 된 프로젝트 정보 출력 출력
             /// 키노트가 열려있는 경우,
             if isDetilsActive {
-                HPMenu(
-                    selected: $selectedKeynoteName,
-                    options: $keynoteNameOptions
-                )
-                VStack(alignment: .leading) {
-    //                Text("현재 열려있는 키노트")
-                    if !keynoteOptions.isEmpty {
-                        Picker("프로젝트", selection: $selectedKeynote) {
-                            ForEach(keynoteOptions, id: \.id) { opendKeynote in
-                                Text("\(opendKeynote.getFileName())").tag(opendKeynote)
-                            }
-                        }
-                        .labelsHidden()
-                    } else {
-                        Text("현재 열려 있는 키노트 파일이 없네여")
-                    }
-                    Picker("프로젝트", selection: $selectedProject) {
-                        ForEach(projectModels, id: \.self) { project in
-                            Text("\(project.projectName)").tag(project)
+                VStack(spacing: .HPSpacing.xsmall) {
+                    HStack {
+                        Text("발표 연습을 진행 할 키노트")
+                            .systemFont(.caption2, weight: .semibold)
+                            .foregroundStyle(Color.HPTextStyle.darker)
+                        Spacer()
+                        if !keynoteOptions.isEmpty {
+                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
+                        } else {
+                            Text("음성으로만 연습할래요?")
                         }
                     }
-                    .labelsHidden()
+                    HStack {
+                        Text("발표 연습을 진행 할 키노트")
+                            .systemFont(.caption2, weight: .semibold)
+                            .foregroundStyle(Color.HPTextStyle.darker)
+                        Spacer()
+                        if !keynoteOptions.isEmpty {
+                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
+                        } else {
+                            Text("음성으로만 연습할래요?")
+                        }
+                    }
+//                    VStack(alignment: .leading) {
+//                        Picker("프로젝트", selection: $selectedProject) {
+//                            ForEach(projectModels, id: \.self) { project in
+//                                Text("\(project.projectName)").tag(project)
+//                            }
+//                        }
+//                        .labelsHidden()
+//                    }
                 }
+                .padding(.top, .HPSpacing.xxxsmall)
+                .padding(.bottom, .HPSpacing.xsmall)
+                .padding(.horizontal, .HPSpacing.small)
+                .frame(maxHeight: .infinity)
             }
         }
-        .padding(.vertical, .HPSpacing.xxsmall)
-        .padding(.horizontal, .HPSpacing.small)
         .frame(height: isDetilsActive ? 133 : 45, alignment: .topLeading)
+        .border(.HPComponent.stroke, width: 1, edges: [.bottom])
         .clipped()
-        .border(.red, width: 2)
     }
     
     @ViewBuilder
