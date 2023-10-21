@@ -10,11 +10,11 @@ import UserNotifications
 import CoreLocation
 
 @MainActor
-final class NotificationManager :NSObject,ObservableObject{
+final class NotificationManager :NSObject,ObservableObject {
     let notificationCenter = UNUserNotificationCenter.current()
     @Published var nextView: NextView?
     
-    override init(){
+    override init() {
         super.init()
         notificationCenter.delegate = self
     }
@@ -46,12 +46,14 @@ final class NotificationManager :NSObject,ObservableObject{
         notificationCenter.removeAllPendingNotificationRequests()
     }
 }
-extension NotificationManager: UNUserNotificationCenterDelegate{
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+extension NotificationManager: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound])
     }
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        if let value = response.notification.request.content.userInfo["nextView"] as? String{
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        if let value = response.notification.request.content.userInfo["nextView"] as? String {
             nextView = NextView(rawValue: value)
         }
         
@@ -60,16 +62,16 @@ extension NotificationManager: UNUserNotificationCenterDelegate{
 
 enum NextView: String,Identifiable {
     case view1,view2
-    var id: String{
+    var id: String {
         self.rawValue
     }
     @ViewBuilder
-    func helloView() -> some View{
+    func helloView() -> some View {
         switch self {
         case .view1:
-            View1()
+            Text("")
         case .view2:
-            View2()
+            Text("")
         }
     }
 }
