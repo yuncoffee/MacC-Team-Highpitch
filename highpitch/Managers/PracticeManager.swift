@@ -49,6 +49,7 @@ extension PracticeManager {
     }
     
     func getPracticeDetail() {
+        print("시작..!!!!!!")
         if let current = current {
             
             initializer()
@@ -124,6 +125,6 @@ extension PracticeManager {
             }
             updateSummary()
         }
-        
+        print("ㄲ트..>!!!!")
     }
 }

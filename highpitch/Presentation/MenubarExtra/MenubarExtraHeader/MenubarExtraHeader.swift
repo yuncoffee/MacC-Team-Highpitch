@@ -158,11 +158,12 @@ extension MenubarExtraHeader {
                 utterances: newUtteranceModels,
                 summary: PracticeSummaryModel()
             )
-            print(#file, #line, newPracticeModel)
-            
             selectedProject.practices.append(newPracticeModel)
             practiceManager.current = newPracticeModel
-            practiceManager.getPracticeDetail()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                practiceManager.getPracticeDetail()
+            }
+//            practiceManager.getPracticeDetail()
         }
     }
     
