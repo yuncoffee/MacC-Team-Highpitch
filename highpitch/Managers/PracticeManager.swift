@@ -49,6 +49,7 @@ extension PracticeManager {
     }
     
     func getPracticeDetail() {
+        print("시작..!!!!!!")
         if let current = current {
             
             initializer()
@@ -63,7 +64,6 @@ extension PracticeManager {
             for (index, utterance) in current.utterances.sorted().enumerated() {
                 let messageLenght = utterance.message.components(separatedBy: " ").count
                 for (index, word) in utterance.message.components(separatedBy: " ").enumerated() {
-                    
                     // word와 관련한 값을 업데이트합니다.
                     current.summary.wordCount += 1
                     current.summary.syllableSum += word.count
@@ -125,6 +125,6 @@ extension PracticeManager {
             }
             updateSummary()
         }
-        
+        print("ㄲ트..>!!!!")
     }
 }

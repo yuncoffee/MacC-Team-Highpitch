@@ -143,7 +143,7 @@ struct MenubarExtraView: View {
 //                    try modelContext.delete(model: SentenceModel.self)
 //                    try modelContext.delete(model: PracticeSummaryModel.self)
 //                    try modelContext.delete(model: FillerWordModel.self)
-//                } catch {
+//                } catch {}
 //
                 // MARK: 녹음 중일 경우 처리하기
 //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
