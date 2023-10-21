@@ -46,6 +46,7 @@ struct UsagePercentChart: View {
     
     var body: some View {
         let maxHeight: CGFloat = 500 / 3 * 2
+        var summary = data.summary
         VStack(alignment: .leading, spacing: 0) {
             header
             GeometryReader { geometry in
@@ -66,7 +67,7 @@ struct UsagePercentChart: View {
                         )
                         Spacer(minLength: .HPSpacing.xxxsmall)
                         chartBar(
-                            usagePercent: getFillerRate() * 0.01,
+                            usagePercent: (summary.fillerWordPercentage ?? 0) * 0.01,
                             type: .current,
                             maxWidth: maxWidth,
                             maxHeight: barMaxHeight
@@ -114,35 +115,6 @@ extension UsagePercentChart {
         
         return result
     }
-    // 습관어 사용 비율을 반환합니다.
-    // swiftlint:disable identifier_name
-    private func getFillerRate() -> Double {
-        let fillerWordList = FillerWordList()
-        
-        // index에 맞게 습관어 사용 횟수를 확인합니다.
-        var fillerCount = [Int](repeating: 0, count: fillerWordList.defaultList.count)
-        var messagesArray: [[String]] = []
-        for utterence in data.utterances {
-            messagesArray.append(utterence.message.components(separatedBy: " "))
-        }
-        for messageArray in messagesArray {
-            for message in messageArray {
-                for index in 0..<fillerWordList.defaultList.count
-                where fillerWordList.defaultList[index] == message {
-                    fillerCount[index] += 1
-                }
-            }
-        }
-        // STT 결과의 모든 단어 수를 확인합니다.
-        var wordSum = 0
-        for messageArray in messagesArray {
-            wordSum += messageArray.count
-        }
-        // 습관어 사용 횟수 / STT 모든 단어 수를 반환합니다.
-        var ret = 0; for i in fillerCount { ret += i }
-        return Double(ret) / Double(wordSum)
-    }
-    // swiftlint:enable identifier_name
 }
 
 extension UsagePercentChart {
