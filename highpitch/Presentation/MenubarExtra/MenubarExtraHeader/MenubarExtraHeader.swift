@@ -16,14 +16,20 @@ struct MenubarExtraHeader: View {
     private var appleScriptManager
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(KeynoteManager.self)
+    private var keynoteManager
     @Environment(MediaManager.self)
     private var mediaManager
+    @Environment(\.modelContext)
+    var modelContext
     @Binding
-    var selectedProject: ProjectModel
+    var selectedProject: ProjectModel?
     @Binding
-    var selectedKeynote: OpendKeynote
+    var selectedKeynote: OpendKeynote?
     @Binding
     var isMenuPresented: Bool
+    @Binding
+    var isRecording: Bool
     var practiceManager = PracticeManager()
     
     var body: some View {
@@ -58,7 +64,7 @@ struct MenubarExtraHeader: View {
                     (
                         label:"연습 시작",
                         image: "play.fill",
-                        color: Color.HPPrimary.base
+                        color: Color.HPPrimary.dark
                     )
                 } else {
                     (
@@ -73,23 +79,22 @@ struct MenubarExtraHeader: View {
                     } else {
                         pausePractice()
                     }
-//                    labels.func
                 } label: {
                     Label(labels.label, systemImage: labels.image)
-                        .systemFont(.body)
+                        .systemFont(.caption2)
                         .foregroundStyle(labels.color)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
+                        .labelStyle(VerticalIconWithTextLabelStyle())
+                        .frame(height: 24)
                 }
                 .buttonStyle(.plain)
                 Button {
                     stopPractice()
                 } label: {
-                    Label("연습 끝내기", systemImage: "stop.fill")
-                        .systemFont(.body)
-                        .foregroundStyle(Color.HPGray.system800)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
+                    Label("끝내기", systemImage: "stop.fill")
+                        .systemFont(.caption2)
+                        .foregroundStyle(Color.HPSecondary.base)
+                        .labelStyle(VerticalIconWithTextLabelStyle())
+                        .frame(height: 24)
                 }
                 .buttonStyle(.plain)
             }
@@ -101,43 +106,44 @@ struct MenubarExtraHeader: View {
 }
 
 extension MenubarExtraHeader {
-    // MARK: - 연습 시자기.
+    // MARK: - 연습 시작.
     private func playPractice() {
-        print("..?")
-        Task {
-            await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
+        print("------연습이 시작되었습니다.-------")
+        /// 선택된 키노트가 있을 때
+        if let selectedKeynote = selectedKeynote {
+            Task {
+                await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
+            }
+        } else {
+            /// 선택된 키노트가 없을 때
         }
-        mediaManager.isRecording.toggle()
-        isMenuPresented.toggle()
-        
-//         녹음파일 저장할 fileName 정하고, 녹음 시작!!!
+        projectManager.temp = selectedProject
+        keynoteManager.temp = selectedKeynote
+        mediaManager.isRecording = true
         mediaManager.fileName = mediaManager.currentDateTimeString()
         mediaManager.startRecording()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            isRecording.toggle()
+        }
     }
     // MARK: - 연습 일시중지
     private func pausePractice() {
-        
+//        print(projectManager.temp)
+//        print(projectManager.temp?.projectName)
     }
     
     // MARK: - 연습 끝내기
     private func stopPractice() {
         print("녹음 종료")
         mediaManager.isRecording.toggle()
-        
-        // 녹음 중지!
         mediaManager.stopRecording()
-        // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
-        // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
-        // ReturnZero API를 이용해서 UtteranceModel완성
+        /// mediaManager.fileName에 음성 파일이 저장되어있을거다!!
+        /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
+        /// ReturnZero API를 이용해서 UtteranceModel완성
         Task {
-            // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
             let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-            // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-            print(#file, #line, tempUtterances)
-            
             var newUtteranceModels: [UtteranceModel] = []
-            
             for tempUtterance in tempUtterances {
                 newUtteranceModels.append(
                     UtteranceModel(
@@ -147,35 +153,55 @@ extension MenubarExtraHeader {
                     )
                 )
             }
-            
-            // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
-            let newPracticeModel = PracticeModel(
-                practiceName: "\(selectedProject.practices.count + 1)번째 연습",
-                index: selectedProject.practices.count,
-                isVisited: false,
-                creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
-                audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
-                utterances: newUtteranceModels,
-                summary: PracticeSummaryModel()
-            )
-            selectedProject.practices.append(newPracticeModel)
-            practiceManager.current = newPracticeModel
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                practiceManager.getPracticeDetail()
+            /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
+            if projectManager.temp == nil {
+                makeNewProject()
             }
-//            practiceManager.getPracticeDetail()
+            if let selectedProject = projectManager.temp {
+                let newPracticeModel = PracticeModel(
+                    practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                    index: selectedProject.practices.count,
+                    isVisited: false,
+                    creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
+                    audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+                    utterances: newUtteranceModels,
+                    summary: PracticeSummaryModel()
+                )
+                selectedProject.practices.append(newPracticeModel)
+                practiceManager.current = newPracticeModel
+                await MainActor.run {
+                    practiceManager.getPracticeDetail()
+                }
+            }
         }
     }
     
+    private func makeNewProject() {
+        let newProject = ProjectModel(
+            projectName: "새 프로젝트",
+            creatAt: Date.now.formatted(),
+            keynotePath: nil,
+            keynoteCreation: "temp"
+        )
+        if let selectedKeynote = keynoteManager.temp {
+            newProject.keynoteCreation = selectedKeynote.creation
+            newProject.keynotePath = URL(fileURLWithPath: selectedKeynote.path)
+            newProject.projectName = selectedKeynote.getFileName()
+        }
+        modelContext.insert(newProject)
+        projectManager.temp = newProject
+    }
+    
     private func openSelectedProject() {
-        print("프로젝트 열기")
-        if selectedProject.projectName != "새 프로젝트" {
-            projectManager.current = selectedProject
-            if !projectManager.path.isEmpty {
-                projectManager.currentTabItem = 0
-                projectManager.path.removeLast()
+        if let selectedProject = selectedProject {
+            if selectedProject.projectName != "새 프로젝트" {
+                projectManager.current = selectedProject
+                if !projectManager.path.isEmpty {
+                    projectManager.currentTabItem = 0
+                    projectManager.path.removeLast()
+                }
+                openWindow(id: "main")
             }
-            openWindow(id: "main")
         }
     }
     private func quitApp() {

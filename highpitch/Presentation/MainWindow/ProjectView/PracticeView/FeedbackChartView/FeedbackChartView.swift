@@ -22,7 +22,7 @@ struct FeedbackChartView: View {
                 FastSentReplay(data: $practice)
             }
             .padding(.leading, .HPSpacing.medium)
-            .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
+            .padding(.bottom, 100)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

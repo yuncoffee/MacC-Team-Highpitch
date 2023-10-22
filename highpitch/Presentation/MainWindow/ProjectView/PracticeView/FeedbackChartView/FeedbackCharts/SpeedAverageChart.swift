@@ -16,8 +16,7 @@ struct SpeedAverageChart: View {
     var data: PracticeModel
     
     var body: some View {
-        var sentences = data.sentences
-        
+        let sentences = data.sentences
         VStack {
             Text("이번 연습에서의 발화 속도")
             Text("평균 발화 속도")

@@ -17,6 +17,7 @@ final class ProjectManager {
             self.practiceManager.practices = current?.practices
         }
     }
+    var temp: ProjectModel?
     var currentTabItem = 1
     var path: NavigationPath = .init()
     var testCurrent: Project?
