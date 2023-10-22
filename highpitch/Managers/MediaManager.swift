@@ -30,6 +30,9 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     
     var fileName: String = ""
     
+    var currentTime: TimeInterval = 0.0
+    
+    var stopPoint: TimeInterval?
 }
 
 // MARK: - 음성메모 녹음 관련 메서드

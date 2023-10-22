@@ -21,9 +21,6 @@ struct AudioControllerView: View {
     private var totalTime: TimeInterval = 0.0
     
     @State
-    private var currentTime: TimeInterval = 0.0
-    
-    @State
     var sliderValue:Float = 0
     
     @Binding
@@ -50,6 +47,12 @@ struct AudioControllerView: View {
         }
         .onReceive(timer, perform: { _ in
             updateProgress()
+//            if mediaManager.stopPoint != nil {
+//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
+//                    mediaManager.pausePlaying()
+//                    mediaManager.stopPoint = nil
+//                }
+//            }
         })
     }
 }
@@ -80,7 +83,7 @@ extension AudioControllerView {
     
     private func updateProgress() {
         guard let player = mediaManager.audioPlayer else { return }
-        currentTime = player.currentTime
+        mediaManager.currentTime = player.currentTime
     }
     
     private func timeString(time: TimeInterval) -> String {
@@ -96,14 +99,14 @@ extension AudioControllerView {
     private var sliderContainer: some View {
         VStack(spacing: 0) {
             Slider(value: Binding(get: {
-                currentTime
+                mediaManager.currentTime
             }, set: { newValue in
                 seekAudio(to: newValue)
             }), in: 0...totalTime)
             .tint(Color.HPPrimary.base)
             .padding(.horizontal, .HPSpacing.large)
             HStack(spacing: 0) {
-                Text(timeString(time: currentTime))
+                Text(timeString(time: mediaManager.currentTime))
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
                 Spacer()

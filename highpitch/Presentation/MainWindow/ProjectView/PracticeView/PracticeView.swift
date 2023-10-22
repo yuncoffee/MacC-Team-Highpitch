@@ -53,7 +53,7 @@ struct PracticeView: View {
     
     @State 
     var practice: PracticeModel
-
+    
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
@@ -75,6 +75,10 @@ struct PracticeView: View {
                 practice.isVisited = true
             }
         }
+//        .onChange(of: mediaManager.currentTime) { _, newValue in
+//
+//            print("newValue: \(newValue)")
+//        }
     }
 }
 

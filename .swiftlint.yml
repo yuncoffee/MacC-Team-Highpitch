@@ -51,6 +51,7 @@ identifier_name:
     - app
     - lhs
     - rhs
+    - at
   allowed_symbols: ["_"]
 opt_in_rules:
   - missing_docs
