@@ -165,7 +165,6 @@ extension MenubarExtraView {
     
     private func updateCurrentProject() {
         // MARK: - 열려있는 키노트가 없으면
-        print(keynoteManager.opendKeynotes)
         if keynoteManager.opendKeynotes.isEmpty {
             selectedProject = nil
         } else {

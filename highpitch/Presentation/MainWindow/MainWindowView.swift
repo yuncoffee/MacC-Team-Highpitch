@@ -24,7 +24,7 @@ struct MainWindowView: View {
     @Environment(\.modelContext)
     var modelContext
     @Query(sort: \ProjectModel.creatAt)
-    var asddsa: [ProjectModel]
+    var projects: [ProjectModel]
     
     @State
     private var columnVisibility = NavigationSplitViewVisibility.detailOnly
@@ -53,9 +53,10 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
 //        쿼리해온 데이터에서 맨 앞 데이터 선택
-//        let projects = fileSystemManager.loadProjects()
-//        projectManager.projects = projects
-//        projectManager.current = projects[0]
+        if !projects.isEmpty {
+            projectManager.projects = projects
+            projectManager.current = projects[0]
+        }
     }
 }
 
