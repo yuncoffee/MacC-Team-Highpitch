@@ -17,10 +17,10 @@ struct MenubarExtraContent: View {
     private var projectManager
     
     @Binding
-    var selectedProject: ProjectModel
+    var selectedProject: ProjectModel?
     
     @Binding
-    var selectedKeynote: OpendKeynote
+    var selectedKeynote: OpendKeynote?
     
     @Binding
     var keynoteOptions: [OpendKeynote]
@@ -47,6 +47,7 @@ struct MenubarExtraContent: View {
     private var projectNameOptions: [String] = ["새 프로젝트로 생성"]
     
     var body: some View {
+        
         VStack(spacing: 0) {
             sectionProject
             sectionPractice
@@ -56,7 +57,18 @@ struct MenubarExtraContent: View {
             keynoteNameOptions.append(contentsOf: keynoteOptions.map {$0.getFileName()})
         }
         .onChange(of: selectedKeynote, { _, newValue in
-            selectedKeynoteName = newValue.getFileName()
+            if let newValue = newValue {
+                selectedKeynoteName = newValue.getFileName()
+            } else {
+                selectedKeynoteName = "음성으로만 연습하기"
+            }
+        })
+        .onChange(of: selectedProject, { _, newValue in
+            if let newValue = newValue {
+                selectedProjectName = newValue.projectName
+            } else {
+                selectedProjectName = "새 프로젝트로 생성"
+            }
         })
         /// 키노트 리스트 변경
         .onChange(of: keynoteOptions) { _, newValue in
@@ -66,11 +78,13 @@ struct MenubarExtraContent: View {
         }
         /// 키노트 변경
         .onChange(of: selectedKeynoteName) { _, newValue in
+            print("HHHHHH")
             if newValue == "음성으로만 연습하기" {
-                return
+                selectedKeynote = nil
+            } else {
+                let filtered = keynoteOptions.filter {$0.getFileName() == newValue}
+                selectedKeynote = filtered[0]
             }
-            let filtered = keynoteOptions.filter {$0.getFileName() == newValue}
-            selectedKeynote = filtered[0]
         }
         /// 프로젝트 모델 변경
         .onChange(of: projectModels) { _, newValue in
@@ -81,10 +95,15 @@ struct MenubarExtraContent: View {
         /// 프로젝트 변경
         .onChange(of: selectedProjectName) { _, newValue in
             if newValue == "새 프로젝트로 생성" {
-                return
+                selectedProject = nil
+            } else {
+                let filtered = projectModels.filter {$0.projectName == newValue}
+                if !filtered.isEmpty {
+                    selectedProject = filtered[0]
+                } else {
+                    selectedProject = nil
+                }
             }
-            let filtered = projectModels.filter {$0.projectName == newValue}
-            selectedProject = filtered[0]
         }
     }
 }
@@ -125,11 +144,13 @@ extension MenubarExtraContent {
                             .systemFont(.caption2, weight: .semibold)
                             .foregroundStyle(Color.HPTextStyle.darker)
                         Spacer()
-                        if !keynoteOptions.isEmpty {
-                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
-                        } else {
-                            Text("음성으로만 연습할래요?")
-                        }
+                        // MARK: - 키노트옵션이 비어있을 때 처리 어떻게 할지?
+                        HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
+//                        if !keynoteOptions.isEmpty {
+//                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
+//                        } else {
+//                            Text("음성으로만 연습할래요?")
+//                        }
                     }
                     HStack {
                         Text("해당 연습을 저장할 프로젝트")
@@ -170,24 +191,26 @@ extension MenubarExtraContent {
             .padding(.vertical, .HPSpacing.xxsmall)
             .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
             .border(.HPComponent.stroke, width: 1, edges: [.bottom])
-            if !selectedProject.practices.isEmpty {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem()], spacing: 0) {
-                        ForEach(selectedProject.practices, id: \.self) { practice in
-                            PracticeResultCell(practice: practice) {
-                                openSelectedPractice(practice: practice)
+            if let selectedProject = selectedProject {
+                if !selectedProject.practices.isEmpty {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem()], spacing: 0) {
+                            ForEach(selectedProject.practices, id: \.self) { practice in
+                                PracticeResultCell(practice: practice) {
+                                    openSelectedPractice(practice: practice)
+                                }
                             }
                         }
                     }
+                    .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+                } else {
+                    VStack {
+                        Text("연습 이력이 없네요...")
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 24)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-            } else {
-                VStack {
-                    Text("연습 이력이 없네요...")
-                }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 24)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }
@@ -209,7 +232,7 @@ extension MenubarExtraContent {
 
 #Preview {
     @State
-    var selectedKeynote: OpendKeynote = OpendKeynote()
+    var selectedKeynote: OpendKeynote? = OpendKeynote()
     @State
     var keynoteOptions: [OpendKeynote] = []
     
@@ -217,7 +240,7 @@ extension MenubarExtraContent {
     var isMenuPresented: Bool = true
 
     @State
-    var selectedProject: ProjectModel = ProjectModel(
+    var selectedProject: ProjectModel? = ProjectModel(
         projectName: "d",
         creatAt: "d",
         keynoteCreation: "dd"
