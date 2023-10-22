@@ -18,7 +18,7 @@ struct PracticeResultCell: View {
                     Circle()
                         .frame(width: 8)
                         .foregroundStyle(practice.isVisited ? .clear : .HPRed.base)
-                    Text("\(practice.index)번째 연습의 피드백이 생성되었어요")
+                    Text("\(practice.index + 1)번째 연습의 피드백이 생성되었어요")
                         .systemFont(.caption, weight: .semibold)
                         .foregroundStyle(Color.HPTextStyle.darker)
                 }

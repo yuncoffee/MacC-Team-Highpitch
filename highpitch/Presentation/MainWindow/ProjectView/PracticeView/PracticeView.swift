@@ -71,6 +71,9 @@ struct PracticeView: View {
         .ignoresSafeArea()
         .onAppear {
             practice.utterances.sort { $0.startAt < $1.startAt }
+            if !practice.isVisited {
+                practice.isVisited = true
+            }
         }
     }
 }

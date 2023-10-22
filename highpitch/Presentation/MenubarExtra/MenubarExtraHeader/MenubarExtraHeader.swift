@@ -169,7 +169,7 @@ extension MenubarExtraHeader {
                 )
                 selectedProject.practices.append(newPracticeModel)
                 practiceManager.current = newPracticeModel
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                await MainActor.run {
                     practiceManager.getPracticeDetail()
                 }
             }

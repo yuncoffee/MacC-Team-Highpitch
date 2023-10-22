@@ -94,7 +94,7 @@ struct MenubarExtraContent: View {
             } else {
                 let filtered = projectModels
                     .filter {$0.projectName == newValue}
-//                    .filter {$0.keynoteCreation == selectedKeynote?.creation }
+                //                    .filter {$0.keynoteCreation == selectedKeynote?.creation }
                 // 이름으로 필터링 중인데 변경해야
                 if !filtered.isEmpty {
                     selectedProject = filtered[0]
@@ -167,23 +167,31 @@ extension MenubarExtraContent {
     @ViewBuilder
     private var sectionPractice: some View {
         VStack(spacing: 0) {
-            HStack {
-                Text("\(10)개 확인하지 않음")
-                    .foregroundStyle(Color.HPTextStyle.dark)
-                    .systemFont(.caption2, weight: .semibold)
-                Spacer()
-                Button {
-                    print("모두 읽음 !")
-                } label: {
-                    Text("모두 읽음")
-                        .foregroundStyle(Color.HPPrimary.base)
-                        .systemFont(.caption2, weight: .semibold)
+            if let selectedProject = selectedProject {
+                if !selectedProject.practices.isEmpty {
+                    HStack {
+                        let unCheckedCount = selectedProject.practices
+                            .map {$0.isVisited}
+                            .filter {$0 == false}
+                            .count
+                        Text("\(unCheckedCount)개 확인하지 않음")
+                            .foregroundStyle(Color.HPTextStyle.dark)
+                            .systemFont(.caption2, weight: .semibold)
+                        Spacer()
+                        Button {
+                            selectedProject.practices.forEach { $0.isVisited = true }
+                        } label: {
+                            Text("모두 읽음")
+                                .foregroundStyle(Color.HPPrimary.base)
+                                .systemFont(.caption2, weight: .semibold)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.vertical, .HPSpacing.xxsmall)
+                    .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+                    .border(.HPComponent.stroke, width: 1, edges: [.bottom])
                 }
-                .buttonStyle(.plain)
             }
-            .padding(.vertical, .HPSpacing.xxsmall)
-            .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-            .border(.HPComponent.stroke, width: 1, edges: [.bottom])
             if let selectedProject = selectedProject {
                 if !selectedProject.practices.isEmpty {
                     ScrollView {
@@ -238,7 +246,7 @@ extension MenubarExtraContent {
     
     @State
     var isMenuPresented: Bool = true
-
+    
     @State
     var selectedProject: ProjectModel? = ProjectModel(
         projectName: "d",
@@ -247,7 +255,7 @@ extension MenubarExtraContent {
     )
     
     return MenubarExtraContent(
-        selectedProject: $selectedProject, 
+        selectedProject: $selectedProject,
         selectedKeynote: $selectedKeynote,
         keynoteOptions: $keynoteOptions,
         isMenuPresented: $isMenuPresented)
