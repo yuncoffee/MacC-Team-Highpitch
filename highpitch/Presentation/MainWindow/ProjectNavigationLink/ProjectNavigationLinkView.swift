@@ -72,7 +72,7 @@ struct ProjectNavigationLink: View {
                                         practiceName: "연습 \(index)",
                                         index: index,
                                         isVisited: false,
-                                        creatAt: "2023-10-18",
+                                        creatAt: Date().m4aNameToCreateAt(input: Date().makeM4aFileName()),
                                         audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
                                         utterances: [], summary: PracticeSummaryModel()
                                     )
