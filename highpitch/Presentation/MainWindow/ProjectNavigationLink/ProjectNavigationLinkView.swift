@@ -72,7 +72,7 @@ struct ProjectNavigationLink: View {
                                         practiceName: "연습 \(index)",
                                         index: index,
                                         isVisited: false,
-                                        creatAt: "2023-10-18",
+                                        creatAt: Date().m4aNameToCreateAt(input: Date().makeM4aFileName()),
                                         audioPath: index == 0 ? TEST_ONE_M4A! : TEST_TWO_M4A!,
                                         utterances: [], summary: PracticeSummaryModel()
                                     )
@@ -122,6 +122,15 @@ struct ProjectNavigationLink: View {
 extension ProjectNavigationLink {
     func checkIsSelected(_ projectName: String) -> Bool {
         projectName == projectManager.current?.projectName
+    }
+    
+    func formattedDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+        
+        let currentDate = Date()
+        
+        return dateFormatter.string(from: currentDate)
     }
 }
 

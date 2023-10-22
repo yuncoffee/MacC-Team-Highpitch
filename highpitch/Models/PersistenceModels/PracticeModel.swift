@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class PracticeModel {
+class PracticeModel: Comparable {
     var practiceName: String
     var index: Int
     var isVisited: Bool
@@ -40,5 +40,13 @@ class PracticeModel {
         self.words = words
         self.sentences = sentences
         self.summary = summary
+    }
+    
+    static func < (lhs: PracticeModel, rhs: PracticeModel) -> Bool {
+        return lhs.creatAt < rhs.creatAt
+    }
+
+    static func == (lhs: PracticeModel, rhs: PracticeModel) -> Bool {
+        return lhs.creatAt == rhs.creatAt
     }
 }

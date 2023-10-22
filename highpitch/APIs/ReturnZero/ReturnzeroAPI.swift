@@ -76,12 +76,9 @@ struct ReturnzeroAPI {
         let jwtToken = try await isAuth()
         // 설정(config) JSON 데이터
         let config: [String: Any] = [
-            "use_diarization": true, // 화자 분리
-            "diarization": [
-                "spk_count": 2 // 참여하는 화자 수 알면 여기다가 적는다.
-            ],
+            "use_diarization": false, // 화자 분리
             "use_multi_channel": false, // 다중 채널 지원
-            "use_itn": false, // 영어 숫자 단위 변환
+            "use_itn": true, // 영어 숫자 단위 변환
             "use_disfluency_filter": true, // 간투어 필터 ("에-"는 필터가 되지 않음)
             "use_profanity_filter": false, // 비속어 필터
             "use_paragraph_splitter": true, // 문단 나누기
