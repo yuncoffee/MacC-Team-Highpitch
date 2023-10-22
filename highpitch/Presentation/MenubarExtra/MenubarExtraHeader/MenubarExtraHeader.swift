@@ -169,8 +169,10 @@ extension MenubarExtraHeader {
                 )
                 selectedProject.practices.append(newPracticeModel)
                 practiceManager.current = newPracticeModel
-                await MainActor.run {
-                    practiceManager.getPracticeDetail()
+                Task {
+                    await MainActor.run {
+                        practiceManager.getPracticeDetail()
+                    }
                 }
             }
         }

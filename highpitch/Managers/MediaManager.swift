@@ -20,6 +20,8 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     /// 음성 녹음 진행 중인 여부 확인용
     var isRecording = false
     
+    var isPlaying = false
+    
     //
     /// 음성메모 녹음 관련 프로퍼티
     var audioRecorder: AVAudioRecorder?
@@ -77,6 +79,7 @@ extension MediaManager {
     }
     func play() {
         audioPlayer?.play()
+        isPlaying = true
     }
     func playAt(atTime: Double) {
         let offset = atTime/1000
@@ -89,14 +92,17 @@ extension MediaManager {
     ///
     func stopPlaying() {
         audioPlayer?.stop()
+        isPlaying = false
     }
     
     func pausePlaying() {
         audioPlayer?.pause()
+        isPlaying = false
     }
     
     func resumePlaying() {
         audioPlayer?.play()
+        isPlaying = true
     }
     func getPath(fileName: String) -> URL {
         let dataPath = getDocumentsDirectory()

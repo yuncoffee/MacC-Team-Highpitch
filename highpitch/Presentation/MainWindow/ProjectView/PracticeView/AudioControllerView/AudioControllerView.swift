@@ -13,10 +13,7 @@ struct AudioControllerView: View {
     private var projectManager
     @Environment(MediaManager.self)
     private var mediaManager
-    
-    @State
-    private var isPlaying = false
-    
+        
     @State
     private var totalTime: TimeInterval = 0.0
     
@@ -70,11 +67,11 @@ extension AudioControllerView {
     }
     private func play() {
         mediaManager.play()
-        isPlaying = true
+//        isPlaying = true
     }
     private func pause() {
         mediaManager.pausePlaying()
-        isPlaying = false
+//        isPlaying = false
         
     }
     private func seekAudio(to time: TimeInterval) {
@@ -131,20 +128,22 @@ extension AudioControllerView {
     @ViewBuilder
     private var controllButton: some View {
         Button {
-            isPlaying ? pause() : play()
+            mediaManager.isPlaying ? pause() : play()
         } label: {
             Label(
-                isPlaying
+                mediaManager.isPlaying
                 ? "멈춤"
                 : "재생",
-                systemImage: isPlaying
+                systemImage: mediaManager.isPlaying
                 ? "pause.fill"
                 : "play.fill"
             )
             .systemFont(.largeTitle)
             .labelStyle(.iconOnly)
             .foregroundStyle(Color.HPTextStyle.base)
+            .imageScale(.large)
         }
+        .frame(width: 24, height: 24)
         .buttonStyle(.plain)
     }
     

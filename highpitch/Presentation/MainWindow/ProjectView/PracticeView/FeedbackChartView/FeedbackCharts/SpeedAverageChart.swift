@@ -43,12 +43,12 @@ struct SpeedAverageChart: View {
             }
             .chartLegend(position: .top, alignment: .bottom, spacing: 10)
             .chartYAxisLabel(alignment: .topLeading) {
-                Label("(EPM)", systemImage: "")
+                Text("(EPM)")
                     .systemFont(.caption)
                     .foregroundStyle(Color.HPTextStyle.dark)
             }
             .chartXAxisLabel(alignment: .trailing) {
-                Label("(총 문장 수)", systemImage: "")
+                Text("(총 문장 수)")
                     .systemFont(.caption)
                     .foregroundStyle(Color.HPTextStyle.dark)
             }
