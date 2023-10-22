@@ -67,10 +67,13 @@ struct PracticeView: View {
             }
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
-        .background(Color.HPComponent.mainWindowDetailsBackground)
+        .background(Color.HPGray.systemWhite)
         .ignoresSafeArea()
         .onAppear {
             practice.utterances.sort { $0.startAt < $1.startAt }
+            if !practice.isVisited {
+                practice.isVisited = true
+            }
         }
     }
 }
