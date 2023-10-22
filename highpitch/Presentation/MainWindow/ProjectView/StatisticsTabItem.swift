@@ -25,7 +25,7 @@ struct StatisticsTabItem: View {
         VStack(alignment:.leading, spacing: 0) {
             if let practiceCount = practiceCount {
                 if let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt }) {
-                    let practiceDuration = "\(practices.first!.creatAt) ~ \(practices.last!.creatAt)"
+                    let practiceDuration = "\(practices.first!.creatAt) - \(practices.last!.creatAt)"
                     VStack(alignment: .leading, spacing: 0) {
                         Text("총 \(practiceCount)번의 연습에 대한 결과예요")
                             .systemFont(.largeTitle)
@@ -240,14 +240,39 @@ extension StatisticsTabItem {
                             x: .value("연습 회차", practice.index + 1),
                             y: .value("레벨", practice.summary.level!)
                         )
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(Color.HPPrimary.light)
+                        .lineStyle(StrokeStyle(lineWidth: 3))
+                        PointMark(
+                            x: .value("연습 회차", practice.index + 1),
+                            y: .value("레벨", practice.summary.level!)
+                        )
                         .foregroundStyle(Color.HPPrimary.base)
                     }
                 }
                 .chartScrollableAxes(.horizontal)
                 .chartXVisibleDomain(length: 13)
-                .border(.blue)
+                .chartYScale(domain: [0, 6])
+                .chartXAxis {
+                    AxisMarks(values: Array(stride(from: 1, to: practices.count + 2, by: 1))) { value in
+                        AxisValueLabel(centered: false) {
+                            Text("\(value.index + 1)회차")
+                                .systemFont(.caption2, weight: .medium)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        }
+                    }
+                }
+                .chartYAxis {
+                    AxisMarks(position: .leading, values: Array(stride(from: 1, to: 6, by: 1))) { value in
+                        AxisValueLabel(centered: false) {
+                            Text("LV.\(value.index + 1)")
+                                .systemFont(.caption2, weight: .medium)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        }
+                        AxisGridLine()
+                    }
+                }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .border(.green)
             } else if selectedSegment == 1 {
                 ScrollView(.horizontal) {
                     Chart {
