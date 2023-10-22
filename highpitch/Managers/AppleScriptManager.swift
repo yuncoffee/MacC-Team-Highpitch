@@ -81,7 +81,6 @@ extension AppleScriptManager {
             if let documentList = script.executeAndReturnError(&error).coerce(toDescriptorType: typeAEList) {
                 for index in 0...documentList.numberOfItems {
                     if let aDocument = documentList.atIndex(index) {
-                        print("aDocx: \(aDocument)")
                         if let path = aDocument.stringValue {
                             result.append(path)
                         }

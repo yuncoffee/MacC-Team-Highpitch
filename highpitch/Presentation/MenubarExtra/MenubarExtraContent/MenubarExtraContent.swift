@@ -9,6 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct MenubarExtraContent: View {
+    @Environment(\.openWindow)
+    private var openWindow
+    
     @Environment(AppleScriptManager.self)
     private var appleScriptManager
     @Environment(MediaManager.self)
@@ -16,38 +19,29 @@ struct MenubarExtraContent: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
-    @Binding
-    var selectedProject: ProjectModel?
-    
-    @Binding
-    var selectedKeynote: OpendKeynote?
-    
-    @Binding
-    var keynoteOptions: [OpendKeynote]
-    
-    @Binding
-    var isMenuPresented: Bool
-    
     @Query(sort: \ProjectModel.creatAt)
     var projectModels: [ProjectModel]
     
+    @Binding
+    var selectedProject: ProjectModel?
+    @Binding
+    var selectedKeynote: OpendKeynote?
+    @Binding
+    var keynoteOptions: [OpendKeynote]
+    @Binding
+    var isMenuPresented: Bool
     @State
     private var isDetilsActive = false
-    
     @State
     private var selectedKeynoteName = "음성으로만 연습하기"
-    
     @State
     private var keynoteNameOptions: [String] = ["음성으로만 연습하기"]
-    
     @State
     private var selectedProjectName = "새 프로젝트로 생성"
-    
     @State
     private var projectNameOptions: [String] = ["새 프로젝트로 생성"]
     
     var body: some View {
-        
         VStack(spacing: 0) {
             sectionProject
             sectionPractice
@@ -56,6 +50,7 @@ struct MenubarExtraContent: View {
             projectNameOptions.append(contentsOf: projectModels.map {$0.projectName})
             keynoteNameOptions.append(contentsOf: keynoteOptions.map {$0.getFileName()})
         }
+        /// 선택된 키노트가 변경되었음
         .onChange(of: selectedKeynote, { _, newValue in
             if let newValue = newValue {
                 selectedKeynoteName = newValue.getFileName()
@@ -63,6 +58,7 @@ struct MenubarExtraContent: View {
                 selectedKeynoteName = "음성으로만 연습하기"
             }
         })
+        /// 선택된 프로젝트가 변경되었음
         .onChange(of: selectedProject, { _, newValue in
             if let newValue = newValue {
                 selectedProjectName = newValue.projectName
@@ -70,34 +66,36 @@ struct MenubarExtraContent: View {
                 selectedProjectName = "새 프로젝트로 생성"
             }
         })
-        /// 키노트 리스트 변경
+        /// 키노트 리스트가 변경되었음
         .onChange(of: keynoteOptions) { _, newValue in
             var temp = ["음성으로만 연습하기"]
             temp.append(contentsOf: newValue.map {$0.getFileName()})
             keynoteNameOptions = temp
         }
-        /// 키노트 변경
-        .onChange(of: selectedKeynoteName) { _, newValue in
-            print("HHHHHH")
-            if newValue == "음성으로만 연습하기" {
-                selectedKeynote = nil
-            } else {
-                let filtered = keynoteOptions.filter {$0.getFileName() == newValue}
-                selectedKeynote = filtered[0]
-            }
-        }
-        /// 프로젝트 모델 변경
+        /// 프로젝트 모델이 변경되었음
         .onChange(of: projectModels) { _, newValue in
             var temp = ["새 프로젝트로 생성"]
             temp.append(contentsOf: newValue.map {$0.projectName})
             projectNameOptions = temp
         }
-        /// 프로젝트 변경
+        /// 키노트 선택을 변경함
+        .onChange(of: selectedKeynoteName) { _, newValue in
+            if newValue == "음성으로만 연습하기" {
+                selectedKeynote = nil
+            } else {
+                let filtered = keynoteOptions.filter {$0.getFileName() == newValue} // 이름으로 필터링 중인데 변경해야
+                selectedKeynote = filtered[0]
+            }
+        }
+        /// 프로젝트 선택을 변경함
         .onChange(of: selectedProjectName) { _, newValue in
             if newValue == "새 프로젝트로 생성" {
                 selectedProject = nil
             } else {
-                let filtered = projectModels.filter {$0.projectName == newValue}
+                let filtered = projectModels
+                    .filter {$0.projectName == newValue}
+//                    .filter {$0.keynoteCreation == selectedKeynote?.creation }
+                // 이름으로 필터링 중인데 변경해야
                 if !filtered.isEmpty {
                     selectedProject = filtered[0]
                 } else {
@@ -146,11 +144,6 @@ extension MenubarExtraContent {
                         Spacer()
                         // MARK: - 키노트옵션이 비어있을 때 처리 어떻게 할지?
                         HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
-//                        if !keynoteOptions.isEmpty {
-//                            HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
-//                        } else {
-//                            Text("음성으로만 연습할래요?")
-//                        }
                     }
                     HStack {
                         Text("해당 연습을 저장할 프로젝트")
@@ -223,9 +216,16 @@ extension MenubarExtraContent {
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()
         }
-        // MARK: - 뷰 갱신 하는 방법으로 변경해야함.!!!
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+        Task {
+            await appendPractice(practice: practice)
+        }
+    }
+    
+    @MainActor
+    private func appendPractice(practice: PracticeModel) async {
+        await MainActor.run {
             projectManager.path.append(practice)
+            openWindow(id: "main")
         }
     }
 }
