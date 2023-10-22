@@ -12,30 +12,44 @@ struct PracticesTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
-    @State private var editButtonOn: Bool = false
+    @State private var isEditing: Bool = false
+    @State private var selectedItems: Set<Int> = []
     
     var body: some View {
         @Bindable var projectManager = projectManager
         HStack {
-            Text("0개 선택")
-                .systemFont(.footnote, weight: .semibold)
-                .foregroundStyle(Color.primary500)
-            Spacer()
-            Button("편집하기") {
-                editButtonOn.toggle()
+            if isEditing {
+                Text("\(selectedItems.count)개 선택")
+                    .systemFont(.footnote, weight: .semibold)
+                    .foregroundStyle(Color.primary500)
             }
-            .systemFont(.footnote, weight: .semibold)
-            .foregroundStyle(Color("8B6DFF"))
+            
+            Spacer()
+            
+            Button(action: {
+                if isEditing == true && selectedItems.count > 0 {
+                    // 체크된 것들 삭제하는 과정
+                }
+                isEditing.toggle()
+            }) {
+                Text(isEditing ? "삭제하기" : "편집하기")
+                    .systemFont(.footnote, weight: .semibold)
+                    .foregroundStyle(isEditing ? Color.red : Color("8B6DFF"))
+            }
             .buttonStyle(.plain)
         }
         
-        if editButtonOn {
+        if isEditing {
             if let project = projectManager.current {
                 List {
                     ForEach(Array(project.practices.sorted().enumerated()).reversed(), id: \.element.id) { index, practice in
                         HStack {
-                            Rectangle()
-                                .frame(width:10, height:10)
+                            
+                            Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
+                                .onTapGesture {
+                                    toggleSelection(index)
+                                }
+                                .padding(.trailing, 24)
                             
                             HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
                                 // 몇번째 연습
@@ -83,11 +97,11 @@ struct PracticesTabItem: View {
                                 .padding(.horizontal, 32)
                             }
                             .frame(minWidth: 672, minHeight: 136, maxHeight: 136)
-                            .listRowSeparator(.hidden)
                             .background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .listRowBackground(Color.HPComponent.mainWindowDetailsBackground)
                         }
+                        .listRowSeparator(.hidden)
                     }
                 }
                 .listStyle(.plain)
@@ -155,9 +169,6 @@ struct PracticesTabItem: View {
                             .listRowBackground(Color.HPComponent.mainWindowDetailsBackground)
                         }
                     }
-                    .toolbar{
-                        
-                    }
                     // MARK: 연습 삭제하기 버튼 임시로 만들었습니다. 순서 상관없이 인덱스 0번째꺼 지우는 코드니깐 나중에 수정 필요!!
                     .contextMenu {
                         Button("delete") {
@@ -173,6 +184,14 @@ struct PracticesTabItem: View {
                     .scrollContentBackground(.hidden)
                 }
             }
+        }
+    }
+    
+    func toggleSelection(_ index: Int) {
+        if selectedItems.contains(index) {
+            selectedItems.remove(index)
+        } else {
+            selectedItems.insert(index)
         }
     }
 }
