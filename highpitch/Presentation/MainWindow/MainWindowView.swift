@@ -45,6 +45,11 @@ struct MainWindowView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.HPComponent.mainWindowSidebarBackground)
         .onAppear {
+//            do {
+//                try modelContext.delete(model: ProjectModel.self)
+//            } catch {
+//                print("Failed to clear all ProjectModel data")
+//            }
             setup()
         }
     }

@@ -28,16 +28,26 @@ struct HighpitchApp: App {
     private var isMenuPresented: Bool = false
     #endif
     
+    let container: ModelContainer
+    
+    init() {
+        do {
+            container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
+        }
+        catch {
+            fatalError("Could not initialize ModelContainer")
+        }
+    }
     //
     
-    let container: ModelContainer = {
-        do {
-            let container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
-            return container
-        } catch {
-            fatalError("Failed to create container")
-        }
-    }()
+//    let container: ModelContainer = {
+//        do {
+//            let container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
+//            return container
+//        } catch {
+//            fatalError("Failed to create container")
+//        }
+//    }()
     
     var body: some Scene {
         #if os(iOS)
@@ -86,9 +96,6 @@ struct HighpitchApp: App {
         .menuBarExtraStyle(.window)
         .commandsRemoved()
         #endif
-    }
-    init() {
-//        setupInit()
     }
     
 }

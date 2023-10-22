@@ -37,7 +37,7 @@ struct StatisticsTabItem: View {
                     .padding(.bottom, .HPSpacing.xsmall)
                     HStack(spacing: .HPSpacing.xxsmall) {
                         averageLevelCard
-                        bestLvelPracticeCard
+                        bestLevelPracticeCard
                     }
                     .padding(.bottom, .HPSpacing.xxsmall)
                     /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
@@ -145,7 +145,7 @@ extension StatisticsTabItem {
     }
     
     @ViewBuilder
-    var bestLvelPracticeCard: some View {
+    var bestLevelPracticeCard: some View {
         let bestPractice = getBestPractice()
         let MAX_LEVEL = 5.description
         /// 최고 카드
