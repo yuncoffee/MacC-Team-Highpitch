@@ -62,10 +62,15 @@ extension AppleScriptManager {
         let scriptSource = """
         tell application "Keynote"
             set documentList to {}
+            set missing to missing value
             repeat with aDocument in documents
                 set documentPath to the file of aDocument
                 set filePath to documentPath
-                set end of documentList to POSIX path of filePath
+                if filePath is equal to missing then
+                    set end of documentList to filePath
+                else
+                    set end of documentList to POSIX path of filePath
+                end if
             end repeat
             return documentList
         end tell
@@ -76,6 +81,7 @@ extension AppleScriptManager {
             if let documentList = script.executeAndReturnError(&error).coerce(toDescriptorType: typeAEList) {
                 for index in 0...documentList.numberOfItems {
                     if let aDocument = documentList.atIndex(index) {
+                        print("aDocx: \(aDocument)")
                         if let path = aDocument.stringValue {
                             result.append(path)
                         }

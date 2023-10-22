@@ -106,12 +106,11 @@ struct MenubarExtraHeader: View {
 }
 
 extension MenubarExtraHeader {
-    // MARK: - 연습 시자기.
+    // MARK: - 연습 시작.
     private func playPractice() {
         print("------연습이 시작되었습니다.-------")
         /// 선택된 키노트가 있을 때
         if let selectedKeynote = selectedKeynote {
-            /// 선택된 키노트의 패스로 애플 스크립트 실행
             Task {
                 await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
             }
@@ -120,41 +119,31 @@ extension MenubarExtraHeader {
         }
         projectManager.temp = selectedProject
         keynoteManager.temp = selectedKeynote
-        
-        mediaManager.isRecording.toggle()
-//         녹음파일 저장할 fileName 정하고, 녹음 시작!!!
+        mediaManager.isRecording = true
         mediaManager.fileName = mediaManager.currentDateTimeString()
         mediaManager.startRecording()
-        /// 연습 시작 시, 녹음 중이라는 노티피케이션 세팅
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             isRecording.toggle()
         }
     }
     // MARK: - 연습 일시중지
     private func pausePractice() {
-        print(projectManager.temp)
-        print(projectManager.temp?.projectName)
+//        print(projectManager.temp)
+//        print(projectManager.temp?.projectName)
     }
     
     // MARK: - 연습 끝내기
     private func stopPractice() {
         print("녹음 종료")
         mediaManager.isRecording.toggle()
-        
-        // 녹음 중지!
         mediaManager.stopRecording()
-        // mediaManager.fileName에 음성 파일이 저장되어있을거다!!
-        // 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
-        // ReturnZero API를 이용해서 UtteranceModel완성
+        /// mediaManager.fileName에 음성 파일이 저장되어있을거다!!
+        /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
+        /// ReturnZero API를 이용해서 UtteranceModel완성
         Task {
-            // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
             let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-            // MARK: 여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!여기다!!!!!!!!
-            print(#file, #line, tempUtterances)
-            
             var newUtteranceModels: [UtteranceModel] = []
-            
             for tempUtterance in tempUtterances {
                 newUtteranceModels.append(
                     UtteranceModel(
@@ -164,13 +153,11 @@ extension MenubarExtraHeader {
                     )
                 )
             }
-                  
+            /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
             if projectManager.temp == nil {
                 makeNewProject()
             }
-            
             if let selectedProject = projectManager.temp {
-                // 새로운 녹음에 대한 PracticeModel을 만들어서 넣는다!
                 let newPracticeModel = PracticeModel(
                     practiceName: "\(selectedProject.practices.count + 1)번째 연습",
                     index: selectedProject.practices.count,
@@ -206,7 +193,6 @@ extension MenubarExtraHeader {
     }
     
     private func openSelectedProject() {
-        print("프로젝트 열기")
         if let selectedProject = selectedProject {
             if selectedProject.projectName != "새 프로젝트" {
                 projectManager.current = selectedProject

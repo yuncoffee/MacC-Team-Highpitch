@@ -64,40 +64,27 @@ struct MenubarExtraView: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
-    // MARK: 샘플 임시 데이터
-    @State
-    private var selectedProject: ProjectModel?
-    
-    @State
-    private var selectedKeynote: OpendKeynote?
-    
-    @State
-    private var keynoteOptions: [OpendKeynote] = []
-    
-    @State
-    private var isRecording = false {
-        didSet {
-            print("isRecording:", isRecording)
-//            if isRecording {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-//                    isRecording = false
-//                }
-//            }
-        }
-    }
-    
-    @Binding
-    var isMenuPresented: Bool
-    
     @Environment(\.modelContext)
     var modelContext
     @Query(sort: \ProjectModel.creatAt)
     var projectModels: [ProjectModel]
     
+    @State
+    private var keynoteOptions: [OpendKeynote] = []
+    @State
+    private var selectedProject: ProjectModel?
+    @State
+    private var selectedKeynote: OpendKeynote?
+    @State
+    private var isRecording = false
+    
+    @Binding
+    var isMenuPresented: Bool
+    
     var body: some View {
         if isMenuPresented {
             ZStack {
-                Text("임시")
+                Text("  ")
                     .frame(width: 45, height: 1)
                     .popover(isPresented: $isRecording, arrowEdge: .bottom) {
                         let message = mediaManager.isRecording ? "연습 녹음이 시작되었어요!" : "연습 녹음 저장이 완료되었어요!"
@@ -130,7 +117,6 @@ struct MenubarExtraView: View {
             .onAppear {
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
-//                updateCurrentProject()
             }
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
                 if newValue {
@@ -138,7 +124,6 @@ struct MenubarExtraView: View {
                 }
             })
             .onChange(of: keynoteManager.opendKeynotes) { _, newValue in
-                print(newValue)
                 keynoteOptions = newValue
                 if !newValue.isEmpty {
                     selectedKeynote = newValue[0]
@@ -154,6 +139,7 @@ struct MenubarExtraView: View {
 
 // MARK: - Methods
 extension MenubarExtraView {
+    /// 키노트가 열려있는지 조회 후 상태 처리
     private func getIsActiveKeynoteApp() {
         Task {
             let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
@@ -186,29 +172,17 @@ extension MenubarExtraView {
             // MARK: - 열려있는 키노트가 있다면
             // MARK: - 만들어 둔 프로젝트가 있다면
             if projectModels.count > 1 {
-                print("!?!??!?!?!?!?")
                 if let selectedKeynote = selectedKeynote {
                     let filtered = projectModels.filter({ project in
                         project.keynoteCreation == selectedKeynote.creation
                     })
                     if !filtered.isEmpty {
-                        print("!!!!!!!!!!!!!")
                         print("일치하는 프로젝트: \(filtered[0].projectName)")
                         projectManager.current = filtered[0]
-                        //
                         selectedProject = filtered[0]
-                        print("일치: ", selectedProject?.projectName)
                     } else {
-                        print("???????????")
                         print("일치하는 프로젝트가 없음")
-                        //
-    //                    selectedProject = projectModels.last!
-                        selectedProject = ProjectModel(
-                            projectName: selectedKeynote.getFileName(),
-                            creatAt: Date().description,
-                            keynoteCreation: selectedKeynote.creation
-                        )
-                        print("불일치: ", selectedProject?.projectName)
+                        selectedProject = nil
                     }
                 }
             }
