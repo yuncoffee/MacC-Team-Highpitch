@@ -62,8 +62,8 @@ struct FastSentReplay: View {
                 .foregroundStyle(Color.HPComponent.stroke)
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal, .HPSpacing.xxxlarge)
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
+        .padding(.trailing, .HPSpacing.xxxlarge)
         .onReceive(timer, perform: { _ in
             if mediaManager.stopPoint != nil {
                 if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {

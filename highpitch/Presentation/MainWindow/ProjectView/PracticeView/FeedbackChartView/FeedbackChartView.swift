@@ -15,10 +15,46 @@ struct FeedbackChartView: View {
         VStack(spacing: 0) {
             header
             ScrollView {
-                UsagePercentChart(data: $practice)
-                UsageTopTierChart(data: $practice)
-                FillerWordDetail(data: $practice)
-                SpeedAverageChart(data: $practice)
+                VStack(spacing: 0) {
+                    HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
+                        Text("이번 연습에서 사용한 습관어")
+                            .systemFont(.subTitle)
+                            .foregroundStyle(Color.HPTextStyle.darker)
+                        HPTooltip(tooltipContent: "...")
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .leading
+                    )
+                    UsagePercentChart(data: $practice)
+                    UsageTopTierChart(data: $practice)
+                    FillerWordDetail(data: $practice)
+                        .padding(.bottom, .HPSpacing.medium)
+                }
+                Divider()
+                VStack(spacing: 0) {
+                    HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
+                        Text("이번 연습에서의 발화 속도")
+                            .systemFont(.subTitle)
+                            .foregroundStyle(Color.HPTextStyle.darker)
+                        HPTooltip(tooltipContent: "...")
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .leading
+                    )
+                    SpeedAverageChart(
+                        sentences: practice.sentences
+                    )
+                }
+                .padding(.top, .HPSpacing.medium)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .leading
+                )
                 FastSentReplay(data: $practice)
             }
             .padding(.leading, .HPSpacing.medium)
@@ -36,10 +72,6 @@ extension FeedbackChartView {
             Text("연습 요약보기")
                 .systemFont(.largeTitle)
                 .foregroundStyle(Color.HPTextStyle.darker)
-            Text("이번 연습에서 사용한 습관어")
-                .systemFont(.subTitle)
-                .foregroundStyle(Color.HPTextStyle.darker)
-                .padding(.leading, .HPSpacing.xxxsmall)
         }
         .padding(.leading, .HPSpacing.small)
         .padding(.bottom, .HPSpacing.xsmall)

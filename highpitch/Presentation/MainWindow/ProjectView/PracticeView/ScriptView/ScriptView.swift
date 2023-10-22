@@ -18,11 +18,15 @@ struct ScriptView: View {
         var currentSent = 0
         var sentenceModel = data.sentences.sorted(by: { $0.index < $1.index })
         var wordArray = data.words.sorted(by: { $0.index < $1.index })
-        return VStack(alignment: .leading, spacing: 24) {
-            Text("내 연습 다시보기")
-                .systemFont(.title)
-                .foregroundStyle(Color.HPTextStyle.darker)
-                .padding(.top, 24)
+        VStack(alignment: .leading, spacing: .HPSpacing.small) {
+            HStack(alignment:.top, spacing: .HPSpacing.xxxxsmall) {
+                Text("내 연습 다시보기")
+                    .systemFont(.title)
+                    .foregroundStyle(Color.HPTextStyle.darker)
+                HPTooltip(tooltipContent: "다시보기 ㅎㅎ")
+            }
+            .frame(maxHeight: 64)
+            .padding(.horizontal, .HPSpacing.small)
             ScrollView {
                 ZStack(alignment: .topLeading) {
                     ForEach(wordArray) { word in
@@ -44,7 +48,7 @@ struct ScriptView: View {
                                 nowSentece = word.sentenceIndex
                             }
                             .alignmentGuide(.leading) { item in
-                                if abs(width - item.width) > 436 || word.sentenceIndex != currentSent {
+                                if abs(width - item.width) > 279 || word.sentenceIndex != currentSent {
                                     width = 0.0; height -= item.height + 13
                                     currentSent = word.sentenceIndex
                                 }
@@ -63,10 +67,18 @@ struct ScriptView: View {
                             }
                     }
                 }
-                .frame(minWidth: 436, maxWidth: 436, alignment: .topLeading)
+                .frame(minWidth: 279, maxWidth: 279, alignment: .topLeading)
+                .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
+                .padding(.horizontal, .HPSpacing.medium)
             }
-            .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
+            .padding(.bottom, 100)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(
+            minWidth:343,
+            maxWidth: 343,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+        .border(Color.HPComponent.stroke, width: 1, edges: [.leading])
     }
 }
