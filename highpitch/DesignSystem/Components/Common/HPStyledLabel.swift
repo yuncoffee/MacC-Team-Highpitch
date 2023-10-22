@@ -14,7 +14,8 @@ struct HPStyledLabel: View {
         Text("\(content)")
             .systemFont(.caption2, weight: .semibold)
             .foregroundStyle(Color.HPPrimary.base)
-            .padding(4)
+            .padding(.vertical, 4)
+            .padding(.horizontal, 8)
             .background(Color.HPComponent.mainWindowSidebarBackground)
             .clipShape(
                 RoundedRectangle(cornerRadius: 4)

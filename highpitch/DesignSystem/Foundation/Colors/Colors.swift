@@ -14,7 +14,7 @@ extension Color {
         private init() {}
         /// #6A4AEC, 1
         static let dark = Color.primary600
-        /// #8A6DFF, 1
+        /// #8B6DFF, 1
         static let base = Color.primary500
         /// #AD99FF, 1
         static let light = Color.primary400
