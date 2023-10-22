@@ -25,7 +25,7 @@ struct HPSegmentedControl: View {
                             .HPGray.systemWhite
                         } else { .clear }
                         let forgroundColor: Color = if selectedSegment == index {
-                            .HPPrimary.base
+                            .HPPrimary.dark
                         } else { .HPTextStyle.light }
                         let strokeColor: Color = if selectedSegment == index {
                             .HPGray.system200
@@ -39,10 +39,8 @@ struct HPSegmentedControl: View {
                                 )
                         }
                         Text(options[index])
-                            .systemFont(.footnote, weight: .semibold)
-                            // TODO: - Padding
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, .HPSpacing.xsmall)
+                            .systemFont(.caption, weight: .semibold)
+                            .frame(width: 84)
                             .foregroundStyle(forgroundColor)
                             .frame(minHeight: 33)
                             .background(backgroundColor)
@@ -66,6 +64,6 @@ struct HPSegmentedControl: View {
     @State var selectedSegment = 0
     return HPSegmentedControl(
         selectedSegment: $selectedSegment,
-        options: ["평균 레벨 추이", "필러워드", "말 빠르기"]
+        options: ["레벨", "습관어", "발화 속도"]
     ).frame(width: 300)
 }

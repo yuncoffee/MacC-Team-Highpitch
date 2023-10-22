@@ -90,9 +90,7 @@ struct ProjectNavigationLink: View {
                                     practice.utterances = tempUtterance
                                     project.practices.append(practice)
                                     practiceManager.current = practice
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-                                        practiceManager.getPracticeDetail()
-                                    }
+                                    practiceManager.getPracticeDetail()
                                     
                                 } catch {
                                     print("파일 또는 디코딩 에러")
