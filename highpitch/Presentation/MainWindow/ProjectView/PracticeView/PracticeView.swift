@@ -53,7 +53,7 @@ struct PracticeView: View {
     
     @State 
     var practice: PracticeModel
-
+    
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
@@ -75,6 +75,10 @@ struct PracticeView: View {
                 practice.isVisited = true
             }
         }
+//        .onChange(of: mediaManager.currentTime) { _, newValue in
+//
+//            print("newValue: \(newValue)")
+//        }
     }
 }
 
@@ -85,7 +89,10 @@ extension PracticeView {
             /// 피드백 뷰
             FeedbackChartView(practice: $practice)
             /// 스크립트 뷰
-            ScriptView(data: $practice)
+            ScriptView(
+                sentences: practice.sentences.sorted(by: { $0.index < $1.index }),
+                words: practice.words.sorted(by: { $0.index < $1.index })
+            )
         }
         .padding(.top, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -71,15 +71,13 @@ extension MainWindowView {
     // MARK: - navigationSidebar
     @ViewBuilder
     var navigationSidebar: some View {
-        let idealWidth: CGFloat = 200
-        let maxWidth: CGFloat = 300
         LazyVGrid(columns: [GridItem()], alignment: .leading) {
             ProjectNavigationLink()
         }
         .padding(.top, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.HPComponent.mainWindowSidebarBackground)
-        .navigationSplitViewColumnWidth(ideal: idealWidth, max: maxWidth)
+        .navigationSplitViewColumnWidth(200)
     }
     
     // MARK: - navigationDetails

@@ -67,7 +67,7 @@ extension StatisticsTabItem {
         var answer = 0.0
         if let practices = projectManager.current?.practices {
             for practice in practices {
-                answer += Double(practice.summary.level!)
+                answer += Double(practice.summary.level ?? 0)
             }
             answer /= Double(practices.count)
             return answer
@@ -78,7 +78,7 @@ extension StatisticsTabItem {
     
     func getBestPractice() -> PracticeModel? {
         if let practices = projectManager.current?.practices.sorted(
-            by: { $0.summary.level! > $1.summary.level! }) {
+            by: { $0.summary.level ?? 0 > $1.summary.level ?? 0 }) {
             let answer = practices[0]
             return answer
         } else {
