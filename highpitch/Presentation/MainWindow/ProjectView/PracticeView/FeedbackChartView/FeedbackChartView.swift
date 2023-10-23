@@ -10,6 +10,10 @@ import SwiftUI
 struct FeedbackChartView: View {
     @Binding
     var practice: PracticeModel
+    @State
+    var projectManager: ProjectManager
+    @State
+    var isPopoverActive = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -20,16 +24,41 @@ struct FeedbackChartView: View {
                         Text("이번 연습에서 사용한 습관어")
                             .systemFont(.title)
                             .foregroundStyle(Color.HPTextStyle.darker)
-                        HPTooltip(tooltipContent: "...")
+                        Button {
+                            isPopoverActive.toggle()
+                        } label: {
+                            Label("도움말", systemImage: "questionmark.circle")
+                                .systemFont(.footnote)
+                                .labelStyle(.iconOnly)
+                                .foregroundStyle(Color.HPGray.system400)
+                                .frame(width: 20, height: 20)
+                        }.sheet(isPresented: $isPopoverActive) {
+                            // TODO: Image insert
+                            Text("까꿍")
+                                .padding(20)
+                                .onTapGesture {
+                                    isPopoverActive.toggle()
+                                }
+                        }
+                        .buttonStyle(.plain)
+                        .offset(y: -2)
                     }
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity,
                         alignment: .leading
                     )
-                    UsagePercentChart(data: $practice)
+                    .padding(.bottom, .HPSpacing.xsmall)
+                    .border(.red)
+                    UsagePercentChart(
+                        data: $practice,
+                        projectManager: projectManager
+                    )
+                        .border(.red)
                     UsageTopTierChart(data: $practice)
+                        .border(.red)
                     FillerWordDetail(data: $practice)
+                        .border(.red)
                         .padding(.bottom, .HPSpacing.medium)
                 }
                 Divider()

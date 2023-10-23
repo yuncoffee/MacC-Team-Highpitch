@@ -67,7 +67,7 @@ struct PracticeView: View {
                 AudioControllerView(practice: $practice)
             }
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.HPGray.systemWhite)
         .ignoresSafeArea()
         .onAppear {
@@ -89,7 +89,10 @@ extension PracticeView {
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
             /// 피드백 뷰
-            FeedbackChartView(practice: $practice)
+            FeedbackChartView(
+                practice: $practice,
+                projectManager: projectManager
+            )
             /// 스크립트 뷰
             ScriptView(
                 sentences: practice.sentences.sorted(by: { $0.index < $1.index }),
