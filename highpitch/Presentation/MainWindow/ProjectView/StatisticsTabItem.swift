@@ -18,30 +18,41 @@ struct StatisticsTabItem: View {
     private var graphOptions = ["레벨", "습관어", "발화 속도"]
     @State
     private var selectedSegment = 0
-    @State var isPopoverActive = false
+    @State
+    var isPopoverActive = false
+    @State
+    var rawSelected: Int?
+    @State
+    var rawSelectedRange: ClosedRange<Int>?
     
     var body: some View {
         let practiceCount = projectManager.current?.practices.count
         VStack(alignment:.leading, spacing: 0) {
             if let practiceCount = practiceCount {
-                if let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt }) {
-                    let practiceDuration = "\(practices.first!.creatAt) - \(practices.last!.creatAt)"
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("총 \(practiceCount)번의 연습에 대한 결과예요")
-                            .systemFont(.largeTitle)
-                            .foregroundStyle(Color.HPTextStyle.darker)
-                        Text("\(practiceDuration) 동안 연습했어요")
-                            .systemFont(.body)
-                            .foregroundStyle(Color.HPTextStyle.base)
+                if practiceCount > 0 {
+                    if let practices =
+                        projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt }) {
+                        let practiceDuration =
+                        "\(Date().createAtToYMD(input: practices.first!.creatAt)) - \(Date().createAtToYMD(input: practices.last!.creatAt))"
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("총 \(practiceCount)번의 연습에 대한 결과예요")
+                                .systemFont(.largeTitle)
+                                .foregroundStyle(Color.HPTextStyle.darker)
+                            Text("\(practiceDuration) 동안 연습했어요")
+                                .systemFont(.body)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        }
+                        .padding(.bottom, .HPSpacing.xsmall)
+                        HStack(spacing: .HPSpacing.xxsmall) {
+                            averageLevelCard
+                            bestLevelPracticeCard
+                        }
+                        .padding(.bottom, .HPSpacing.xxsmall)
+                        /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
+                        averageGraph
                     }
-                    .padding(.bottom, .HPSpacing.xsmall)
-                    HStack(spacing: .HPSpacing.xxsmall) {
-                        averageLevelCard
-                        bestLevelPracticeCard
-                    }
-                    .padding(.bottom, .HPSpacing.xxsmall)
-                    /// [평균 레벨 추이 ,필러워드 말빠르기] 그래프
-                    averageGraph
+                } else {
+                    emptyView
                 }
             } else {
                 emptyView
@@ -229,77 +240,225 @@ extension StatisticsTabItem {
     }
     
     // MARK: - 그래프 아이템들
+    
+    var selected: Int? {
+        let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
+        if let practices = practices {
+            if let rawSelected {
+                return practices.first(where: {
+                    return ($0.index ... $0.index + 1).contains(rawSelected)
+                })?.index
+            } else if let selectedRange, selectedRange.lowerBound == selectedRange.upperBound {
+                return selectedRange.lowerBound
+            }
+            return nil
+        } else { return nil }
+    }
+    
+    var selectedRange: ClosedRange<Int>? {
+        let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
+        if let practices = practices {
+            if let rawSelectedRange {
+                let lower = practices.first(where: {
+                    return ($0.index ... $0.index + 1).contains(rawSelectedRange.lowerBound)
+                })?.index
+                let upper = practices.first(where: {
+                    return ($0.index ... $0.index + 1).contains(rawSelectedRange.upperBound)
+                })?.index
+                
+                if let lower, let upper {
+                    return lower ... upper
+                }
+            }
+            return nil
+        } else { return nil }
+    }
+    
+    func fillerWordRange() -> [Double] {
+        let practices = projectManager.current?.practices.sorted(
+            by: { $0.summary.fillerWordPercentage! < $1.summary.fillerWordPercentage! }
+        )
+        if let practices = practices {
+            if ( practices.first!.summary.fillerWordPercentage! ==
+                 practices.last!.summary.fillerWordPercentage!) {
+                return [
+                    practices.first!.summary.fillerWordPercentage! - 5.0,
+                    practices.first!.summary.fillerWordPercentage! + 5.0
+                ]
+            }
+            return [
+                practices.first!.summary.fillerWordPercentage!,
+                practices.last!.summary.fillerWordPercentage!
+            ]
+        }
+        return []
+    }
+    
+    func epmValueRange() -> [Double] {
+        let practices = projectManager.current?.practices.sorted(
+            by: { $0.summary.epmAverage! < $1.summary.epmAverage! }
+        )
+        if let practices = practices {
+            if ( practices.first!.summary.epmAverage! ==
+                 practices.last!.summary.epmAverage!) {
+                return [
+                    practices.first!.summary.epmAverage! - 25,
+                    practices.first!.summary.epmAverage! + 25
+                ]
+            }
+            return [
+                practices.first!.summary.epmAverage!,
+                practices.last!.summary.epmAverage!
+            ]
+        }
+        return []
+    }
+    
     @ViewBuilder
     var graphContainer: some View {
-        let practices = projectManager.current?.practices
+        let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
+        let range: [[Double]] = [[1.0, 5.0], fillerWordRange(), epmValueRange()]
         if let practices = practices {
-            if selectedSegment == 0 {
-                Chart {
-                    ForEach(practices.sorted(by: { $0.index < $1.index })) { practice in
+            Chart {
+                ForEach(practices) { practice in
+                    if selectedSegment == 0 {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
                             y: .value("레벨", practice.summary.level ?? 0)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
+                        .symbol(by: .value("", ""))
+                        .symbolSize(113)
                         .lineStyle(StrokeStyle(lineWidth: 3))
-                        PointMark(
+                    } else if selectedSegment == 1 {
+                        LineMark(
                             x: .value("연습 회차", practice.index + 1),
-                            y: .value("레벨", practice.summary.level ?? 0)
+                            y: .value("습관어", practice.summary.fillerWordPercentage!)
                         )
-                        .foregroundStyle(Color.HPPrimary.base)
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(Color.HPPrimary.light)
+                        .symbol(by: .value("", ""))
+                        .symbolSize(113)
+                        .lineStyle(StrokeStyle(lineWidth: 3))
+                    } else {
+                        LineMark(
+                            x: .value("연습 회차", practice.index + 1),
+<<<<<<< HEAD
+                            y: .value("레벨", practice.summary.level ?? 0)
+=======
+                            y: .value("발화 속도", practice.summary.epmAverage!)
+>>>>>>> develop
+                        )
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(Color.HPPrimary.light)
+                        .symbol(by: .value("", ""))
+                        .symbolSize(113)
+                        .lineStyle(StrokeStyle(lineWidth: 3))
                     }
                 }
-                .chartScrollableAxes(.horizontal)
-                .chartXVisibleDomain(length: 13)
-                .chartYScale(domain: [0, 6])
-                .chartXAxis {
-                    AxisMarks(values: Array(stride(from: 1, to: practices.count + 2, by: 1))) { value in
-                        AxisValueLabel(centered: false) {
-                            Text("\(value.index + 1)회차")
-                                .systemFont(.caption2, weight: .medium)
-                                .foregroundStyle(Color.HPTextStyle.base)
+                if selectedSegment == 0 {
+                    PointMark(
+                        x: .value("연습 회차", practices.last!.index + 1),
+                        y: .value("레벨", practices.last!.summary.level!)
+                    )
+                    .foregroundStyle(Color.HPPrimary.base)
+                } else if selectedSegment == 1 {
+                    PointMark(
+                        x: .value("연습 회차", practices.last!.index + 1),
+                        y: .value("습관어", practices.last!.summary.fillerWordPercentage!)
+                    )
+                    .foregroundStyle(Color.HPPrimary.base)
+                } else {
+                    PointMark(
+                        x: .value("연습 회차", practices.last!.index + 1),
+                        y: .value("발화 속도", practices.last!.summary.epmAverage!)
+                    )
+                    .foregroundStyle(Color.HPPrimary.base)
+                }
+                if let selected {
+                    RuleMark(
+                        x: .value("Selected", selected + 1)
+                    )
+                    .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 10]))
+                    .foregroundStyle(Color.gray.opacity(0.3))
+                    .offset(yStart: -10)
+                    .zIndex(0)
+                    .annotation(
+                        position: .leading, spacing: 0,
+                        overflowResolution: .init(
+                            x: .fit(to: .chart),
+                            y: .disabled
+                        )
+                    ) {
+                        VStack(spacing: 0) {
+                            Text("\(Date().createAtToYMD(input: practices[selected].creatAt))")
+                                .systemFont(.caption, weight: .semibold)
+                                .foregroundStyle(Color.HPTextStyle.dark)
+                            Text("\(Date().createAtToHMS(input: practices[selected].creatAt))")
+                                .systemFont(.caption, weight: .regular)
+                                .foregroundStyle(Color.HPTextStyle.dark)
+                                .zIndex(5)
                         }
+                        .padding(.horizontal, .HPSpacing.xxxsmall)
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(color: .HPComponent.shadowBlackColor, radius: 8)
+                        .frame(width: 90, height: 52)
+                        .offset(x: 40)
                     }
                 }
-                .chartYAxis {
-                    AxisMarks(position: .leading, values: Array(stride(from: 1, to: 6, by: 1))) { value in
-                        AxisValueLabel(centered: false) {
+            }
+            .chartXSelection(value: $rawSelected)
+            .chartXSelection(range: $rawSelectedRange)
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 13)
+            .chartYScale(domain: [
+                range[selectedSegment].first! -
+                (range[selectedSegment].last! - range[selectedSegment].first!) / 8,
+                range[selectedSegment].last! +
+                (range[selectedSegment].last! - range[selectedSegment].first!) / 8
+            ])
+            .chartXAxis {
+                AxisMarks(values: Array(stride(from: 1, to: practices.count + 2, by: 1))) { value in
+                    AxisValueLabel(centered: false) {
+                        Text("\(value.index + 1)회차")
+                            .offset(x: -17)
+                            .systemFont(.caption2, weight: .medium)
+                            .foregroundStyle(Color.HPTextStyle.base)
+                            .padding(.trailing, 18)
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading, values: Array(stride(
+                    from: range[selectedSegment].first!,
+                    to: range[selectedSegment].last! +
+                    (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
+                    by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                ))) { value in
+                    AxisValueLabel(centered: false) {
+                        if selectedSegment == 0 {
                             Text("LV.\(value.index + 1)")
                                 .systemFont(.caption2, weight: .medium)
                                 .foregroundStyle(Color.HPTextStyle.base)
-                        }
-                        AxisGridLine()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            } else if selectedSegment == 1 {
-                ScrollView(.horizontal) {
-                    Chart {
-                        ForEach(practices.sorted(by: { $0.index < $1.index })) { practice in
-                            LineMark(
-                                x: .value("연습 회차", practice.index + 1),
-                                y: .value("레벨", practice.summary.fillerWordCount)
-                            )
-                            .foregroundStyle(Color.HPPrimary.base)
+                                .padding(.trailing, 18)
+                        } else if selectedSegment == 1 {
+                            Text("\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")%")
+                                .systemFont(.caption2, weight: .medium)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        } else {
+                            Text("\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")EPM")
+                                .systemFont(.caption2, weight: .medium)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                                .padding(.trailing, 18)
                         }
                     }
+                    AxisGridLine()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            } else {
-                ScrollView(.horizontal) {
-                    Chart {
-                        ForEach(practices.sorted(by: { $0.index < $1.index })) { practice in
-                            LineMark(
-                                x: .value("연습 회차", practice.index + 1),
-                                y: .value("레벨", practice.summary.epmAverage!)
-                            )
-                            .foregroundStyle(Color.HPPrimary.base)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
+            .chartLegend(.hidden)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }

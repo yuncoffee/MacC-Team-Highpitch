@@ -68,14 +68,14 @@ struct PracticesTabItem: View {
                                         .foregroundStyle(Color.HPTextStyle.light)
                                 }
                                 HStack {
-                                    AverageLevelBox(measure: "4.5")
-                                    FillerWordBox(measure: "12")
+                                    AverageLevelBox(measure: "\(practice.summary.level!)")
+                                    FillerWordBox(measure: "\(practice.summary.fillerWordCount)")
                                     // 구분선
                                     Rectangle()
                                         .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
                                         .frame(width: 1, height: 52) // 너비와 높이를 조절
                                         .padding(.vertical, 5) // 원하는 간격으로 조절
-                                    SpeechSpeedBox(measure: "138")
+                                    SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage!))")
                                 }
                             }
                             .padding(.horizontal, 32)
@@ -133,14 +133,14 @@ struct PracticesTabItem: View {
                                             .foregroundStyle(Color.HPTextStyle.light)
                                     }
                                     HStack {
-                                        AverageLevelBox(measure: "4.5")
-                                        FillerWordBox(measure: "12")
+                                        AverageLevelBox(measure: "\(practice.summary.level!)")
+                                        FillerWordBox(measure: "\(practice.summary.fillerWordCount)")
                                         // 구분선
                                         Rectangle()
                                             .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
                                             .frame(width: 1, height: 52) // 너비와 높이를 조절
                                             .padding(.vertical, 5) // 원하는 간격으로 조절
-                                        SpeechSpeedBox(measure: "138")
+                                        SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage!))")
                                     }
                                 }
                                 .padding(.horizontal, 32)
@@ -249,7 +249,7 @@ struct FillerWordBox: View {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
                 Text(measure)
                     .systemFont(.largeTitle, weight: .bold)
-                    .foregroundStyle(Color.primary600)
+                    .foregroundStyle(Color.primary500)
                 Text("회")
                     .systemFont(.body, weight: .medium)
                     .foregroundStyle(Color.text500)
@@ -271,7 +271,7 @@ struct SpeechSpeedBox: View {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
                 Text(measure)
                     .systemFont(.largeTitle, weight: .bold)
-                    .foregroundStyle(Color.primary600)
+                    .foregroundStyle(Color.primary500)
                 Text("EPM")
                     .systemFont(.body, weight: .medium)
                     .foregroundStyle(Color.text500)
