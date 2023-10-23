@@ -14,96 +14,79 @@ struct PracticesTabItem: View {
     
     @State private var isEditing: Bool = false
     @State private var selectedItems: Set<Int> = []
+    @State private var editButtonOn: Bool = false
     
     var body: some View {
         @Bindable var projectManager = projectManager
         HStack {
-            if isEditing {
-                Text("\(selectedItems.count)개 선택")
-                    .systemFont(.footnote, weight: .semibold)
-                    .foregroundStyle(Color.primary500)
-            }
-            
+            Text("0개 선택")
+                .systemFont(.footnote, weight: .semibold)
+                .foregroundStyle(Color.primary500)
             Spacer()
-            
-            Button(action: {
-                if isEditing == true && selectedItems.count > 0 {
-                    // 체크된 것들 삭제하는 과정
-                    
-                    projectManager.current!.practices.remove(at: 0)
-                }
-                isEditing.toggle()
-            }) {
-                Text(isEditing ? "삭제하기" : "편집하기")
-                    .systemFont(.footnote, weight: .semibold)
-                    .foregroundStyle(isEditing ? Color.red : Color("8B6DFF"))
+            Button("편집하기") {
+                editButtonOn.toggle()
             }
+            .systemFont(.footnote, weight: .semibold)
+            .foregroundStyle(Color("8B6DFF"))
             .buttonStyle(.plain)
         }
         
-        if isEditing {
+        if editButtonOn {
             if let project = projectManager.current {
                 List {
                     ForEach(Array(project.practices.sorted().enumerated()).reversed(), id: \.element.id) { index, practice in
-                        HStack {
-                            Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
-                                .onTapGesture {
-                                    print(index)
-                                    toggleSelection(index)
-                                }
-                                .padding(.trailing, 24)
+                        
+                        HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
                             
-                            HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
-                                // 몇번째 연습
-                                VStack(alignment:.leading, spacing: 0) {
-                                    // let reversedIndex = project.practices.count - index
-                                    Text(Date().createAtToPracticeDate(input: practice.creatAt))
-                                        .systemFont(.footnote, weight: .medium)
-                                        .foregroundStyle(Color.HPTextStyle.dark)
-                                    Text("\(indexToOrdinalNumber(index: index))번째 연습")
-                                        .systemFont(.title, weight: .semibold)
-                                        .foregroundStyle(Color.HPTextStyle.darker)
-                                    HPStyledLabel(content: "1시간 30분 48초 소요")
-                                }
-                                .padding(.horizontal, .HPSpacing.medium)
-                                
-                                Spacer()
-                                
-                                // 구분선
-                                Rectangle()
-                                    .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
-                                    .frame(width: 1, height: 100) // 너비와 높이를 조절
-                                    .padding(.vertical, 5) // 원하는 간격으로 조절
-                                
-                                // 평균레벨 습관어 발화속도
-                                VStack(alignment: .trailing) {
-                                    HStack {
-                                        Text("자세히 보기")
-                                            .systemFont(.caption, weight: .semibold)
-                                            .foregroundStyle(Color("000000").opacity(0.35))
-                                        Image(systemName: "chevron.right")
-                                            .systemFont(.caption, weight: .semibold)
-                                            .foregroundStyle(Color.HPTextStyle.light)
-                                    }
-                                    HStack {
-                                        AverageLevelBox(measure: "4.5")
-                                        FillerWordBox(measure: "12")
-                                        // 구분선
-                                        Rectangle()
-                                            .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
-                                            .frame(width: 1, height: 52) // 너비와 높이를 조절
-                                            .padding(.vertical, 5) // 원하는 간격으로 조절
-                                        SpeechSpeedBox(measure: "138")
-                                    }
-                                }
-                                .padding(.horizontal, 32)
+                            // 몇번째 연습
+                            VStack(alignment:.leading, spacing: 0) {
+                                // let reversedIndex = project.practices.count - index
+                                Text(Date().createAtToPracticeDate(input: practice.creatAt))
+                                    .systemFont(.footnote, weight: .medium)
+                                    .foregroundStyle(Color.HPTextStyle.dark)
+                                Text("\(indexToOrdinalNumber(index: index))번째 연습")
+                                    .systemFont(.title, weight: .semibold)
+                                    .foregroundStyle(Color.HPTextStyle.darker)
+                                HPStyledLabel(content: "1시간 30분 48초 소요")
                             }
-                            .frame(minWidth: 672, minHeight: 136, maxHeight: 136)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                            .listRowBackground(Color.HPComponent.mainWindowDetailsBackground)
+                            .padding(.horizontal, .HPSpacing.medium)
+                            
+                            Spacer()
+                            
+                            // 구분선
+                            Rectangle()
+                                .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
+                                .frame(width: 1, height: 100) // 너비와 높이를 조절
+                                .padding(.vertical, 5) // 원하는 간격으로 조절
+                            
+                            // 평균레벨 습관어 발화속도
+                            VStack(alignment: .trailing) {
+                                HStack {
+                                    Text("자세히 보기")
+                                        .systemFont(.caption, weight: .semibold)
+                                        .foregroundStyle(Color("000000").opacity(0.35))
+                                    Image(systemName: "chevron.right")
+                                        .systemFont(.caption, weight: .semibold)
+                                        .foregroundStyle(Color.HPTextStyle.light)
+                                }
+                                HStack {
+                                    AverageLevelBox(measure: "\(practice.summary.level!)")
+                                    FillerWordBox(measure: "\(practice.summary.fillerWordCount)")
+                                    // 구분선
+                                    Rectangle()
+                                        .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
+                                        .frame(width: 1, height: 52) // 너비와 높이를 조절
+                                        .padding(.vertical, 5) // 원하는 간격으로 조절
+                                    SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage!))")
+                                }
+                            }
+                            .padding(.horizontal, 32)
                         }
+                        .frame(minWidth: 672, minHeight: 136, maxHeight: 136)
                         .listRowSeparator(.hidden)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .listRowBackground(Color.HPComponent.mainWindowDetailsBackground)
                     }
                 }
                 .listStyle(.plain)
@@ -152,14 +135,14 @@ struct PracticesTabItem: View {
                                             .foregroundStyle(Color.HPTextStyle.light)
                                     }
                                     HStack {
-                                        AverageLevelBox(measure: "4.5")
-                                        FillerWordBox(measure: "12")
+                                        AverageLevelBox(measure: "\(practice.summary.level ?? 0)")
+                                        FillerWordBox(measure: "\(practice.summary.fillerWordCount)")
                                         // 구분선
                                         Rectangle()
                                             .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
                                             .frame(width: 1, height: 52) // 너비와 높이를 조절
                                             .padding(.vertical, 5) // 원하는 간격으로 조절
-                                        SpeechSpeedBox(measure: "138")
+                                        SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage ?? 0))")
                                     }
                                 }
                                 .padding(.horizontal, 32)
@@ -170,6 +153,9 @@ struct PracticesTabItem: View {
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .listRowBackground(Color.HPComponent.mainWindowDetailsBackground)
                         }
+                    }
+                    .toolbar{
+                        
                     }
                     // MARK: 연습 삭제하기 버튼 임시로 만들었습니다. 순서 상관없이 인덱스 0번째꺼 지우는 코드니깐 나중에 수정 필요!!
                     .contextMenu {
@@ -205,6 +191,12 @@ struct PracticesTabItem: View {
 
 extension PracticesTabItem {
     
+    //    Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
+    //        .onTapGesture {
+    //            print(index)
+    //            toggleSelection(index)
+    //        }
+    //        .padding(.trailing, 24)
     func fileNameDateToPracticeDate(input: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
@@ -273,7 +265,7 @@ struct FillerWordBox: View {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
                 Text(measure)
                     .systemFont(.largeTitle, weight: .bold)
-                    .foregroundStyle(Color.primary600)
+                    .foregroundStyle(Color.primary500)
                 Text("회")
                     .systemFont(.body, weight: .medium)
                     .foregroundStyle(Color.text500)
@@ -295,7 +287,7 @@ struct SpeechSpeedBox: View {
             HStack(alignment: .lastTextBaseline, spacing: 0) {
                 Text(measure)
                     .systemFont(.largeTitle, weight: .bold)
-                    .foregroundStyle(Color.primary600)
+                    .foregroundStyle(Color.primary500)
                 Text("EPM")
                     .systemFont(.body, weight: .medium)
                     .foregroundStyle(Color.text500)

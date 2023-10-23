@@ -46,7 +46,7 @@ struct UsagePercentChart: View {
     
     var body: some View {
         let maxHeight: CGFloat = 500 / 3 * 2
-        var summary = data.summary
+        let summary = data.summary
         VStack(alignment: .leading, spacing: 0) {
             header
             GeometryReader { geometry in
@@ -150,7 +150,7 @@ extension UsagePercentChart {
         maxWidth: CGFloat,
         maxHeight: CGFloat) -> some View {
         VStack(spacing: 0) {
-            let barWidth = (maxWidth - 64 * 4) / 5
+            let barWidth = (maxWidth - 64 * 4) / 10
             let barHeight = maxHeight * usagePercent
             /// decorater
             let decorater = if type == .current {
@@ -163,8 +163,8 @@ extension UsagePercentChart {
             /// bar
             Rectangle()
                 .frame(
-                    width: barWidth,
-                    height: barHeight
+                    maxWidth: 64,
+                    maxHeight: barHeight
                 )
                 .foregroundStyle(type.color.bar)
                 .clipShape(

@@ -57,7 +57,7 @@ struct FillerWordDetail: View {
                 .foregroundStyle(Color.HPComponent.stroke)
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal, .HPSpacing.xxxlarge)
+        .padding(.trailing, .HPSpacing.xxxlarge)
     }
 }
 

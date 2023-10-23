@@ -13,15 +13,9 @@ struct AudioControllerView: View {
     private var projectManager
     @Environment(MediaManager.self)
     private var mediaManager
-    
-    @State
-    private var isPlaying = false
-    
+        
     @State
     private var totalTime: TimeInterval = 0.0
-    
-    @State
-    private var currentTime: TimeInterval = 0.0
     
     @State
     var sliderValue:Float = 0
@@ -50,6 +44,12 @@ struct AudioControllerView: View {
         }
         .onReceive(timer, perform: { _ in
             updateProgress()
+//            if mediaManager.stopPoint != nil {
+//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
+//                    mediaManager.pausePlaying()
+//                    mediaManager.stopPoint = nil
+//                }
+//            }
         })
     }
 }
@@ -67,11 +67,11 @@ extension AudioControllerView {
     }
     private func play() {
         mediaManager.play()
-        isPlaying = true
+//        isPlaying = true
     }
     private func pause() {
         mediaManager.pausePlaying()
-        isPlaying = false
+//        isPlaying = false
         
     }
     private func seekAudio(to time: TimeInterval) {
@@ -80,7 +80,7 @@ extension AudioControllerView {
     
     private func updateProgress() {
         guard let player = mediaManager.audioPlayer else { return }
-        currentTime = player.currentTime
+        mediaManager.currentTime = player.currentTime
     }
     
     private func timeString(time: TimeInterval) -> String {
@@ -96,14 +96,14 @@ extension AudioControllerView {
     private var sliderContainer: some View {
         VStack(spacing: 0) {
             Slider(value: Binding(get: {
-                currentTime
+                mediaManager.currentTime
             }, set: { newValue in
                 seekAudio(to: newValue)
             }), in: 0...totalTime)
             .tint(Color.HPPrimary.base)
             .padding(.horizontal, .HPSpacing.large)
             HStack(spacing: 0) {
-                Text(timeString(time: currentTime))
+                Text(timeString(time: mediaManager.currentTime))
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
                 Spacer()
@@ -128,20 +128,22 @@ extension AudioControllerView {
     @ViewBuilder
     private var controllButton: some View {
         Button {
-            isPlaying ? pause() : play()
+            mediaManager.isPlaying ? pause() : play()
         } label: {
             Label(
-                isPlaying
+                mediaManager.isPlaying
                 ? "멈춤"
                 : "재생",
-                systemImage: isPlaying
+                systemImage: mediaManager.isPlaying
                 ? "pause.fill"
                 : "play.fill"
             )
             .systemFont(.largeTitle)
             .labelStyle(.iconOnly)
             .foregroundStyle(Color.HPTextStyle.base)
+            .imageScale(.large)
         }
+        .frame(width: 24, height: 24)
         .buttonStyle(.plain)
     }
     

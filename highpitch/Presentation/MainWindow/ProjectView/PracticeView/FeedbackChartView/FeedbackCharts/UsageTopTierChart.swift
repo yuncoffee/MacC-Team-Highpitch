@@ -48,7 +48,6 @@ struct UsageTopTierChart: View {
                 if (useFillerWord()) {
                     ZStack {
                         VStack(spacing: 0) {
-                            Text("width: \(geometry.size.width)")
                             Text("\(getFillerTypeCount())가지")
                                 .systemFont(.title)
                                 .foregroundStyle(Color.HPPrimary.base)
@@ -77,20 +76,6 @@ struct UsageTopTierChart: View {
                             maxHeight: breakPoint.chartSize,
                             alignment: .center
                         )
-//                        ForEach(
-//                            Array(fillerWordOffset(size: breakPoint.offset).enumerated()),
-//                            id: \.self.1.id) { index, each in
-//                            VStack(spacing: .HPSpacing.xxxxsmall) {
-//                                Text("\(fillerWordList.defaultList[each.index])")
-//                                    .systemFont(index == 0 ? .title : .body)
-//                                    .multilineTextAlignment(.center)
-//                                Text("\(each.value)회")
-//                                    .systemFont(.footnote)
-//                                    .multilineTextAlignment(.center)
-//                            }
-//                            .foregroundStyle(Color.HPTextStyle.dark)
-//                            .offset(each.offset)
-//                        }
                     }
                     .frame(
                         maxWidth: .infinity,

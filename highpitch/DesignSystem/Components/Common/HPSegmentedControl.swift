@@ -16,9 +16,7 @@ struct HPSegmentedControl: View {
         HStack(spacing: 0) {
             ForEach(options.indices, id:\.self) { index in
                 Button {
-                    withAnimation(.interactiveSpring()) {
-                        selectedSegment = index
-                    }
+                    selectedSegment = index
                 } label: {
                     ZStack(alignment: .trailing) {
                         let backgroundColor: Color = if selectedSegment == index {
@@ -47,6 +45,7 @@ struct HPSegmentedControl: View {
                             .cornerRadius(5)
                             .shadow(color: .HPComponent.shadowBlackColor, radius: 8)
                             .contentShape(Rectangle())
+                            .animation(.interactiveSpring(), value: selectedSegment)
                     }
                     .frame(alignment: .trailing)
                 }

@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct FastSentReplay: View {
+    @Environment(MediaManager.self)
+    private var mediaManager
     @Binding
     var data: PracticeModel
     @State
     var isDetailActive = false
+    
+    @State
+    var selectedIndex = -1
+    
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         VStack(spacing: 0) {
             if !data.summary.fastSentenceIndex.isEmpty {
@@ -29,23 +37,20 @@ struct FastSentReplay: View {
                     ) { index, each in
                         if each.epmValue! > 422.4 {
                             FastSentReplayCell(
-                                isOdd: index % 2 != 0,
-                                startAt: each.startAt!,
-                                sentence: each.sentence
-                            ) {
-                                print("hello")
-                            }
-                            .border(
-                                .HPComponent.stroke,
-                                width: index == data.sentences.count - 1 ? 0 : 1,
-                                edges: [.bottom]
+                                index: index,
+                                isOdd: index % 2 == 0,
+                                startAt: Double(each.startAt!),
+                                endAt: Double(each.endAt!),
+                                sentence: each.sentence,
+                                isLast: index == data.sentences.count - 1,
+                                selectedIndex: $selectedIndex
                             )
+                            .padding(.horizontal, 2)
                         }
                     }
                 }
             }
         }
-        .padding(.HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,
             minHeight: 70,
@@ -57,8 +62,25 @@ struct FastSentReplay: View {
                 .foregroundStyle(Color.HPComponent.stroke)
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal, .HPSpacing.xxxlarge)
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
+        .padding(.trailing, .HPSpacing.xxxlarge)
+        .onReceive(timer, perform: { _ in
+            if mediaManager.stopPoint != nil {
+                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
+                    mediaManager.stopPoint = nil
+                    selectedIndex = -1
+                    mediaManager.pausePlaying()
+                }
+            }
+        })
+    }
+}
+
+extension FastSentReplay {
+    private func play(startAt: Double, endAt: Double) {
+        mediaManager.playAt(atTime: startAt)
+        mediaManager.play()
+        mediaManager.stopPoint = endAt
     }
 }
 
@@ -76,22 +98,40 @@ extension FastSentReplay {
                 .foregroundStyle(Color.HPTextStyle.base)
                 .rotationEffect(isDetailActive ? .degrees(90) : .zero)
         }
+        .padding(.top, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .padding(.bottom, isDetailActive ? .HPSpacing.xsmall + .HPSpacing.xxxxsmall : 0)
+        .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
     }
 }
 
 struct FastSentReplayCell: View {
+    @Environment(MediaManager.self)
+    private var mediaManager
+    var index: Int
     var isOdd: Bool
-    var startAt: Int
+    var startAt: Double
+    var endAt: Double
     var sentence: String
-    var completion: () -> Void
+    var isLast = false
     
+    @State
+    var isPlay = false
+    
+    @Binding
+    var selectedIndex: Int {
+        didSet {
+            if selectedIndex != index {
+                isPlay = false
+            }
+        }
+    }
+
     var body: some View {
         HStack(spacing: .HPSpacing.xsmall) {
             Button {
-                print(startAt)
+                play(startAt: startAt, endAt: endAt)
             } label: {
-                Label("play", systemImage: "play.fill")
+                Label("play", systemImage: selectedIndex == index && isPlay ? "pause.fill" : "play.fill")
                     .labelStyle(.iconOnly)
                     .systemFont(.body)
                     .foregroundStyle(Color.HPPrimary.base)
@@ -111,8 +151,24 @@ struct FastSentReplayCell: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         }
         .padding(.vertical, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+        .border(
+            .HPComponent.stroke,
+            width: isLast ? 0 : 1,
+            edges: [.bottom]
+        )
+        .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(isOdd ? Color.HPComponent.mainWindowDetailsBackground : .clear)
+    }
+}
+
+extension FastSentReplayCell {
+    private func play(startAt: Double, endAt: Double) {
+        mediaManager.playAt(atTime: startAt)
+        mediaManager.play()
+        mediaManager.stopPoint = endAt
+        isPlay.toggle()
+        selectedIndex = index
     }
 }
 
