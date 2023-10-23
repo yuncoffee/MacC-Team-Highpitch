@@ -13,16 +13,19 @@ import SwiftUI
 import Charts
 
 enum EnumFillerUsagePercent: CaseIterable {
+    case empty
     case prev
     case current
     case toptier
     
     var color: (bar: Color, decorater: Color) {
         switch self {
+        case .empty:
+            (bar: Color.HPTextStyle.lighter, decorater: Color.HPTextStyle.base)
         case .prev:
             (bar: Color.HPTextStyle.lighter, decorater: Color.HPTextStyle.base)
         case .current:
-            (bar: Color.HPPrimary.base, decorater: Color.HPPrimary.base)
+            (bar: Color.HPPrimary.base, decorater: Color.HPPrimary.dark)
         case .toptier:
             (bar: Color.HPTextStyle.darker, decorater: Color.HPTextStyle.base)
         }
@@ -30,6 +33,8 @@ enum EnumFillerUsagePercent: CaseIterable {
     
     var label: String {
         switch self {
+        case .empty:
+            "지난 연습이\n표시됩니다!"
         case .prev:
             "지난 연습\n습관어 사용 비율"
         case .current:
@@ -43,99 +48,116 @@ enum EnumFillerUsagePercent: CaseIterable {
 struct UsagePercentChart: View {
     @Binding
     var data: PracticeModel
+    @State
+    var projectManager: ProjectManager
     
     var body: some View {
-        let maxHeight: CGFloat = 500 / 3 * 2
+        let maxHeight: CGFloat = 422
         let summary = data.summary
         VStack(alignment: .leading, spacing: 0) {
             header
-            GeometryReader { geometry in
-                let maxWidth = geometry.size.width
-                let barMaxHeight = geometry.size.height - 48 - 24
-                ZStack(alignment: .bottom) {
-                    Rectangle()
-                        .frame(width: maxWidth - .HPSpacing.xlarge * 2, height: 1)
-                        .offset(y: -.HPSpacing.xlarge)
-                        .foregroundStyle(Color.HPComponent.stroke)
-                    HStack(alignment: .bottom, spacing: 0) {
-                        Spacer()
+                .frame(alignment: .topLeading)
+            ZStack(alignment: .bottom) {
+                Rectangle()
+                    .frame(width: 350, height: 1)
+                    .offset(y: -.HPSpacing.xlarge - .HPSpacing.xxsmall)
+                    .foregroundStyle(Color.HPComponent.stroke)
+                HStack(alignment: .bottom, spacing: 17) {
+                    if (data.index != 0) {
                         chartBar(
                             usagePercent: getPrevFillerRate(),
                             type: .prev,
-                            maxWidth: maxWidth, 
-                            maxHeight: barMaxHeight
+                            maxHeight: 125
                         )
-                        Spacer(minLength: .HPSpacing.xxxsmall)
+                    } else {
                         chartBar(
-                            usagePercent: (summary.fillerWordPercentage ?? 0) * 0.01,
-                            type: .current,
-                            maxWidth: maxWidth,
-                            maxHeight: barMaxHeight
+                            usagePercent: 1.0,
+                            type: .empty,
+                            maxHeight: 125
                         )
-                        Spacer(minLength: .HPSpacing.xxxsmall)
-                        chartBar(
-                            usagePercent: getTopTierFillerRate(),
-                            type: .toptier,
-                            maxWidth: maxWidth,
-                            maxHeight: barMaxHeight
-                        )
-                        Spacer()
                     }
+                    chartBar(
+                        usagePercent: (summary.fillerWordPercentage ?? 0),
+                        type: .current,
+                        maxHeight: 125
+                    )
+                    chartBar(
+                        usagePercent: getTopTierFillerRate(),
+                        type: .toptier,
+                        maxHeight: 125
+                    )
                 }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .bottom
-                )
+                .frame(width: 349, height: 218)
             }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .center
+            )
         }
         .padding(.bottom, .HPSpacing.xxlarge)
-        .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
+        .padding(.trailing, .HPSpacing.medium)
         .frame(
             maxWidth: .infinity,
             minHeight: maxHeight,
             maxHeight: maxHeight,
-            alignment: .topLeading
+            alignment: .center
         )
     }
 }
 
 extension UsagePercentChart {
     /// 이전 습관어 비율
-    private func getPrevFillerRate() -> CGFloat {
-        var result: CGFloat
-        result = 0.75
-        
-        return result
+    private func getPrevFillerRate() -> Double {
+        if let current = projectManager.current {
+            return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!
+        }
+        return -100
     }
     /// 상위 10% 습관어 비율
-    private func getTopTierFillerRate() -> CGFloat {
+    private func getTopTierFillerRate() -> Double {
         var result: CGFloat
-        result = 0.02
+        result = 2
         
         return result
     }
 }
 
 extension UsagePercentChart {
+    
+    func fillerWordDifference() -> Double {
+        if let current = projectManager.current {
+            return data.summary.fillerWordPercentage! -
+            (current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!)
+        }
+        return -100
+    }
+    
     @ViewBuilder
     private var header: some View {
         // MARK: 수정 필요
         // nn%, 늘었어요, 적절했어요 로직 추가되어야 합니다.
         // 지난 연습과 상위 10% 결과 반환하는 로직 추가되어야 합니다.
         // 지난 연습과 상위 10% 결과를 바탕으로 높이를 연산하는 로직 추가되어야 합니다.
-        Group {
-            Text("지난 연습 대비 습관어 사용 비율이 ")
-            + Text("nn% 늘었어요.")
-                .foregroundStyle(Color.HPPrimary.base)
-                .bold()
+        Text("습관어 사용 비율")
+            .systemFont(.subTitle, weight: .bold)
+            .foregroundStyle(Color.HPTextStyle.darker)
+            .padding(.bottom, .HPSpacing.xxxsmall)
+        if (data.index != 0) {
+            Group {
+                Text("지난 연습 대비 습관어 사용 비율이 ")
+                + Text("\(abs(fillerWordDifference()), specifier: "%.1f")%P ")
+                    .foregroundStyle(Color.HPPrimary.dark)
+                    .bold()
+                + Text(fillerWordDifference() > 0 ? "늘었어요." : "감소했어요.")
+                    .foregroundStyle(Color.HPPrimary.dark)
+                    .bold()
+            }.systemFont(.body)
+                .foregroundStyle(Color.HPTextStyle.dark)
         }
-        .systemFont(.body)
-        .foregroundStyle(Color.HPTextStyle.dark)
         Group {
             Text("이번 연습에서 습관어 사용 비율은 ")
             + Text("적절했어요.")
-                .foregroundStyle(Color.HPPrimary.base)
+                .foregroundStyle(Color.HPPrimary.dark)
                 .bold()
         }
         .systemFont(.body)
@@ -143,19 +165,29 @@ extension UsagePercentChart {
         .padding(.bottom, .HPSpacing.large)
     }
     
+    func getMaxPercentage() -> Double {
+        var answer = max(getTopTierFillerRate(), data.summary.fillerWordPercentage!)
+        if let current = projectManager.current {
+            if data.index != 0 {
+                return max(answer, current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!)
+            }
+            return answer
+        }
+        return -100
+    }
+    
     @ViewBuilder
     func chartBar(
-        usagePercent: CGFloat,
+        usagePercent: Double,
         type: EnumFillerUsagePercent,
-        maxWidth: CGFloat,
-        maxHeight: CGFloat) -> some View {
+        maxHeight: Double
+    ) -> some View {
         VStack(spacing: 0) {
-            let barWidth = (maxWidth - 64 * 4) / 10
-            let barHeight = maxHeight * usagePercent
+            let barHeight = maxHeight * usagePercent / getMaxPercentage()
             /// decorater
-            let decorater = if type == .current {
-                String(format: "%.4f", usagePercent * 100)
-            } else { Int(usagePercent * 100).description }
+            let decorater = if type == .empty {
+                "?? "
+            } else { String(format: "%.1f", usagePercent) }
             Text("\(decorater)%")
                 .systemFont(.body)
                 .foregroundStyle(type.color.decorater)
@@ -163,8 +195,8 @@ extension UsagePercentChart {
             /// bar
             Rectangle()
                 .frame(
-                    maxWidth: 64,
-                    maxHeight: barHeight
+                    width: 50,
+                    height: barHeight
                 )
                 .foregroundStyle(type.color.bar)
                 .clipShape(
@@ -173,6 +205,7 @@ extension UsagePercentChart {
                         topTrailingRadius: 4
                     )
                 )
+                .padding(.bottom, .HPSpacing.xsmall)
             /// label
             Text("\(type.label)")
                 .systemFont(.caption, weight: .regular)
@@ -181,6 +214,7 @@ extension UsagePercentChart {
                 .fixedSize()
                 .frame(height: 48)
         }
+        .frame(width: 105)
     }
 }
 

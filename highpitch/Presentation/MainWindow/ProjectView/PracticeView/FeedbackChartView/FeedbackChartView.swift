@@ -10,6 +10,10 @@ import SwiftUI
 struct FeedbackChartView: View {
     @Binding
     var practice: PracticeModel
+    @State
+    var projectManager: ProjectManager
+    @State
+    var isPopoverActive = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -18,25 +22,49 @@ struct FeedbackChartView: View {
                 VStack(spacing: 0) {
                     HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
                         Text("이번 연습에서 사용한 습관어")
-                            .systemFont(.subTitle)
+                            .systemFont(.title)
                             .foregroundStyle(Color.HPTextStyle.darker)
-                        HPTooltip(tooltipContent: "...")
+                        Button {
+                            isPopoverActive.toggle()
+                        } label: {
+                            Label("도움말", systemImage: "questionmark.circle")
+                                .systemFont(.footnote)
+                                .labelStyle(.iconOnly)
+                                .foregroundStyle(Color.HPGray.system400)
+                                .frame(width: 20, height: 20)
+                        }.sheet(isPresented: $isPopoverActive) {
+                            // TODO: Image insert
+                            Text("까꿍")
+                                .padding(20)
+                                .onTapGesture {
+                                    isPopoverActive.toggle()
+                                }
+                        }
+                        .buttonStyle(.plain)
+                        .offset(y: -2)
                     }
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity,
                         alignment: .leading
                     )
-                    UsagePercentChart(data: $practice)
-                    UsageTopTierChart(data: $practice)
-                    FillerWordDetail(data: $practice)
-                        .padding(.bottom, .HPSpacing.medium)
+                    .padding(.bottom, .HPSpacing.xsmall)
+                    UsagePercentChart(
+                        data: $practice,
+                        projectManager: projectManager
+                    )
+                    UsageTopTierChart(summary: practice.summary)
+                    if (practice.summary.fillerWordCount > 0) {
+                        FillerWordDetail(data: $practice)
+//                            .border(.red)
+                            .padding(.bottom, .HPSpacing.medium)
+                    }
                 }
                 Divider()
                 VStack(spacing: 0) {
                     HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
                         Text("이번 연습에서의 발화 속도")
-                            .systemFont(.subTitle)
+                            .systemFont(.title)
                             .foregroundStyle(Color.HPTextStyle.darker)
                         HPTooltip(tooltipContent: "...")
                     }
@@ -46,7 +74,8 @@ struct FeedbackChartView: View {
                         alignment: .leading
                     )
                     SpeedAverageChart(
-                        sentences: practice.sentences
+                        sentences: practice.sentences,
+                        practice: practice
                     )
                 }
                 .padding(.top, .HPSpacing.medium)
@@ -55,7 +84,9 @@ struct FeedbackChartView: View {
                     maxHeight: .infinity,
                     alignment: .leading
                 )
-                FastSentReplay(data: $practice)
+                if (!practice.summary.fastSentenceIndex.isEmpty) {
+                    FastSentReplay(data: $practice)
+                }
             }
             .padding(.leading, .HPSpacing.medium)
             .padding(.bottom, 100)

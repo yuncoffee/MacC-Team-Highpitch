@@ -176,13 +176,24 @@ extension StatisticsTabItem {
                 .frame(height: 27)
                 Spacer()
                 Button {
-                    print("자세히보기 클릭했슴다")
+                    if let practices = projectManager.current?.practices.sorted() {
+                        projectManager.currentTabItem = 1
+                        if !projectManager.path.isEmpty {
+                            projectManager.path.removeLast()
+                        }
+                        let bestPracticeModel = practices[bestPractice?.index ?? -1]
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            projectManager.path.append(bestPracticeModel)
+                        }
+                    }
                 } label: {
                     Label("자세히보기", systemImage: "chevron.right")
                         .systemFont(.caption, weight: .semibold)
                         .foregroundStyle(Color.HPTextStyle.light)
                         .labelStyle(TextWithIconLabelStyle())
                         .contentShape(Rectangle())
+                    
                 }
                 .buttonStyle(.plain)
             }
@@ -212,6 +223,19 @@ extension StatisticsTabItem {
         .background(Color.HPGray.systemWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
+        .onTapGesture {
+            if let practices = projectManager.current?.practices.sorted() {
+                projectManager.currentTabItem = 1
+                if !projectManager.path.isEmpty {
+                    projectManager.path.removeLast()
+                }
+                let bestPracticeModel = practices[bestPractice?.index ?? -1]
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    projectManager.path.append(bestPracticeModel)
+                }
+            }
+        }
     }
     
     @ViewBuilder
