@@ -69,8 +69,8 @@ struct SpeedAverageChart: View {
                             }
                         }
                     }
-                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
-                        .foregroundStyle(Color.HPGray.system200)
+//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
+//                        .foregroundStyle(Color.HPGray.system200)
                 }
             }
             .chartYAxis {
@@ -91,9 +91,9 @@ struct SpeedAverageChart: View {
             .chartXScale(domain: [0, sentences.count])
             .chartYScale(domain: [
                 min(288, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).first?.epmValue ?? 0),
+                    0 }).first?.epmValue ?? 0) - 100,
                 max(422.4, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).last?.epmValue ?? 0)
+                    0 }).last?.epmValue ?? 0) + 100
             ])
             .padding(.trailing, .HPSpacing.xxxlarge)
             .padding(.bottom, .HPSpacing.large)

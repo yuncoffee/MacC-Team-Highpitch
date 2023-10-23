@@ -74,6 +74,8 @@
 		1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */; };
 		1D95F0AF2AE3BEF000E563EA /* PracticeResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */; };
 		1D95F0B32AE3C35D00E563EA /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D95F0B22AE3C35D00E563EA /* SecretKey.plist */; };
+		1D98941F2AE6199000DE57A1 /* PracticeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98941E2AE6199000DE57A1 /* PracticeList.swift */; };
+		1D9894212AE61A4B00DE57A1 /* PracticeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9894202AE61A4B00DE57A1 /* PracticeListCell.swift */; };
 		1DB132312AD771A6006711B9 /* KeynoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132302AD771A6006711B9 /* KeynoteManager.swift */; };
 		1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */; };
 		1DBF14512ADE1DC100B28CED /* LabelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14502ADE1DC100B28CED /* LabelModifier.swift */; };
@@ -185,6 +187,8 @@
 		1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utterance.swift; sourceTree = "<group>"; };
 		1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeResultCell.swift; sourceTree = "<group>"; };
 		1D95F0B22AE3C35D00E563EA /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
+		1D98941E2AE6199000DE57A1 /* PracticeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeList.swift; sourceTree = "<group>"; };
+		1D9894202AE61A4B00DE57A1 /* PracticeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeListCell.swift; sourceTree = "<group>"; };
 		1DB132302AD771A6006711B9 /* KeynoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteManager.swift; sourceTree = "<group>"; };
 		1DB132332AD78752006711B9 /* ReturnzeroAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPI.swift; sourceTree = "<group>"; };
 		1DBF14502ADE1DC100B28CED /* LabelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModifier.swift; sourceTree = "<group>"; };
@@ -249,6 +253,7 @@
 		1D09AF5C2AD9892500C1400E /* ProjectView */ = {
 			isa = PBXGroup;
 			children = (
+				1D98941D2AE6196500DE57A1 /* PracticeList */,
 				1D09AF672AD98A1700C1400E /* ProjectView.swift */,
 				1D09AF932ADA67BB00C1400E /* StatisticsTabItem.swift */,
 				1D09AF962ADA681500C1400E /* PracticesTabItem.swift */,
@@ -522,6 +527,15 @@
 				10C7D1FC2ADE12B3008691CD /* TokenData.swift */,
 			);
 			path = DataModels;
+			sourceTree = "<group>";
+		};
+		1D98941D2AE6196500DE57A1 /* PracticeList */ = {
+			isa = PBXGroup;
+			children = (
+				1D98941E2AE6199000DE57A1 /* PracticeList.swift */,
+				1D9894202AE61A4B00DE57A1 /* PracticeListCell.swift */,
+			);
+			path = PracticeList;
 			sourceTree = "<group>";
 		};
 		1DA23C802AE361A000050194 /* Recovered References */ = {
@@ -906,6 +920,7 @@
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,
+				1D9894212AE61A4B00DE57A1 /* PracticeListCell.swift in Sources */,
 				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */,
@@ -925,6 +940,7 @@
 				1D09AFA72ADA78A800C1400E /* UsageTopTierChart.swift in Sources */,
 				1D09AF922ADA34B100C1400E /* ShapeModifier.swift in Sources */,
 				10C7D1FD2ADE12B3008691CD /* TokenData.swift in Sources */,
+				1D98941F2AE6199000DE57A1 /* PracticeList.swift in Sources */,
 				1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */,
 				1D30E61B2AD59E6C00623A58 /* SampleModel.swift in Sources */,
 				1D09AF6E2AD98B0100C1400E /* NotificationManager.swift in Sources */,
