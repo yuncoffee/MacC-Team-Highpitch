@@ -74,7 +74,8 @@ struct FeedbackChartView: View {
                         alignment: .leading
                     )
                     SpeedAverageChart(
-                        sentences: practice.sentences
+                        sentences: practice.sentences,
+                        practice: practice
                     )
                 }
                 .padding(.top, .HPSpacing.medium)

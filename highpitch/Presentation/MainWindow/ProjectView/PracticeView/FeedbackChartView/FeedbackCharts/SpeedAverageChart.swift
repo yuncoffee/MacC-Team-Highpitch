@@ -14,12 +14,7 @@ import Charts
 struct SpeedAverageChart: View {
     @State
     var sentences: [SentenceModel]
-    var averageEPM: Double {
-        sentences
-            .map {$0.epmValue}
-            .reduce(0, {acc, cur in acc + (cur ?? 0) }) 
-            / Double(sentences.count)
-    }
+    var practice: PracticeModel
     
     var body: some View {
         VStack {
@@ -27,8 +22,8 @@ struct SpeedAverageChart: View {
             Chart {
                 // MARK: 적정 구간 인디케이터
                 RectangleMark(
-                    xStart: .value("", 0),
-                    xEnd: .value("", sentences.count),
+                    xStart: .value("", 0.5),
+                    xEnd: .value("", Double(sentences.count) + 0.5),
                     yStart: .value("", 288),
                     yEnd: .value("", 422.4)
                 )
@@ -39,18 +34,18 @@ struct SpeedAverageChart: View {
                         y: .value("EPM", sentence.epmValue ?? 0)
                     )
                     .foregroundStyle(Color.HPPrimary.base)
+                    .lineStyle(StrokeStyle(lineWidth: 2))
                 }
             }
-            .chartLegend(position: .top, alignment: .bottom, spacing: 10)
             .chartXAxisLabel(alignment: .trailing) {
                 Text("(총 문장 수)")
                     .systemFont(.caption)
-                    .foregroundStyle(Color.HPTextStyle.dark)
+                    .foregroundStyle(Color.HPTextStyle.base)
             }
             .chartYAxisLabel(alignment: .topLeading) {
                 Text("(EPM)")
                     .systemFont(.caption)
-                    .foregroundStyle(Color.HPTextStyle.dark)
+                    .foregroundStyle(Color.HPTextStyle.base)
             }
             .chartPlotStyle { plotArea in
                 plotArea
@@ -58,47 +53,61 @@ struct SpeedAverageChart: View {
                 
             }
             .chartXAxis {
-                AxisMarks(values: .automatic) { value in
-                    AxisValueLabel {
-                        if let value = value.as(Int.self) {
-                            switch value {
-                            case 0, sentences.count - 1:
-                                Text("\(value)")
-                                    .systemFont(.caption)
-                                    .foregroundStyle(Color.HPTextStyle.base)
-                            default:
-                                Text(".")
-                                    .systemFont(.caption)
-                                    .foregroundStyle(Color.HPTextStyle.base)
-                            }
-                        }
-                    }
-//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
-//                        .foregroundStyle(Color.HPGray.system200)
-                }
-            }
-            .chartYAxis {
-                AxisMarks(position: .leading, values: .automatic) { value in
-                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1, dash: [4, 2]))
-                        .foregroundStyle(Color.HPGray.system200)
-                    AxisValueLabel {
-                        if let value = value.as(Int.self) {
-                            Text("\(value)")
+                AxisMarks(values: Array(stride(
+                    from: 1,
+                    to: sentences.count + 1,
+                    by: 1
+                ))) { value in
+                    AxisValueLabel(centered: false) {
+                        if (value.index == 0 || value.index == sentences.count - 1) {
+                            Text("\(value.index + 1)")
                                 .systemFont(.caption)
+                                .offset(x: -9)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                        } else {
+                            Text(".")
+                                .systemFont(.caption)
+                                .offset(x: -9)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         }
                     }
-                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
-                        .foregroundStyle(Color.HPGray.system200)
                 }
             }
-            .chartXScale(domain: [0, sentences.count])
+            .chartYAxis {
+                AxisMarks(position: .leading, values: Array(stride(
+                    from: min(288.0, epmRange()[0]),
+                    to: max(422.4, epmRange()[1]) +
+                    (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4,
+                    by: (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4
+                ))) { value in
+                    AxisValueLabel(centered: false) {
+                        Text("\(Double(value.index) * (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4 + min(288.0, epmRange()[0]), specifier: "%.0f")")
+                            .systemFont(.caption, weight: .regular)
+                            .foregroundStyle(Color.HPTextStyle.base)
+                    }
+                }
+            }
+//            .chartYAxis {
+//                AxisMarks(position: .leading, values: .automatic) { value in
+//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1, dash: [4, 2]))
+//                        .foregroundStyle(Color.HPGray.system200)
+//                    AxisValueLabel {
+//                        if let value = value.as(Int.self) {
+//                            Text("\(value)")
+//                                .systemFont(.caption)
+//                                .foregroundStyle(Color.HPTextStyle.base)
+//                        }
+//                    }
+//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
+//                        .foregroundStyle(Color.HPGray.system200)
+//                }
+//            }
+            .chartXScale(domain: [0.5, Double(sentences.count) + 0.5])
             .chartYScale(domain: [
-                min(288, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).first?.epmValue ?? 0) - 100,
-                max(422.4, sentences.sorted(by: { $0.epmValue ?? 0 < $1.epmValue ??
-                    0 }).last?.epmValue ?? 0) + 100
+                min(288.0, epmRange()[0]) - 10.0,
+                max(422.4, epmRange()[1]) + 10.0
             ])
+            .chartLegend(.hidden)
             .padding(.trailing, .HPSpacing.xxxlarge)
             .padding(.bottom, .HPSpacing.large)
             .frame(maxWidth: 800, maxHeight: 300, alignment: .topTrailing)
@@ -136,9 +145,19 @@ struct SpeedAverageChart: View {
 }
 
 extension SpeedAverageChart {
+    
+    func epmRange() -> [Double] {
+        let sortedSentences = sentences.sorted(by: { $0.epmValue! < $1.epmValue! })
+        return [
+            sortedSentences.first!.epmValue!,
+            sortedSentences.last!.epmValue!
+        ]
+    }
+    
     @ViewBuilder
     var header: some View {
-        let rate =  if averageEPM > 288 && averageEPM < 422.4 {"적절"} else {"부적절"}
+        let rate =  if practice.summary.epmAverage! > 288 &&
+        practice.summary.epmAverage! < 422.4 {"적절"} else {"부적절"}
         VStack(alignment: .leading, spacing: 8) {
             Text("평균 발화 속도")
                 .systemFont(.subTitle)
@@ -147,7 +166,7 @@ extension SpeedAverageChart {
                 Text("이번 연습의 평균 속도는 ")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPTextStyle.dark)
-                Text("\(String(format: "%.0f", averageEPM))EPM")
+                Text("\(String(format: "%.0f", practice.summary.epmAverage!))EPM")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPPrimary.dark)
                 Text(" 으로 ")
