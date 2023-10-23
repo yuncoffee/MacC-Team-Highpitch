@@ -55,11 +55,13 @@ struct FeedbackChartView: View {
                         projectManager: projectManager
                     )
                         .border(.red)
-                    UsageTopTierChart(data: $practice)
+                    UsageTopTierChart(summary: practice.summary)
                         .border(.red)
-                    FillerWordDetail(data: $practice)
-                        .border(.red)
-                        .padding(.bottom, .HPSpacing.medium)
+                    if (practice.summary.fillerWordCount > 0) {
+                        FillerWordDetail(data: $practice)
+                            .border(.red)
+                            .padding(.bottom, .HPSpacing.medium)
+                    }
                 }
                 Divider()
                 VStack(spacing: 0) {
