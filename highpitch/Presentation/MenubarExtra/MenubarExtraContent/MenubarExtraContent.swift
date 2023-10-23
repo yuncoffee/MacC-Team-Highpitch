@@ -226,13 +226,13 @@ extension MenubarExtraContent {
         }
         Task {
             await appendPractice(practice: practice)
+            projectManager.path.append(practice)
         }
     }
     
     @MainActor
     private func appendPractice(practice: PracticeModel) async {
         await MainActor.run {
-            projectManager.path.append(practice)
             openWindow(id: "main")
         }
     }
