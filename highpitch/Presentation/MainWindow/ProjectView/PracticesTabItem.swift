@@ -29,6 +29,8 @@ struct PracticesTabItem: View {
             Button(action: {
                 if isEditing == true && selectedItems.count > 0 {
                     // 체크된 것들 삭제하는 과정
+                    
+                    projectManager.current!.practices.remove(at: 0)
                 }
                 isEditing.toggle()
             }) {
@@ -44,9 +46,9 @@ struct PracticesTabItem: View {
                 List {
                     ForEach(Array(project.practices.sorted().enumerated()).reversed(), id: \.element.id) { index, practice in
                         HStack {
-                            
                             Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
                                 .onTapGesture {
+                                    print(index)
                                     toggleSelection(index)
                                 }
                                 .padding(.trailing, 24)

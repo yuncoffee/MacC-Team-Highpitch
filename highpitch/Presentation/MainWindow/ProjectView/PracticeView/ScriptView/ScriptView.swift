@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct ScriptView: View {
-    @Binding
-    var data: PracticeModel
+    var sentenceModel: [SentenceModel]
+    var wordArray: [WordModel]
     @State var nowSentece: Int?
     
     var body: some View {
         var width = 0.0
         var height = 0.0
         var currentSent = 0
-        var sentenceModel = data.sentences.sorted(by: { $0.index < $1.index })
-        var wordArray = data.words.sorted(by: { $0.index < $1.index })
         return VStack(alignment: .leading, spacing: 24) {
             Text("내 연습 다시보기")
                 .systemFont(.title)

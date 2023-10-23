@@ -74,6 +74,7 @@ struct PracticeView: View {
             if !practice.isVisited {
                 practice.isVisited = true
             }
+            
         }
     }
 }
@@ -85,7 +86,10 @@ extension PracticeView {
             /// 피드백 뷰
             FeedbackChartView(practice: $practice)
             /// 스크립트 뷰
-            ScriptView(data: $practice)
+            ScriptView(
+                sentenceModel: practice.sentences.sorted(by: { $0.index < $1.index }),
+                wordArray: practice.words.sorted(by: { $0.index < $1.index })
+            )
         }
         .padding(.top, .HPSpacing.small)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
