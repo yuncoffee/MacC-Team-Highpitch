@@ -12,6 +12,8 @@ struct PracticesTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
+    @State private var isEditing: Bool = false
+    @State private var selectedItems: Set<Int> = []
     @State private var editButtonOn: Bool = false
     
     var body: some View {
@@ -133,14 +135,14 @@ struct PracticesTabItem: View {
                                             .foregroundStyle(Color.HPTextStyle.light)
                                     }
                                     HStack {
-                                        AverageLevelBox(measure: "\(practice.summary.level!)")
+                                        AverageLevelBox(measure: "\(practice.summary.level ?? 0)")
                                         FillerWordBox(measure: "\(practice.summary.fillerWordCount)")
                                         // 구분선
                                         Rectangle()
                                             .fill(Color.HPComponent.stroke) // 수직 줄의 색상을 설정
                                             .frame(width: 1, height: 52) // 너비와 높이를 조절
                                             .padding(.vertical, 5) // 원하는 간격으로 조절
-                                        SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage!))")
+                                        SpeechSpeedBox(measure: "\(Int(practice.summary.epmAverage ?? 0))")
                                     }
                                 }
                                 .padding(.horizontal, 32)
@@ -172,6 +174,14 @@ struct PracticesTabItem: View {
             }
         }
     }
+    
+    func toggleSelection(_ index: Int) {
+        if selectedItems.contains(index) {
+            selectedItems.remove(index)
+        } else {
+            selectedItems.insert(index)
+        }
+    }
 }
 
 // #Preview {
@@ -181,6 +191,12 @@ struct PracticesTabItem: View {
 
 extension PracticesTabItem {
     
+    //    Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
+    //        .onTapGesture {
+    //            print(index)
+    //            toggleSelection(index)
+    //        }
+    //        .padding(.trailing, 24)
     func fileNameDateToPracticeDate(input: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"

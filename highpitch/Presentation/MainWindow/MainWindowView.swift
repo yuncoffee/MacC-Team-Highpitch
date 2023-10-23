@@ -47,6 +47,12 @@ struct MainWindowView: View {
         .onAppear {
 //            do {
 //                try modelContext.delete(model: ProjectModel.self)
+//                try modelContext.delete(model: PracticeModel.self)
+//                try modelContext.delete(model: UtteranceModel.self)
+//                try modelContext.delete(model: WordModel.self)
+//                try modelContext.delete(model: SentenceModel.self)
+//                try modelContext.delete(model: PracticeSummaryModel.self)
+//                try modelContext.delete(model: FillerWordModel.self)
 //            } catch {
 //                print("Failed to clear all ProjectModel data")
 //            }

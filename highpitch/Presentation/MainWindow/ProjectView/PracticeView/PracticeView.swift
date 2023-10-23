@@ -74,6 +74,7 @@ struct PracticeView: View {
             if !practice.isVisited {
                 practice.isVisited = true
             }
+            
         }
 //        .onChange(of: mediaManager.currentTime) { _, newValue in
 //
