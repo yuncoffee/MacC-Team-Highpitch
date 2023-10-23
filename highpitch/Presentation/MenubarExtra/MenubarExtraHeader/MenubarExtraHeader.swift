@@ -164,7 +164,7 @@ extension MenubarExtraHeader {
             }
             if let selectedProject = projectManager.temp {
                 let newPracticeModel = PracticeModel(
-                    practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                    practiceName: indexToOrdinalNumber(index: selectedProject.practices.count + 1)+"번째 연습",
                     index: selectedProject.practices.count,
                     isVisited: false,
                     creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
@@ -182,6 +182,16 @@ extension MenubarExtraHeader {
             }
             await NotificationManager.shared.sendNotification(name: practiceManager.current?.practiceName ?? "err")
         }
+    }
+    
+    func indexToOrdinalNumber(index: Int) -> String {
+        let ordinalNumber = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열",
+                             "열한", "열두", "열세", "열네", "열다섯", "열여섯", "열일곱", "열여덟"]
+        
+        if ordinalNumber.count < index {
+            return "Index 초과"
+        }
+        return ordinalNumber[index]
     }
     
     private func makeNewProject() {

@@ -44,7 +44,7 @@ struct MainWindowView: View {
         .toolbarBackground(.hidden)
         .navigationTitle("Sidebar")
         .frame(minWidth: 1000, minHeight: 600)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: 1512, maxHeight: .infinity)
         .background(Color.HPComponent.mainWindowSidebarBackground)
         .onAppear {
             NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HPTooltip<T: View>: View {
-    @State 
+    @State
     private var isPopoverActive = false
     var tooltipContent: String
     var content: (() -> T)?
@@ -40,7 +40,8 @@ struct HPTooltip<T: View>: View {
 //            if let content = content {
 //                
 //            } else {
-//               
+//
+            
 //            }
 //            ZStack {
 //                Color("F6F6F6")

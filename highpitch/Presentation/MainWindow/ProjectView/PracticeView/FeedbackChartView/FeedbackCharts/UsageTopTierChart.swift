@@ -12,23 +12,28 @@ import SwiftUI
 import Charts
 
 struct UsageTopTierChart: View {
-    @Binding
-    var data: PracticeModel
+    var summary: PracticeSummaryModel
     let fillerWordList = FillerWordList()
+    var epmtyData = [FillerCountData(
+        index: 0,
+        value: 1,
+        word: "",
+        color: Color("F1EDFF")
+    )]
     
-    @State
-    var selectedIndex: Double?
-    
-    @State
-    var cumulativeRangesForStyles: [(index: Int, range: Range<Double>)]?
-    
-    var selectedStyle: (name: String, selected: Int)? {
-        if let selectedIndex = selectedIndex {
-            let _selected = cumulativeRangesForStyles?.firstIndex(where: { $0.range.contains(selectedIndex) })
-            return (name: self.fillerWordList.defaultList[_selected ?? 0], selected: Int(_selected ?? 0))
-        }
-        return nil
-    }
+//    @State
+//    var selectedIndex: Double?
+//    
+//    @State
+//    var cumulativeRangesForStyles: [(index: Int, range: Range<Double>)]?
+//    
+//    var selectedStyle: (name: String, selected: Int)? {
+//        if let selectedIndex = selectedIndex {
+//            let _selected = cumulativeRangesForStyles?.firstIndex(where: { $0.range.contains(selectedIndex) })
+//            return (name: self.fillerWordList.defaultList[_selected ?? 0], selected: Int(_selected ?? 0))
+//        }
+//        return nil
+//    }
 
     var body: some View {
         let maxHeight: CGFloat = 500
@@ -38,14 +43,14 @@ struct UsageTopTierChart: View {
                 let breakPoint: (chartSize: CGFloat, offset: CGFloat) = if geometry.size.width < 320 {
                     (chartSize: maxHeight * 0.5, offset: geometry.size.height/3)
                 } else if geometry.size.width < 500 {
-                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/2.3)
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height * 0.37)
                 } else if geometry.size.width > 999 {
-                    (chartSize: maxHeight, offset: geometry.size.height/1.7)
+                    (chartSize: maxHeight, offset: geometry.size.height * 0.5)
                 } else {
-                    (chartSize: maxHeight * 0.6, offset: geometry.size.height/2)
+                    (chartSize: maxHeight * 0.6, offset: geometry.size.height * 0.45)
                 }
                 
-                if (useFillerWord()) {
+                if (summary.fillerWordCount > 0) {
                     ZStack {
                         VStack(spacing: 0) {
                             Text("\(getFillerTypeCount())가지")
@@ -55,21 +60,60 @@ struct UsageTopTierChart: View {
                                 .systemFont(.footnote)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         }
-                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { index, each in
+                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { _, each in
                             if let color = each.color {
                                 SectorMark(
                                     angle: .value("count", each.value),
                                     innerRadius: .ratio(0.618),
-                                    outerRadius: .ratio(1),
-                                    angularInset: 1.5
+                                    outerRadius: .ratio(0.8)
                                 )
-                                .cornerRadius(2)
                                 .foregroundStyle(color)
-                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
+//                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
                             }
                         }
-                        .chartLegend(alignment: .center, spacing: 18)
-                        .chartAngleSelection(value: $selectedIndex)
+//                        .chartAngleSelection(value: $selectedIndex)
+                        .scaledToFit()
+                        .frame(
+                            maxWidth: breakPoint.chartSize,
+                            maxHeight: breakPoint.chartSize,
+                            alignment: .center
+                        )
+                        ForEach(fillerWordOffset(size: breakPoint.offset)) {each in
+                            VStack(alignment: .center, spacing: 0) {
+                                Text("\(each.word)")
+                                    .systemFont(.title)
+                                    .foregroundStyle(Color.HPTextStyle.dark)
+                                Text("\(each.value)회")
+                                    .systemFont(.footnote)
+                                    .foregroundStyle(Color.HPTextStyle.dark)
+                                
+                            }
+                            .offset(CGSize(width: each.offset.width, height: each.offset.height))
+                        }
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: geometry.size.height,
+                        alignment: .center
+                    )
+                } else {
+                    ZStack {
+                            Text("사용된 습관어가\n없어요!")
+                            .multilineTextAlignment(.center)
+                                .systemFont(.footnote)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                    Chart(Array(epmtyData.enumerated()), id: \.1.id) { _, each in
+                            if let color = each.color {
+                                SectorMark(
+                                    angle: .value("count", each.value),
+                                    innerRadius: .ratio(0.618),
+                                    outerRadius: .ratio(0.8)
+                                )
+                                .foregroundStyle(color)
+//                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
+                            }
+                        }
+//                        .chartAngleSelection(value: $selectedIndex)
                         .scaledToFit()
                         .frame(
                             maxWidth: breakPoint.chartSize,
@@ -86,7 +130,7 @@ struct UsageTopTierChart: View {
             }
             
         }
-        .padding(.bottom, .HPSpacing.large)
+        .padding(.bottom, .HPSpacing.medium)
         .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,
@@ -94,15 +138,15 @@ struct UsageTopTierChart: View {
             maxHeight: maxHeight,
             alignment: .topLeading
         )
-        .onAppear {
-            var cumulative = 0.0
-            cumulativeRangesForStyles = getFillerCount().enumerated().map {
-                let newCumulative = cumulative + Double($1.value)
-                let result = (index: $0, range: cumulative ..< newCumulative)
-                cumulative = newCumulative
-                return result
-            }
-        }
+//        .onAppear {
+//            var cumulative = 0.0
+//            cumulativeRangesForStyles = getFillerCount().enumerated().map {
+//                let newCumulative = cumulative + Double($1.value)
+//                let result = (index: $0, range: cumulative ..< newCumulative)
+//                cumulative = newCumulative
+//                return result
+//            }
+//        }
     }
 }
 
@@ -117,7 +161,7 @@ extension UsageTopTierChart {
                 .systemFont(.body)
                 .foregroundStyle(Color.HPTextStyle.dark)
         }
-        .padding(.bottom, .HPSpacing.large)
+        .padding(.bottom, .HPSpacing.xsmall)
     }
 }
 
@@ -126,96 +170,67 @@ struct FillerCountData: Identifiable {
     var id = UUID()
     var index: Int
     var value: Int
+    var word: String
     var color: Color?
 }
 
 // donut chart의 annotation offset을 설정하기 위한 구조체입니다.
-struct FillerCountOffset: Identifiable, Hashable {
+struct FillerCountOffset: Identifiable {
     var id = UUID()
     var index: Int
     var value: Int
+    var word: String
     var offset: CGSize
-    
-    func hash(into hasher: inout Hasher) {}
 }
 
 extension UsageTopTierChart {
     
-    // 습관어를 사용했는지 반환합니다.
-    func useFillerWord() -> Bool {
-        var messagesArray: [[String]] = []
-        for utterence in data.utterances {
-            messagesArray.append(utterence.message.components(separatedBy: " "))
-        }
-        for messageArray in messagesArray {
-            for message in messageArray {
-                for index in 0..<fillerWordList.defaultList.count
-                where fillerWordList.defaultList[index] == message {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-    
     // 습관어 사용 횟수를 '순서대로' 반환합니다.
     func getFillerCount() -> [FillerCountData] {
-        // index에 맞게 fillerword 사용 횟수를 확인합니다.
-        var fillerCount: [FillerCountData] = []
-        for index in 0..<fillerWordList.defaultList.count {
-            fillerCount.append(FillerCountData(index: index, value: 0))
-        }
-        var messagesArray: [[String]] = []
-        for utterence in data.utterances {
-            messagesArray.append(utterence.message.components(separatedBy: " "))
-        }
-        for messageArray in messagesArray {
-            for message in messageArray {
-                for index in 0..<fillerWordList.defaultList.count
-                where fillerWordList.defaultList[index] == message {
-                    fillerCount[index].value += 1
-                }
+        let eachFillerCount = summary.eachFillerWordCount
+            .sorted(by: { $0.count > $1.count })
+        var returnFillerCount: [FillerCountData] = []
+        var index = -1, temp = 0
+        for fillerWord in eachFillerCount {
+            if (index != 4) { index += 1 }
+            if (index == 4) {
+                temp += fillerWord.count
+            } else {
+                returnFillerCount.append(FillerCountData(
+                    index: index,
+                    value: fillerWord.count,
+                    word: fillerWord.fillerWord
+                ))
             }
         }
-        var returnFillerCount = fillerCount.sorted(by: {$0.value > $1.value})
-        // 습관어 사용 횟수가 적은 부분은 기타로 합칩니다.
-        while returnFillerCount.count > 5 {
-            // 기타의 index는 -1로 배정합니다.
-            returnFillerCount[4].index = -1
-            returnFillerCount[4].value += returnFillerCount.last!.value
-            _ = returnFillerCount.popLast()
+        if (index == 4) {
+            returnFillerCount.append(FillerCountData(
+                index: index,
+                value: temp,
+                word: "기타"
+            ))
         }
-        // 습관어 사용 횟수가 많은 순으로 색을 배정합니다.
-        returnFillerCount[0].color = Color("8B6DFF")
-        returnFillerCount[1].color = Color("AD99FF")
-        returnFillerCount[2].color = Color("D0C5FF")
-        returnFillerCount[3].color = Color("E1DAFF")
-        returnFillerCount[4].color = Color("F1EDFF")
+        for rightIndex in 0..<returnFillerCount.count {
+            if rightIndex == 0 {
+                returnFillerCount[rightIndex].color = Color("8B6DFF")
+            } else if rightIndex == 1 {
+                returnFillerCount[rightIndex].color = Color("AD99FF")
+            } else if rightIndex == 2 {
+                returnFillerCount[rightIndex].color = Color("D0C5FF")
+            } else if rightIndex == 3 {
+                returnFillerCount[rightIndex].color = Color("E1DAFF")
+            } else {
+                returnFillerCount[rightIndex].color = Color("F1EDFF")
+            }
+        }
         return returnFillerCount
     }
     
     // 사용된 습관어의 종류 수를 반환합니다.
     func getFillerTypeCount() -> Int {
         var fillerTypeCnt = 0
-        // index에 맞게 fillerword 사용 횟수를 확인합니다.
-        var fillerCount: [FillerCountData] = []
-        for index in 0..<fillerWordList.defaultList.count {
-            fillerCount.append(FillerCountData(index: index, value: 0))
-        }
-        var messagesArray: [[String]] = []
-        for utterence in data.utterances {
-            messagesArray.append(utterence.message.components(separatedBy: " "))
-        }
-        for messageArray in messagesArray {
-            for message in messageArray {
-                for index in 0..<fillerWordList.defaultList.count
-                where fillerWordList.defaultList[index] == message {
-                    fillerCount[index].value += 1
-                }
-            }
-        }
-        // 한 번 이상 사용된 습관어의 수를 합산합니다.
-        for fillerword in fillerCount where fillerword.value > 0 {
+        let eachFillerCount = summary.eachFillerWordCount
+        for fillerWord in eachFillerCount where fillerWord.count > 0 {
             fillerTypeCnt += 1
         }
         return fillerTypeCnt
@@ -237,6 +252,7 @@ extension UsageTopTierChart {
             returnContainer.append(
                 FillerCountOffset(
                     index: fillerCnt[index].index, value: fillerCnt[index].value,
+                    word: fillerCnt[index].word,
                     offset:
                         CGSize(
                             width: Double(size) * cos((temp + radiusContainer[index] / 2) - CGFloat.pi / 2),
@@ -248,8 +264,3 @@ extension UsageTopTierChart {
         return returnContainer
     }
 }
-
-// #Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return UsageTopTierChart(data: $practice)
-// }
