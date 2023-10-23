@@ -10,19 +10,17 @@ import SwiftUI
 struct FastSentReplay: View {
     @Environment(MediaManager.self)
     private var mediaManager
-    @Binding
-    var data: PracticeModel
+    var practice: PracticeModel
+    
     @State
     var isDetailActive = false
     
     @State
     var selectedIndex = -1
-    
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    
+        
     var body: some View {
         VStack(spacing: 0) {
-            if !data.summary.fastSentenceIndex.isEmpty {
+            if !practice.summary.fastSentenceIndex.isEmpty {
                 header
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -32,7 +30,7 @@ struct FastSentReplay: View {
                     }
                 if isDetailActive {
                     ForEach(
-                        Array(data.sentences.sorted(by: {$0.epmValue! < $1.epmValue! }).enumerated()),
+                        Array(practice.sentences.sorted(by: {$0.epmValue! < $1.epmValue! }).enumerated()),
                         id: \.1.id
                     ) { index, each in
                         if each.epmValue! > 422.4 {
@@ -42,7 +40,7 @@ struct FastSentReplay: View {
                                 startAt: Double(each.startAt!),
                                 endAt: Double(each.endAt!),
                                 sentence: each.sentence,
-                                isLast: index == data.sentences.count - 1,
+                                isLast: index == practice.sentences.count - 1,
                                 selectedIndex: $selectedIndex
                             )
                             .padding(.horizontal, 2)
@@ -65,7 +63,7 @@ struct FastSentReplay: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         .padding(.trailing, .HPSpacing.xxxlarge)
-        .onReceive(timer, perform: { _ in
+        .onReceive(mediaManager.timer, perform: { _ in
             if mediaManager.stopPoint != nil {
                 if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
                     mediaManager.stopPoint = nil

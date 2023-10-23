@@ -24,15 +24,13 @@ struct ProjectNavigationLink: View {
     var practiceManager = PracticeManager()
     
     var body: some View {
-//    TODO: - Padding
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
             Text("프로젝트 이름")
                 .systemFont(.body, weight: .semibold)
                 .foregroundStyle(Color.HPTextStyle.darker)
                 .padding(.top, .HPSpacing.small)
                 .padding(.horizontal, .HPSpacing.xxsmall)
-//        TODO: - Padding
-                .padding(.bottom, 10)
+                .padding(.bottom, .HPSpacing.xsmall)
                 .onTapGesture {
                     let newItem = ProjectModel(
                         projectName: Date.now.formatted(), creatAt: "2", keynoteCreation: "3"
@@ -104,7 +102,7 @@ struct ProjectNavigationLink: View {
                             // /Users/leejaehyuk/Downloads/kimji.m4a
                             Task {
                                 let tempUtterances: [Utterance] = try await ReturnzeroAPI()
-                                    .getResult(filePath: "/Users/leejaehyuk/Downloads/lee.m4a")
+                                    .getResult(filePath: "/Users/coffee/Downloads/a.m4a")
                                 var newUtteranceModels: [UtteranceModel] = []
                                 for tempUtterance in tempUtterances {
                                     newUtteranceModels.append(
@@ -118,7 +116,7 @@ struct ProjectNavigationLink: View {
                                 /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
                                 if projectManager.temp == nil {
                                     let newProject = ProjectModel(
-                                        projectName: "새 프로젝트 5",
+                                        projectName: "새 프로젝트 1",
                                         creatAt: Date.now.formatted(),
                                         keynotePath: nil,
                                         keynoteCreation: "temp"
@@ -137,7 +135,7 @@ struct ProjectNavigationLink: View {
                                         index: selectedProject.practices.count,
                                         isVisited: false,
                                         creatAt: Date().m4aNameToCreateAt(input: Date().makeM4aFileName()),
-                                        audioPath: URL(string: "/Users/leejaehyuk/Downloads/lee.m4a"),
+                                        audioPath: URL(string: "/Users/coffee/Downloads/a.m4a"),
                                         utterances: newUtteranceModels,
                                         summary: PracticeSummaryModel()
                                     )

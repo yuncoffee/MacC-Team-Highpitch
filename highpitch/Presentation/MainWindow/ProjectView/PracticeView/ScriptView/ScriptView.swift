@@ -13,7 +13,6 @@ struct ScriptView: View {
     var sentences: [SentenceModel]
     var words: [WordModel]
     @State var nowSentece: Int?
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         var width = 0.0
@@ -48,7 +47,8 @@ struct ScriptView: View {
                                 )
                                 .onTapGesture {
                                     nowSentece = word.sentenceIndex
-                                    play(startAt: Double(sentences[nowSentece!].startAt!), endAt: Double(sentences[nowSentece!].endAt!), index: nowSentece!)
+                                    play(startAt: Double(sentences[nowSentece!].startAt!), index: nowSentece!)
+                                    mediaManager.isPlaying = true
                                 }
                                 .id(width == 0.0 ? word.sentenceIndex : -1)
                                 .alignmentGuide(.leading) { item in
@@ -90,18 +90,18 @@ struct ScriptView: View {
             alignment: .topLeading
         )
         .border(Color.HPComponent.stroke, width: 1, edges: [.leading])
-        .onChange(of: mediaManager.currentTime, {_, newValue in
+        .onChange(of: mediaManager.currentTime, { _, newValue in
             if nowSentece != nil {
                 if nowSentece! < sentences.count {
-                    if newValue > Double(sentences[nowSentece!].endAt!)/1000 {
-                        nowSentece! += 1
+                    if nowSentece != -1 {
+                        if newValue > Double(sentences[nowSentece!].endAt!)/1000 {
+                            nowSentece! += 1
+                        }
                     }
                 }
             } else {
                 nowSentece = 0
             }
-        })
-        .onReceive(timer, perform: { _ in
             if mediaManager.stopPoint != nil {
                 if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
                     mediaManager.stopPoint = nil
@@ -110,14 +110,14 @@ struct ScriptView: View {
                 }
             }
         })
+
     }
 }
 
 extension ScriptView {
-    private func play(startAt: Double, endAt: Double, index: Int) {
+    private func play(startAt: Double, index: Int) {
         mediaManager.playAt(atTime: startAt)
         mediaManager.play()
-        mediaManager.stopPoint = endAt
         nowSentece = index
     }
 }
