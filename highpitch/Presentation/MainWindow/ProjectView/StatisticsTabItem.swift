@@ -324,7 +324,7 @@ extension StatisticsTabItem {
                     if selectedSegment == 0 {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
-                            y: .value("레벨", practice.summary.level ?? 0)
+                            y: .value("레벨", practice.summary.level!)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
@@ -344,11 +344,7 @@ extension StatisticsTabItem {
                     } else {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
-<<<<<<< HEAD
-                            y: .value("레벨", practice.summary.level ?? 0)
-=======
                             y: .value("발화 속도", practice.summary.epmAverage!)
->>>>>>> develop
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
