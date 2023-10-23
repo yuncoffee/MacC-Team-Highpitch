@@ -84,7 +84,9 @@ struct FeedbackChartView: View {
                     maxHeight: .infinity,
                     alignment: .leading
                 )
-                FastSentReplay(data: $practice)
+                if (!practice.summary.fastSentenceIndex.isEmpty) {
+                    FastSentReplay(data: $practice)
+                }
             }
             .padding(.leading, .HPSpacing.medium)
             .padding(.bottom, 100)

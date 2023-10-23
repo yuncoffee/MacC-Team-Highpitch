@@ -28,6 +28,14 @@ struct SpeedAverageChart: View {
                     yEnd: .value("", 422.4)
                 )
                 .foregroundStyle(Color.HPComponent.appropriateSpeed.opacity(0.5))
+                if (sentences.count == 1) {
+                    PointMark(
+                        x: .value("문장 번호", 1),
+                        y: .value("EPM", sentences.first?.epmValue ?? 0)
+                    )
+                    .foregroundStyle(Color.HPPrimary.base)
+                    .lineStyle(StrokeStyle(lineWidth: 2))
+                }
                 ForEach(sentences) { sentence in
                     LineMark(
                         x: .value("문장 번호", sentence.index + 1),
@@ -61,47 +69,36 @@ struct SpeedAverageChart: View {
                     AxisValueLabel(centered: false) {
                         if (value.index == 0 || value.index == sentences.count - 1) {
                             Text("\(value.index + 1)")
+                                .frame(height: 21)
                                 .systemFont(.caption)
-                                .offset(x: -9)
+                                .offset(x: -7)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         } else {
                             Text(".")
+                                .frame(height: 21)
                                 .systemFont(.caption)
-                                .offset(x: -9)
+                                .offset(x: -7)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         }
                     }
                 }
             }
             .chartYAxis {
-                AxisMarks(position: .leading, values: Array(stride(
-                    from: min(288.0, epmRange()[0]),
-                    to: max(422.4, epmRange()[1]) +
-                    (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4,
-                    by: (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4
-                ))) { value in
-                    AxisValueLabel(centered: false) {
-                        Text("\(Double(value.index) * (max(422.4, epmRange()[1]) - min(288.0, epmRange()[0])) / 4 + min(288.0, epmRange()[0]), specifier: "%.0f")")
-                            .systemFont(.caption, weight: .regular)
-                            .foregroundStyle(Color.HPTextStyle.base)
+                AxisMarks(position: .leading, values: .automatic) { value in
+                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1, dash: [4, 2]))
+                        .foregroundStyle(Color.HPGray.system200)
+                    AxisValueLabel {
+                        if let value = value.as(Int.self) {
+                            Text("\(value)")
+                                .systemFont(.caption)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                                .padding(.trailing, 8)
+                        }
                     }
+                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
+                        .foregroundStyle(Color.HPGray.system200)
                 }
             }
-//            .chartYAxis {
-//                AxisMarks(position: .leading, values: .automatic) { value in
-//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1, dash: [4, 2]))
-//                        .foregroundStyle(Color.HPGray.system200)
-//                    AxisValueLabel {
-//                        if let value = value.as(Int.self) {
-//                            Text("\(value)")
-//                                .systemFont(.caption)
-//                                .foregroundStyle(Color.HPTextStyle.base)
-//                        }
-//                    }
-//                    AxisGridLine(centered: true, stroke: StrokeStyle(lineWidth: 1))
-//                        .foregroundStyle(Color.HPGray.system200)
-//                }
-//            }
             .chartXScale(domain: [0.5, Double(sentences.count) + 0.5])
             .chartYScale(domain: [
                 min(288.0, epmRange()[0]) - 10.0,

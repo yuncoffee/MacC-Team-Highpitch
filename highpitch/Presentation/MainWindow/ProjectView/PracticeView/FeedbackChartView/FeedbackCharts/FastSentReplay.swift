@@ -52,7 +52,8 @@ struct FastSentReplay: View {
             }
         }
         .frame(
-            maxWidth: .infinity,
+            minWidth: 388,
+            maxWidth: 388,
             minHeight: 70,
             alignment: .top
         )
