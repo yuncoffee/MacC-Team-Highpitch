@@ -7,10 +7,12 @@
 
 import Foundation
 import AVFoundation
+import Combine
 
 enum AudioError: Error {
     case audioNotFoundErr
 }
+
 @Observable
 /// 미디어 입력, 출력 역할을 담당하는 매니저 클래스
 final class MediaManager: NSObject, AVAudioPlayerDelegate {
@@ -35,6 +37,9 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     var currentTime: TimeInterval = 0.0
     
     var stopPoint: TimeInterval?
+    var timerCount: Double = 0.1
+    var timer = Timer.publish(every: 0.1, on: .main, in: .common)
+    var connectedTimer: Cancellable?
 }
 
 // MARK: - 음성메모 녹음 관련 메서드

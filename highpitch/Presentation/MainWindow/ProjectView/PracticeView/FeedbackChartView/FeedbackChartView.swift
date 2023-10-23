@@ -55,7 +55,7 @@ struct FeedbackChartView: View {
                     maxHeight: .infinity,
                     alignment: .leading
                 )
-                FastSentReplay(data: $practice)
+                FastSentReplay(practice: practice)
             }
             .padding(.leading, .HPSpacing.medium)
             .padding(.bottom, 100)

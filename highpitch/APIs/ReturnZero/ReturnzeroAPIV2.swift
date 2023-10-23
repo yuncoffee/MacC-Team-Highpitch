@@ -7,8 +7,8 @@ struct ReturnzeroAPIV2 {
     let keyChainManager = KeychainManager()
     let returnZero_CLIENT_ID = Bundle().returnZeroClientId
     let returnZero_CLIENT_SECRET = Bundle().returnZeroClientSecret
-    let authUrl = "http://localhost:8080/authenticate"
-    let tranUrl = "http://localhost:8080/transcribe"
+    let authUrl = "http://10.141.49.220:8080/authenticate"
+  let tranUrl = "http://10.141.49.220:8080/transcribe"
     
     func getResult(filePath: String)async throws -> [Utterance] {
         let id = try await setTranscribe(filePath: filePath)

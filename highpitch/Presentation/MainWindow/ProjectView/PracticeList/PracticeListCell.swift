@@ -120,6 +120,7 @@ struct PracticeListCell: View {
             .padding(.horizontal, .HPSpacing.medium)
             .background(Color.HPGray.systemWhite)
             .clipShape(RoundedRectangle(cornerRadius: 12))
+            .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
         }
         .onAppear {
             do {

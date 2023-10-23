@@ -13,17 +13,7 @@ struct AudioControllerView: View {
     private var projectManager
     @Environment(MediaManager.self)
     private var mediaManager
-        
-    @State
-    private var totalTime: TimeInterval = 0.0
-    
-    @State
-    var sliderValue:Float = 0
-    
-    @Binding
-    var practice: PracticeModel
-    
-    let timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
+    var audioPath: URL
     
     var body: some View {
         VStack(spacing: 0) {
@@ -38,19 +28,8 @@ struct AudioControllerView: View {
         .border(.HPComponent.stroke, width: 1, edges: [.top])
         .onAppear {
             // MARK: 음성 파일 세팅
-            if let filePath = practice.audioPath {
-                settingAudio(filePath: filePath)
-            }
+            settingAudio(filePath: audioPath)
         }
-        .onReceive(timer, perform: { _ in
-            updateProgress()
-//            if mediaManager.stopPoint != nil {
-//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
-//                    mediaManager.pausePlaying()
-//                    mediaManager.stopPoint = nil
-//                }
-//            }
-        })
     }
 }
 
@@ -59,30 +38,20 @@ extension AudioControllerView {
     private func settingAudio(filePath: URL) {
         do {
             try mediaManager.registerAudio(url: filePath)
-            totalTime = mediaManager.getDuration()
         } catch {
             print(error.localizedDescription)
         }
-        
     }
     private func play() {
         mediaManager.play()
-//        isPlaying = true
     }
     private func pause() {
         mediaManager.pausePlaying()
-//        isPlaying = false
-        
     }
     private func seekAudio(to time: TimeInterval) {
         mediaManager.audioPlayer?.currentTime = time
     }
-    
-    private func updateProgress() {
-        guard let player = mediaManager.audioPlayer else { return }
-        mediaManager.currentTime = player.currentTime
-    }
-    
+        
     private func timeString(time: TimeInterval) -> String {
         let minute = Int(time) / 60
         let seconds = Int(time) % 60
@@ -99,7 +68,7 @@ extension AudioControllerView {
                 mediaManager.currentTime
             }, set: { newValue in
                 seekAudio(to: newValue)
-            }), in: 0...totalTime)
+            }), in: 0...mediaManager.getDuration())
             .tint(Color.HPPrimary.base)
             .padding(.horizontal, .HPSpacing.large)
             HStack(spacing: 0) {
@@ -107,7 +76,7 @@ extension AudioControllerView {
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
                 Spacer()
-                Text(timeString(time: totalTime))
+                Text(timeString(time: mediaManager.getDuration()))
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
             }
