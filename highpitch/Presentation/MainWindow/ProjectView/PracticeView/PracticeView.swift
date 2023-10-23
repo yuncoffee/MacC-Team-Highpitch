@@ -58,7 +58,8 @@ struct PracticeView: View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
             let title = practice.practiceName.description
-            let date = practice.creatAt.description
+            let date = Date().createAtToYMD(input: practice.creatAt.description) +
+            " | " + Date().createAtToHMS(input: practice.creatAt.description)
             HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer

@@ -18,7 +18,7 @@ struct FeedbackChartView: View {
                 VStack(spacing: 0) {
                     HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
                         Text("이번 연습에서 사용한 습관어")
-                            .systemFont(.subTitle)
+                            .systemFont(.title)
                             .foregroundStyle(Color.HPTextStyle.darker)
                         HPTooltip(tooltipContent: "...")
                     }
