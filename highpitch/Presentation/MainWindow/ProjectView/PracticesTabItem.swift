@@ -12,10 +12,20 @@ struct PracticesTabItem: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
+    @State private var isEditing: Bool = false
+    @State private var selectedItems: Set<Int> = []
     @State private var editButtonOn: Bool = false
     
     var body: some View {
         PracticeList()
+    }
+    
+    func toggleSelection(_ index: Int) {
+        if selectedItems.contains(index) {
+            selectedItems.remove(index)
+        } else {
+            selectedItems.insert(index)
+        }
     }
 }
 
@@ -26,6 +36,12 @@ struct PracticesTabItem: View {
 
 extension PracticesTabItem {
     
+    //    Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
+    //        .onTapGesture {
+    //            print(index)
+    //            toggleSelection(index)
+    //        }
+    //        .padding(.trailing, 24)
     func fileNameDateToPracticeDate(input: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"

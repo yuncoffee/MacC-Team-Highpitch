@@ -13,7 +13,8 @@ struct ProjectNavigationLink: View {
     private var fileSystemManager
     @Environment(ProjectManager.self)
     private var projectManager
-    
+    @Environment(KeynoteManager.self)
+    private var keynoteManager
     //
     @Environment(\.modelContext)
     var modelContext
@@ -98,11 +99,55 @@ struct ProjectNavigationLink: View {
                             }
                             
                         }
-                        Button("녹음 시작") {
-                            
-                        }
-                        Button("녹음 종료 및 연습 저장") {
-                            
+                        // MARK: 세바시 연습 추가 버튼 나중에 삭제 가능
+                        Button("세바시 연습 추가") {
+                            // /Users/leejaehyuk/Downloads/kimji.m4a
+                            Task {
+                                let tempUtterances: [Utterance] = try await ReturnzeroAPI()
+                                    .getResult(filePath: "/Users/leejaehyuk/Downloads/lee.m4a")
+                                var newUtteranceModels: [UtteranceModel] = []
+                                for tempUtterance in tempUtterances {
+                                    newUtteranceModels.append(
+                                        UtteranceModel(
+                                            startAt: tempUtterance.startAt,
+                                            duration: tempUtterance.duration,
+                                            message: tempUtterance.message
+                                        )
+                                    )
+                                }
+                                /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
+                                if projectManager.temp == nil {
+                                    let newProject = ProjectModel(
+                                        projectName: "새 프로젝트 5",
+                                        creatAt: Date.now.formatted(),
+                                        keynotePath: nil,
+                                        keynoteCreation: "temp"
+                                    )
+                                    if let selectedKeynote = keynoteManager.temp {
+                                        newProject.keynoteCreation = selectedKeynote.creation
+                                        newProject.keynotePath = URL(fileURLWithPath: selectedKeynote.path)
+                                        newProject.projectName = selectedKeynote.getFileName()
+                                    }
+                                    modelContext.insert(newProject)
+                                    projectManager.temp = newProject
+                                }
+                                if let selectedProject = projectManager.temp {
+                                    let newPracticeModel = PracticeModel(
+                                        practiceName: "\(selectedProject.practices.count + 1)번째 연습",
+                                        index: selectedProject.practices.count,
+                                        isVisited: false,
+                                        creatAt: Date().m4aNameToCreateAt(input: Date().makeM4aFileName()),
+                                        audioPath: URL(string: "/Users/leejaehyuk/Downloads/lee.m4a"),
+                                        utterances: newUtteranceModels,
+                                        summary: PracticeSummaryModel()
+                                    )
+                                    selectedProject.practices.append(newPracticeModel)
+                                    practiceManager.current = newPracticeModel
+                                    await MainActor.run {
+                                        practiceManager.getPracticeDetail()
+                                    }
+                                }
+                            }
                         }
                     }
             }
@@ -115,6 +160,7 @@ struct ProjectNavigationLink: View {
             alignment: .topLeading
         )
     }
+    
 }
 
 extension ProjectNavigationLink {
