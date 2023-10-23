@@ -141,7 +141,7 @@ extension MenubarExtraHeader {
         /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
         /// ReturnZero API를 이용해서 UtteranceModel완성
         Task {
-            let tempUtterances: [Utterance] = try await ReturnzeroAPI()
+            let tempUtterances: [Utterance] = try await ReturnzeroAPIV2()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             var newUtteranceModels: [UtteranceModel] = []
             for tempUtterance in tempUtterances {
@@ -175,6 +175,8 @@ extension MenubarExtraHeader {
                     }
                 }
             }
+
+            await NotificationManager.shared.sendNotification(name: practiceManager.current?.practiceName ?? "err")
         }
     }
     
