@@ -28,31 +28,35 @@ struct SpeedAverageChart: View {
                 // MARK: 적정 구간 인디케이터
                 RectangleMark(
                     xStart: .value("", 0),
-                    xEnd: .value("", sentences.count - 1),
+                    xEnd: .value("", sentences.count),
                     yStart: .value("", 288),
                     yEnd: .value("", 422.4)
                 )
                 .foregroundStyle(Color.HPComponent.appropriateSpeed.opacity(0.5))
                 ForEach(sentences) { sentence in
                     LineMark(
-                        x: .value("문장 번호", sentence.index),
+                        x: .value("문장 번호", sentence.index + 1),
                         y: .value("EPM", sentence.epmValue ?? 0)
                     )
                     .foregroundStyle(Color.HPPrimary.base)
                 }
             }
             .chartLegend(position: .top, alignment: .bottom, spacing: 10)
-            .chartYAxisLabel(alignment: .topLeading) {
-                Text("(EPM)")
-                    .systemFont(.caption)
-                    .foregroundStyle(Color.HPTextStyle.dark)
-            }
             .chartXAxisLabel(alignment: .trailing) {
                 Text("(총 문장 수)")
                     .systemFont(.caption)
                     .foregroundStyle(Color.HPTextStyle.dark)
             }
-//            .chartXAxis {AxisMarks(values: [0, sentences.count - 1])}
+            .chartYAxisLabel(alignment: .topLeading) {
+                Text("(EPM)")
+                    .systemFont(.caption)
+                    .foregroundStyle(Color.HPTextStyle.dark)
+            }
+            .chartPlotStyle { plotArea in
+                plotArea
+                    .border(Color("EAEAEA"), width: 1)
+                
+            }
             .chartXAxis {
                 AxisMarks(values: .automatic) { value in
                     AxisValueLabel {
@@ -97,7 +101,7 @@ struct SpeedAverageChart: View {
             ])
             .padding(.trailing, .HPSpacing.xxxlarge)
             .padding(.bottom, .HPSpacing.large)
-            .frame(maxWidth: .infinity, maxHeight: 300, alignment: .topTrailing)
+            .frame(maxWidth: 800, maxHeight: 300, alignment: .topTrailing)
             .scaledToFill()
             .overlay {
                 HStack {
@@ -145,13 +149,13 @@ extension SpeedAverageChart {
                     .foregroundStyle(Color.HPTextStyle.dark)
                 Text("\(String(format: "%.0f", averageEPM))EPM")
                     .systemFont(.body)
-                    .foregroundStyle(Color.HPPrimary.base)
+                    .foregroundStyle(Color.HPPrimary.dark)
                 Text(" 으로 ")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPTextStyle.dark)
                 Text("\(rate)했어요.")
                     .systemFont(.body)
-                    .foregroundStyle(Color.HPPrimary.base)
+                    .foregroundStyle(Color.HPPrimary.dark)
             }
         }
         .padding(.top, .HPSpacing.xsmall)
@@ -159,8 +163,3 @@ extension SpeedAverageChart {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
 }
-
-// #Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return SpeedAverageChart(data: $practice)
-// }

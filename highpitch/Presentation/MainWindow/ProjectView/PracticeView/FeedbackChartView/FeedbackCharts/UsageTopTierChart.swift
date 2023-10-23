@@ -130,7 +130,7 @@ struct UsageTopTierChart: View {
             }
             
         }
-        .padding(.bottom, .HPSpacing.small)
+        .padding(.bottom, .HPSpacing.medium)
         .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,

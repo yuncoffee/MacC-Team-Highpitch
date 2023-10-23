@@ -49,17 +49,14 @@ struct FeedbackChartView: View {
                         alignment: .leading
                     )
                     .padding(.bottom, .HPSpacing.xsmall)
-                    .border(.red)
                     UsagePercentChart(
                         data: $practice,
                         projectManager: projectManager
                     )
-                        .border(.red)
                     UsageTopTierChart(summary: practice.summary)
-                        .border(.red)
                     if (practice.summary.fillerWordCount > 0) {
                         FillerWordDetail(data: $practice)
-                            .border(.red)
+//                            .border(.red)
                             .padding(.bottom, .HPSpacing.medium)
                     }
                 }
@@ -67,7 +64,7 @@ struct FeedbackChartView: View {
                 VStack(spacing: 0) {
                     HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
                         Text("이번 연습에서의 발화 속도")
-                            .systemFont(.subTitle)
+                            .systemFont(.title)
                             .foregroundStyle(Color.HPTextStyle.darker)
                         HPTooltip(tooltipContent: "...")
                     }
