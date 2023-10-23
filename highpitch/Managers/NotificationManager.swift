@@ -11,8 +11,9 @@ import CoreLocation
 
 @MainActor
 final class NotificationManager :NSObject,ObservableObject {
+    static let shared = NotificationManager()
     let notificationCenter = UNUserNotificationCenter.current()
-    @Published var nextView: NextView?
+    @Published var name: String?
     
     override init() {
         super.init()
@@ -30,13 +31,13 @@ final class NotificationManager :NSObject,ObservableObject {
         }
     }
     
-    func sendNotification(param: String) {
+    func sendNotification(name: String) {
         let content = UNMutableNotificationContent()
         content.title = "HighPitch"
         content.subtitle = "분석 결과가 도착했어요"
         content.sound = .default
         content.badge = 1
-        content.userInfo = ["nextView" : param]
+        content.userInfo = ["name" : name]
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval:1, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         notificationCenter.add(request)
@@ -53,11 +54,12 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {
-        if let value = response.notification.request.content.userInfo["nextView"] as? String {
-            nextView = NextView(rawValue: value)
+        if let value = response.notification.request.content.userInfo["name"] as? String {
+            NotificationCenter.default.post(name: Notification.Name("projectName"), object: value)
         }
         
     }
+    
 }
 
 enum NextView: String,Identifiable {

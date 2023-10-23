@@ -90,7 +90,7 @@ extension ProjectView {
             }
         }
         .padding(.top, .HPSpacing.small + .HPSpacing.xxxxsmall)
-        .padding(.horizontal, .HPSpacing.xxxlarge)
+        .padding(.horizontal, projectManager.currentTabItem == 0 ? .HPSpacing.xxxlarge : 0)
         .padding(.bottom, .HPSpacing.large)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }

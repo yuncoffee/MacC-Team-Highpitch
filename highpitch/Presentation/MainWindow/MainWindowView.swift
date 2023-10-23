@@ -29,6 +29,8 @@ struct MainWindowView: View {
     @State
     private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     
+    @ObservedObject var notiManager = NotificationManager.shared
+    
     private var selected: ProjectModel? {
         projectManager.current
     }
@@ -42,9 +44,31 @@ struct MainWindowView: View {
         .toolbarBackground(.hidden)
         .navigationTitle("Sidebar")
         .frame(minWidth: 1000, minHeight: 600)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: 1512, maxHeight: .infinity)
         .background(Color.HPComponent.mainWindowSidebarBackground)
         .onAppear {
+            NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
+                                                   object: nil, queue: nil) { value in
+                if let practices = projectManager.current?.practices.sorted() {
+                    projectManager.currentTabItem = 1
+                    if !projectManager.path.isEmpty {
+                      projectManager.path.removeLast()
+                    }
+                    if let practiceName = value.object as? String {
+                        if practiceName != "err"{
+                            var latestPractice = practices.first { practice in
+                                practice.practiceName == practiceName
+                            }
+                            guard let appendablePractice = latestPractice else {
+                                return
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                              projectManager.path.append(appendablePractice)
+                            }
+                        }
+                    }
+                }
+            }
 //            do {
 //                try modelContext.delete(model: ProjectModel.self)
 //                try modelContext.delete(model: PracticeModel.self)

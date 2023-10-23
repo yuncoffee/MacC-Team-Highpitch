@@ -14,6 +14,12 @@ import Charts
 struct UsageTopTierChart: View {
     var summary: PracticeSummaryModel
     let fillerWordList = FillerWordList()
+    var epmtyData = [FillerCountData(
+        index: 0,
+        value: 1,
+        word: "",
+        color: Color("F1EDFF")
+    )]
     
 //    @State
 //    var selectedIndex: Double?
@@ -37,11 +43,11 @@ struct UsageTopTierChart: View {
                 let breakPoint: (chartSize: CGFloat, offset: CGFloat) = if geometry.size.width < 320 {
                     (chartSize: maxHeight * 0.5, offset: geometry.size.height/3)
                 } else if geometry.size.width < 500 {
-                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/2.3)
+                    (chartSize: maxHeight * 0.5, offset: geometry.size.height * 0.37)
                 } else if geometry.size.width > 999 {
-                    (chartSize: maxHeight, offset: geometry.size.height/1.7)
+                    (chartSize: maxHeight, offset: geometry.size.height * 0.5)
                 } else {
-                    (chartSize: maxHeight * 0.6, offset: geometry.size.height/2)
+                    (chartSize: maxHeight * 0.6, offset: geometry.size.height * 0.45)
                 }
                 
                 if (summary.fillerWordCount > 0) {
@@ -54,20 +60,17 @@ struct UsageTopTierChart: View {
                                 .systemFont(.footnote)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         }
-                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { index, each in
+                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { _, each in
                             if let color = each.color {
                                 SectorMark(
                                     angle: .value("count", each.value),
                                     innerRadius: .ratio(0.618),
-                                    outerRadius: .ratio(0.8),
-                                    angularInset: 1.5
+                                    outerRadius: .ratio(0.8)
                                 )
-                                .cornerRadius(2)
                                 .foregroundStyle(color)
 //                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
                             }
                         }
-                        .chartLegend(alignment: .center, spacing: 18)
 //                        .chartAngleSelection(value: $selectedIndex)
                         .scaledToFit()
                         .frame(
@@ -93,11 +96,41 @@ struct UsageTopTierChart: View {
                         maxHeight: geometry.size.height,
                         alignment: .center
                     )
+                } else {
+                    ZStack {
+                            Text("사용된 습관어가\n없어요!")
+                            .multilineTextAlignment(.center)
+                                .systemFont(.footnote)
+                                .foregroundStyle(Color.HPTextStyle.base)
+                    Chart(Array(epmtyData.enumerated()), id: \.1.id) { _, each in
+                            if let color = each.color {
+                                SectorMark(
+                                    angle: .value("count", each.value),
+                                    innerRadius: .ratio(0.618),
+                                    outerRadius: .ratio(0.8)
+                                )
+                                .foregroundStyle(color)
+//                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
+                            }
+                        }
+//                        .chartAngleSelection(value: $selectedIndex)
+                        .scaledToFit()
+                        .frame(
+                            maxWidth: breakPoint.chartSize,
+                            maxHeight: breakPoint.chartSize,
+                            alignment: .center
+                        )
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: geometry.size.height,
+                        alignment: .center
+                    )
                 }
             }
             
         }
-        .padding(.bottom, .HPSpacing.large)
+        .padding(.bottom, .HPSpacing.small)
         .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
         .frame(
             maxWidth: .infinity,
@@ -128,7 +161,7 @@ extension UsageTopTierChart {
                 .systemFont(.body)
                 .foregroundStyle(Color.HPTextStyle.dark)
         }
-        .padding(.bottom, .HPSpacing.large)
+        .padding(.bottom, .HPSpacing.xsmall)
     }
 }
 
@@ -190,7 +223,6 @@ extension UsageTopTierChart {
                 returnFillerCount[rightIndex].color = Color("F1EDFF")
             }
         }
-        print(returnFillerCount)
         return returnFillerCount
     }
     

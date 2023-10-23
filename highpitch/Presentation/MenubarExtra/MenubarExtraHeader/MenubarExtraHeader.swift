@@ -175,6 +175,8 @@ extension MenubarExtraHeader {
                     }
                 }
             }
+
+            await NotificationManager.shared.sendNotification(name: practiceManager.current?.practiceName ?? "err")
         }
     }
     
