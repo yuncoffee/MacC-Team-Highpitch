@@ -23,7 +23,6 @@ extension View {
         modifier(HPStyledFontModifier(style: style, weight: weight))
     }
 }
-
 struct HPStyledFontModifier: ViewModifier {
     var style: HPStyledFont
     var weight: FoundationTypoSystemFont.FontWeight?
