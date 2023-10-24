@@ -19,37 +19,37 @@ struct SettingsView: View {
     @State private var isAlertActive = false
     
     var body: some View {
-//        VStack {
-//            Image(.settingView1)
-//                .resizable()
-//                .scaledToFill()
-//                .onTapGesture {
-//                    isAlertActive = true
-//                }
-//                .alert(isPresented: $isAlertActive) {
-//                    Alert(title: Text("준비 중입니다!"))
-//                }
-//        }
-//        .frame(width: 508, height: 512)
-        TabView(selection: $selectedTab) {
-            // 첫 번째 탭
-            FirstSettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("General")
+        VStack {
+            Image(.settingView1)
+                .resizable()
+                .scaledToFill()
+                .onTapGesture {
+                    isAlertActive = true
                 }
-                .tag(0)
-            // 두 번째 탭
-            SecondSettingsView()
-                .tabItem {
-                    Image(systemName: "pencil")
-                    Text("Feedback")
+                .alert(isPresented: $isAlertActive) {
+                    Alert(title: Text("준비 중입니다!"))
                 }
-                .tag(1)
         }
-        .frame(minWidth: 508, idealWidth: 508, minHeight: 512, idealHeight: 512, alignment: .topLeading)
-        .background(Color.white)
-        .accentColor(Color.primary200)
+        .frame(width: 508, height: 512)
+//        TabView(selection: $selectedTab) {
+//            // 첫 번째 탭
+//            FirstSettingsView()
+//                .tabItem {
+//                    Image(systemName: "gearshape.fill")
+//                    Text("General")
+//                }
+//                .tag(0)
+//            // 두 번째 탭
+//            SecondSettingsView()
+//                .tabItem {
+//                    Image(systemName: "pencil")
+//                    Text("Feedback")
+//                }
+//                .tag(1)
+//        }
+//        .frame(minWidth: 508, idealWidth: 508, minHeight: 512, idealHeight: 512, alignment: .topLeading)
+//        .background(Color.white)
+//        .accentColor(Color.primary200)
     }
 }
 

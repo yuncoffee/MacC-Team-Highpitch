@@ -161,7 +161,7 @@ extension MenubarExtraHeader {
             }
         }
         Task {
-            let tempUtterances: [Utterance] = try await ReturnzeroAPI()
+            let tempUtterances: [Utterance] = try await ReturnzeroAPIV2()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             var newUtteranceModels: [UtteranceModel] = []
             for tempUtterance in tempUtterances {
