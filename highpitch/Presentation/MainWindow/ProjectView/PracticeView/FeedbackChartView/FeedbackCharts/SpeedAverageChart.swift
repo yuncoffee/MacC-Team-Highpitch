@@ -74,11 +74,11 @@ struct SpeedAverageChart: View {
                                 .offset(x: -7)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         } else {
-                            Text(".")
-                                .frame(height: 21)
-                                .systemFont(.caption)
-                                .offset(x: -7)
-                                .foregroundStyle(Color.HPTextStyle.base)
+//                            Text(".")
+//                                .frame(height: 21)
+//                                .systemFont(.caption)
+//                                .offset(x: -7)
+//                                .foregroundStyle(Color.HPTextStyle.base)
                         }
                     }
                 }
