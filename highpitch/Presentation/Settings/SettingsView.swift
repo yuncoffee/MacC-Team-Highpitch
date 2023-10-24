@@ -8,7 +8,7 @@
 /**
  사용자화 기능 필요
  */
-
+import AppKit
 import SwiftUI
 import SwiftData
 
@@ -18,7 +18,18 @@ struct SettingsView: View {
     @State private var selectedTab = 0
     @State private var isAlertActive = false
     
+//    init() {
+//        // 사용자 정의 TabView 스타일을 생성
+//        let appearance = UITabBarAppearance()
+//        appearance.selectionIndicatorTintColor = .purple
+//        
+//        // 모든 TabView에서 사용할 수 있도록 전역적으로 설정
+//        UITabBar.appearance().scrollEdgeAppearance = appearance
+//        UITabBar.appearance().compactAppearance = appearance
+//    }
+    
     var body: some View {
+        
 //        VStack {
 //            Image(.settingView1)
 //                .resizable()
@@ -39,6 +50,7 @@ struct SettingsView: View {
                     Text("General")
                 }
                 .tag(0)
+                
             // 두 번째 탭
             SecondSettingsView()
                 .tabItem {
@@ -49,7 +61,7 @@ struct SettingsView: View {
         }
         .frame(minWidth: 508, idealWidth: 508, minHeight: 512, idealHeight: 512, alignment: .topLeading)
         .background(Color.white)
-        .accentColor(Color.primary200)
+        
     }
 }
 
@@ -100,6 +112,11 @@ struct FirstSettingsView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
+                    Image(.F_5)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .padding(.horizontal, 20)
                 }
                 HStack {
                     Text("연습 녹음 일시정지")
@@ -110,6 +127,11 @@ struct FirstSettingsView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
+                    Image(.space)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .padding(.horizontal, 20)
                 }
                 HStack {
                     Text("연습 녹음 저장")
@@ -120,6 +142,11 @@ struct FirstSettingsView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
+                    Image(.ESC)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .padding(.horizontal, 20)
                 }
             }
             
@@ -132,6 +159,11 @@ struct FirstSettingsView: View {
 
 struct SecondSettingsView: View {
     var body: some View {
-        Text("두번째 탭")
+        VStack(alignment: .leading) {
+            Image(.feedback)
+                .resizable()
+                .scaledToFit()
+        }
+        .frame(width: 508, height: 512)
     }
 }
