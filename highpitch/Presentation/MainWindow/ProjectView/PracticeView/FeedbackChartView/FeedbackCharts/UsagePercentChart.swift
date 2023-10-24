@@ -48,7 +48,6 @@ enum EnumFillerUsagePercent: CaseIterable {
 struct UsagePercentChart: View {
     @Binding
     var data: PracticeModel
-    @State
     var projectManager: ProjectManager
     
     var body: some View {
@@ -63,7 +62,7 @@ struct UsagePercentChart: View {
                     .offset(y: -.HPSpacing.xlarge - .HPSpacing.xxsmall)
                     .foregroundStyle(Color.HPComponent.stroke)
                 HStack(alignment: .bottom, spacing: 17) {
-                    if (data.index != 0) {
+                    if (projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt }).first?.id != data.id) {
                         chartBar(
                             usagePercent: getPrevFillerRate(),
                             type: .prev,
@@ -127,7 +126,7 @@ extension UsagePercentChart {
     func fillerWordDifference() -> Double {
         if let current = projectManager.current {
             return data.summary.fillerWordPercentage! -
-            (current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!)
+            (current.practices.sorted()[data.index - 1 >= 0 ? data.index - 1 : 0].summary.fillerWordPercentage!)
         }
         return -100
     }

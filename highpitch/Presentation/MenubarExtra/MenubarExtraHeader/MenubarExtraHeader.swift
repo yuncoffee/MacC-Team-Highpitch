@@ -173,6 +173,10 @@ extension MenubarExtraHeader {
                     )
                 )
             }
+            if tempUtterances.isEmpty {
+                print("none of words!")
+                return
+            }
             /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
             if projectManager.temp == nil {
                 makeNewProject()
