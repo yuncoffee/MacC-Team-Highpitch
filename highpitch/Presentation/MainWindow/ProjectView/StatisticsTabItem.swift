@@ -19,7 +19,7 @@ struct StatisticsTabItem: View {
     @State
     private var selectedSegment = 0
     @State
-    var isPopoverActive = false
+    var isLevelTooltipActive = false
     @State
     var rawSelected: Int?
     @State
@@ -108,24 +108,7 @@ extension StatisticsTabItem {
                         .systemFont(.body)
                         .foregroundStyle(Color.HPTextStyle.darker)
                         .frame(height: 27)
-                    Button {
-                        isPopoverActive.toggle()
-                    } label: {
-                        Label("도움말", systemImage: "questionmark.circle")
-                            .systemFont(.footnote)
-                            .labelStyle(.iconOnly)
-                            .foregroundStyle(Color.HPGray.system400)
-                            .frame(width: 20, height: 20)
-                    }.sheet(isPresented: $isPopoverActive) {
-                        // TODO: Image insert
-                        Text("까꿍")
-                            .padding(20)
-                            .onTapGesture {
-                                isPopoverActive.toggle()
-                            }
-                    }
-                    .buttonStyle(.plain)
-                    .offset(y: -.HPSpacing.xxxsmall)
+                    tooltipLevel
                 }
                 HStack(alignment: .center, spacing: .HPSpacing.xxsmall) {
                     HStack(alignment: .firstTextBaseline, spacing: 0) {
@@ -249,8 +232,29 @@ extension StatisticsTabItem {
                     HPSegmentedControl(selectedSegment: $selectedSegment, options: graphOptions)
                 }
                 Spacer()
-                HPTooltip(tooltipContent: "도움말 컨텐츠")
-                    .padding(.trailing, .HPSpacing.xsmall)
+                HPTooltip(tooltipContent: "다시보기", arrowEdge: .top, content: {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("회차별 연습 차트란?")
+                            .systemFont(.footnote, weight: .bold)
+                            .foregroundStyle(Color.HPTextStyle.darker)
+                            .padding(.bottom, .HPSpacing.xxxxsmall)
+                        HStack(spacing: 0) {
+                            Text("이 프로젝트에서 연습한 ").fontWeight(.regular)
+                            + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 발화 속도의 추이").bold()
+                            + Text("를 한 눈에 볼 수 있게 각각 차트로 나타냈어요.").fontWeight(.regular)
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                        Text("*차트의 점을 클릭하면, 해당 회차의 연습 날짜 및 시간 정보를 볼 수 있어요")
+                            .systemFont(.caption2, weight: .medium)
+                            .foregroundStyle(Color.HPPrimary.base)
+                    }
+                    .padding(.vertical, .HPSpacing.xsmall)
+                    .padding(.horizontal, .HPSpacing.small)
+                    .frame(maxWidth: 400, maxHeight: 145)
+                })
+                .padding(.trailing, .HPSpacing.xsmall)
             }
             .frame(alignment: .top)
             graphContainer
@@ -480,6 +484,201 @@ extension StatisticsTabItem {
             .chartLegend(.hidden)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
+    }
+    
+    @ViewBuilder
+    private var tooltipLevel: some View {
+        Button {
+            isLevelTooltipActive.toggle()
+        } label: {
+            Label("도움말", systemImage: "questionmark.circle")
+                .systemFont(.footnote)
+                .labelStyle(.iconOnly)
+                .foregroundStyle(Color.HPGray.system400)
+                .frame(width: 20, height: 20)
+        }.sheet(isPresented: $isLevelTooltipActive) {
+            VStack(alignment: .leading, spacing: .HPSpacing.small) {
+                VStack(alignment: .leading, spacing: .HPSpacing.xxxsmall) {
+                    Text("총 평균 레벨이란?")
+                        .systemFont(.footnote, weight: .bold)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                        .padding(.bottom, .HPSpacing.xxxsmall)
+                    HStack(spacing: 0) {
+                        Text("이 프로젝트에서 연습한 ")
+                        + Text("모든 회차 레벨들의 평균").bold()
+                        + Text("이예요.\n")
+                        + Text("습관어를 말한 횟수가 적을수록, 발화 속도가 적정 속도일수록 레벨이 높아져요.")
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .systemFont(.caption)
+                    .foregroundStyle(Color.HPTextStyle.darker)
+                    Text("*상위 % 데이터는 0000명의 highpitch 이용자의 전체 진단 데이터를 토대로 제공되고 있어요")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .systemFont(.caption2, weight: .medium)
+                        .foregroundStyle(Color.HPPrimary.base)
+                }
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("습관어 LV 기준 및 분포도")
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                        .padding(.bottom, .HPSpacing.xxxsmall)
+                    ZStack(alignment: .topTrailing) {
+                        Text("(단위: %)")
+                            .systemFont(.caption2)
+                            .foregroundStyle(Color.HPGray.system600)
+                            .offset(y: -22)
+                        VStack(spacing: 0) {
+                            HStack(spacing: 0) {
+                                Text("LV.1").frame(maxWidth: .infinity)
+                                Text("LV.2").frame(maxWidth: .infinity)
+                                Text("LV.3").frame(maxWidth: .infinity)
+                                Text("LV.4").frame(maxWidth: .infinity)
+                                Text("LV.5").frame(maxWidth: .infinity)
+                            }
+                            .systemFont(.caption2, weight: .medium)
+                            .foregroundStyle(Color.HPTextStyle.base)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.HPPrimary.lightnest)
+                            .border(.HPComponent.stroke, width: 1, edges: [.top, .bottom])
+                            HStack(spacing: 0) {
+                                VStack(spacing: 0) {
+                                    Text("0.12<x")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("7.3%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("0.09< x ≤0.12")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("27.7%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("0.06< x ≤0.09")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("38.0%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("0.03< x ≤0.06")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("18.4%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("0.00≤ x ≤0.03")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("8.6%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .border(.HPComponent.stroke, width: 1, edges: [.bottom])
+                    }
+                }
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("발화 속도 LV 기준 및 분포도")
+                        .systemFont(.caption, weight: .semibold)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                        .padding(.bottom, .HPSpacing.xxxsmall)
+                    ZStack(alignment: .topTrailing) {
+                        Text("(단위 : EPM)")
+                            .systemFont(.caption2)
+                            .foregroundStyle(Color.HPGray.system600)
+                            .offset(y: -22)
+                        VStack(spacing: 0) {
+                            HStack(spacing: 0) {
+                                Text("LV.1").frame(maxWidth: .infinity)
+                                Text("LV.2").frame(maxWidth: .infinity)
+                                Text("LV.3").frame(maxWidth: .infinity)
+                                Text("LV.4").frame(maxWidth: .infinity)
+                                Text("LV.5").frame(maxWidth: .infinity)
+                            }
+                            .systemFont(.caption2, weight: .medium)
+                            .foregroundStyle(Color.HPTextStyle.base)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.HPPrimary.lightnest)
+                            .border(.HPComponent.stroke, width: 1, edges: [.top, .bottom])
+                            HStack(spacing: 0) {
+                                VStack(spacing: 0) {
+                                    Text("土75≤ 오차값")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("4.6%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("土50≤ 오차값 <土75")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("28.2%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("土25≤ 오차값 <土50")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("31.3%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("오차값 <土25")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("23.6%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Text("336≤ x <377.4")
+                                        .systemFont(.caption2)
+                                        .foregroundStyle(Color.HPTextStyle.base)
+                                    Text("12.3%")
+                                        .systemFont(.caption2, weight: .semibold)
+                                        .foregroundStyle(Color.HPPrimary.light)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.bottom, .HPSpacing.xxxxsmall)
+                        .border(.HPComponent.stroke, width: 1, edges: [.bottom])
+                    }
+                    Text("*LV.1 ~ LV.4의 발화 속도 범위는, LV.5를 기준으로 각 LV 별 오차값 범위를 더하고 뺀 범위예요")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .systemFont(.caption2, weight: .medium)
+                        .foregroundStyle(Color.HPGray.system600)
+                }
+            }
+            .padding(.vertical, .HPSpacing.xsmall)
+            .padding(.horizontal, .HPSpacing.small)
+            .frame(maxWidth: 520, maxHeight: 420)
+        }
+        .buttonStyle(.plain)
+        .offset(y: -2)
     }
 }
 
