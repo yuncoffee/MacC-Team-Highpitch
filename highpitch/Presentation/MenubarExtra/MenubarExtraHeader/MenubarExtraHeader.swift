@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HotKey
 
 struct MenubarExtraHeader: View {
     @Environment(\.openSettings)
@@ -31,6 +32,11 @@ struct MenubarExtraHeader: View {
     @Binding
     var isRecording: Bool
     var practiceManager = PracticeManager()
+    
+    // HotKeys
+    let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
+    let hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
+    let hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
     
     var body: some View {
         HStack(spacing: 0) {
@@ -87,6 +93,8 @@ struct MenubarExtraHeader: View {
                         .frame(height: 24)
                 }
                 .buttonStyle(.plain)
+                .keyboardShortcut(!mediaManager.isRecording ? "a" : .space, modifiers: [.command, .option] )
+                
                 Button {
                     stopPractice()
                 } label: {
@@ -97,11 +105,17 @@ struct MenubarExtraHeader: View {
                         .frame(height: 24)
                 }
                 .buttonStyle(.plain)
+                .keyboardShortcut(.escape, modifiers: [.command, .option] )
             }
         }
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(minHeight: 48, maxHeight: 48)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
+        .onAppear {
+            hotkeyStart.keyDownHandler = playPractice
+            hotkeyPause.keyDownHandler = pausePractice
+            hotkeySave.keyDownHandler = stopPractice
+        }
     }
 }
 
