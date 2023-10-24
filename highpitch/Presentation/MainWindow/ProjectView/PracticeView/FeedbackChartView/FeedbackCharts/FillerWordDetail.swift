@@ -46,7 +46,8 @@ struct FillerWordDetail: View {
         }
         .padding(.HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(
-            maxWidth: .infinity,
+            minWidth: 388,
+            maxWidth: 388,
             minHeight: 70,
             maxHeight: 374,
             alignment: .top
@@ -91,18 +92,13 @@ struct FillerWordDetailCell: View {
                 .foregroundStyle(Color.HPTextStyle.darker)
             Spacer()
             Text("\(count)회")
-                .systemFont(.subTitle)
+                .systemFont(.body)
                 .foregroundStyle(Color.HPPrimary.base)
         }
         .padding(.vertical, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .padding(.horizontal, .HPSpacing.medium)
-        .frame(maxWidth: .infinity)
-        .background(isOdd ? Color.HPComponent.mainWindowDetailsBackground : .clear)
+        .frame(width: 348)
+        .background(!isOdd ? Color.HPComponent.mainWindowDetailsBackground : .clear)
         .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
-
-// #Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return FillerWordDetail(data: $practice)
-// }

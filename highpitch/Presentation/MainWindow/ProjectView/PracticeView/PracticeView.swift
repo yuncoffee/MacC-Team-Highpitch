@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 /**
  연습 회차별 피드백
@@ -51,35 +52,69 @@ struct PracticeView: View {
     @Environment(MediaManager.self)
     private var mediaManager
     
-    @State 
+    @State
     var practice: PracticeModel
     
     var body: some View {
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
             let title = practice.practiceName.description
-            let date = practice.creatAt.description
+            let date = Date().createAtToYMD(input: practice.creatAt.description) +
+            " | " + Date().createAtToHMS(input: practice.creatAt.description)
             HPTopToolbar(title: title, subTitle: date)
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
-                AudioControllerView(practice: $practice)
+                if let audioPath = practice.audioPath {
+                    AudioControllerView(audioPath: audioPath)
+                }
             }
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.HPGray.systemWhite)
         .ignoresSafeArea()
         .onAppear {
+            mediaManager.timer = Timer.publish(every: mediaManager.timerCount, on: .main, in: .common)
+            mediaManager.connectedTimer = mediaManager.timer.connect()
+            mediaManager.connectedTimer?.cancel()
             practice.utterances.sort { $0.startAt < $1.startAt }
             if !practice.isVisited {
                 practice.isVisited = true
             }
-            
         }
-//        .onChange(of: mediaManager.currentTime) { _, newValue in
-//
-//            print("newValue: \(newValue)")
-//        }
+        .onChange(of: mediaManager.audioPlayer, { _, newValue in
+            if let newValue = newValue {
+                switch newValue.duration {
+                case (6000)...:
+                mediaManager.timerCount = 1
+                case (300)...:
+                mediaManager.timerCount = 0.5
+                case 60...:
+                mediaManager.timerCount = 0.1
+                default:
+                    mediaManager.timerCount = 0.01
+                }
+            }
+        })
+        .onChange(of: mediaManager.isPlaying, { _, newValue in
+            if !newValue {
+                mediaManager.connectedTimer?.cancel()
+            } else {
+                mediaManager.timer = Timer.publish(every: mediaManager.timerCount, on: .main, in: .common)
+                mediaManager.connectedTimer = mediaManager.timer.connect()
+            }
+        })
+        .onReceive(mediaManager.timer) { _ in
+            if let audioPlayer = mediaManager.audioPlayer {
+                DispatchQueue.main.async {
+                    mediaManager.currentTime = audioPlayer.currentTime
+                }
+                
+            }
+        }
+        .onDisappear {
+            mediaManager.connectedTimer?.cancel()
+        }
     }
 }
 
@@ -88,7 +123,10 @@ extension PracticeView {
     private var practiceContentsContainer: some View {
         HStack(spacing: 0) {
             /// 피드백 뷰
-            FeedbackChartView(practice: $practice)
+            FeedbackChartView(
+                practice: $practice,
+                projectManager: projectManager
+            )
             /// 스크립트 뷰
             ScriptView(
                 sentences: practice.sentences.sorted(by: { $0.index < $1.index }),
@@ -100,9 +138,16 @@ extension PracticeView {
     }
 }
 
+extension PracticeView {
+    private func updateProgress() {
+        guard let player = mediaManager.audioPlayer else { return }
+        mediaManager.currentTime = player.currentTime
+    }
+}
+
 // #Preview {
 //    @State
 //    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    
+//
 //    return PracticeView(practice: practice)
 // }

@@ -80,7 +80,7 @@ struct AverageLevelBox: View {
             Text("평균 레벨")
                 .systemFont(.caption, weight: .semibold)
                 .foregroundStyle(Color.text900)
-            HStack(alignment: .lastTextBaseline, spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
                 Text("LV.")
                     .systemFont(.body, weight: .semibold)
                     .foregroundStyle(Color.primary600)
