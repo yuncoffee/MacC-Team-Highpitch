@@ -105,6 +105,7 @@
 		434FE5AB2ADA5C760005645F /* test2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 434FE5A52ADA5C760005645F /* test2.m4a */; };
 		43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EA82ADE809F00B3E7B7 /* PracticeModel.swift */; };
 		43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43556EAA2ADE80A900B3E7B7 /* UtteranceModel.swift */; };
+		43F1D9B92AE6F094001A7225 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 43F1D9B82AE6F094001A7225 /* HotKey */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -230,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43F1D9B92AE6F094001A7225 /* HotKey in Frameworks */,
 				1D7A3EDB2ADC1F6F0084E962 /* MenuBarExtraAccess in Frameworks */,
 				1DBF14672AE1623E00B28CED /* SettingsAccess in Frameworks */,
 			);
@@ -728,6 +730,7 @@
 			packageProductDependencies = (
 				1D7A3EDA2ADC1F6F0084E962 /* MenuBarExtraAccess */,
 				1DBF14662AE1623E00B28CED /* SettingsAccess */,
+				43F1D9B82AE6F094001A7225 /* HotKey */,
 			);
 			productName = highpitch;
 			productReference = 1DF659862AD594BD00AE5601 /* highpitch.app */;
@@ -804,6 +807,7 @@
 			packageReferences = (
 				1D7A3ED92ADC1F6F0084E962 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
 				1DBF14652AE1623E00B28CED /* XCRemoteSwiftPackageReference "SettingsAccess" */,
+				43F1D9B72AE6F094001A7225 /* XCRemoteSwiftPackageReference "HotKey" */,
 			);
 			productRefGroup = 1DF659872AD594BD00AE5601 /* Products */;
 			projectDirPath = "";
@@ -1362,6 +1366,14 @@
 				minimumVersion = 1.4.0;
 			};
 		};
+		43F1D9B72AE6F094001A7225 /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1374,6 +1386,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1DBF14652AE1623E00B28CED /* XCRemoteSwiftPackageReference "SettingsAccess" */;
 			productName = SettingsAccess;
+		};
+		43F1D9B82AE6F094001A7225 /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43F1D9B72AE6F094001A7225 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
