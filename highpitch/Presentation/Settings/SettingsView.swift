@@ -164,6 +164,6 @@ struct SecondSettingsView: View {
                 .resizable()
                 .scaledToFit()
         }
-        .frame(width: 508, height: 512)
+        .frame(width: 508, height: 452)
     }
 }
