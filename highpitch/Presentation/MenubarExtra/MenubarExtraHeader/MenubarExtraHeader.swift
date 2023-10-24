@@ -149,6 +149,9 @@ extension MenubarExtraHeader {
     
     // MARK: - 연습 끝내기
     private func stopPractice() {
+        if !mediaManager.isRecording {
+            return
+        }
         print("녹음 종료")
         mediaManager.isRecording.toggle()
         mediaManager.stopRecording()
