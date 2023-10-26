@@ -20,8 +20,6 @@ final class ProjectManager {
     var temp: ProjectModel?
     var currentTabItem = 1
     var path: NavigationPath = .init()
-//    var testCurrent: Project?
-//    var testProjects: [Project]?
     // MARK: PracticeManager
     var practiceManager: PracticeManager = PracticeManager()
 }
