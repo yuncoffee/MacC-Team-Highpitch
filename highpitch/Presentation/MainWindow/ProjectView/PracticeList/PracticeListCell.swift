@@ -32,7 +32,7 @@ struct PracticeListCell: View {
             HStack(spacing: 0) {
                 // 인포
                 VStack(alignment: .leading, spacing: .HPSpacing.xxxsmall) {
-                    Text("\(fileNameDateToPracticeDate(input: practice.creatAt))")
+                    Text("\(Date().createAtToPracticeDate(input: practice.creatAt))")
                         .systemFont(.footnote)
                         .foregroundStyle(Color.HPTextStyle.base)
                     Text("\(indexToOrdinalNumber(index: practice.index))번째 연습")
@@ -161,23 +161,6 @@ extension PracticeListCell {
         }
 
         return result
-    }
-    
-    private func fileNameDateToPracticeDate(input: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        if let date = inputFormatter.date(from: input) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "YYYY.MM.dd(E) HH:mm:ss"
-            outputFormatter.locale = Locale(identifier: "ko_KR")
-            
-            let dateString = outputFormatter.string(from: date)
-            
-            return dateString
-        } else {
-            return "Invalid Date"
-        }
     }
 
 private func indexToOrdinalNumber(index: Int) -> String {

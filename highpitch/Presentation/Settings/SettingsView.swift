@@ -18,30 +18,8 @@ struct SettingsView: View {
     @State private var selectedTab = 0
     @State private var isAlertActive = false
     
-//    init() {
-//        // 사용자 정의 TabView 스타일을 생성
-//        let appearance = UITabBarAppearance()
-//        appearance.selectionIndicatorTintColor = .purple
-//        
-//        // 모든 TabView에서 사용할 수 있도록 전역적으로 설정
-//        UITabBar.appearance().scrollEdgeAppearance = appearance
-//        UITabBar.appearance().compactAppearance = appearance
-//    }
-    
     var body: some View {
-        
-//        VStack {
-//            Image(.settingView1)
-//                .resizable()
-//                .scaledToFill()
-//                .onTapGesture {
-//                    isAlertActive = true
-//                }
-//                .alert(isPresented: $isAlertActive) {
-//                    Alert(title: Text("준비 중입니다!"))
-//                }
-//        }
-//        .frame(width: 508, height: 512)
+
         TabView(selection: $selectedTab) {
             // 첫 번째 탭
             FirstSettingsView()
