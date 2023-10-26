@@ -41,6 +41,11 @@ struct ProjectNavigationLink: View {
                         }
                         projectManager.current = project
                     }
+                    .contextMenu {
+                        Button("Delete") {
+                            modelContext.delete(project)
+                        }
+                    }
             }
             .padding(.leading, 8)
             .padding(.trailing, 12)
