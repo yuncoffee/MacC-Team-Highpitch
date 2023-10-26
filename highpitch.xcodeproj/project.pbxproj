@@ -49,7 +49,6 @@
 		1D09AFB12ADAD08E00C1400E /* FileSystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFB02ADAD08E00C1400E /* FileSystemManager.swift */; };
 		1D09AFB32ADAD5D800C1400E /* test1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AFB22ADAD5D800C1400E /* test1.json */; };
 		1D09AFB52ADAD5E300C1400E /* test2.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AFB42ADAD5E300C1400E /* test2.json */; };
-		1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFB62ADADB9300C1400E /* SampleProjectJson.swift */; };
 		1D09AFBB2ADAF2AD00C1400E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D09AFBA2ADAF2AD00C1400E /* Project.swift */; };
 		1D09AFBE2ADBA71C00C1400E /* test2.key in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AFBC2ADBA71C00C1400E /* test2.key */; };
 		1D09AFBF2ADBA71C00C1400E /* test1.key in Resources */ = {isa = PBXBuildFile; fileRef = 1D09AFBD2ADBA71C00C1400E /* test1.key */; };
@@ -162,7 +161,6 @@
 		1D09AFB02ADAD08E00C1400E /* FileSystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemManager.swift; sourceTree = "<group>"; };
 		1D09AFB22ADAD5D800C1400E /* test1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test1.json; sourceTree = "<group>"; };
 		1D09AFB42ADAD5E300C1400E /* test2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test2.json; sourceTree = "<group>"; };
-		1D09AFB62ADADB9300C1400E /* SampleProjectJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleProjectJson.swift; sourceTree = "<group>"; };
 		1D09AFBA2ADAF2AD00C1400E /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1D09AFBC2ADBA71C00C1400E /* test2.key */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.key; sourceTree = "<group>"; };
 		1D09AFBD2ADBA71C00C1400E /* test1.key */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.key; sourceTree = "<group>"; };
@@ -505,7 +503,6 @@
 			isa = PBXGroup;
 			children = (
 				1D30E6342AD6EE3300623A58 /* AppleScript.swift */,
-				1D09AFB62ADADB9300C1400E /* SampleProjectJson.swift */,
 				1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */,
 				1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */,
 				1D09AFBA2ADAF2AD00C1400E /* Project.swift */,
@@ -907,7 +904,6 @@
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,
 				1D95F0AF2AE3BEF000E563EA /* PracticeResultCell.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
-				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,
 				1D9894212AE61A4B00DE57A1 /* PracticeListCell.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
