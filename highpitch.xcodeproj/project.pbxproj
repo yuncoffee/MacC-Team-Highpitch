@@ -65,7 +65,6 @@
 		1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */; };
 		1D7A3EDB2ADC1F6F0084E962 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1D7A3EDA2ADC1F6F0084E962 /* MenuBarExtraAccess */; };
 		1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AEF2AD7BB3200B01F10 /* ProjectModel.swift */; };
-		1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */; };
 		1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */; };
 		1D95F0AF2AE3BEF000E563EA /* PracticeResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */; };
 		1D95F0B32AE3C35D00E563EA /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D95F0B22AE3C35D00E563EA /* SecretKey.plist */; };
@@ -175,7 +174,6 @@
 		1D58FA282AE2956E00B92B4A /* HPMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPMenu.swift; sourceTree = "<group>"; };
 		1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpendKeynote.swift; sourceTree = "<group>"; };
 		1D8C5AEF2AD7BB3200B01F10 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
-		1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utterance.swift; sourceTree = "<group>"; };
 		1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeResultCell.swift; sourceTree = "<group>"; };
 		1D95F0B22AE3C35D00E563EA /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
@@ -502,7 +500,6 @@
 			children = (
 				1D30E6342AD6EE3300623A58 /* AppleScript.swift */,
 				1D8C5AF42AD7BEDB00B01F10 /* Utterance.swift */,
-				1D8C5AF22AD7BBBA00B01F10 /* Practice.swift */,
 				1D7A3ED72ADC0FBD0084E962 /* OpendKeynote.swift */,
 				10C7D1FC2ADE12B3008691CD /* TokenData.swift */,
 			);
@@ -927,7 +924,6 @@
 				10C7D1F82ADD8E6A008691CD /* AuthManager.swift in Sources */,
 				1D0ECD702ADCE8FA00B95A74 /* Typography.swift in Sources */,
 				10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */,
-				1D8C5AF32AD7BBBA00B01F10 /* Practice.swift in Sources */,
 				1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */,
 				1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */,
 				1D09AFB12ADAD08E00C1400E /* FileSystemManager.swift in Sources */,
