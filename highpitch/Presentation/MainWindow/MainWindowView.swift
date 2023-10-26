@@ -56,7 +56,7 @@ struct MainWindowView: View {
                       projectManager.path.removeLast()
                     }
                     if let practiceName = value.object as? String {
-                        if practiceName != "err"{
+                        if practiceName != "err" {
                             var latestPractice = practices.first { practice in
                                 practice.practiceName == practiceName
                             }

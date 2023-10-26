@@ -125,12 +125,3 @@ extension MediaManager {
         return audioPlayer?.duration ?? 0
     }
 }
-
-// MARK: Date.now()를 기준으로 YYYYMMDDHHMMSS.m4a 형식의 String으로 변환
-extension MediaManager {
-    func currentDateTimeString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMddHHmmss"
-        return formatter.string(from: Date())
-    }
-}

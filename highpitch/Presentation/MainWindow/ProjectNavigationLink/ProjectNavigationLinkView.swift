@@ -160,15 +160,6 @@ extension ProjectNavigationLink {
     func checkIsSelected(_ projectName: String) -> Bool {
         projectName == projectManager.current?.projectName
     }
-    
-    func formattedDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        let currentDate = Date()
-        
-        return dateFormatter.string(from: currentDate)
-    }
 }
 
 #Preview {
