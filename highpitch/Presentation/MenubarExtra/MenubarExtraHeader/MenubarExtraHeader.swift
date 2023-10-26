@@ -149,6 +149,9 @@ extension MenubarExtraHeader {
     
     // MARK: - 연습 끝내기
     private func stopPractice() {
+        if !mediaManager.isRecording {
+            return
+        }
         print("녹음 종료")
         mediaManager.isRecording.toggle()
         mediaManager.stopRecording()
@@ -161,7 +164,7 @@ extension MenubarExtraHeader {
             }
         }
         Task {
-            let tempUtterances: [Utterance] = try await ReturnzeroAPIV2()
+            let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             var newUtteranceModels: [UtteranceModel] = []
             for tempUtterance in tempUtterances {

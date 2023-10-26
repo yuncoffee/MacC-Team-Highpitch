@@ -69,7 +69,7 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .modelContainer(container)
         }
-        .defaultSize(width: 1000, height: 600)
+        .defaultSize(width: 1080, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         // MARK: - Settings Scene
