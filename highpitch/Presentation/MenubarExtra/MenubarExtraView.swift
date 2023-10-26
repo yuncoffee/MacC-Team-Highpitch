@@ -133,6 +133,11 @@ struct MenubarExtraView: View {
             .onChange(of: selectedKeynote, {
                 updateCurrentProject()
             })
+            .onChange(of: mediaManager.isRecording) { _, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    isRecording = true
+                }
+            }
         }
     }
 }

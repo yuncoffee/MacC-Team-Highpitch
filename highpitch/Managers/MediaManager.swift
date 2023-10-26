@@ -57,6 +57,7 @@ extension MediaManager {
         do {
             audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
             audioRecorder?.record()
+            isRecording = true
         } catch {
             print("녹음 중 오류 발생: \(error.localizedDescription)")
         }
@@ -64,6 +65,7 @@ extension MediaManager {
     
     func stopRecording() {
         audioRecorder?.stop()
+        isRecording = false
     }
     
     private func getDocumentsDirectory() -> URL {

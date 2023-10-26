@@ -94,7 +94,6 @@ struct MenubarExtraHeader: View {
                 }
                 .buttonStyle(.plain)
                 .keyboardShortcut(!mediaManager.isRecording ? "a" : .space, modifiers: [.command, .option] )
-                
                 Button {
                     stopPractice()
                 } label: {
@@ -106,6 +105,7 @@ struct MenubarExtraHeader: View {
                 }
                 .buttonStyle(.plain)
                 .keyboardShortcut(.escape, modifiers: [.command, .option] )
+                .disabled(!mediaManager.isRecording)
             }
         }
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
@@ -134,12 +134,8 @@ extension MenubarExtraHeader {
         }
         projectManager.temp = selectedProject
         keynoteManager.temp = selectedKeynote
-        mediaManager.isRecording = true
         mediaManager.fileName = mediaManager.currentDateTimeString()
         mediaManager.startRecording()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            isRecording.toggle()
-        }
     }
     // MARK: - 연습 일시중지
     private func pausePractice() {
@@ -153,18 +149,12 @@ extension MenubarExtraHeader {
             return
         }
         print("녹음 종료")
-        mediaManager.isRecording.toggle()
         mediaManager.stopRecording()
         /// mediaManager.fileName에 음성 파일이 저장되어있을거다!!
         /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
         /// ReturnZero API를 이용해서 UtteranceModel완성
         Task {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                isRecording.toggle()
-            }
-        }
-        Task {
-            let tempUtterances: [Utterance] = try await ReturnzeroAPIV2()
+            let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             var newUtteranceModels: [UtteranceModel] = []
             for tempUtterance in tempUtterances {
