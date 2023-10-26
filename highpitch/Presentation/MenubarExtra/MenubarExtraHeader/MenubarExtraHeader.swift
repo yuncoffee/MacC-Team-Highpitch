@@ -134,7 +134,7 @@ extension MenubarExtraHeader {
         }
         projectManager.temp = selectedProject
         keynoteManager.temp = selectedKeynote
-        mediaManager.fileName = mediaManager.currentDateTimeString()
+        mediaManager.fileName = Date().makeM4aFileName()
         mediaManager.startRecording()
     }
     // MARK: - 연습 일시중지
@@ -179,7 +179,7 @@ extension MenubarExtraHeader {
                     practiceName: indexToOrdinalNumber(index: selectedProject.practices.count + 1)+"번째 연습",
                     index: selectedProject.practices.count,
                     isVisited: false,
-                    creatAt: fileNameDateToCreateAtDate(input: mediaManager.fileName),
+                    creatAt: Date().m4aNameToCreateAt(input: mediaManager.fileName),
                     audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
                     utterances: newUtteranceModels,
                     summary: PracticeSummaryModel()
@@ -238,22 +238,6 @@ extension MenubarExtraHeader {
         exit(0)
     }
     
-    // MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
-    private func fileNameDateToCreateAtDate(input: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyyMMddHHmmss"
-        
-        if let date = inputFormatter.date(from: input) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-            
-            let formattedDate = outputFormatter.string(from: date)
-            
-            return formattedDate
-        } else {
-            return "Invalid Date"
-        }
-    }
 }
 
 // #Preview {

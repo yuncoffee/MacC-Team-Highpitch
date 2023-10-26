@@ -14,5 +14,4 @@ final class KeynoteManager {
     var isKeynoteProcessOpen = false
     var opendKeynotes: [OpendKeynote] = []
     var temp: OpendKeynote?
-//    var myModles: [MyModel] = []
 }
