@@ -14,8 +14,6 @@
 		10C7D1FA2ADD9457008691CD /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */; };
 		10C7D1FD2ADE12B3008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
 		10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FC2ADE12B3008691CD /* TokenData.swift */; };
-		10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
-		10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1FF2ADE2201008691CD /* AudioManager.swift */; };
 		10C7D2942AE62054008691CD /* ReturnzeroAPIV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D2932AE62054008691CD /* ReturnzeroAPIV2.swift */; };
 		11294CF72AE3C38000B5EB48 /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11294CF62AE3C38000B5EB48 /* SecretKey.plist */; };
 		1172F1032AE1326000D6B0B9 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1172F1022AE1326000D6B0B9 /* WordModel.swift */; };
@@ -130,7 +128,6 @@
 		10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		10C7D1F72ADD8E6A008691CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		10C7D1FC2ADE12B3008691CD /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
-		10C7D1FF2ADE2201008691CD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		10C7D23C2ADF7230008691CD /* PlayBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBar.swift; sourceTree = "<group>"; };
 		10C7D2932AE62054008691CD /* ReturnzeroAPIV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnzeroAPIV2.swift; sourceTree = "<group>"; };
 		11294CF62AE3C38000B5EB48 /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
@@ -472,7 +469,6 @@
 				1D09AF702AD98BB700C1400E /* SpeechRecognizerManager.swift */,
 				10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */,
 				10C7D1F72ADD8E6A008691CD /* AuthManager.swift */,
-				10C7D1FF2ADE2201008691CD /* AudioManager.swift */,
 				1DBF145B2AE0A75600B28CED /* PracticeManager.swift */,
 			);
 			path = Managers;
@@ -929,7 +925,6 @@
 				1D09AFB72ADADB9300C1400E /* SampleProjectJson.swift in Sources */,
 				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,
 				1D9894212AE61A4B00DE57A1 /* PracticeListCell.swift in Sources */,
-				10C7D2002ADE2201008691CD /* AudioManager.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */,
 				43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */,
@@ -968,7 +963,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				10C7D1FE2ADE12BF008691CD /* TokenData.swift in Sources */,
-				10C7D23A2ADE6A21008691CD /* AudioManager.swift in Sources */,
 				1DF6599F2AD594BF00AE5601 /* highpitchTests.swift in Sources */,
 				10C7D1FA2ADD9457008691CD /* KeychainManager.swift in Sources */,
 				10C7D1F92ADD8F1C008691CD /* AuthManager.swift in Sources */,
