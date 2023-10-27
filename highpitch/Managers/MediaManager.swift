@@ -15,7 +15,7 @@ enum AudioError: Error {
 
 @Observable
 /// 미디어 입력, 출력 역할을 담당하는 매니저 클래스
-final class MediaManager: NSObject, AVAudioPlayerDelegate {
+final class MediaManager: NSObject, AVAudioPlayerDelegate, Recordable, AudioPlayable {
     /// 샘플 코드
     var keynoteIsOpen = true
     
@@ -33,13 +33,11 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     var audioPlayer: AVAudioPlayer?
     
     var fileName: String = ""
-    
     var currentTime: TimeInterval = 0.0
-    
     var stopPoint: TimeInterval?
-    var timerCount: Double = 0.1
-    var timer = Timer.publish(every: 0.1, on: .main, in: .common)
-    var connectedTimer: Cancellable?
+//    var timerCount: Double = 0.1
+//    var timer = Timer.publish(every: 0.1, on: .main, in: .common)
+    //var connectedTimer: Cancellable?
 }
 
 // MARK: - 음성메모 녹음 관련 메서드
@@ -109,6 +107,18 @@ extension MediaManager {
         audioPlayer?.play()
         isPlaying = true
     }
+    func getDuration() -> Double {
+        return audioPlayer?.duration ?? 0
+    }
+    func getState() -> Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    func setCurrentTime(time: TimeInterval) {
+        audioPlayer?.currentTime = time
+    }
+    func getCurrentTime() -> TimeInterval {
+        return audioPlayer?.currentTime ?? 0
+    }
     func getPath(fileName: String) -> URL {
         let dataPath = getDocumentsDirectory()
             .appendingPathComponent("HighPitch")
@@ -121,9 +131,6 @@ extension MediaManager {
         }
         return dataPath.appendingPathComponent(fileName + ".m4a")
     }
-    func getDuration() -> Double {
-        return audioPlayer?.duration ?? 0
-    }
 }
 
 // MARK: Date.now()를 기준으로 YYYYMMDDHHMMSS.m4a 형식의 String으로 변환
@@ -133,4 +140,20 @@ extension MediaManager {
         formatter.dateFormat = "yyyyMMddHHmmss"
         return formatter.string(from: Date())
     }
+}
+protocol Recordable {
+    func startRecording()
+    func stopRecording()
+}
+protocol AudioPlayable {
+    var isPlaying: Bool { get set }
+    func registerAudio(url: URL) throws
+    func play()
+    func playAfter(second: Double)
+    func stopPlaying()
+    func pausePlaying()
+    func getState() -> Bool
+    func setCurrentTime(time: TimeInterval)
+    func getCurrentTime() -> Double
+    func getDuration() -> Double
 }
