@@ -24,8 +24,6 @@ struct MenubarExtraHeader: View {
     private var mediaManager
     @Environment(\.modelContext)
     var modelContext
-    @Query(sort: \ProjectModel.creatAt)
-    var projectModels: [ProjectModel]
     @Binding
     var selectedProject: ProjectModel?
     @Binding
@@ -126,9 +124,6 @@ struct MenubarExtraHeader: View {
                 }
             }
         }
-        .onChange(of: projectModels) { _, newValue in
-            print("newValue:", newValue)
-        }
     }
 }
 
@@ -149,6 +144,7 @@ extension MenubarExtraHeader {
         mediaManager.fileName = Date().makeM4aFileName()
         mediaManager.startRecording()
     }
+    
     // MARK: - 연습 일시중지
     private func pausePractice() {
         
@@ -283,10 +279,10 @@ extension MenubarExtraHeader {
             }
         }
     }
+    
     private func quitApp() {
         exit(0)
     }
-    
 }
 
 // #Preview {
