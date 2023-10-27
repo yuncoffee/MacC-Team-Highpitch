@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import HotKey
 
 struct MenubarExtraHeader: View {
@@ -23,6 +24,8 @@ struct MenubarExtraHeader: View {
     private var mediaManager
     @Environment(\.modelContext)
     var modelContext
+    @Query(sort: \ProjectModel.creatAt)
+    var projectModels: [ProjectModel]
     @Binding
     var selectedProject: ProjectModel?
     @Binding
@@ -115,7 +118,16 @@ struct MenubarExtraHeader: View {
             // onAppear를 통해서 hotKey들의 동작 함수들을 등록해준다.
             hotkeyStart.keyDownHandler = playPractice
             hotkeyPause.keyDownHandler = pausePractice
-            hotkeySave.keyDownHandler = stopPractice
+            hotkeySave.keyDownHandler = {
+                Task {
+                    await MainActor.run {
+                        stopPractice()
+                    }
+                }
+            }
+        }
+        .onChange(of: projectModels) { _, newValue in
+            print("newValue:", newValue)
         }
     }
 }
@@ -132,18 +144,18 @@ extension MenubarExtraHeader {
         } else {
             /// 선택된 키노트가 없을 때
         }
-        projectManager.temp = selectedProject
+        projectManager.temp = selectedProject?.persistentModelID
         keynoteManager.temp = selectedKeynote
         mediaManager.fileName = Date().makeM4aFileName()
         mediaManager.startRecording()
     }
     // MARK: - 연습 일시중지
     private func pausePractice() {
-//        print(projectManager.temp)
-//        print(projectManager.temp?.projectName)
+        
     }
     
     // MARK: - 연습 끝내기
+    @MainActor
     private func stopPractice() {
         if !mediaManager.isRecording {
             return
@@ -154,11 +166,47 @@ extension MenubarExtraHeader {
         /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
         /// ReturnZero API를 이용해서 UtteranceModel완성
         Task {
+            let newUtteranceModels = await makeNewUtterances()
+            /// 아무말도 하지 않았을 경우 종료한다.
+            if newUtteranceModels.isEmpty {
+                print("none of words!")
+                return
+            }
+            /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
+            /// temp는 새로 만들어진 ProjectModel.persistentModelID 을 들고 있다.
+            if projectManager.temp == nil {
+                makeNewProject()
+            }
+            /// 생성한 ID로 프로젝트 모델을 가져온다.
+            guard let id = projectManager.temp else { return }
+            guard let tempProject = modelContext.model(for: id) as? ProjectModel else { return }
+            let newPracticeModel = makeNewPractice(project: tempProject, utterances: newUtteranceModels)
+            /// 프로젝트에 추가한다.
+            tempProject.practices.append(newPracticeModel)
+            
+            /// @@@@@@@@ summary를 생성한다. 변경 필요! @@@@@@@@
+            practiceManager.current = newPracticeModel
+            practiceManager.getPracticeDetail(practice: newPracticeModel)
+            /// @@@@@@@@ summary를 생성한다. 변경 필요! @@@@@@@@
+            
+            projectManager.temp = nil
+            
+            if projectManager.current == nil {
+                projectManager.current = tempProject
+            }
+            NotificationManager.shared.sendNotification(
+                name: practiceManager.current?.practiceName ?? "err"
+            )
+        }
+    }
+    
+    private func makeNewUtterances() async -> [UtteranceModel] {
+        var result: [UtteranceModel] = []
+        do {
             let tempUtterances: [Utterance] = try await ReturnzeroAPI()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
-            var newUtteranceModels: [UtteranceModel] = []
             for tempUtterance in tempUtterances {
-                newUtteranceModels.append(
+                result.append(
                     UtteranceModel(
                         startAt: tempUtterance.startAt,
                         duration: tempUtterance.duration,
@@ -166,49 +214,15 @@ extension MenubarExtraHeader {
                     )
                 )
             }
-            if tempUtterances.isEmpty {
-                print("none of words!")
-                return
-            }
-            /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
-            if projectManager.temp == nil {
-                makeNewProject()
-            }
-            if let selectedProject = projectManager.temp {
-                let newPracticeModel = PracticeModel(
-                    practiceName: indexToOrdinalNumber(index: selectedProject.practices.count + 1)+"번째 연습",
-                    index: selectedProject.practices.count,
-                    isVisited: false,
-                    creatAt: Date().m4aNameToCreateAt(input: mediaManager.fileName),
-                    audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
-                    utterances: newUtteranceModels,
-                    summary: PracticeSummaryModel()
-                )
-                selectedProject.practices.append(newPracticeModel)
-                practiceManager.current = newPracticeModel
-                Task {
-                    await MainActor.run {
-                        practiceManager.getPracticeDetail()
-                    }
-                }
-            }
-            await NotificationManager.shared.sendNotification(name: practiceManager.current?.practiceName ?? "err")
+        } catch {
+            print(error)
         }
-    }
-    
-    func indexToOrdinalNumber(index: Int) -> String {
-        let ordinalNumber = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열",
-                             "열한", "열두", "열세", "열네", "열다섯", "열여섯", "열일곱", "열여덟"]
-        
-        if ordinalNumber.count < index {
-            return "Index 초과"
-        }
-        return ordinalNumber[index]
+        return result
     }
     
     private func makeNewProject() {
         let newProject = ProjectModel(
-            projectName: "새 프로젝트",
+            projectName: "\(Date.now.formatted())",
             creatAt: Date.now.formatted(),
             keynotePath: nil,
             keynoteCreation: "temp"
@@ -219,9 +233,44 @@ extension MenubarExtraHeader {
             newProject.projectName = selectedKeynote.getFileName()
         }
         modelContext.insert(newProject)
-        projectManager.temp = newProject
+        projectManager.temp = newProject.persistentModelID
     }
     
+    private func makeNewPractice(project: ProjectModel, utterances: [UtteranceModel]) -> PracticeModel {
+        /// 새 연습 모델을 생성한다.
+        let result = PracticeModel(
+            practiceName: "init",
+            index: -1,
+            isVisited: false,
+            creatAt: Date().m4aNameToCreateAt(input: mediaManager.fileName),
+            audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+            utterances: utterances,
+            summary: PracticeSummaryModel()
+        )
+
+        if project.practices.count == 0 {
+            result.index = 0
+            result.practiceName = indexToOrdinalNumber(index: 0)
+        } else {
+            let latestIndex = project.practices.sorted(by: {$0.creatAt > $1.creatAt}).first?.index
+            if let latestIndex = latestIndex {
+                result.index = latestIndex + 1
+                result.practiceName = indexToOrdinalNumber(index: latestIndex + 1)
+            }
+        }
+        return result
+    }
+    
+    private func indexToOrdinalNumber(index: Int) -> String {
+        let ordinalNumber = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열",
+                             "열한", "열두", "열세", "열네", "열다섯", "열여섯", "열일곱", "열여덟"]
+        
+        if ordinalNumber.count < index {
+            return "Index 초과"
+        }
+        return ordinalNumber[index]
+    }
+            
     private func openSelectedProject() {
         if let selectedProject = selectedProject {
             if selectedProject.projectName != "새 프로젝트" {
