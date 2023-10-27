@@ -198,23 +198,3 @@ extension MenubarExtraView {
         .frame(maxWidth: 360, maxHeight: 480)
 }
 #endif
-
-// MARK: Date.now() -> String으로 변환하는 함수들
-extension MenubarExtraView {
-    // MediaManager밑에 있는 fileName을 통해서 createAt에 넣을 날짜 생성
-    func fileNameDateToCreateAtDate(input: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyyMMddHHmmss"
-        
-        if let date = inputFormatter.date(from: input) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-            
-            let formattedDate = outputFormatter.string(from: date)
-            
-            return formattedDate
-        } else {
-            return "Invalid Date"
-        }
-    }
-}

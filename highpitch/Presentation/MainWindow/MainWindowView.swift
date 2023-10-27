@@ -47,6 +47,7 @@ struct MainWindowView: View {
         .frame(maxWidth: 1512, maxHeight: .infinity)
         .background(Color.HPComponent.mainWindowSidebarBackground)
         .onAppear {
+            NotificationManager.shared.requestAuthorization()
             NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
                                                    object: nil, queue: nil) { value in
                 if let practices = projectManager.current?.practices.sorted() {
@@ -55,7 +56,7 @@ struct MainWindowView: View {
                       projectManager.path.removeLast()
                     }
                     if let practiceName = value.object as? String {
-                        if practiceName != "err"{
+                        if practiceName != "err" {
                             var latestPractice = practices.first { practice in
                                 practice.practiceName == practiceName
                             }

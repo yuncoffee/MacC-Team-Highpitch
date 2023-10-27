@@ -36,29 +36,6 @@ struct PracticesTabItem: View {
 
 extension PracticesTabItem {
     
-    //    Image(systemName: selectedItems.contains(index) ? "checkmark.square.fill" : "square")
-    //        .onTapGesture {
-    //            print(index)
-    //            toggleSelection(index)
-    //        }
-    //        .padding(.trailing, 24)
-    func fileNameDateToPracticeDate(input: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        if let date = inputFormatter.date(from: input) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "YYYY.MM.dd(E) HH:mm:ss"
-            outputFormatter.locale = Locale(identifier: "ko_KR")
-            
-            let dateString = outputFormatter.string(from: date)
-            
-            return dateString
-        } else {
-            return "Invalid Date"
-        }
-    }
-    
     func indexToOrdinalNumber(index: Int) -> String {
         let ordinalNumber = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열",
                              "열한", "열두", "열세", "열네", "열다섯", "열여섯", "열일곱", "열여덟"]

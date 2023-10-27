@@ -38,17 +38,7 @@ struct HighpitchApp: App {
             fatalError("Could not initialize ModelContainer")
         }
     }
-    //
-    
-//    let container: ModelContainer = {
-//        do {
-//            let container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
-//            return container
-//        } catch {
-//            fatalError("Failed to create container")
-//        }
-//    }()
-    
+
     var body: some Scene {
         #if os(iOS)
         /// iOS Sample
@@ -69,7 +59,7 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .modelContainer(container)
         }
-        .defaultSize(width: 1000, height: 600)
+        .defaultSize(width: 1080, height: 600)
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         // MARK: - Settings Scene
