@@ -55,6 +55,11 @@ struct HPSystemFontModifier: ViewModifier {
     }
 }
 
+enum HPFont {
+    case system(FoundationTypoSystemFont)
+    case styled(HPStyledFont)
+}
+
 enum HPStyledFont {
     case largeTitleLv
     case labeldButton

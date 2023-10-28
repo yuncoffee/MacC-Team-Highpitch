@@ -99,9 +99,9 @@ struct MenubarExtraHeader: View {
                     stopPractice()
                 } label: {
                     Label("끝내기", systemImage: "stop.fill")
-                        .systemFont(.caption2)
+                        .styledFont(.labeldButton)
                         .foregroundStyle(Color.HPSecondary.base)
-                        .labelStyle(VerticalIconWithTextLabelStyle())
+                        .labelStyle(VerticalIconWithTextLabelStyle(iconSize: 18))
                         .frame(height: 24)
                 }
                 .buttonStyle(.plain)
