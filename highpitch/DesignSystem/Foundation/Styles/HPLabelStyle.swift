@@ -21,9 +21,9 @@ enum LabelAlignStyle {
     case iconWithTextVertical
 }
 
-enum LabelType: ComponentBaseType {
-    case blockFill
-    case blockLine
+enum LabelType: ComponentBaseType {    
+    case blockFill(CGFloat)
+    case blockLine(CGFloat)
     case boxFill
     case boxLine
     case roundFill
@@ -34,22 +34,27 @@ enum LabelType: ComponentBaseType {
     var style: ComponentStyle? {
         switch self {
         case .blockFill:
-            ComponentStyle(cornerStyle: .block)
+            if case .blockFill(let HPCornerRadius) = self {
+                return ComponentStyle(cornerStyle: .block(HPCornerRadius))
+            }
         case .blockLine:
-            ComponentStyle(cornerStyle: .block, fillStyle: .line)
+            if case .blockLine(let HPCornerRadius) = self {
+                return ComponentStyle(cornerStyle: .block(HPCornerRadius), fillStyle: .line)
+            }
         case .boxFill:
-            ComponentStyle(fillStyle: .fill)
+            return ComponentStyle(fillStyle: .fill)
         case .boxLine:
-            ComponentStyle(fillStyle: .line)
+            return ComponentStyle(fillStyle: .line)
         case .roundFill:
-            ComponentStyle(cornerStyle: .round, fillStyle: .fill)
+            return ComponentStyle(cornerStyle: .round, fillStyle: .fill)
         case .roundLine:
-            ComponentStyle(cornerStyle: .round, fillStyle: .line)
+            return ComponentStyle(cornerStyle: .round, fillStyle: .line)
         case .text:
-            ComponentStyle(fillStyle: .text)
+            return ComponentStyle(fillStyle: .text)
         case .none:
-            nil
+            return nil
         }
+        return nil
     }
 }
 
@@ -82,9 +87,9 @@ enum LabelSize: ComponentBaseSize {
         case .small:
             28
         case .medium:
-            34
+            36
         case .large:
-            38
+            40
         case .xlarge:
             44
         }
@@ -93,19 +98,24 @@ enum LabelSize: ComponentBaseSize {
 
 // swiftlint:disable function_body_length
 struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
-    var type: LabelType = .blockFill
+    var type: LabelType = .blockFill(.HPCornerRadius.medium)
     var size: LabelSize = .small
     var color: Color = .clear
+    
     var alignStyle: LabelAlignStyle = .textOnly
     var iconSize: CGFloat?
+    
+    var expandable: Bool = false
     var fontStyle: HPFont = .system(.caption)
     var width: CGFloat?
     var padding: (v: CGFloat, h: CGFloat)
     
     func makeBody(configuration: Configuration) -> some View {
-        if type == .none {
-            configuration.icon
-            configuration.title
+        if type.style == nil {
+            HStack(spacing: .HPSpacing.xxxxsmall) {
+                configuration.icon
+                configuration.title
+            }
         } else {
             if let style = type.style {
                 switch fontStyle {
@@ -121,7 +131,11 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
                     .systemFont(foundationTypoSystemFont)
                     .padding(.vertical, padding.v)
                     .padding(.horizontal, padding.h)
-                    .frame(minWidth: width, maxWidth: .infinity, minHeight: size.height)
+                    .frame(
+                        minWidth: width,
+                        maxWidth: .infinity,
+                        minHeight: size.height,
+                        maxHeight: expandable ? .infinity : nil)
                     .background(
                         style.fillStyle.isLook(.fill)
                         ? color
@@ -134,29 +148,15 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
                     )
                     .overlay {
                         RoundedRectangle(
-                            cornerRadius: style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0)
+                            cornerRadius: style.cornerStyle.cornerRadius)
                         .stroke(
                             style.fillStyle.isLook(.text)
                             ? .clear
                             : color, lineWidth: 2)
-                        .cornerRadius(style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0)
+                        .cornerRadius(style.cornerStyle.cornerRadius)
                     }
                     .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0
-                        )
+                        RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
                     )
                 case .styled(let HPStyledFont):
                     HPLabelContent(
@@ -170,7 +170,11 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
                     .styledFont(HPStyledFont)
                     .padding(.vertical, padding.v)
                     .padding(.horizontal, padding.h)
-                    .frame(minWidth: width, maxWidth: .infinity, minHeight: size.height)
+                    .frame(
+                        minWidth: width,
+                        maxWidth: .infinity,
+                        minHeight: size.height,
+                        maxHeight: expandable ? .infinity : nil)
                     .background(
                         style.fillStyle.isLook(.fill)
                         ? color
@@ -183,29 +187,15 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
                     )
                     .overlay {
                         RoundedRectangle(
-                            cornerRadius: style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0)
+                            cornerRadius: style.cornerStyle.cornerRadius)
                         .stroke(
                             style.fillStyle.isLook(.text)
                             ? .clear
                             : color, lineWidth: 2)
-                        .cornerRadius(style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0)
+                        .cornerRadius(style.cornerStyle.cornerRadius)
                     }
                     .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: style.cornerStyle.isLook(.block)
-                            ? .HPCornerRadius.medium
-                            : style.cornerStyle.isLook(.round)
-                            ? .HPCornerRadius.round
-                            : 0
-                        )
+                        RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
                     )
                 }
             }

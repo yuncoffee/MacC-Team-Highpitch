@@ -77,6 +77,7 @@
 		1DE8B64C2AECD4C400E0746E /* BaseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */; };
 		1DE8B64E2AECDC1200E0746E /* HPLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64D2AECDC1200E0746E /* HPLabelStyle.swift */; };
 		1DE8B6512AECECBE00E0746E /* HPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6502AECECBE00E0746E /* HPLabel.swift */; };
+		1DE8B6532AED1C7B00E0746E /* HPButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6522AED1C7B00E0746E /* HPButtonStyle.swift */; };
 		1DF6598A2AD594BD00AE5601 /* highpitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF659892AD594BD00AE5601 /* highpitchApp.swift */; };
 		1DF6598C2AD594BD00AE5601 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598B2AD594BD00AE5601 /* ContentView.swift */; };
 		1DF6598E2AD594BD00AE5601 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF6598D2AD594BD00AE5601 /* Item.swift */; };
@@ -178,6 +179,7 @@
 		1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStyle.swift; sourceTree = "<group>"; };
 		1DE8B64D2AECDC1200E0746E /* HPLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPLabelStyle.swift; sourceTree = "<group>"; };
 		1DE8B6502AECECBE00E0746E /* HPLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPLabel.swift; sourceTree = "<group>"; };
+		1DE8B6522AED1C7B00E0746E /* HPButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButtonStyle.swift; sourceTree = "<group>"; };
 		1DF659862AD594BD00AE5601 /* highpitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = highpitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF659892AD594BD00AE5601 /* highpitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = highpitchApp.swift; sourceTree = "<group>"; };
 		1DF6598B2AD594BD00AE5601 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 			children = (
 				1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */,
 				1DE8B64D2AECDC1200E0746E /* HPLabelStyle.swift */,
+				1DE8B6522AED1C7B00E0746E /* HPButtonStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -865,6 +868,7 @@
 				1DF659BB2AD5959200AE5601 /* HighPitchApp.swift in Sources */,
 				1D0ECD7C2ADE010500B95A74 /* HPTooltip.swift in Sources */,
 				1DE8B6452AECD0C500E0746E /* HPButton.swift in Sources */,
+				1DE8B6532AED1C7B00E0746E /* HPButtonStyle.swift in Sources */,
 				1D09AF682AD98A1700C1400E /* ProjectView.swift in Sources */,
 				1D09AFA52ADA785100C1400E /* UsagePercentChart.swift in Sources */,
 				1D09AF6A2AD98A4000C1400E /* PracticeView.swift in Sources */,

@@ -28,13 +28,13 @@ struct ComponentStyle {
     var fillStyle: ComponentFillStyle = .fill
     
     /// 컴포넌트 라운딩 스타일
-    enum ComponentCornerStyle: Int, CaseIterable {
+    enum ComponentCornerStyle{
         /// 기본적인 라운딩 스타일 rawValue = 8
         ///
         /// ```
         /// cornerRadius: CGFloat.HPCornerRadius.medium
         /// ```
-        case block
+        case block(CGFloat)
         /// 라운딩 미적용 rawValue = 0
         ///
         /// ```
@@ -47,6 +47,27 @@ struct ComponentStyle {
         /// cornerRadius: 100
         /// ```
         case round
+        
+//        var cornerRadius: CGFloat {
+//            switch self {
+//            case .block(let radius):
+//                return radius
+//            case .box:
+//                return 0
+//            case .round:
+//                return CGFloat.HPCornerRadius.round
+//            }
+//        }
+        var cornerRadius: CGFloat {
+            switch self {
+            case .block(let radius):
+                return radius
+            case .box:
+                return 0
+            case .round:
+                return CGFloat.HPCornerRadius.round
+            }
+        }
     }
     
     /// 컴포넌트 외형 스타일
@@ -96,13 +117,21 @@ extension ComponentStyle.ComponentFillStyle {
 
 extension ComponentStyle.ComponentCornerStyle {
     func isLook(_ style: ComponentStyle.ComponentCornerStyle) -> Bool {
-        self == style
+        switch self {
+        case .block:
+            if case .block = style { return true }
+        case .box:
+            if case .box = style { return true }
+        case .round:
+            if case .round = style { return true }
+        }
+        return false
     }
 }
 
 protocol ComponentBaseType {
-    static var blockFill: Self { get }
-    static var blockLine: Self { get }
+    static func blockFill(_ : CGFloat) -> Self
+    static func blockLine(_ : CGFloat) -> Self
     static var boxFill: Self { get }
     static var boxLine: Self { get }
     static var roundFill: Self { get }
@@ -116,4 +145,39 @@ protocol ComponentBaseSize {
     static var small: Self { get }
     static var medium: Self { get }
     static var large: Self { get }
+}
+
+enum BaseType: ComponentBaseType {
+    case blockFill(CGFloat)
+    case blockLine(CGFloat)
+    case boxFill
+    case boxLine
+    case roundFill
+    case roundLine
+    case text
+    
+    var style: ComponentStyle? {
+        switch self {
+        case .blockFill:
+            ComponentStyle(cornerStyle: .block(.HPCornerRadius.medium))
+        case .blockLine:
+            ComponentStyle(cornerStyle: .block(.HPCornerRadius.medium), fillStyle: .line)
+        case .boxFill:
+            ComponentStyle(fillStyle: .fill)
+        case .boxLine:
+            ComponentStyle(fillStyle: .line)
+        case .roundFill:
+            ComponentStyle(cornerStyle: .round, fillStyle: .fill)
+        case .roundLine:
+            ComponentStyle(cornerStyle: .round, fillStyle: .line)
+        case .text:
+            ComponentStyle(fillStyle: .text)
+        }
+    }
+}
+
+enum BaseSize: ComponentBaseSize {
+    case small
+    case medium
+    case large
 }
