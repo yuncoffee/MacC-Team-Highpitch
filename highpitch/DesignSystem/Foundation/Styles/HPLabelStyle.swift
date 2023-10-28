@@ -98,7 +98,8 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
     var color: Color = .clear
     var alignStyle: LabelAlignStyle = .textOnly
     var iconSize: CGFloat?
-    var maxWidth: CGFloat
+    var fontStyle: HPFont = .system(.caption)
+    var width: CGFloat?
     var padding: (v: CGFloat, h: CGFloat)
     
     func makeBody(configuration: Configuration) -> some View {
@@ -107,53 +108,106 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
             configuration.title
         } else {
             if let style = type.style {
-                HPLabelContent(
-                    configuration: configuration,
-                    type: type,
-                    size: size,
-                    color: color,
-                    alignStyle: alignStyle,
-                    iconSize: iconSize
-                )
-                .padding(.vertical, padding.v)
-                .padding(.horizontal, padding.h)
-                .frame(maxWidth: maxWidth, minHeight: size.height)
-                .background(
-                    style.fillStyle.isLook(.fill)
-                    ? color
-                    : .clear
-                )
-                .foregroundColor(
-                    style.fillStyle.isLook(.fill)
-                    ? .HPGray.systemWhite
-                    : color
-                )
-                .overlay {
-                    RoundedRectangle(
-                        cornerRadius: style.cornerStyle.isLook(.block)
-                        ? .HPCornerRadius.medium
-                        : style.cornerStyle.isLook(.round)
-                        ? .HPCornerRadius.round
-                        : 0)
-                    .stroke(
-                        style.fillStyle.isLook(.text)
-                        ? .clear
-                        : color, lineWidth: 2)
-                    .cornerRadius(style.cornerStyle.isLook(.block)
-                                  ? .HPCornerRadius.medium
-                                  : style.cornerStyle.isLook(.round)
-                                  ? .HPCornerRadius.round
-                                  : 0)
-                }
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: style.cornerStyle.isLook(.block)
-                        ? .HPCornerRadius.medium
-                        : style.cornerStyle.isLook(.round)
-                        ? .HPCornerRadius.round
-                        : 0
+                switch fontStyle {
+                case .system(let foundationTypoSystemFont):
+                    HPLabelContent(
+                        configuration: configuration,
+                        type: type,
+                        size: size,
+                        color: color,
+                        alignStyle: alignStyle,
+                        iconSize: iconSize
                     )
-                )
+                    .systemFont(foundationTypoSystemFont)
+                    .padding(.vertical, padding.v)
+                    .padding(.horizontal, padding.h)
+                    .frame(minWidth: width, maxWidth: .infinity, minHeight: size.height)
+                    .background(
+                        style.fillStyle.isLook(.fill)
+                        ? color
+                        : .clear
+                    )
+                    .foregroundColor(
+                        style.fillStyle.isLook(.fill)
+                        ? .HPGray.systemWhite
+                        : color
+                    )
+                    .overlay {
+                        RoundedRectangle(
+                            cornerRadius: style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0)
+                        .stroke(
+                            style.fillStyle.isLook(.text)
+                            ? .clear
+                            : color, lineWidth: 2)
+                        .cornerRadius(style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0)
+                    }
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0
+                        )
+                    )
+                case .styled(let HPStyledFont):
+                    HPLabelContent(
+                        configuration: configuration,
+                        type: type,
+                        size: size,
+                        color: color,
+                        alignStyle: alignStyle,
+                        iconSize: iconSize
+                    )
+                    .styledFont(HPStyledFont)
+                    .padding(.vertical, padding.v)
+                    .padding(.horizontal, padding.h)
+                    .frame(minWidth: width, maxWidth: .infinity, minHeight: size.height)
+                    .background(
+                        style.fillStyle.isLook(.fill)
+                        ? color
+                        : .clear
+                    )
+                    .foregroundColor(
+                        style.fillStyle.isLook(.fill)
+                        ? .HPGray.systemWhite
+                        : color
+                    )
+                    .overlay {
+                        RoundedRectangle(
+                            cornerRadius: style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0)
+                        .stroke(
+                            style.fillStyle.isLook(.text)
+                            ? .clear
+                            : color, lineWidth: 2)
+                        .cornerRadius(style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0)
+                    }
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: style.cornerStyle.isLook(.block)
+                            ? .HPCornerRadius.medium
+                            : style.cornerStyle.isLook(.round)
+                            ? .HPCornerRadius.round
+                            : 0
+                        )
+                    )
+                }
             }
         }
     }
