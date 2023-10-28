@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HPLabel: View, StyleEssential, LabelStyleEssential {
-    var content: (label: String, icon: String?) = (label: "Label", icon: "plus.square.fill")
-    var type: LabelType = .blockFill(.HPCornerRadius.small)
+    var content: (label: String, icon: String?) = (label: "Label", icon: nil)
+    var type: LabelType = .blockFill(10)
     var size: LabelSize = .small
     var color: Color = .HPGray.system400
     
@@ -50,14 +50,6 @@ struct HPLabel: View, StyleEssential, LabelStyleEssential {
         )
         .frame(width: 120, height: 26)
         .padding(20)
-        .frame(width: 600)
-        .padding(40)
-        .border(.red)
-        HPLabel(
-            content: (label: "Hello World!!!", icon: nil),
-            size: .xsmall,
-            fontStyle: .system(.caption2)
-        )
     }
     .frame(maxWidth: 420)
 }

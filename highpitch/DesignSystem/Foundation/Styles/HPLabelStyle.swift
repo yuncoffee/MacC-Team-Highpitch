@@ -111,99 +111,97 @@ struct HPLabelStyle: LabelStyle, StyleEssential, LabelStyleEssential {
     var padding: (v: CGFloat, h: CGFloat)
     
     func makeBody(configuration: Configuration) -> some View {
-        if type.style == nil {
+        if let style = type.style {
+            switch fontStyle {
+            case .system(let foundationTypoSystemFont):
+                HPLabelContent(
+                    configuration: configuration,
+                    type: type,
+                    size: size,
+                    color: color,
+                    alignStyle: alignStyle,
+                    iconSize: iconSize
+                )
+                .systemFont(foundationTypoSystemFont)
+                .padding(.vertical, padding.v)
+                .padding(.horizontal, padding.h)
+                .frame(
+                    minWidth: width,
+                    maxWidth: .infinity,
+                    minHeight: size.height,
+                    maxHeight: expandable ? .infinity : nil)
+                .background(
+                    style.fillStyle.isLook(.fill)
+                    ? color
+                    : .clear
+                )
+                .foregroundColor(
+                    style.fillStyle.isLook(.fill)
+                    ? .HPGray.systemWhite
+                    : color
+                )
+                .overlay {
+                    RoundedRectangle(
+                        cornerRadius: style.cornerStyle.cornerRadius)
+                    .stroke(
+                        style.fillStyle.isLook(.text)
+                        ? .clear
+                        : color, lineWidth: 2)
+                    .cornerRadius(style.cornerStyle.cornerRadius)
+                }
+                .clipShape(
+                    RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
+                )
+            case .styled(let HPStyledFont):
+                HPLabelContent(
+                    configuration: configuration,
+                    type: type,
+                    size: size,
+                    color: color,
+                    alignStyle: alignStyle,
+                    iconSize: iconSize
+                )
+                .styledFont(HPStyledFont)
+                .padding(.vertical, padding.v)
+                .padding(.horizontal, padding.h)
+                .frame(
+                    minWidth: width,
+                    maxWidth: .infinity,
+                    minHeight: size.height,
+                    maxHeight: expandable ? .infinity : nil)
+                .background(
+                    style.fillStyle.isLook(.fill)
+                    ? color
+                    : .clear
+                )
+                .foregroundColor(
+                    style.fillStyle.isLook(.fill)
+                    ? .HPGray.systemWhite
+                    : color
+                )
+                .overlay {
+                    RoundedRectangle(
+                        cornerRadius: style.cornerStyle.cornerRadius)
+                    .stroke(
+                        style.fillStyle.isLook(.text)
+                        ? .clear
+                        : color, lineWidth: 2)
+                    .cornerRadius(style.cornerStyle.cornerRadius)
+                }
+                .clipShape(
+                    RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
+                )
+            }
+        } else {
             HStack(spacing: .HPSpacing.xxxxsmall) {
                 configuration.icon
                 configuration.title
             }
-        } else {
-            if let style = type.style {
-                switch fontStyle {
-                case .system(let foundationTypoSystemFont):
-                    HPLabelContent(
-                        configuration: configuration,
-                        type: type,
-                        size: size,
-                        color: color,
-                        alignStyle: alignStyle,
-                        iconSize: iconSize
-                    )
-                    .systemFont(foundationTypoSystemFont)
-                    .padding(.vertical, padding.v)
-                    .padding(.horizontal, padding.h)
-                    .frame(
-                        minWidth: width,
-                        maxWidth: .infinity,
-                        minHeight: size.height,
-                        maxHeight: expandable ? .infinity : nil)
-                    .background(
-                        style.fillStyle.isLook(.fill)
-                        ? color
-                        : .clear
-                    )
-                    .foregroundColor(
-                        style.fillStyle.isLook(.fill)
-                        ? .HPGray.systemWhite
-                        : color
-                    )
-                    .overlay {
-                        RoundedRectangle(
-                            cornerRadius: style.cornerStyle.cornerRadius)
-                        .stroke(
-                            style.fillStyle.isLook(.text)
-                            ? .clear
-                            : color, lineWidth: 2)
-                        .cornerRadius(style.cornerStyle.cornerRadius)
-                    }
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
-                    )
-                case .styled(let HPStyledFont):
-                    HPLabelContent(
-                        configuration: configuration,
-                        type: type,
-                        size: size,
-                        color: color,
-                        alignStyle: alignStyle,
-                        iconSize: iconSize
-                    )
-                    .styledFont(HPStyledFont)
-                    .padding(.vertical, padding.v)
-                    .padding(.horizontal, padding.h)
-                    .frame(
-                        minWidth: width,
-                        maxWidth: .infinity,
-                        minHeight: size.height,
-                        maxHeight: expandable ? .infinity : nil)
-                    .background(
-                        style.fillStyle.isLook(.fill)
-                        ? color
-                        : .clear
-                    )
-                    .foregroundColor(
-                        style.fillStyle.isLook(.fill)
-                        ? .HPGray.systemWhite
-                        : color
-                    )
-                    .overlay {
-                        RoundedRectangle(
-                            cornerRadius: style.cornerStyle.cornerRadius)
-                        .stroke(
-                            style.fillStyle.isLook(.text)
-                            ? .clear
-                            : color, lineWidth: 2)
-                        .cornerRadius(style.cornerStyle.cornerRadius)
-                    }
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: style.cornerStyle.cornerRadius)
-                    )
-                }
-            }
         }
     }
 }
-// swiftlint:enable function_body_length
 
+// swiftlint:enable function_body_length
 struct HPLabelContent: View, StyleConfiguration, LabelStyleEssential {
     var configuration: LabelStyleConfiguration
     var type: LabelType

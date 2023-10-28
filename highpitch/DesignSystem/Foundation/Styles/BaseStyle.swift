@@ -28,7 +28,7 @@ struct ComponentStyle {
     var fillStyle: ComponentFillStyle = .fill
     
     /// 컴포넌트 라운딩 스타일
-    enum ComponentCornerStyle{
+    enum ComponentCornerStyle {
         /// 기본적인 라운딩 스타일 rawValue = 8
         ///
         /// ```

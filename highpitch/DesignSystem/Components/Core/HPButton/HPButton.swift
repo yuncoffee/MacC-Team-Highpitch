@@ -35,7 +35,10 @@ struct HPButton<T: View>: StyleEssential, View where T: ButtonComposable {
 }
 
 #Preview {
-    HPButton(size: .large, color: .HPSecondary.base) {
+    HPButton(
+        type: .blockFill(10),
+        size: .large,
+        color: .HPSecondary.base) {
         print("Hello Button!")
     } label: { type, size, color, expandable in
         HPLabel(
@@ -48,12 +51,9 @@ struct HPButton<T: View>: StyleEssential, View where T: ButtonComposable {
             fontStyle: .system(.body),
             padding: (v: 8, h: 16)
         )
-        
     }
     .fixedSize()
     .frame(width: 106)
-//    .padding(24)
-//    .border(.blue)
     .frame(width: 200, height: 64)
     .border(.blue)
     .padding(24)
