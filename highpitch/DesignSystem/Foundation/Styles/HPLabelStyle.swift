@@ -212,7 +212,7 @@ struct HPLabelContent: View, StyleConfiguration, LabelStyleEssential {
     
     var body: some View {
         if alignStyle == .iconWithTextVertical {
-            VStack(spacing: .HPSpacing.xxxxsmall) {
+            VStack(spacing: 2) {
                 if let iconSize {
                     configuration.icon
                         .font(.system(size: iconSize))

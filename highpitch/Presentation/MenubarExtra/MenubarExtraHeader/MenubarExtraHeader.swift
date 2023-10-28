@@ -41,73 +41,9 @@ struct MenubarExtraHeader: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            HStack(spacing: .HPSpacing.xsmall) {
-                Button {
-                    print("앱 열기")
-                    openSelectedProject()
-                } label: {
-                    Label("홈", systemImage: "house.fill")
-                        .systemFont(.caption)
-                        .foregroundStyle(Color.HPGray.system800)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
-                }
-                .buttonStyle(.plain)
-                Button {
-                    print("설정창 열기...")
-                    try? openSettings()
-                } label: {
-                    Label("설정창 열기", systemImage: "gearshape.fill")
-                        .systemFont(.caption)
-                        .foregroundStyle(Color.HPGray.system800)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 24, height: 24)
-                }
-                .buttonStyle(.plain)
-            }
+            leftButtonGroup
             Spacer()
-            HStack(spacing: .HPSpacing.xsmall) {
-                let labels = if !mediaManager.isRecording {
-                    (
-                        label:"연습 시작",
-                        image: "play.fill",
-                        color: Color.HPPrimary.dark
-                    )
-                } else {
-                    (
-                        label:"일시 정지",
-                        image: "pause.fill",
-                        color: Color.HPGray.system800
-                    )
-                }
-                Button {
-                    if !mediaManager.isRecording {
-                        playPractice()
-                    } else {
-                        pausePractice()
-                    }
-                } label: {
-                    Label(labels.label, systemImage: labels.image)
-                        .systemFont(.caption2)
-                        .foregroundStyle(labels.color)
-                        .labelStyle(VerticalIconWithTextLabelStyle())
-                        .frame(height: 24)
-                }
-                .buttonStyle(.plain)
-                .keyboardShortcut(!mediaManager.isRecording ? "a" : .space, modifiers: [.command, .option] )
-                Button {
-                    stopPractice()
-                } label: {
-                    Label("끝내기", systemImage: "stop.fill")
-                        .styledFont(.labeldButton)
-                        .foregroundStyle(Color.HPSecondary.base)
-                        .labelStyle(VerticalIconWithTextLabelStyle(iconSize: 18))
-                        .frame(height: 24)
-                }
-                .buttonStyle(.plain)
-                .keyboardShortcut(.escape, modifiers: [.command, .option] )
-                .disabled(!mediaManager.isRecording)
-            }
+            rightButtonGroup
         }
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(minHeight: 48, maxHeight: 48)
@@ -127,6 +63,123 @@ struct MenubarExtraHeader: View {
     }
 }
 
+// MARK: Views
+extension MenubarExtraHeader {
+    @ViewBuilder
+    var leftButtonGroup: some View {
+        HStack(spacing: .HPSpacing.xxsmall) {
+            openMainWindowButton
+            openSettingWindowButton
+        }
+    }
+    
+    @ViewBuilder
+    var openMainWindowButton: some View {
+        HPButton(type: .text, size: .medium, color: .HPGray.system800) {
+            openSelectedProject()
+        } label: { type, size, color, expandable in
+            HPLabel(
+                content: (label: "Home", icon: "house.fill"),
+                type: type,
+                size: size,
+                color: color,
+                alignStyle: .iconOnly,
+                expandable: expandable
+            )
+        }
+        .frame(width: 24, height: 24)
+    }
+    
+    @ViewBuilder
+    var openSettingWindowButton: some View {
+        HPButton(type: .text, size: .medium, color: .HPGray.system800) {
+            try? openSettings()
+        } label: { type, size, color, expandable in
+            HPLabel(
+                content: (label: "Open Settings", icon: "gearshape.fill"),
+                type: type,
+                size: size,
+                color: color,
+                alignStyle: .iconOnly,
+                expandable: expandable
+            )
+        }
+        .frame(width: 24, height: 24)
+    }
+    
+    @ViewBuilder
+    var rightButtonGroup: some View {
+        HStack(spacing: .HPSpacing.xsmall + .HPSpacing.xxxxsmall) {
+            playAndPauseButton
+            stopButton
+        }
+    }
+    
+    @ViewBuilder
+    var playAndPauseButton: some View {
+        let labels = if !mediaManager.isRecording {
+            (
+                label:"연습 시작",
+                image: "play.fill",
+                color: Color.HPPrimary.dark
+            )
+        } else {
+            (
+                label:"일시 정지",
+                image: "pause.fill",
+                color: Color.HPGray.system800
+            )
+        }
+        HPButton(type: .text, size: .medium, color: labels.color) {
+            if !mediaManager.isRecording {
+                playPractice()
+            } else {
+                pausePractice()
+            }
+        } label: { type, size, color, expandable in
+            HPLabel(
+                content: (label: labels.label, icon: labels.image),
+                type: type,
+                size: size,
+                color: color,
+                alignStyle: .iconWithTextVertical,
+                iconSize: 18,
+                expandable: expandable,
+                fontStyle: .styled(.labeldButton)
+            )
+        }
+        .frame(width: ButtonSize.medium.labelSize.height, height: ButtonSize.medium.labelSize.height)
+        .keyboardShortcut(!mediaManager.isRecording ? "a" : .space, modifiers: [.command, .option] )
+    }
+    
+    @ViewBuilder
+    var stopButton: some View {
+        let content = (label: "끝내기", icon: "stop.fill")
+        HPButton(type: .text, size: .medium, color: .HPSecondary.base) {
+            Task {
+                await MainActor.run {
+                    stopPractice()
+                }
+            }
+        } label: { type, size, color, expandable in
+            HPLabel(
+                content: content,
+                type: type,
+                size: size,
+                color: color,
+                alignStyle: .iconWithTextVertical,
+                iconSize: 18,
+                expandable: expandable,
+                fontStyle: .styled(.labeldButton)
+            )
+        }
+        .frame(width: ButtonSize.medium.labelSize.height, height: ButtonSize.medium.labelSize.height)
+        .keyboardShortcut(.escape, modifiers: [.command, .option] )
+        .disabled(!mediaManager.isRecording)
+    }
+}
+
+// MARK: Methods
 extension MenubarExtraHeader {
     // MARK: - 연습 시작.
     private func playPractice() {
