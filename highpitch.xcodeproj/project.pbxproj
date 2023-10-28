@@ -444,13 +444,6 @@
 			path = APIs;
 			sourceTree = "<group>";
 		};
-		1D30E62A2AD6E67900623A58 /* Embaded */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Embaded;
-			sourceTree = "<group>";
-		};
 		1D30E6302AD6EAE200623A58 /* PersistenceModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,7 +601,6 @@
 		1DF659B92AD5951900AE5601 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				1D30E62A2AD6E67900623A58 /* Embaded */,
 				1DF6598F2AD594BF00AE5601 /* Assets.xcassets */,
 			);
 			path = Resource;

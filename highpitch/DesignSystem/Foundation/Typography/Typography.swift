@@ -57,6 +57,7 @@ struct HPSystemFontModifier: ViewModifier {
 
 enum HPStyledFont {
     case largeTitleLv
+    case labeldButton
 }
 
 extension HPStyledFont {
@@ -64,24 +65,32 @@ extension HPStyledFont {
         switch self {
         case .largeTitleLv:
             28
+        case .labeldButton:
+            10
         }
     }
     var lineHeight: CGFloat {
         switch self {
         case .largeTitleLv:
             ((self.fontSize*1.68) - self.fontSize) / 2
+        case .labeldButton:
+            ((self.fontSize*1.48) - self.fontSize) / 2
         }
     }
     var fontWeight: FoundationTypoSystemFont.FontWeight {
         switch self {
         case .largeTitleLv:
             .bold
+        case .labeldButton:
+            .semibold
         }
     }
     var relateTo: Font.TextStyle {
         switch self {
         case .largeTitleLv:
             .largeTitle
+        case .labeldButton:
+            .caption2
         }
     }
 }
