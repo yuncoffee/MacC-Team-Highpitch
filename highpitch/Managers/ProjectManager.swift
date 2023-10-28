@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 @Observable
 final class ProjectManager {
@@ -17,7 +18,7 @@ final class ProjectManager {
             self.practiceManager.practices = current?.practices
         }
     }
-    var temp: ProjectModel?
+    var temp: PersistentIdentifier?
     var currentTabItem = 1
     var path: NavigationPath = .init()
     // MARK: PracticeManager

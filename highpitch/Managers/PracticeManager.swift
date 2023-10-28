@@ -48,12 +48,10 @@ extension PracticeManager {
         current!.summary.level! /= 2.0
     }
     
-    func getPracticeDetail() {
+    func getPracticeDetail(practice: PracticeModel) {
         print("시작!!!!!!")
-        if let current = current {
-            
+        let current = practice
             initializer()
-            
             // sentenceIndex와 wordIndex, sentenceSyllable을 관리합니다.
             var sentenceIndex = 0; var wordIndex = 0
             var sentenceSyllable: [Int] = [0]
@@ -124,7 +122,6 @@ extension PracticeManager {
                 }
             }
             updateSummary()
-        }
         print("끝")
     }
 }

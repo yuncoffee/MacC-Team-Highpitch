@@ -57,7 +57,7 @@ struct MainWindowView: View {
                     }
                     if let practiceName = value.object as? String {
                         if practiceName != "err" {
-                            var latestPractice = practices.first { practice in
+                            let latestPractice = practices.first { practice in
                                 practice.practiceName == practiceName
                             }
                             guard let appendablePractice = latestPractice else {
@@ -70,17 +70,6 @@ struct MainWindowView: View {
                     }
                 }
             }
-//            do {
-//                try modelContext.delete(model: ProjectModel.self)
-//                try modelContext.delete(model: PracticeModel.self)
-//                try modelContext.delete(model: UtteranceModel.self)
-//                try modelContext.delete(model: WordModel.self)
-//                try modelContext.delete(model: SentenceModel.self)
-//                try modelContext.delete(model: PracticeSummaryModel.self)
-//                try modelContext.delete(model: FillerWordModel.self)
-//            } catch {
-//                print("Failed to clear all ProjectModel data")
-//            }
             setup()
         }
     }
