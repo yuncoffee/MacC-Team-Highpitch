@@ -16,20 +16,3 @@ struct TextWithIconLabelStyle: LabelStyle {
         }
     }
 }
-
-struct VerticalIconWithTextLabelStyle: LabelStyle {
-    var iconSize: CGFloat?
-    
-    func makeBody(configuration: Configuration) -> some View {
-        VStack(spacing: 2) {
-            if let iconSize = iconSize {
-                configuration.icon
-                    .font(.system(size: iconSize))
-                configuration.title
-            } else {
-                configuration.icon
-                configuration.title
-            }
-        }
-    }
-}
