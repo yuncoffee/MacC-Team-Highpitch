@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct AudioControllerView: View {
-    //    let mediaManager: AudioRecorderManager
-    @Environment(ProjectManager.self)
-    private var projectManager
-    @Environment(MediaManager.self)
-    private var mediaManager
+    private var audioPlayer : AudioPlayable
     var audioPath: URL
+    var timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
+    var callback: ((TimeInterval) -> Void)?
+    @State var currentTime = 0.0
+    @State var isPlaying = false
+    @State var isDragging = false
+    @State var prevState = false
     
+    init(
+        audioPlayer: AudioPlayable,
+        audioPath: URL,
+        callback: ((TimeInterval) -> Void)? = nil
+    ) {
+        self.audioPlayer = audioPlayer
+        self.audioPath = audioPath
+        self.callback = callback
+    }
     var body: some View {
         VStack(spacing: 0) {
             sliderContainer
@@ -27,8 +38,22 @@ struct AudioControllerView: View {
         .background(.ultraThinMaterial)
         .border(.HPComponent.stroke, width: 1, edges: [.top])
         .onAppear {
-            // MARK: 음성 파일 세팅
             settingAudio(filePath: audioPath)
+        }.onReceive(timer) { _ in
+            callback?(currentTime)
+            if !isDragging {
+                update()
+            } else {
+                audioPlayer.setCurrentTime(time: currentTime)
+            }
+        }.onChange(of: isDragging) { _, newValue in
+            if newValue {
+                audioPlayer.pausePlaying()
+            } else {
+                if prevState {
+                    audioPlayer.play()
+                }
+            }
         }
     }
 }
@@ -37,21 +62,21 @@ extension AudioControllerView {
     /// 음성파일 URL을 MediaManager에 등록
     private func settingAudio(filePath: URL) {
         do {
-            try mediaManager.registerAudio(url: filePath)
+            try audioPlayer.registerAudio(url: filePath)
         } catch {
             print(error.localizedDescription)
         }
     }
+    private func update() {
+        self.currentTime = audioPlayer.getCurrentTime()
+        self.isPlaying = audioPlayer.getState()        
+    }
     private func play() {
-        mediaManager.play()
+        audioPlayer.play()
     }
     private func pause() {
-        mediaManager.pausePlaying()
+        audioPlayer.pausePlaying()
     }
-    private func seekAudio(to time: TimeInterval) {
-        mediaManager.audioPlayer?.currentTime = time
-    }
-        
     private func timeString(time: TimeInterval) -> String {
         let minute = Int(time) / 60
         let seconds = Int(time) % 60
@@ -64,19 +89,22 @@ extension AudioControllerView {
     @ViewBuilder
     private var sliderContainer: some View {
         VStack(spacing: 0) {
-            Slider(value: Binding(get: {
-                mediaManager.currentTime
-            }, set: { newValue in
-                seekAudio(to: newValue)
-            }), in: 0...mediaManager.getDuration())
+            Slider(value: $currentTime, in: 0...audioPlayer.getDuration()) { edit in
+                if edit {
+                    isDragging = true
+                    prevState = isPlaying
+                } else {
+                    isDragging = false
+                }
+            }
             .tint(Color.HPPrimary.base)
             .padding(.horizontal, .HPSpacing.large)
             HStack(spacing: 0) {
-                Text(timeString(time: mediaManager.currentTime))
+                Text(timeString(time: currentTime))
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
                 Spacer()
-                Text(timeString(time: mediaManager.getDuration()))
+                Text(timeString(time: audioPlayer.getDuration()))
                     .systemFont(.caption2)
                     .foregroundStyle(Color.HPTextStyle.light)
             }
@@ -97,13 +125,13 @@ extension AudioControllerView {
     @ViewBuilder
     private var controllButton: some View {
         Button {
-            mediaManager.isPlaying ? pause() : play()
+            isPlaying ? pause() : play()
         } label: {
             Label(
-                mediaManager.isPlaying
+                isPlaying
                 ? "멈춤"
                 : "재생",
-                systemImage: mediaManager.isPlaying
+                systemImage: isPlaying
                 ? "pause.fill"
                 : "play.fill"
             )
@@ -119,7 +147,7 @@ extension AudioControllerView {
     @ViewBuilder
     private var goForward: some View {
         Button {
-            mediaManager.playAfter(second: 10)
+            audioPlayer.playAfter(second: 10)
         } label: {
             Label("앞으로 10초",
                 systemImage: "goforward.10"
@@ -134,7 +162,7 @@ extension AudioControllerView {
     @ViewBuilder
     private var goBackward: some View {
         Button {
-            mediaManager.playAfter(second: -10)
+            audioPlayer.playAfter(second: -10)
         } label: {
             Label("뒤로 10초",
                 systemImage: "gobackward.10"
@@ -146,7 +174,6 @@ extension AudioControllerView {
         .buttonStyle(.plain)
     }
 }
-
 // #Preview {
 //    @State var practice = PracticeModel(practiceName: "", index: 0, isVisited: <#Bool#>, creatAt: "", utterances: [], summary: PracticeSummaryModel())
 //    return AudioControllerView(practice: $practice)

@@ -32,7 +32,6 @@ struct MenubarExtraHeader: View {
     var isMenuPresented: Bool
     @Binding
     var isRecording: Bool
-    var practiceManager = PracticeManager()
     
     // HotKeys
     let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
@@ -204,7 +203,6 @@ extension MenubarExtraHeader {
         projectManager.stopPractice(
             mediaManager: mediaManager,
             keynoteManager: keynoteManager,
-            practiceManager: practiceManager,
             modelContext: modelContext
         )
     }

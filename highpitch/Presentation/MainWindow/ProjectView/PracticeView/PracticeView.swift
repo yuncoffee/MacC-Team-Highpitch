@@ -56,6 +56,7 @@ struct PracticeView: View {
     var practice: PracticeModel
     
     var body: some View {
+        @Bindable var mediaManager = mediaManager
         VStack(spacing: 0) {
             /// 연습 메타데이터(연습 횟수, 연습일)
             let title = practice.practiceName.description
@@ -66,7 +67,9 @@ struct PracticeView: View {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
                 if let audioPath = practice.audioPath {
-                    AudioControllerView(audioPath: audioPath)
+                    AudioControllerView(audioPlayer: mediaManager, audioPath: audioPath) { time in
+                        mediaManager.currentTime = time
+                    }
                 }
             }
         }
@@ -74,46 +77,10 @@ struct PracticeView: View {
         .background(Color.HPGray.systemWhite)
         .ignoresSafeArea()
         .onAppear {
-            mediaManager.timer = Timer.publish(every: mediaManager.timerCount, on: .main, in: .common)
-            mediaManager.connectedTimer = mediaManager.timer.connect()
-            mediaManager.connectedTimer?.cancel()
             practice.utterances.sort { $0.startAt < $1.startAt }
             if !practice.isVisited {
                 practice.isVisited = true
             }
-        }
-        .onChange(of: mediaManager.audioPlayer, { _, newValue in
-            if let newValue = newValue {
-                switch newValue.duration {
-                case (6000)...:
-                mediaManager.timerCount = 1
-                case (300)...:
-                mediaManager.timerCount = 0.5
-                case 60...:
-                mediaManager.timerCount = 0.1
-                default:
-                    mediaManager.timerCount = 0.01
-                }
-            }
-        })
-        .onChange(of: mediaManager.isPlaying, { _, newValue in
-            if !newValue {
-                mediaManager.connectedTimer?.cancel()
-            } else {
-                mediaManager.timer = Timer.publish(every: mediaManager.timerCount, on: .main, in: .common)
-                mediaManager.connectedTimer = mediaManager.timer.connect()
-            }
-        })
-        .onReceive(mediaManager.timer) { _ in
-            if let audioPlayer = mediaManager.audioPlayer {
-                DispatchQueue.main.async {
-                    mediaManager.currentTime = audioPlayer.currentTime
-                }
-                
-            }
-        }
-        .onDisappear {
-            mediaManager.connectedTimer?.cancel()
         }
     }
 }
@@ -138,12 +105,12 @@ extension PracticeView {
     }
 }
 
-extension PracticeView {
-    private func updateProgress() {
-        guard let player = mediaManager.audioPlayer else { return }
-        mediaManager.currentTime = player.currentTime
-    }
-}
+//extension PracticeView {
+//    private func updateProgress() {
+//        guard let player = mediaManager.audioPlayer else { return }
+//        mediaManager.currentTime = player.currentTime
+//    }
+//}
 
 // #Preview {
 //    @State

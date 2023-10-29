@@ -30,15 +30,15 @@ struct FastSentReplay: View {
                     }
                 if isDetailActive {
                     ForEach(
-                        Array(practice.sentences.sorted(by: {$0.epmValue! < $1.epmValue! }).enumerated()),
+                        Array(practice.sentences.sorted(by: {$0.epmValue < $1.epmValue }).enumerated()),
                         id: \.1.id
                     ) { index, each in
-                        if each.epmValue! > 422.4 {
+                        if each.epmValue > 422.4 {
                             FastSentReplayCell(
                                 index: index,
                                 isOdd: index % 2 == 0,
-                                startAt: Double(each.startAt!),
-                                endAt: Double(each.endAt!),
+                                startAt: Double(each.startAt),
+                                endAt: Double(each.endAt),
                                 sentence: each.sentence,
                                 isLast: index == practice.sentences.count - 1,
                                 selectedIndex: $selectedIndex
@@ -63,15 +63,15 @@ struct FastSentReplay: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         .padding(.trailing, .HPSpacing.xxxlarge)
-        .onReceive(mediaManager.timer, perform: { _ in
-            if mediaManager.stopPoint != nil {
-                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
-                    mediaManager.stopPoint = nil
-                    selectedIndex = -1
-                    mediaManager.pausePlaying()
-                }
-            }
-        })
+//        .onReceive(mediaManager.timer, perform: { _ in
+//            if mediaManager.stopPoint != nil {
+//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
+//                    mediaManager.stopPoint = nil
+//                    selectedIndex = -1
+//                    mediaManager.pausePlaying()
+//                }
+//            }
+//        })
     }
 }
 
