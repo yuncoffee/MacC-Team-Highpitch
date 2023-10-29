@@ -10,7 +10,7 @@ import SwiftUI
 struct AudioControllerView: View {
     private var audioPlayer : AudioPlayable
     var audioPath: URL
-    var timer = Timer.publish(every: 0.03, on: .main, in: .common).autoconnect()
+    var timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
     var callback: ((TimeInterval) -> Void)?
     @State var currentTime = 0.0
     @State var isPlaying = false
@@ -174,7 +174,6 @@ extension AudioControllerView {
         .buttonStyle(.plain)
     }
 }
-
 // #Preview {
 //    @State var practice = PracticeModel(practiceName: "", index: 0, isVisited: <#Bool#>, creatAt: "", utterances: [], summary: PracticeSummaryModel())
 //    return AudioControllerView(practice: $practice)

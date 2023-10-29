@@ -15,7 +15,7 @@ enum AudioError: Error {
 
 @Observable
 /// 미디어 입력, 출력 역할을 담당하는 매니저 클래스
-final class MediaManager: NSObject, AVAudioPlayerDelegate, Recordable, AudioPlayable {
+final class MediaManager: NSObject, AVAudioPlayerDelegate {
     /// 샘플 코드
     var keynoteIsOpen = true
     
@@ -24,7 +24,6 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate, Recordable, AudioPlay
     
     var isPlaying = false
     
-    //
     /// 음성메모 녹음 관련 프로퍼티
     var audioRecorder: AVAudioRecorder?
     
@@ -35,13 +34,10 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate, Recordable, AudioPlay
     var fileName: String = ""
     var currentTime: TimeInterval = 0.0
     var stopPoint: TimeInterval?
-//    var timerCount: Double = 0.1
-//    var timer = Timer.publish(every: 0.1, on: .main, in: .common)
-    //var connectedTimer: Cancellable?
 }
 
 // MARK: - 음성메모 녹음 관련 메서드
-extension MediaManager {
+extension MediaManager: Recordable {
     func startRecording() {
         // MARK: 파일 이름 전략은 -> YYYYMMDDHHMMSS.m4a
         let fileURL = getPath(fileName: fileName)
@@ -71,7 +67,7 @@ extension MediaManager {
 }
 
 // MARK: - 음성메모 재생 관련 메서드
-extension MediaManager {
+extension MediaManager: AudioPlayable  {
     func registerAudio(url: URL) throws {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -146,7 +142,6 @@ protocol Recordable {
     func stopRecording()
 }
 protocol AudioPlayable {
-    var isPlaying: Bool { get set }
     func registerAudio(url: URL) throws
     func play()
     func playAfter(second: Double)
