@@ -144,17 +144,17 @@ struct SpeedAverageChart: View {
 extension SpeedAverageChart {
     
     func epmRange() -> [Double] {
-        let sortedSentences = sentences.sorted(by: { $0.epmValue! < $1.epmValue! })
+        let sortedSentences = sentences.sorted(by: { $0.epmValue < $1.epmValue })
         return [
-            sortedSentences.first!.epmValue!,
-            sortedSentences.last!.epmValue!
+            sortedSentences.first!.epmValue,
+            sortedSentences.last!.epmValue
         ]
     }
     
     @ViewBuilder
     var header: some View {
-        let rate =  if practice.summary.epmAverage! > 288 &&
-        practice.summary.epmAverage! < 422.4 {"적절"} else {"부적절"}
+        let rate =  if practice.summary.epmAverage > 288 &&
+        practice.summary.epmAverage < 422.4 {"적절"} else {"부적절"}
         VStack(alignment: .leading, spacing: 8) {
             Text("평균 발화 속도")
                 .systemFont(.subTitle)
@@ -163,7 +163,7 @@ extension SpeedAverageChart {
                 Text("이번 연습의 평균 속도는 ")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPTextStyle.dark)
-                Text("\(String(format: "%.0f", practice.summary.epmAverage!))EPM")
+                Text("\(String(format: "%.0f", practice.summary.epmAverage))EPM")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPPrimary.dark)
                 Text(" 으로 ")

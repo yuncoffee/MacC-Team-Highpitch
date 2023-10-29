@@ -66,7 +66,6 @@ struct HighpitchApp: App {
         Settings {
             SettingsView()
                 .environment(appleScriptManager)
-                .environment(fileSystemManager)
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .modelContainer(container)

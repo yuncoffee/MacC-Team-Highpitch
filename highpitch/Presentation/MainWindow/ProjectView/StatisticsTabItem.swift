@@ -67,7 +67,7 @@ extension StatisticsTabItem {
         var answer = 0.0
         if let practices = projectManager.current?.practices {
             for practice in practices {
-                answer += Double(practice.summary.level ?? 0)
+                answer += Double(practice.summary.level)
             }
             answer /= Double(practices.count)
             return answer
@@ -78,7 +78,7 @@ extension StatisticsTabItem {
     
     func getBestPractice() -> PracticeModel? {
         if let practices = projectManager.current?.practices.sorted(
-            by: { $0.summary.level ?? 0 > $1.summary.level ?? 0 }) {
+            by: { $0.summary.level > $1.summary.level }) {
             let answer = practices[0]
             return answer
         } else {
@@ -185,7 +185,7 @@ extension StatisticsTabItem {
                     Text("LV. ")
                         .systemFont(.caption, weight: .semibold)
                         .foregroundStyle(Color.HPPrimary.dark)
-                    Text(" \(bestPractice?.summary.level! ?? -1, specifier: "%.1f")")
+                    Text(" \(bestPractice?.summary.level ?? -1, specifier: "%.1f")")
                         .styledFont(.largeTitleLv)
                         .foregroundStyle(Color.HPPrimary.dark)
                     Text("/\(MAX_LEVEL)")
@@ -195,7 +195,7 @@ extension StatisticsTabItem {
                 .frame(alignment: .bottom)
                 HStack(spacing: 0) {
                     HPStyledLabel(content: "습관어 \(bestPractice?.summary.fillerWordCount ?? -1)회 • 발화 속도"
-                                  + String(format: "%.1f", bestPractice?.summary.epmAverage! ?? -1) + "EPM")
+                                  + String(format: "%.1f", bestPractice?.summary.epmAverage ?? -1) + "EPM")
                 }
             }
             .frame(alignment: .center)
@@ -304,19 +304,19 @@ extension StatisticsTabItem {
     
     func fillerWordRange() -> [Double] {
         let practices = projectManager.current?.practices.sorted(
-            by: { $0.summary.fillerWordPercentage! < $1.summary.fillerWordPercentage! }
+            by: { $0.summary.fillerWordPercentage < $1.summary.fillerWordPercentage }
         )
         if let practices = practices {
-            if ( practices.first!.summary.fillerWordPercentage! ==
-                 practices.last!.summary.fillerWordPercentage!) {
+            if ( practices.first!.summary.fillerWordPercentage ==
+                 practices.last!.summary.fillerWordPercentage) {
                 return [
-                    practices.first!.summary.fillerWordPercentage! - 5.0,
-                    practices.first!.summary.fillerWordPercentage! + 5.0
+                    practices.first!.summary.fillerWordPercentage - 5.0,
+                    practices.first!.summary.fillerWordPercentage + 5.0
                 ]
             }
             return [
-                practices.first!.summary.fillerWordPercentage!,
-                practices.last!.summary.fillerWordPercentage!
+                practices.first!.summary.fillerWordPercentage,
+                practices.last!.summary.fillerWordPercentage
             ]
         }
         return []
@@ -324,19 +324,19 @@ extension StatisticsTabItem {
     
     func epmValueRange() -> [Double] {
         let practices = projectManager.current?.practices.sorted(
-            by: { $0.summary.epmAverage! < $1.summary.epmAverage! }
+            by: { $0.summary.epmAverage < $1.summary.epmAverage }
         )
         if let practices = practices {
-            if ( practices.first!.summary.epmAverage! ==
-                 practices.last!.summary.epmAverage!) {
+            if ( practices.first!.summary.epmAverage ==
+                 practices.last!.summary.epmAverage) {
                 return [
-                    practices.first!.summary.epmAverage! - 25,
-                    practices.first!.summary.epmAverage! + 25
+                    practices.first!.summary.epmAverage - 25,
+                    practices.first!.summary.epmAverage + 25
                 ]
             }
             return [
-                practices.first!.summary.epmAverage!,
-                practices.last!.summary.epmAverage!
+                practices.first!.summary.epmAverage,
+                practices.last!.summary.epmAverage
             ]
         }
         return []
@@ -352,7 +352,7 @@ extension StatisticsTabItem {
                     if selectedSegment == 0 {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
-                            y: .value("레벨", practice.summary.level!)
+                            y: .value("레벨", practice.summary.level)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
@@ -362,7 +362,7 @@ extension StatisticsTabItem {
                     } else if selectedSegment == 1 {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
-                            y: .value("습관어", practice.summary.fillerWordPercentage!)
+                            y: .value("습관어", practice.summary.fillerWordPercentage)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
@@ -372,7 +372,7 @@ extension StatisticsTabItem {
                     } else {
                         LineMark(
                             x: .value("연습 회차", practice.index + 1),
-                            y: .value("발화 속도", practice.summary.epmAverage!)
+                            y: .value("발화 속도", practice.summary.epmAverage)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(Color.HPPrimary.light)
@@ -384,19 +384,19 @@ extension StatisticsTabItem {
                 if selectedSegment == 0 {
                     PointMark(
                         x: .value("연습 회차", practices.last!.index + 1),
-                        y: .value("레벨", practices.last!.summary.level!)
+                        y: .value("레벨", practices.last!.summary.level)
                     )
                     .foregroundStyle(Color.HPPrimary.base)
                 } else if selectedSegment == 1 {
                     PointMark(
                         x: .value("연습 회차", practices.last!.index + 1),
-                        y: .value("습관어", practices.last!.summary.fillerWordPercentage!)
+                        y: .value("습관어", practices.last!.summary.fillerWordPercentage)
                     )
                     .foregroundStyle(Color.HPPrimary.base)
                 } else {
                     PointMark(
                         x: .value("연습 회차", practices.last!.index + 1),
-                        y: .value("발화 속도", practices.last!.summary.epmAverage!)
+                        y: .value("발화 속도", practices.last!.summary.epmAverage)
                     )
                     .foregroundStyle(Color.HPPrimary.base)
                 }
@@ -476,6 +476,15 @@ extension StatisticsTabItem {
                                 .systemFont(.caption2, weight: .medium)
                                 .foregroundStyle(Color.HPTextStyle.base)
                                 .padding(.trailing, 18)
+                                .onTapGesture {
+                                    print(Array(stride(
+                                        from: range[selectedSegment].first!,
+                                        to: range[selectedSegment].last! +
+                                        (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
+                                        by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                                    )))
+                                    print("touched")
+                                }
                         }
                     }
                     AxisGridLine()
