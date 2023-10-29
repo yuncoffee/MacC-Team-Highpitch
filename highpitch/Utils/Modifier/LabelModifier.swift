@@ -16,12 +16,3 @@ struct TextWithIconLabelStyle: LabelStyle {
         }
     }
 }
-
-struct VerticalIconWithTextLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack(spacing: 2) {
-            configuration.icon
-            configuration.title
-        }
-    }
-}
