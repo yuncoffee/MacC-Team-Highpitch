@@ -27,6 +27,12 @@ struct MenubarExtraFooter: View {
         order: .reverse)
     var unVisitedPractices: [PracticeModel] = []
     
+    @Query(
+        sort: \ProjectModel.creatAt,
+        order: .reverse
+    )
+    var projectModels: [ProjectModel]
+    
     @Binding
     var selectedProject: ProjectModel?
     
@@ -81,13 +87,25 @@ extension MenubarExtraFooter {
                     LazyVGrid(columns: [GridItem()], spacing: 0) {
                         if !checkUnVisitedPracticesCount() {
                             ForEach(practies[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
-                                PracticeResultCell(practice: practice) {
+                                let projectName = projectModels
+                                    .filter { $0.practices.contains {
+                                        $0.persistentModelID == practice.persistentModelID
+                                    }
+                                }[0].projectName
+                                
+                                PracticeResultCell(projectName: projectName, practice: practice) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }
                         } else {
                             ForEach(unVisitedPractices[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
-                                PracticeResultCell(practice: practice) {
+                                let projectName = projectModels
+                                    .filter { $0.practices.contains {
+                                        $0.persistentModelID == practice.persistentModelID
+                                    }
+                                }[0].projectName
+                                
+                                PracticeResultCell(projectName: projectName, practice: practice) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }

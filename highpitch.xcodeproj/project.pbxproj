@@ -506,7 +506,6 @@
 			isa = PBXGroup;
 			children = (
 				1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */,
-				1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */,
 			);
 			path = MenubarExtraContent;
 			sourceTree = "<group>";
@@ -514,6 +513,7 @@
 		1DE82ACF2AEDF30B009925FC /* MenubarExtraFooter */ = {
 			isa = PBXGroup;
 			children = (
+				1D95F0AE2AE3BEF000E563EA /* PracticeResultCell.swift */,
 				1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */,
 			);
 			path = MenubarExtraFooter;

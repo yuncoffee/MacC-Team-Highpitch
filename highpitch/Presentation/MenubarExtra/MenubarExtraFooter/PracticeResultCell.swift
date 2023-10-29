@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PracticeResultCell: View {
+    var projectName: String
     var practice: PracticeModel
     var completion: () -> Void
     
@@ -22,10 +23,16 @@ struct PracticeResultCell: View {
                         .systemFont(.caption, weight: .semibold)
                         .foregroundStyle(Color.HPTextStyle.darker)
                 }
-                Text("\(practice.practiceName) •  \(practice.creatAt)")
-                    .systemFont(.caption2)
-                    .foregroundStyle(Color.HPTextStyle.base)
-                    .offset(x: 16)
+                HStack(spacing: 0) {
+                    Text("\(projectName)")
+                        .lineLimit(1)
+                    Text(" • ")
+                    Text("\(Date.diffNowToPractieDate(input: practice.creatAt))")
+                }
+                .systemFont(.caption2)
+                .foregroundStyle(Color.HPTextStyle.base)
+                .frame(maxWidth: 200, alignment: .leading)
+                .offset(x: 16)
             }
             Spacer()
             VStack {
@@ -56,7 +63,7 @@ struct PracticeResultCell: View {
         summary: PracticeSummaryModel()
     )
     
-    return PracticeResultCell(practice: practice) {
+    return PracticeResultCell(projectName: "프로젝트", practice: practice) {
         print("Hello")
     }
     .padding(8)
