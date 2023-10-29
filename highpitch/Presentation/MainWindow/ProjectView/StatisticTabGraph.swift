@@ -12,14 +12,43 @@ struct StatisticTabGraph: View {
     @Environment(ProjectManager.self)
     private var projectManager
     
-    @Binding
-    var selectedSegment: Int
+    @State
+    private var selectedSegment = 0
     @State
     var rawSelected: Int?
     @State
     var rawSelectedRange: ClosedRange<Int>?
     
     var body: some View {
+        let title: [String] = ["레벨", "습관어", "발화 속도"]
+        VStack(spacing: 16) {
+            HStack(alignment: .top, spacing: 0) {
+                HStack(spacing: .HPSpacing.small) {
+                    Text("회차별 연습 차트")
+                        .systemFont(.subTitle)
+                        .foregroundStyle(Color.HPTextStyle.darker)
+                    HPSegmentedControl(selectedSegment: $selectedSegment, options: title)
+                }
+                Spacer()
+                averageGraphToolTip
+                .padding(.trailing, .HPSpacing.xsmall)
+            }
+            .frame(alignment: .top)
+            graphContainer
+        }
+        .padding(.vertical, .HPSpacing.xsmall)
+        .padding(.leading, .HPSpacing.medium)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(Color.HPGray.systemWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
+    }
+}
+
+extension StatisticTabGraph {
+    // MARK: - 그래프 컨테이너
+    @ViewBuilder
+    var graphContainer: some View {
         let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
         if let practices = practices {
             /// 그래프 종류
@@ -147,6 +176,33 @@ struct StatisticTabGraph: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
+    
+    // MARK: - 회차별 연습 차트 툴팁
+    @ViewBuilder
+    var averageGraphToolTip: some View {
+        HPTooltip(tooltipContent: "다시보기", arrowEdge: .top, content: {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("회차별 연습 차트란?")
+                    .systemFont(.footnote, weight: .bold)
+                    .foregroundStyle(Color.HPTextStyle.darker)
+                    .padding(.bottom, .HPSpacing.xxxxsmall)
+                HStack(spacing: 0) {
+                    Text("이 프로젝트에서 연습한 ").fontWeight(.regular)
+                    + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 발화 속도의 추이").bold()
+                    + Text("를 한 눈에 볼 수 있게 각각 차트로 나타냈어요.").fontWeight(.regular)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .systemFont(.caption, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                Text("*차트의 점을 클릭하면, 해당 회차의 연습 날짜 및 시간 정보를 볼 수 있어요")
+                    .systemFont(.caption2, weight: .medium)
+                    .foregroundStyle(Color.HPPrimary.base)
+            }
+            .padding(.vertical, .HPSpacing.xsmall)
+            .padding(.horizontal, .HPSpacing.small)
+            .frame(maxWidth: 400, maxHeight: 145)
+        })
+    }
 }
 
 extension StatisticTabGraph {
@@ -182,7 +238,6 @@ extension StatisticTabGraph {
             return nil
         } else { return nil }
     }
-    
     
     /// 레벨 그래프에 그려질 YAxis 범위
     func levelRange() -> [Double] {

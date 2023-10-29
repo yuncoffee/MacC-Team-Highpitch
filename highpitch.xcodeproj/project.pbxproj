@@ -229,9 +229,9 @@
 				1D98941D2AE6196500DE57A1 /* PracticeList */,
 				1D09AF672AD98A1700C1400E /* ProjectView.swift */,
 				1D09AF932ADA67BB00C1400E /* StatisticsTabItem.swift */,
+				1101606A2AEE48C100BD405F /* StatisticTabGraph.swift */,
 				1D09AF962ADA681500C1400E /* PracticesTabItem.swift */,
 				1D09AF642AD989DA00C1400E /* PracticeView */,
-				1101606A2AEE48C100BD405F /* StatisticTabGraph.swift */,
 			);
 			path = ProjectView;
 			sourceTree = "<group>";
