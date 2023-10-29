@@ -17,10 +17,10 @@ class PracticeSummaryModel {
     var fastSpeechTime: Int
     var eachFillerWordCount: [FillerWordModel]
     var fastSentenceIndex: [Int]
-    var fastSpeechRate: Double?
-    var fillerWordPercentage: Double?
-    var epmAverage: Double?
-    var level: Double?
+    var fastSpeechRate: Double
+    var fillerWordPercentage: Double
+    var epmAverage: Double
+    var level: Double
     
     init(
         syllableSum: Int = 0,
@@ -30,10 +30,10 @@ class PracticeSummaryModel {
         fastSpeechTime: Int = 0,
         eachFillerWordCount: [FillerWordModel] = [],
         fastSentenceIndex: [Int] = [],
-        fastSpeechRate: Double? = nil,
-        fillerWordPercentage: Double? = nil,
-        epmAverage: Double? = nil,
-        level: Double? = nil
+        fastSpeechRate: Double = -1.0,
+        fillerWordPercentage: Double = -1.0,
+        epmAverage: Double = -1.0,
+        level: Double = -1.0
     ) {
         self.syllableSum = syllableSum
         self.durationSum = durationSum

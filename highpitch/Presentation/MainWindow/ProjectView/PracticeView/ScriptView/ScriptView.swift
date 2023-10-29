@@ -63,12 +63,12 @@ struct ScriptView: View {
                                     Color.HPPrimary.base : word.sentenceIndex == nowSentece ?
                                     Color.HPTextStyle.darker : Color.HPTextStyle.base)
                                 .background(
-                                    sentences[word.sentenceIndex].epmValue! > 422.4 ?
+                                    sentences[word.sentenceIndex].epmValue > 422.4 ?
                                     Color.HPComponent.highlight : Color.clear
                                 )
                                 .onTapGesture {
                                     nowSentece = word.sentenceIndex
-                                    play(startAt: Double(sentences[nowSentece!].startAt!), index: nowSentece!)
+                                    play(startAt: Double(sentences[nowSentece!].startAt), index: nowSentece!)
                                     mediaManager.isPlaying = true
                                 }
                                 .id(width == 0.0 ? word.sentenceIndex : -1)
@@ -115,7 +115,7 @@ struct ScriptView: View {
             if nowSentece != nil {
                 if nowSentece! < sentences.count {
                     if nowSentece != -1 {
-                        if newValue > Double(sentences[nowSentece!].endAt!)/1000 {
+                        if newValue > Double(sentences[nowSentece!].endAt)/1000 {
                             nowSentece! += 1
                         }
                     }

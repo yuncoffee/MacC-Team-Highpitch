@@ -49,7 +49,6 @@ extension ProjectManager {
     func stopPractice(
         mediaManager: MediaManager,
         keynoteManager: KeynoteManager,
-        practiceManager: PracticeManager,
         modelContext: ModelContext
     ) {
         if !mediaManager.isRecording {
@@ -82,17 +81,14 @@ extension ProjectManager {
             )
             /// 프로젝트에 추가한다.
             tempProject.practices.append(newPracticeModel)
-            
-            /// @@@@@@@@ summary를 생성한다. 변경 필요! @@@@@@@@
-            practiceManager.current = newPracticeModel
-            practiceManager.getPracticeDetail(practice: newPracticeModel)
-            /// @@@@@@@@ summary를 생성한다. 변경 필요! @@@@@@@@
+            /// words, sentences, summary를 처리한다.
+            PracticeManager.getPracticeDetail(practice: newPracticeModel)
             temp = nil
             if current == nil {
                 current = tempProject
             }
             NotificationManager.shared.sendNotification(
-                name: practiceManager.current?.practiceName ?? "err"
+                name: newPracticeModel.practiceName
             )
         }
     }
