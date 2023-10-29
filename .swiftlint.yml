@@ -54,6 +54,7 @@ identifier_name:
     - at
     - acc
     - cur
+    - box
   allowed_symbols: ["_"]
 opt_in_rules:
   - missing_docs

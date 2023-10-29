@@ -11,6 +11,10 @@ import Foundation
 extension CGFloat {
     struct HPCornerRadius {
         private init() {}
+        static let small: CGFloat = 4
+        static let medium: CGFloat = 8
+        static let large: CGFloat = 12
+        static let round: CGFloat = 100
     }
 }
 

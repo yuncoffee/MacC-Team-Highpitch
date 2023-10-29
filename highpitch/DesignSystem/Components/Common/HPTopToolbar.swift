@@ -17,19 +17,19 @@ struct HPTopToolbar: View {
         ZStack {
             HStack(spacing: 0) {
                 if let completion = backButtonCompletion {
-                    Button {
-                      print("키노트 열기")
+                    HPButton(color: .HPSecondary.base) {
                         completion()
-                    } label: {
-                        Text("키노트 열기")
-                            .font(.system(size: 16))
-                            .frame(width: 120, height: 40)
-                            .foregroundStyle(.white)
-                            .background(Color("2f2f2f"))
-                            .cornerRadius(10)
-                            .contentShape(Rectangle())
+                    } label: { type, size, color, expandable in
+                        HPLabel(
+                            content: (label: "키노트 열기", icon: nil),
+                            type: type,
+                            size: size,
+                            color: color,
+                            expandable: expandable,
+                            fontStyle: .system(.body)
+                        )
                     }
-                    .buttonStyle(.plain)
+                    .frame(width: 120)
                     .padding(.leading, .HPSpacing.medium)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -46,18 +46,19 @@ struct HPTopToolbar: View {
             }
             .frame(maxWidth: .infinity)
             HStack(spacing: 0) {
-                Button {
-                  print("키노트 열기")
-                } label: {
-                    Text("키노트 열기")
-                        .systemFont(.body)
-                        .frame(width: 120, height: 40)
-                        .foregroundStyle(Color.HPGray.systemWhite)
-                        .background(Color.HPSecondary.base)
-                        .cornerRadius(10)
-                        .contentShape(Rectangle())
+                HPButton(color: .HPSecondary.base) {
+                    print("키노트 열기")
+                } label: { type, size, color, expandable in
+                    HPLabel(
+                        content: (label: "키노트 열기", icon: nil),
+                        type: type,
+                        size: size,
+                        color: color,
+                        expandable: expandable, 
+                        fontStyle: .system(.body)
+                    )
                 }
-                .buttonStyle(.plain)
+                .frame(width: 120)
                 .padding(.trailing, .HPSpacing.medium)
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }

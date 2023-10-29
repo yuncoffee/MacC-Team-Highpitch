@@ -13,7 +13,6 @@ class UtteranceModel: Comparable {
     var startAt: Int
     var duration: Int
     var message: String
-    var temp: String = "12"
     
     init(startAt: Int, duration: Int, message: String) {
         self.startAt = startAt
