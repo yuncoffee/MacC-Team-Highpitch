@@ -73,7 +73,6 @@
 		1DBF14612AE1380D00B28CED /* MenubarExtraHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14602AE1380D00B28CED /* MenubarExtraHeader.swift */; };
 		1DBF14642AE1391F00B28CED /* MenubarExtraContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */; };
 		1DBF14672AE1623E00B28CED /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1DBF14662AE1623E00B28CED /* SettingsAccess */; };
-		1DDB9CFE2AEE0500001CA7CC /* unused.rb in Resources */ = {isa = PBXBuildFile; fileRef = 1DDB9CFD2AEE0500001CA7CC /* unused.rb */; };
 		1DE82ACE2AEDF2FD009925FC /* MenubarExtraFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */; };
 		1DE8B6452AECD0C500E0746E /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6442AECD0C500E0746E /* HPButton.swift */; };
 		1DE8B64C2AECD4C400E0746E /* BaseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */; };
@@ -174,7 +173,6 @@
 		1DBF145B2AE0A75600B28CED /* PracticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeManager.swift; sourceTree = "<group>"; };
 		1DBF14602AE1380D00B28CED /* MenubarExtraHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraHeader.swift; sourceTree = "<group>"; };
 		1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraContent.swift; sourceTree = "<group>"; };
-		1DDB9CFD2AEE0500001CA7CC /* unused.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unused.rb; sourceTree = "<group>"; };
 		1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraFooter.swift; sourceTree = "<group>"; };
 		1DE8B6442AECD0C500E0746E /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
 		1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStyle.swift; sourceTree = "<group>"; };
@@ -550,7 +548,6 @@
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
-				1DDB9CFD2AEE0500001CA7CC /* unused.rb */,
 				1D30E62B2AD6E88500623A58 /* .swiftlint.yml */,
 				1DF659882AD594BD00AE5601 /* highpitch */,
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
@@ -678,7 +675,6 @@
 			buildConfigurationList = 1DF659AE2AD594BF00AE5601 /* Build configuration list for PBXNativeTarget "highpitch" */;
 			buildPhases = (
 				1D30E62D2AD6E89800623A58 /* Swift Lint */,
-				1DE82AD12AEE010A009925FC /* UnUsed */,
 				1DF659822AD594BD00AE5601 /* Sources */,
 				1DF659832AD594BD00AE5601 /* Frameworks */,
 				1DF659842AD594BD00AE5601 /* Resources */,
@@ -793,7 +789,6 @@
 				11294CF72AE3C38000B5EB48 /* SecretKey.plist in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
 				1D0ECD722ADD13C900B95A74 /* FontResource.xcassets in Resources */,
-				1DDB9CFE2AEE0500001CA7CC /* unused.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,25 +827,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		1DE82AD12AEE010A009925FC /* UnUsed */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = UnUsed;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which pecker >/dev/null; then\n  pecker\nelse\n  echo \"warning: Pecker not installed, download from https://github.com/woshiccm/Pecker\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
