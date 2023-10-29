@@ -63,15 +63,15 @@ struct FastSentReplay: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         .padding(.trailing, .HPSpacing.xxxlarge)
-        .onReceive(mediaManager.timer, perform: { _ in
-            if mediaManager.stopPoint != nil {
-                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
-                    mediaManager.stopPoint = nil
-                    selectedIndex = -1
-                    mediaManager.pausePlaying()
-                }
-            }
-        })
+//        .onReceive(mediaManager.timer, perform: { _ in
+//            if mediaManager.stopPoint != nil {
+//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
+//                    mediaManager.stopPoint = nil
+//                    selectedIndex = -1
+//                    mediaManager.pausePlaying()
+//                }
+//            }
+//        })
     }
 }
 
