@@ -46,7 +46,7 @@ struct MenubarExtraHeader: View {
             rightButtonGroup
         }
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-        .frame(minHeight: 48, maxHeight: 48)
+        .frame(minHeight: 60, maxHeight: 60)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
         .onAppear {
             // onAppear를 통해서 hotKey들의 동작 함수들을 등록해준다.

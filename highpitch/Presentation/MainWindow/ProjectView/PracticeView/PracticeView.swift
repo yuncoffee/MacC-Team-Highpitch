@@ -50,7 +50,7 @@ struct PracticeView: View {
     @Environment(ProjectManager.self)
     private var projectManager
     @Environment(MediaManager.self)
-    private var mediaManager
+    var mediaManager
     
     @State
     var practice: PracticeModel

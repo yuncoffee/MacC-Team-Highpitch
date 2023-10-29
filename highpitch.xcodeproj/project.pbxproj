@@ -72,6 +72,8 @@
 		1DBF14612AE1380D00B28CED /* MenubarExtraHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14602AE1380D00B28CED /* MenubarExtraHeader.swift */; };
 		1DBF14642AE1391F00B28CED /* MenubarExtraContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */; };
 		1DBF14672AE1623E00B28CED /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1DBF14662AE1623E00B28CED /* SettingsAccess */; };
+		1DDB9CFE2AEE0500001CA7CC /* unused.rb in Resources */ = {isa = PBXBuildFile; fileRef = 1DDB9CFD2AEE0500001CA7CC /* unused.rb */; };
+		1DE82ACE2AEDF2FD009925FC /* MenubarExtraFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */; };
 		1DE8B6452AECD0C500E0746E /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6442AECD0C500E0746E /* HPButton.swift */; };
 		1DE8B64C2AECD4C400E0746E /* BaseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */; };
 		1DE8B64E2AECDC1200E0746E /* HPLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64D2AECDC1200E0746E /* HPLabelStyle.swift */; };
@@ -170,6 +172,8 @@
 		1DBF145B2AE0A75600B28CED /* PracticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeManager.swift; sourceTree = "<group>"; };
 		1DBF14602AE1380D00B28CED /* MenubarExtraHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraHeader.swift; sourceTree = "<group>"; };
 		1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraContent.swift; sourceTree = "<group>"; };
+		1DDB9CFD2AEE0500001CA7CC /* unused.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unused.rb; sourceTree = "<group>"; };
+		1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraFooter.swift; sourceTree = "<group>"; };
 		1DE8B6442AECD0C500E0746E /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
 		1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStyle.swift; sourceTree = "<group>"; };
 		1DE8B64D2AECDC1200E0746E /* HPLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPLabelStyle.swift; sourceTree = "<group>"; };
@@ -506,6 +510,14 @@
 			path = MenubarExtraContent;
 			sourceTree = "<group>";
 		};
+		1DE82ACF2AEDF30B009925FC /* MenubarExtraFooter */ = {
+			isa = PBXGroup;
+			children = (
+				1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */,
+			);
+			path = MenubarExtraFooter;
+			sourceTree = "<group>";
+		};
 		1DE8B6432AECD0B700E0746E /* HPButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +547,7 @@
 		1DF6597D2AD594BD00AE5601 = {
 			isa = PBXGroup;
 			children = (
+				1DDB9CFD2AEE0500001CA7CC /* unused.rb */,
 				1D30E62B2AD6E88500623A58 /* .swiftlint.yml */,
 				1DF659882AD594BD00AE5601 /* highpitch */,
 				1DF6599D2AD594BF00AE5601 /* highpitchTests */,
@@ -557,6 +570,7 @@
 		1DF659882AD594BD00AE5601 /* highpitch */ = {
 			isa = PBXGroup;
 			children = (
+				1D95F0B22AE3C35D00E563EA /* SecretKey.plist */,
 				11294CF62AE3C38000B5EB48 /* SecretKey.plist */,
 				1D30E6162AD59E0C00623A58 /* Models */,
 				1DF659BC2AD595E100AE5601 /* Presentation */,
@@ -566,7 +580,6 @@
 				1DF659B92AD5951900AE5601 /* Resource */,
 				1DF659B82AD5950900AE5601 /* App */,
 				1D09AF842ADA260200C1400E /* DesignSystem */,
-				1D95F0B22AE3C35D00E563EA /* SecretKey.plist */,
 			);
 			path = highpitch;
 			sourceTree = "<group>";
@@ -649,6 +662,7 @@
 				1DF659C72AD5998D00AE5601 /* MenubarExtraView.swift */,
 				1DBF145D2AE137B000B28CED /* MenubarExtraHeader */,
 				1DBF145F2AE137F800B28CED /* MenubarExtraContent */,
+				1DE82ACF2AEDF30B009925FC /* MenubarExtraFooter */,
 			);
 			path = MenubarExtra;
 			sourceTree = "<group>";
@@ -661,6 +675,7 @@
 			buildConfigurationList = 1DF659AE2AD594BF00AE5601 /* Build configuration list for PBXNativeTarget "highpitch" */;
 			buildPhases = (
 				1D30E62D2AD6E89800623A58 /* Swift Lint */,
+				1DE82AD12AEE010A009925FC /* UnUsed */,
 				1DF659822AD594BD00AE5601 /* Sources */,
 				1DF659832AD594BD00AE5601 /* Frameworks */,
 				1DF659842AD594BD00AE5601 /* Resources */,
@@ -775,6 +790,7 @@
 				11294CF72AE3C38000B5EB48 /* SecretKey.plist in Resources */,
 				1DF659902AD594BF00AE5601 /* Assets.xcassets in Resources */,
 				1D0ECD722ADD13C900B95A74 /* FontResource.xcassets in Resources */,
+				1DDB9CFE2AEE0500001CA7CC /* unused.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +829,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		1DE82AD12AEE010A009925FC /* UnUsed */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = UnUsed;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which pecker >/dev/null; then\n  pecker\nelse\n  echo \"warning: Pecker not installed, download from https://github.com/woshiccm/Pecker\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -858,6 +893,7 @@
 				1DBF14642AE1391F00B28CED /* MenubarExtraContent.swift in Sources */,
 				1D09AF8E2ADA345E00C1400E /* View+Extension.swift in Sources */,
 				1D8C5AF02AD7BB3200B01F10 /* ProjectModel.swift in Sources */,
+				1DE82ACE2AEDF2FD009925FC /* MenubarExtraFooter.swift in Sources */,
 				1D95F0AF2AE3BEF000E563EA /* PracticeResultCell.swift in Sources */,
 				1D09AF8A2ADA26B600C1400E /* Color+Extension.swift in Sources */,
 				118D56392AE15572003072E9 /* FillerWordModel.swift in Sources */,

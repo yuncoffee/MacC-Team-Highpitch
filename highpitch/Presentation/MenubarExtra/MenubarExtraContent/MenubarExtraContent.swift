@@ -11,25 +11,21 @@ import SwiftData
 struct MenubarExtraContent: View {
     @Environment(\.openWindow)
     private var openWindow
-    
-    @Environment(AppleScriptManager.self)
-    private var appleScriptManager
-    @Environment(MediaManager.self)
-    private var mediaManager
+ 
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(KeynoteManager.self)
+    private var keynoteManager
     
     @Query(sort: \ProjectModel.creatAt)
     var projectModels: [ProjectModel]
-    
     @Binding
     var selectedProject: ProjectModel?
     @Binding
     var selectedKeynote: OpendKeynote?
     @Binding
     var keynoteOptions: [OpendKeynote]
-    @Binding
-    var isMenuPresented: Bool
+
     @State
     private var isDetilsActive = false
     @State
@@ -44,7 +40,6 @@ struct MenubarExtraContent: View {
     var body: some View {
         VStack(spacing: 0) {
             sectionProject
-            sectionPractice
         }
         .onAppear {
             projectNameOptions.append(contentsOf: projectModels.map {$0.projectName})
@@ -62,6 +57,15 @@ struct MenubarExtraContent: View {
         .onChange(of: selectedProject, { _, newValue in
             if let newValue = newValue {
                 selectedProjectName = newValue.projectName
+                if !keynoteManager.opendKeynotes.isEmpty {
+                    let filtered = keynoteManager.opendKeynotes
+                        .filter({ $0.creation == newValue.keynoteCreation })
+                    if !filtered.isEmpty {
+                        selectedKeynote = filtered[0]
+                    } else {
+                        selectedKeynoteName = "음성으로만 연습하기"
+                    }
+                }
             } else {
                 selectedProjectName = "새 프로젝트로 생성"
             }
@@ -83,8 +87,21 @@ struct MenubarExtraContent: View {
             if newValue == "음성으로만 연습하기" {
                 selectedKeynote = nil
             } else {
-                let filtered = keynoteOptions.filter {$0.getFileName() == newValue} // 이름으로 필터링 중인데 변경해야
-                selectedKeynote = filtered[0]
+                let filtered = keynoteOptions
+                    .filter { $0.getFileName() == newValue } // 이름으로 필터링 중인데 변경해야
+
+                if let selectedProject = selectedProject {
+                    let _filtered =  filtered
+                        .filter { $0.creation == selectedProject.keynoteCreation }
+                    if !_filtered.isEmpty {
+                        selectedKeynote = _filtered[0]
+                    } else {
+                        selectedProjectName = "새 프로젝트로 생성"
+                    }
+                    
+                } else {
+                    selectedKeynote = filtered[0] /// 사용자가 키노트의 이름을 동일하게 해서 만든다면.. 가장 첫번째가 선택이 됨.
+                }
             }
         }
         /// 프로젝트 선택을 변경함
@@ -93,9 +110,8 @@ struct MenubarExtraContent: View {
                 selectedProject = nil
             } else {
                 let filtered = projectModels
-                    .filter {$0.projectName == newValue}
-                //                    .filter {$0.keynoteCreation == selectedKeynote?.creation }
-                // 이름으로 필터링 중인데 변경해야
+                    .filter {$0.projectName == newValue} /// 이름으로 프로젝트 모델 서칭 (이름이 유니크해야함)
+
                 if !filtered.isEmpty {
                     selectedProject = filtered[0]
                 } else {
@@ -116,18 +132,23 @@ extension MenubarExtraContent {
                     .systemFont(.caption, weight: .semibold)
                     .foregroundStyle(Color.HPTextStyle.base)
                 Spacer()
-                Button {
+                HPButton(type: .text, size: .large, color: .HPGray.system600) {
                     withAnimation {
                         isDetilsActive.toggle()
                     }
-                } label: {
-                    Label(isDetilsActive ? "닫기" : "열기", systemImage: "chevron.right")
-                        .labelStyle(.iconOnly)
-                        .systemFont(.body)
-                        .foregroundStyle(Color.HPGray.system600)
-                        .rotationEffect(isDetilsActive ? .degrees(90) : .zero)
+                } label: { type, size, color, expandable in
+                    HPLabel(
+                        content: (label: isDetilsActive ? "닫기" : "열기", icon: "chevron.right"),
+                        type: type,
+                        size: size,
+                        color: color,
+                        alignStyle: .iconOnly, 
+                        expandable: expandable,
+                        fontStyle: .system(.body)
+                    )
                 }
-                .buttonStyle(.plain)
+                .frame(width: ButtonSize.small.labelSize.height, height: ButtonSize.small.labelSize.height)
+                .rotationEffect(isDetilsActive ? .degrees(90) : .zero)
             }
             .padding(.vertical, .HPSpacing.xxsmall)
             .padding(.horizontal, .HPSpacing.small)
@@ -163,79 +184,6 @@ extension MenubarExtraContent {
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
         .clipped()
     }
-    
-    @ViewBuilder
-    private var sectionPractice: some View {
-        VStack(spacing: 0) {
-            if let selectedProject = selectedProject {
-                if !selectedProject.practices.isEmpty {
-                    HStack {
-                        let unCheckedCount = selectedProject.practices
-                            .map {$0.isVisited}
-                            .filter {$0 == false}
-                            .count
-                        Text("\(unCheckedCount)개 확인하지 않음")
-                            .foregroundStyle(Color.HPTextStyle.dark)
-                            .systemFont(.caption2, weight: .semibold)
-                        Spacer()
-                        Button {
-                            selectedProject.practices.forEach { $0.isVisited = true }
-                        } label: {
-                            Text("모두 읽음")
-                                .foregroundStyle(Color.HPPrimary.base)
-                                .systemFont(.caption2, weight: .semibold)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .padding(.vertical, .HPSpacing.xxsmall)
-                    .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-                    .border(.HPComponent.stroke, width: 1, edges: [.bottom])
-                }
-            }
-            if let selectedProject = selectedProject {
-                if !selectedProject.practices.isEmpty {
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem()], spacing: 0) {
-                            ForEach(selectedProject.practices, id: \.self) { practice in
-                                PracticeResultCell(practice: practice) {
-                                    openSelectedPractice(practice: practice)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-                } else {
-                    VStack {
-                        Text("연습 이력이 없네요...")
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 24)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
-        }
-    }
-}
-
-extension MenubarExtraContent {
-    private func openSelectedPractice(practice: PracticeModel) {
-        projectManager.current = selectedProject
-        projectManager.currentTabItem = 1
-        if !projectManager.path.isEmpty {
-            projectManager.path.removeLast()
-        }
-        Task {
-            await appendPractice(practice: practice)
-            projectManager.path.append(practice)
-        }
-    }
-    
-    @MainActor
-    private func appendPractice(practice: PracticeModel) async {
-        await MainActor.run {
-            openWindow(id: "main")
-        }
-    }
 }
 
 #Preview {
@@ -243,9 +191,6 @@ extension MenubarExtraContent {
     var selectedKeynote: OpendKeynote? = OpendKeynote()
     @State
     var keynoteOptions: [OpendKeynote] = []
-    
-    @State
-    var isMenuPresented: Bool = true
     
     @State
     var selectedProject: ProjectModel? = ProjectModel(
@@ -257,6 +202,5 @@ extension MenubarExtraContent {
     return MenubarExtraContent(
         selectedProject: $selectedProject,
         selectedKeynote: $selectedKeynote,
-        keynoteOptions: $keynoteOptions,
-        isMenuPresented: $isMenuPresented)
+        keynoteOptions: $keynoteOptions)
 }

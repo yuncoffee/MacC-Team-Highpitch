@@ -33,8 +33,7 @@ struct HighpitchApp: App {
     init() {
         do {
             container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
-        }
-        catch {
+        } catch {
             fatalError("Could not initialize ModelContainer")
         }
     }
