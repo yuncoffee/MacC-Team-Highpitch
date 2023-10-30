@@ -92,8 +92,7 @@ extension MenubarExtraFooter {
                                         $0.persistentModelID == practice.persistentModelID
                                     }
                                 }[0].projectName
-                                
-                                PracticeResultCell(projectName: projectName, practice: practice) {
+                                practiceResultCell(projectName: projectName, practice: practice) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }
@@ -104,8 +103,7 @@ extension MenubarExtraFooter {
                                         $0.persistentModelID == practice.persistentModelID
                                     }
                                 }[0].projectName
-                                
-                                PracticeResultCell(projectName: projectName, practice: practice) {
+                                practiceResultCell(projectName: projectName, practice: practice) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }
@@ -116,6 +114,38 @@ extension MenubarExtraFooter {
             } else {
                 emptyContent
             }
+    }
+    
+    @ViewBuilder
+    private func practiceResultCell(
+        projectName: String,
+        practice: PracticeModel,
+        completion: @escaping () -> Void) -> some View {
+        HPListCell(title: "\(practice.index + 1)번째 연습의 피드백이 생성되었어요") {
+            HStack(spacing: 0) {
+                Text("\(projectName)")
+                    .lineLimit(1)
+                Text(" • ")
+                Text("\(Date.diffNowToPractieDate(input: practice.creatAt))")
+            }
+        } notification: {
+            Circle()
+                .foregroundStyle(practice.isVisited ? .clear : .HPRed.base)
+        } button: {
+            HPButton(type: .text, size: .small, color: .HPTextStyle.base) {
+                completion()
+            } label: { type, size, color, expandable in
+                HPLabel(
+                    content: ("확인하기", "chevron.right"),
+                    type: type,
+                    size: size,
+                    color: color,
+                    alignStyle: .textWithIcon,
+                    expandable: expandable,
+                    fontStyle: .system(.caption)
+                )
+            }
+        }
     }
     
     @ViewBuilder
