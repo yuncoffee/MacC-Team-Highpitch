@@ -18,7 +18,7 @@ class PracticeModel: Comparable {
     @Relationship(deleteRule: .cascade) var utterances: [UtteranceModel]
     @Relationship(deleteRule: .cascade) var words: [WordModel]
     @Relationship(deleteRule: .cascade) var sentences: [SentenceModel]
-    var summary: PracticeSummaryModel
+    @Relationship(deleteRule: .cascade) var summary: PracticeSummaryModel
     
     init(
         practiceName: String,

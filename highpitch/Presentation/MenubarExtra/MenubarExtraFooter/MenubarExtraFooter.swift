@@ -60,7 +60,7 @@ extension MenubarExtraFooter {
                     .systemFont(.caption2, weight: .semibold)
             }
             Spacer()
-            HPButton(type: .text, size: .medium, color: .HPPrimary.base) {
+            HPButton(type: .text, size: .small, color: .HPPrimary.base) {
                 clearUnvisitedNotification()
             } label: { type, size, color, expandable in
                 HPLabel(
@@ -68,52 +68,78 @@ extension MenubarExtraFooter {
                     type: type,
                     size: size,
                     color: color,
-                    expandable: expandable, 
+                    expandable: expandable,
                     fontStyle: .system(.caption2)
                 )
             }
             .fixedSize()
         }
-        .padding(.vertical, .HPSpacing.xxsmall)
+        .padding(.vertical, .HPSpacing.xxxsmall)
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
     }
     
     @ViewBuilder
     private var sectionContent: some View {
-        let practies = unVisitedPractices + visitedPractices
-            if !practies.isEmpty {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem()], spacing: 0) {
-                        if !checkUnVisitedPracticesCount() {
-                            ForEach(practies[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
-                                let projectName = projectModels
+        let practices = unVisitedPractices + visitedPractices
+        if !practices.isEmpty {
+            ScrollView {
+                LazyVGrid(columns: [GridItem()], spacing: 0) {
+                    if !checkUnVisitedPracticesCount() {
+                        if practices.count > MAX_PRACTICE_NOTI_COUNT {
+                            ForEach(practices[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
+                                let filtered = projectModels
                                     .filter { $0.practices.contains {
                                         $0.persistentModelID == practice.persistentModelID
                                     }
-                                }[0].projectName
-                                practiceResultCell(projectName: projectName, practice: practice) {
+                                    }
+                                practiceResultCell(
+                                    projectName: filtered.isEmpty
+                                    ? "임시"
+                                    : filtered[0].projectName,
+                                    practice: practice
+                                ) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }
                         } else {
-                            ForEach(unVisitedPractices[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
-                                let projectName = projectModels
+                            ForEach(practices, id: \.self) { practice in
+                                let filtered = projectModels
                                     .filter { $0.practices.contains {
                                         $0.persistentModelID == practice.persistentModelID
                                     }
-                                }[0].projectName
-                                practiceResultCell(projectName: projectName, practice: practice) {
+                                    }
+                                practiceResultCell(projectName: filtered.isEmpty
+                                   ? "임시"
+                                   : filtered[0].projectName,
+                                   practice: practice
+                                ) {
                                     openSelectedPractice(practice: practice)
                                 }
                             }
                         }
+                    } else {
+                        ForEach(unVisitedPractices[..<MAX_PRACTICE_NOTI_COUNT], id: \.self) { practice in
+                            let filtered = projectModels
+                                .filter { $0.practices.contains {
+                                    $0.persistentModelID == practice.persistentModelID
+                                }
+                                }
+                            practiceResultCell(projectName: filtered.isEmpty 
+                               ? "임시"
+                               : filtered[0].projectName,
+                               practice: practice
+                            ) {
+                                openSelectedPractice(practice: practice)
+                            }
+                        }
                     }
                 }
-                .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
-            } else {
-                emptyContent
             }
+            .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+        } else {
+            emptyContent
+        }
     }
     
     @ViewBuilder
@@ -121,37 +147,37 @@ extension MenubarExtraFooter {
         projectName: String,
         practice: PracticeModel,
         completion: @escaping () -> Void) -> some View {
-        HPListCell(title: "\(practice.index + 1)번째 연습의 피드백이 생성되었어요") {
-            HStack(spacing: 0) {
-                Text("\(projectName)")
-                    .lineLimit(1)
-                Text(" • ")
-                Text("\(Date.diffNowToPractieDate(input: practice.creatAt))")
-            }
-        } notification: {
-            Circle()
-                .foregroundStyle(practice.isVisited ? .clear : .HPRed.base)
-        } button: {
-            HPButton(type: .text, size: .small, color: .HPTextStyle.base) {
-                completion()
-            } label: { type, size, color, expandable in
-                HPLabel(
-                    content: ("확인하기", "chevron.right"),
-                    type: type,
-                    size: size,
-                    color: color,
-                    alignStyle: .textWithIcon,
-                    expandable: expandable,
-                    fontStyle: .system(.caption)
-                )
+            HPListCell(title: "\(practice.index + 1)번째 연습의 피드백이 생성되었어요") {
+                HStack(spacing: 0) {
+                    Text("\(projectName)")
+                        .lineLimit(1)
+                    Text(" • ")
+                    Text("\(Date.diffNowToPractieDate(input: practice.creatAt))")
+                }
+            } notification: {
+                Circle()
+                    .foregroundStyle(practice.isVisited ? .clear : .HPRed.base)
+            } button: {
+                HPButton(type: .text, size: .small, color: .HPTextStyle.base) {
+                    completion()
+                } label: { type, size, color, expandable in
+                    HPLabel(
+                        content: ("확인하기", "chevron.right"),
+                        type: type,
+                        size: size,
+                        color: color,
+                        alignStyle: .textWithIcon,
+                        expandable: expandable,
+                        fontStyle: .system(.caption)
+                    )
+                }
             }
         }
-    }
     
     @ViewBuilder
     private var emptyContent: some View {
         VStack {
-            Text("연습 이력이 없습니다.")
+            Text("아직 발표 연습 이력이 없어요.")
         }
         .padding(.vertical, .HPSpacing.xxxsmall)
         .padding(.horizontal, .HPSpacing.small)
@@ -199,6 +225,6 @@ extension MenubarExtraFooter {
 // #Preview {
 //    @State
 //    var selectedProject: ProjectModel? = nil
-//    
+//
 //    MenubarExtraFooter(selectedProject: $selectedProject)
 // }

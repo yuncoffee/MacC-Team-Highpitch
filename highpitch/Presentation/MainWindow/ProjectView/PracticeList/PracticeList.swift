@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PracticeList: View {
     @Environment(\.modelContext)
@@ -16,6 +17,9 @@ struct PracticeList: View {
     
     @State 
     var practices: [PracticeModel] = []
+    
+    @Query(sort: \PracticeModel.creatAt)
+    var practiceModels: [PracticeModel]
     
     @State
     private var isEditMode = false
@@ -83,13 +87,19 @@ extension PracticeList {
                 if isEditMode && !selectedPractices.isEmpty {
                     selectedPractices.forEach { item in
                         let index = projectManager.current?.practices.firstIndex(of: item)
+                        let modelIndex = practiceModels.firstIndex(of: item)
                         if let index = index {
                             projectManager.current?.practices.remove(at: index)
                         }
-                        do {
-                            try modelContext.save()
-                        } catch {
-                            print(error)
+                        Task {
+                            await MainActor.run {
+                                modelContext.delete(item)
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    print(error)
+                                }
+                            }
                         }
                     }
                 }
