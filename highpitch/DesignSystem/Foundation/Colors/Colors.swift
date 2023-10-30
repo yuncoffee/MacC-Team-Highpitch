@@ -122,11 +122,35 @@ extension Color {
         static let highlight = Color.highlight
         /// #F4F9EB, 1
         static let appropriateSpeed = Color.appropriatespeed
-        /// #FAF9FD, 1
-        static let mainWindowSidebarBackground = Color("F8F5FF")
-        static let mainWindowDetailsBackground = Color("FCFBFF")
         static let shadowColor = Color("9A8ADA").opacity(0.07)
         static let shadowBlackColor = Color("000000").opacity(0.1)
         static let audioControllerBackground = Color.audiocontroller
+        
+        struct Dot {
+            private init() {}
+            static let background = Color.dotbackground
+        }
+        
+        struct Section {
+            private init() {}
+            static let background = Color.sectionbackground
+            static let point = Color.sectionpoint
+        }
+        
+        struct Sidebar {
+            private init() {}
+            static let background = Color.sidebarbackground
+            static let select = Color.sidebarselect
+        }
+        
+        struct Detail {
+            private init() {}
+            static let background = Color.detailbackground
+        }
+        
+        struct Tag {
+            private init() {}
+            static let background = Color.tagbackground
+        }
     }
 }

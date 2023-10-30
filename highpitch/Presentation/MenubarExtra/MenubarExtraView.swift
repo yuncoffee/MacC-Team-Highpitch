@@ -71,7 +71,7 @@ struct MenubarExtraView: View {
                     height: isRecording ? 0 : 440,
                     alignment: .top
                 )
-                .background(Color.HPGray.systemWhite)
+                .background(Color.HPComponent.Detail.background)
             }
             .frame(alignment: .top)
             .onAppear {

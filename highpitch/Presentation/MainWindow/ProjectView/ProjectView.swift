@@ -75,7 +75,7 @@ extension ProjectView {
         .padding(.horizontal, .HPSpacing.xxxlarge)
         .frame(maxWidth: .infinity , minHeight: 60, maxHeight: 60, alignment: .bottomLeading)
         .background(Color.HPGray.systemWhite)
-        .border(Color.HPPrimary.light.opacity(0.25), width: 1, edges: [.bottom])
+//        .border(Color.HPPrimary.light.opacity(0.25), width: 1, edges: [.bottom])
     }
     
     @ViewBuilder

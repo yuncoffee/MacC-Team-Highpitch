@@ -70,7 +70,7 @@ struct AverageLevelBox: View {
             }
         }
         .frame(width: 123, height: 80)
-        .background(Color.HPComponent.mainWindowSidebarBackground)
+        .background(Color.HPComponent.Section.background)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

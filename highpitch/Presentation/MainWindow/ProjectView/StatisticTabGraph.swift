@@ -39,7 +39,7 @@ struct StatisticTabGraph: View {
         .padding(.vertical, .HPSpacing.xsmall)
         .padding(.leading, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(Color.HPGray.systemWhite)
+        .background(Color.HPComponent.Section.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
     }

@@ -153,7 +153,7 @@ extension MenubarExtraContent {
             .padding(.vertical, .HPSpacing.xxsmall)
             .padding(.horizontal, .HPSpacing.small)
             .frame(maxHeight: 45)
-            .border(.HPComponent.stroke, width: isDetilsActive ? 1 : 0, edges: [.bottom])
+//            .border(.HPComponent.stroke, width: isDetilsActive ? 1 : 0, edges: [.bottom])
             // 현재 선택 된 프로젝트 정보 출력 출력
             /// 키노트가 열려있는 경우,
             if isDetilsActive {

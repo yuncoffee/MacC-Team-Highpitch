@@ -93,7 +93,7 @@ extension StatisticsTabItem {
             .padding(.vertical, .HPSpacing.xsmall)
             .padding(.horizontal, .HPSpacing.medium)
             .frame(minHeight: 100, maxHeight: 100, alignment: .leading)
-            .background(Color.HPGray.systemWhite)
+            .background(Color.HPComponent.Section.background)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
         }
@@ -368,7 +368,7 @@ extension StatisticsTabItem {
             .padding(.vertical, .HPSpacing.xsmall)
             .padding(.horizontal, .HPSpacing.medium)
             .frame(maxWidth: .infinity, minHeight:100, maxHeight: 100, alignment: .leading)
-            .background(Color.HPGray.systemWhite)
+            .background(Color.HPComponent.Section.background)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
             /// 해당 연습으로 이동합니다.

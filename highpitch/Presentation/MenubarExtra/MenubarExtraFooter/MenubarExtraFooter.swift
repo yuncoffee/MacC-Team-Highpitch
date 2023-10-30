@@ -60,7 +60,7 @@ extension MenubarExtraFooter {
                     .systemFont(.caption2, weight: .semibold)
             }
             Spacer()
-            HPButton(type: .text, size: .small, color: .HPPrimary.base) {
+            HPButton(type: .text, size: .small, color: .HPPrimary.dark) {
                 clearUnvisitedNotification()
             } label: { type, size, color, expandable in
                 HPLabel(

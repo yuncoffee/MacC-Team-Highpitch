@@ -45,7 +45,7 @@ struct MainWindowView: View {
         .navigationTitle("Sidebar")
         .frame(minWidth: 1000, minHeight: 600)
         .frame(maxWidth: 1512, maxHeight: .infinity)
-        .background(Color.HPComponent.mainWindowSidebarBackground)
+        .background(Color.HPComponent.Sidebar.background)
         .onAppear {
             NotificationManager.shared.requestAuthorization()
             NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
@@ -96,7 +96,8 @@ extension MainWindowView {
         }
         .padding(.top, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(Color.HPComponent.mainWindowSidebarBackground)
+        .background(
+            Color.HPComponent.Sidebar.background)
         .navigationSplitViewColumnWidth(200)
     }
     
@@ -112,7 +113,7 @@ extension MainWindowView {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(Color.HPComponent.mainWindowDetailsBackground)
+            .background(Color.HPComponent.Detail.background)
             .ignoresSafeArea()
         } else {
             emptyProject

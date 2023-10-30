@@ -157,7 +157,7 @@ struct FastSentReplayCell: View {
         )
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(isOdd ? Color.HPComponent.mainWindowDetailsBackground : .clear)
+        .background(isOdd ? Color.HPComponent.Section.background : .clear)
     }
 }
 
