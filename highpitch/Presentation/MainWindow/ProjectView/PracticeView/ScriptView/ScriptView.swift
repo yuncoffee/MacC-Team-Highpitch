@@ -111,6 +111,14 @@ struct ScriptView: View {
             alignment: .topLeading
         )
         .border(Color.HPComponent.stroke, width: 1, edges: [.leading])
+        .onAppear {
+            sentences.forEach { item in
+                print("item: ", item.sentence)
+            }
+            words.forEach { item in
+                print("item: ", item.word)
+            }
+        }
         .onChange(of: mediaManager.currentTime, { _, newValue in
             if nowSentece != nil {
                 if nowSentece! < sentences.count {

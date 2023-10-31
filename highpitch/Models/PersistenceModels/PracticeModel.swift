@@ -15,10 +15,14 @@ class PracticeModel: Comparable {
     var isVisited: Bool
     var creatAt: String
     var audioPath: URL?
-    @Relationship(deleteRule: .cascade) var utterances: [UtteranceModel]
-    @Relationship(deleteRule: .cascade) var words: [WordModel]
-    @Relationship(deleteRule: .cascade) var sentences: [SentenceModel]
-    @Relationship(deleteRule: .cascade) var summary: PracticeSummaryModel
+    @Relationship(deleteRule: .cascade) 
+    var utterances: [UtteranceModel]
+    @Relationship(deleteRule: .cascade) 
+    var words: [WordModel]
+    @Relationship(deleteRule: .cascade) 
+    var sentences: [SentenceModel]
+    @Relationship(deleteRule: .cascade) 
+    var summary: PracticeSummaryModel
     
     init(
         practiceName: String,
