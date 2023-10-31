@@ -41,6 +41,22 @@ struct ProjectNavigationLink: View {
                     }
                     .contextMenu {
                         Button("Delete") {
+                            // 해당 프로젝트 밑에 연습들 경로 하나하나 조회 -> 해당 경로를 통해서 녹음본 삭제
+                            for practice in project.practices {
+                                guard let fileURL = practice.audioPath else {
+                                    print("파일 URL이 nil입니다.")
+                                    return
+                                }
+                                
+                                let fileManager = FileManager.default
+                                do {
+                                    try fileManager.removeItem(at: fileURL)
+                                    print("파일 삭제 성공: \(fileURL.path)")
+                                } catch {
+                                    print("파일 삭제 실패: \(error.localizedDescription)")
+                                }
+                            }
+                            
                             modelContext.delete(project)
                         }
                     }
