@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AudioControllerView: View {
     private var audioPlayer : AudioPlayable
-    var audioPath: URL
-    var timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
-    var callback: ((TimeInterval) -> Void)?
+    private var audioPath: URL
+    @State var timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
+    private var callback: ((TimeInterval) -> Void)?
     @State var currentTime = 0.0
     @State var isPlaying = false
     @State var isDragging = false
@@ -54,6 +54,13 @@ struct AudioControllerView: View {
                     audioPlayer.play()
                 }
             }
+        }.onChange(of: audioPlayer.isPlaying) { _, newValue in
+            isPlaying = newValue
+            if newValue {
+                timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
+            } else {
+                timer.upstream.connect().cancel()
+            }
         }
     }
 }
@@ -69,7 +76,6 @@ extension AudioControllerView {
     }
     private func update() {
         self.currentTime = audioPlayer.getCurrentTime()
-        self.isPlaying = audioPlayer.getState()        
     }
     private func play() {
         audioPlayer.play()
