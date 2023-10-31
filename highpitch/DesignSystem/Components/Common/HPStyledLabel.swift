@@ -16,7 +16,7 @@ struct HPStyledLabel: View {
             .foregroundStyle(Color.HPPrimary.base)
             .padding(.vertical, 4)
             .padding(.horizontal, 8)
-            .background(Color.HPComponent.mainWindowSidebarBackground)
+            .background(Color.HPComponent.Tag.background)
             .clipShape(
                 RoundedRectangle(cornerRadius: 4)
             )

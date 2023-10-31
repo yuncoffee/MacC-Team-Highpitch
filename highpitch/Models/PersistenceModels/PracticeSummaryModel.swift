@@ -15,7 +15,7 @@ class PracticeSummaryModel {
     var wordCount: Int
     var fillerWordCount: Int
     var fastSpeechTime: Int
-    var eachFillerWordCount: [FillerWordModel]
+    @Relationship(deleteRule: .cascade) var eachFillerWordCount: [FillerWordModel]
     var fastSentenceIndex: [Int]
     var fastSpeechRate: Double
     var fillerWordPercentage: Double

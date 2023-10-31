@@ -65,7 +65,7 @@ struct PracticeListCell: View {
                         .padding(.vertical, .HPSpacing.xxsmall)
                         .padding(.horizontal, .HPSpacing.small)
                         .frame(maxWidth: 160)
-                        .background(Color.HPComponent.mainWindowSidebarBackground)
+                        .background(Color.HPComponent.Section.background)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         HStack(spacing: 0) {
                             VStack(spacing: 0) {
@@ -118,7 +118,7 @@ struct PracticeListCell: View {
             }
             .padding(.vertical, .HPSpacing.xsmall)
             .padding(.horizontal, .HPSpacing.medium)
-            .background(Color.HPGray.systemWhite)
+            .background(Color.HPComponent.Section.background)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: .HPSpacing.xxxxsmall)
         }

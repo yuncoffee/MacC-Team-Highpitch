@@ -42,7 +42,7 @@ struct HPMenu: View {
         .padding(.vertical, 3)
         .padding(.leading, 7)
         .padding(.trailing, 3)
-        .background(Color.white)
+        .background(Color.HPGray.systemWhite)
         .frame(maxWidth: maxWidth, maxHeight: maxHeight)
         .clipShape(RoundedRectangle(cornerRadius: 5))
         .shadow(color: /*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.3), radius: 2.5, y: 0.5)

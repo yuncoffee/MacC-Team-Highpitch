@@ -98,7 +98,7 @@ struct FillerWordDetailCell: View {
         .padding(.vertical, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .padding(.horizontal, .HPSpacing.medium)
         .frame(width: 348)
-        .background(!isOdd ? Color.HPComponent.mainWindowDetailsBackground : .clear)
+        .background(!isOdd ? Color.HPComponent.Section.background : .clear)
         .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

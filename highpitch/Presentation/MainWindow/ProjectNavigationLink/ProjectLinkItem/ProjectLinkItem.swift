@@ -21,7 +21,7 @@ struct ProjectLinkItem: View {
         } label: {
             let weight: FoundationTypoSystemFont.FontWeight = if isSelected { .bold } else { .medium }
             let color: Color = if isSelected { .HPTextStyle.darker } else { .HPTextStyle.base }
-            let backgroundColor: Color = if isSelected { .HPPrimary.lightness } else { .clear }
+            let backgroundColor: Color = if isSelected { .HPComponent.Sidebar.select } else { .clear }
             Text(title)
                 .systemFont(.body, weight: weight)
                 .foregroundStyle(color)
