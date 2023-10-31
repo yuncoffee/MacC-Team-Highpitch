@@ -45,7 +45,13 @@ struct FeedbackChartView: View {
                             .padding(.bottom, .HPSpacing.medium)
                     }
                 }
+                .frame(
+                    maxWidth: 720,
+                    maxHeight: .infinity,
+                    alignment: .leading
+                )
                 Divider()
+                    .padding(.trailing, .HPSpacing.medium)
                 VStack(spacing: 0) {
                     HStack(alignment: .top, spacing: .HPSpacing.xxxxsmall) {
                         Text("이번 연습에서의 발화 속도")
@@ -65,7 +71,7 @@ struct FeedbackChartView: View {
                 }
                 .padding(.top, .HPSpacing.medium)
                 .frame(
-                    maxWidth: .infinity,
+                    maxWidth: 720,
                     maxHeight: .infinity,
                     alignment: .leading
                 )
@@ -73,10 +79,10 @@ struct FeedbackChartView: View {
                     FastSentReplay(practice: practice)
                 }
             }
-            .padding(.leading, .HPSpacing.medium)
             .padding(.bottom, 100)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
         }
+        .padding(.leading, .HPSpacing.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
@@ -84,14 +90,13 @@ struct FeedbackChartView: View {
 extension FeedbackChartView {
     @ViewBuilder
     private var header: some View {
-        VStack(alignment: .leading, spacing: .HPSpacing.small + .HPSpacing.xxxxsmall) {
+        VStack(spacing: 0) {
             Text("연습 요약보기")
                 .systemFont(.largeTitle)
                 .foregroundStyle(Color.HPTextStyle.darker)
         }
-        .padding(.leading, .HPSpacing.small)
         .padding(.bottom, .HPSpacing.xsmall)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: 740, alignment: .leading)        
     }
     
     @ViewBuilder

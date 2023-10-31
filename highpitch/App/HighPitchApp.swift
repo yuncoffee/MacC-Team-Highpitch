@@ -25,8 +25,11 @@ struct HighpitchApp: App {
     @State 
     private var keynoteManager = KeynoteManager()
     @State
+    private var practiceManager = PracticeManager()
+    @State
     private var isMenuPresented: Bool = false
     #endif
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     let container: ModelContainer
     
@@ -70,7 +73,12 @@ struct HighpitchApp: App {
                 .modelContainer(container)
         }
         // MARK: - MenubarExtra Scene
-        MenuBarExtra("MenubarExtra", image: .menubarextra) {
+        MenuBarExtra("MenubarExtra", 
+//                     image: practiceManager.isAnalyzing
+//                     ? .ESC
+//                     : .menubarextra
+                     image : .menubarextra
+        ) {
             MenubarExtraView(isMenuPresented: $isMenuPresented)
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
@@ -79,13 +87,23 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .openSettingsAccess()
                 .modelContainer(container)
+                .onAppear(perform: {
+                    practiceManager.isAnalyzing = false
+                })
         }
+//        .onChange(of: practiceManager.isAnalyzing, { oldValue, newValue in
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                practiceManager.isAnalyzing.toggle()
+//            }
+//        })
         .menuBarExtraAccess(isPresented: $isMenuPresented)
         .menuBarExtraStyle(.window)
         .commandsRemoved()
         #endif
     }
-    
+    func updateWeatherData() async {
+            // fetches new weather data and updates app state
+        }
 }
 extension HighpitchApp {
     private func setupInit() {
