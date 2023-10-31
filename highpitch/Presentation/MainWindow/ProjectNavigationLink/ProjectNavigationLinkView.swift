@@ -21,8 +21,6 @@ struct ProjectNavigationLink: View {
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
-    var practiceManager = PracticeManager()
-    
     var body: some View {
         VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
             Text("프로젝트 이름")

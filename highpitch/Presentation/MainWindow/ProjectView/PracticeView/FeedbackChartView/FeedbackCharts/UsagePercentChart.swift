@@ -108,7 +108,7 @@ extension UsagePercentChart {
     /// 이전 습관어 비율
     private func getPrevFillerRate() -> Double {
         if let current = projectManager.current {
-            return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!
+            return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage
         }
         return -100
     }
@@ -125,8 +125,8 @@ extension UsagePercentChart {
     
     func fillerWordDifference() -> Double {
         if let current = projectManager.current {
-            return data.summary.fillerWordPercentage! -
-            (current.practices.sorted()[data.index - 1 >= 0 ? data.index - 1 : 0].summary.fillerWordPercentage!)
+            return data.summary.fillerWordPercentage -
+            (current.practices.sorted()[data.index - 1 >= 0 ? data.index - 1 : 0].summary.fillerWordPercentage)
         }
         return -100
     }
@@ -165,10 +165,10 @@ extension UsagePercentChart {
     }
     
     func getMaxPercentage() -> Double {
-        var answer = max(getTopTierFillerRate(), data.summary.fillerWordPercentage!)
+        var answer = max(getTopTierFillerRate(), data.summary.fillerWordPercentage)
         if let current = projectManager.current {
             if data.index != 0 {
-                return max(answer, current.practices.sorted()[data.index - 1].summary.fillerWordPercentage!)
+                return max(answer, current.practices.sorted()[data.index - 1].summary.fillerWordPercentage)
             }
             return answer
         }
