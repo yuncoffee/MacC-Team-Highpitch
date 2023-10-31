@@ -123,7 +123,7 @@ extension ProjectManager {
         if let selectedKeynote = keynoteManager.temp {
             newProject.keynoteCreation = selectedKeynote.creation
             newProject.keynotePath = URL(fileURLWithPath: selectedKeynote.path)
-            newProject.projectName = selectedKeynote.getFileName()
+            newProject.projectName = selectedKeynote.getFileName().components(separatedBy: ".")[0]
         }
         modelContext.insert(newProject)
         temp = newProject.persistentModelID
@@ -147,7 +147,7 @@ extension ProjectManager {
 
         if project.practices.count == 0 {
             result.index = 0
-            result.practiceName = indexToOrdinalNumber(index: 0)
+            result.practiceName = indexToOrdinalNumber(index: 0) + "번째 연습"
         } else {
             let latestIndex = project.practices.sorted(by: {$0.creatAt > $1.creatAt}).first?.index
             if let latestIndex = latestIndex {
@@ -167,5 +167,4 @@ extension ProjectManager {
         }
         return ordinalNumber[index]
     }
-
 }

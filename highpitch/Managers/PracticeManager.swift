@@ -9,7 +9,8 @@ import Foundation
 
 @Observable
 final class PracticeManager {
-    
+    static var shared = PracticeManager()
+    var isAnalyzing = true
 }
 
 extension PracticeManager {

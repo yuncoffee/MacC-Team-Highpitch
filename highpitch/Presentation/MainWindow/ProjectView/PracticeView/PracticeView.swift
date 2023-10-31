@@ -50,7 +50,7 @@ struct PracticeView: View {
     @Environment(ProjectManager.self)
     private var projectManager
     @Environment(MediaManager.self)
-    private var mediaManager
+    var mediaManager
     
     @State
     var practice: PracticeModel
@@ -94,6 +94,7 @@ extension PracticeView {
                 practice: $practice,
                 projectManager: projectManager
             )
+            .frame(maxWidth: .infinity)
             /// 스크립트 뷰
             ScriptView(
                 sentences: practice.sentences.sorted(by: { $0.index < $1.index }),

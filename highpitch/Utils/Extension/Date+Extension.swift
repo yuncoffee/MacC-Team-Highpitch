@@ -84,4 +84,41 @@ extension Date {
         }
     }
     
+    static func diffNowToPractieDate(input: String) -> String {
+        var result = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
+        let currentDate = Date()
+        guard let inputDate = dateFormatter.date(from: input) else { return "잘못된 날짜" }
+        
+        let diffs = Calendar.current.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second],
+            from: inputDate,
+            to: currentDate
+        )
+        
+        if let year = diffs.year, year > 0 {
+            result = "\(year)년 전"
+        } else if let month = diffs.month, month > 0 {
+            result = "\(month)달 전"
+        } else if let day = diffs.day, day > 0 {
+            result = "\(day)일 전"
+        } else if let hour = diffs.hour, hour > 0 {
+            result = "\(hour)시간 전"
+        } else if let minute = diffs.minute, minute > 0 {
+            result = "\(minute)분 전"
+        } else if let second = diffs.second, second > 30 {
+            result = "\(second)초 전"
+        } else {
+            result = "방금 전"
+        }
+        
+        return result
+    }
+}
+
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
 }
