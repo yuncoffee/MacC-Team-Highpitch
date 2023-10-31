@@ -144,6 +144,7 @@ protocol Recordable {
     func stopRecording()
 }
 protocol AudioPlayable {
+    var isPlaying: Bool { get set }
     func registerAudio(url: URL) throws
     func play()
     func playAfter(second: Double)

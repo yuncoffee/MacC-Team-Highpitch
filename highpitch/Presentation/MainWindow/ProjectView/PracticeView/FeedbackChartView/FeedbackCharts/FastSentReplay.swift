@@ -63,15 +63,15 @@ struct FastSentReplay: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         .padding(.trailing, .HPSpacing.xxxlarge)
-//        .onReceive(mediaManager.timer, perform: { _ in
-//            if mediaManager.stopPoint != nil {
-//                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
-//                    mediaManager.stopPoint = nil
-//                    selectedIndex = -1
-//                    mediaManager.pausePlaying()
-//                }
-//            }
-//        })
+        .onChange(of: mediaManager.currentTime) { _, newValue in
+            if mediaManager.stopPoint != nil {
+                if newValue > (mediaManager.stopPoint!)/1000 {
+                    mediaManager.stopPoint = nil
+                    selectedIndex = -1
+                    mediaManager.pausePlaying()
+                }
+            }
+        }
     }
 }
 
@@ -119,8 +119,8 @@ struct FastSentReplayCell: View {
     @Binding
     var selectedIndex: Int {
         didSet {
-            if selectedIndex != index {
-                isPlay = false
+            if selectedIndex == index {
+                isPlay = mediaManager.isPlaying
             }
         }
     }
@@ -128,6 +128,8 @@ struct FastSentReplayCell: View {
     var body: some View {
         HStack(spacing: .HPSpacing.xsmall) {
             Button {
+                selectedIndex == index && isPlay ?
+                mediaManager.pausePlaying() :
                 play(startAt: startAt, endAt: endAt)
             } label: {
                 Label("play", systemImage: selectedIndex == index && isPlay ? "pause.fill" : "play.fill")
@@ -158,6 +160,12 @@ struct FastSentReplayCell: View {
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(isOdd ? Color.HPComponent.Section.background : .clear)
+        .onChange(of: mediaManager.currentTime) { _, newValue in
+            if startAt.isLessThanOrEqualTo(newValue*1000), !endAt.isLess(than: newValue*1000){
+                selectedIndex = index
+                isPlay = mediaManager.isPlaying
+            }
+        }
     }
 }
 
@@ -166,7 +174,6 @@ extension FastSentReplayCell {
         mediaManager.playAt(atTime: startAt)
         mediaManager.play()
         mediaManager.stopPoint = endAt
-        isPlay.toggle()
         selectedIndex = index
     }
 }

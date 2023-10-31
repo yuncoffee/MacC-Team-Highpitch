@@ -48,28 +48,7 @@ struct MainWindowView: View {
         .background(Color.HPComponent.Sidebar.background)
         .onAppear {
             NotificationManager.shared.requestAuthorization()
-            NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
-                                                   object: nil, queue: nil) { value in
-                if let practices = projectManager.current?.practices.sorted() {
-                    projectManager.currentTabItem = 1
-                    if !projectManager.path.isEmpty {
-                      projectManager.path.removeLast()
-                    }
-                    if let practiceName = value.object as? String {
-                        if practiceName != "err" {
-                            let latestPractice = practices.first { practice in
-                                practice.practiceName == practiceName
-                            }
-                            guard let appendablePractice = latestPractice else {
-                                return
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                              projectManager.path.append(appendablePractice)
-                            }
-                        }
-                    }
-                }
-            }
+            receiveNotificationAndRouting()
             setup()
         }
     }
@@ -81,6 +60,30 @@ extension MainWindowView {
         if !projects.isEmpty {
             projectManager.projects = projects
             projectManager.current = projects[0]
+        }
+    }
+    private func receiveNotificationAndRouting(){
+        NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
+                                               object: nil, queue: nil) { value in
+            if let practices = projectManager.current?.practices.sorted() {
+                projectManager.currentTabItem = 1
+                if !projectManager.path.isEmpty {
+                  projectManager.path.removeLast()
+                }
+                if let practiceName = value.object as? String {
+                    if practiceName != "err" {
+                        let latestPractice = practices.first { practice in
+                            practice.practiceName == practiceName
+                        }
+                        guard let appendablePractice = latestPractice else {
+                            return
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                          projectManager.path.append(appendablePractice)
+                        }
+                    }
+                }
+            }
         }
     }
 }
