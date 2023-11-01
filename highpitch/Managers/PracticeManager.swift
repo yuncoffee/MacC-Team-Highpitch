@@ -38,6 +38,8 @@ extension PracticeManager {
     static func updateSummary(practice: PracticeModel) {
         practice.summary.fastSpeechRate =
         Double(practice.summary.fastSpeechTime * 100) / Double(practice.summary.durationSum)
+        practice.summary.slowSpeechRate =
+        Double(practice.summary.slowSpeechTime * 100) / Double(practice.summary.durationSum)
         practice.summary.fillerWordPercentage =
         Double(practice.summary.fillerWordCount * 100) / Double(practice.summary.wordCount)
         practice.summary.epmAverage =
@@ -111,6 +113,11 @@ extension PracticeManager {
                 if tempSentences[sentenceIndex].epmValue >= 422.4 {
                     practice.summary.fastSpeechTime += sentenceDuration[sentenceIndex]
                     practice.summary.fastSentenceIndex.append(sentenceIndex)
+                }
+                
+                if tempSentences[sentenceIndex].epmValue <= 288 {
+                    practice.summary.slowSpeechTime += sentenceDuration[sentenceIndex]
+                    practice.summary.slowSentenceIndex.append(sentenceIndex)
                 }
                 _ = tempWords.last!.word.popLast()
                 for tempWord in tempWords { practice.words.append(tempWord) }
