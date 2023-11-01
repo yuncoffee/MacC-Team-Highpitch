@@ -97,7 +97,8 @@ extension ProjectManager {
         var result: [UtteranceModel] = []
         do {
             let tempUtterances: [Utterance] = try await ReturnzeroAPI()
-                .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
+//                .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
+                .getResult(filePath: "/Users/coffee/Downloads/three/e.m4a")
             for tempUtterance in tempUtterances {
                 result.append(
                     UtteranceModel(
@@ -140,7 +141,7 @@ extension ProjectManager {
             index: -1,
             isVisited: false,
             creatAt: Date().m4aNameToCreateAt(input: mediaManager.fileName),
-            audioPath: mediaManager.getPath(fileName: mediaManager.fileName),
+            audioPath: URL(string: "/Users/coffee/Downloads/three/e.m4a"),
             utterances: utterances,
             summary: PracticeSummaryModel()
         )

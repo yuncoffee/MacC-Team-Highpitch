@@ -48,6 +48,9 @@ struct HPTopToolbar: View {
             HStack(spacing: 0) {
                 HPButton(color: .HPSecondary.base) {
                     print("키노트 열기")
+                    
+                    //
+                    
                 } label: { type, size, color, expandable in
                     HPLabel(
                         content: (label: "키노트 열기", icon: nil),
