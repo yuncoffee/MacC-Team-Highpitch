@@ -152,7 +152,7 @@ extension ProjectManager {
             let latestIndex = project.practices.sorted(by: {$0.creatAt > $1.creatAt}).first?.index
             if let latestIndex = latestIndex {
                 result.index = latestIndex + 1
-                result.practiceName = indexToOrdinalNumber(index: latestIndex + 1)
+                result.practiceName = indexToOrdinalNumber(index: latestIndex + 1) + "번째 연습"
             }
         }
         return result

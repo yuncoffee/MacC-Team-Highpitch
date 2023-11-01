@@ -165,14 +165,6 @@ extension StatisticTabGraph {
                         )
                         .systemFont(.caption2, weight: .medium)
                         .foregroundStyle(Color.HPTextStyle.base)
-                        .onAppear {
-                            print(Array(stride(
-                                from: range[selectedSegment].first!,
-                                to: range[selectedSegment].last! +
-                                (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
-                                by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
-                            )))
-                        }
                         .padding(.trailing, 18)
                     }
                     AxisGridLine()
