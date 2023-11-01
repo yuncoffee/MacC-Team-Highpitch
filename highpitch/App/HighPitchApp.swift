@@ -72,16 +72,9 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .modelContainer(container)
                 .onAppear {
-                    hotkeyStart.keyDownHandler = { projectManager.playPractice(
-                        selectedKeynote: selectedKeynote,
-                        selectedProject: selectedProject,
-                        appleScriptManager: appleScriptManager,
-                        keynoteManager: keynoteManager,
-                        mediaManager: mediaManager
-                    )
-                    }
+                    hotkeyStart.keyDownHandler = playPractice
                     hotkeyPause.keyDownHandler = projectManager.pausePractice
-                    hotkeySave.keyDownHandler = temp
+                    hotkeySave.keyDownHandler = stopPractice
                 }
         }
         .defaultSize(width: 1080, height: 600)
@@ -129,18 +122,7 @@ struct HighpitchApp: App {
         #endif
     }
     func updateWeatherData() async {
-            // fetches new weather data and updates app state
-        }
-    func temp() {
-        Task {
-            await MainActor.run {
-                projectManager.stopPractice(
-                    mediaManager: mediaManager,
-                    keynoteManager: keynoteManager,
-                    modelContext: container.mainContext
-                )
-            }
-        }
+        // fetches new weather data and updates app state
     }
 }
 extension HighpitchApp {
@@ -158,5 +140,27 @@ extension HighpitchApp {
             }
         }
         #endif
+    }
+    
+    func playPractice() {
+        projectManager.playPractice(
+            selectedKeynote: selectedKeynote,
+            selectedProject: selectedProject,
+            appleScriptManager: appleScriptManager,
+            keynoteManager: keynoteManager,
+            mediaManager: mediaManager
+        )
+    }
+    
+    func stopPractice() {
+        Task {
+            await MainActor.run {
+                projectManager.stopPractice(
+                    mediaManager: mediaManager,
+                    keynoteManager: keynoteManager,
+                    modelContext: container.mainContext
+                )
+            }
+        }
     }
 }
