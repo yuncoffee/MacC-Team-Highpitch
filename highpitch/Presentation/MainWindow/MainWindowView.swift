@@ -62,7 +62,7 @@ extension MainWindowView {
             projectManager.current = projects[0]
         }
     }
-    private func receiveNotificationAndRouting(){
+    private func receiveNotificationAndRouting() {
         NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
                                                object: nil, queue: nil) { value in
             if let practices = projectManager.current?.practices.sorted() {
@@ -94,14 +94,23 @@ extension MainWindowView {
     // MARK: - navigationSidebar
     @ViewBuilder
     var navigationSidebar: some View {
-        LazyVGrid(columns: [GridItem()], alignment: .leading) {
-            ProjectNavigationLink()
+        VStack(alignment: .leading, spacing: 0) {
+            Text("프로젝트 이름")
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                .padding(.bottom, .HPSpacing.xsmall)
+                .padding(.horizontal, .HPSpacing.xxsmall)
+            ScrollView {
+                LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                    ProjectNavigationLink()
+                }
+            }
         }
+        .frame(alignment: .topLeading)
+        .navigationSplitViewColumnWidth(200)
         .padding(.top, .HPSpacing.medium)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             Color.HPComponent.Sidebar.background)
-        .navigationSplitViewColumnWidth(200)
     }
     
     // MARK: - navigationDetails
