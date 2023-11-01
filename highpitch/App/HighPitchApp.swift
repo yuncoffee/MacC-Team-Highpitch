@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 import MenuBarExtraAccess
 import SettingsAccess
+import HotKey
 
 @main
 struct HighpitchApp: App {
@@ -30,6 +31,16 @@ struct HighpitchApp: App {
     private var isMenuPresented: Bool = false
     #endif
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    @State
+    private var selectedProject: ProjectModel?
+    @State
+    private var selectedKeynote: OpendKeynote?
+    
+    // HotKeys
+    let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
+    let hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
+    let hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
     
     let container: ModelContainer
     
@@ -60,6 +71,18 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
                 .modelContainer(container)
+                .onAppear {
+                    hotkeyStart.keyDownHandler = { projectManager.playPractice(
+                        selectedKeynote: selectedKeynote,
+                        selectedProject: selectedProject,
+                        appleScriptManager: appleScriptManager,
+                        keynoteManager: keynoteManager,
+                        mediaManager: mediaManager
+                    )
+                    }
+                    hotkeyPause.keyDownHandler = projectManager.pausePractice
+                    hotkeySave.keyDownHandler = temp
+                }
         }
         .defaultSize(width: 1080, height: 600)
         .windowStyle(.hiddenTitleBar)
@@ -79,7 +102,11 @@ struct HighpitchApp: App {
 //                     : .menubarextra
                      image : .menubarextra
         ) {
-            MenubarExtraView(isMenuPresented: $isMenuPresented)
+            MenubarExtraView(
+                isMenuPresented: $isMenuPresented,
+                selectedProject: $selectedProject,
+                selectedKeynote: $selectedKeynote
+            )
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
                 .environment(keynoteManager)
@@ -104,6 +131,17 @@ struct HighpitchApp: App {
     func updateWeatherData() async {
             // fetches new weather data and updates app state
         }
+    func temp() {
+        Task {
+            await MainActor.run {
+                projectManager.stopPractice(
+                    mediaManager: mediaManager,
+                    keynoteManager: keynoteManager,
+                    modelContext: container.mainContext
+                )
+            }
+        }
+    }
 }
 extension HighpitchApp {
     private func setupInit() {
