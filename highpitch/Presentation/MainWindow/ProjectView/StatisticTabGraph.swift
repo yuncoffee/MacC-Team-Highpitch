@@ -68,7 +68,6 @@ extension StatisticTabGraph {
                             ? practice.summary.fillerWordPercentage
                             : practice.summary.epmAverage)
                     )
-                    .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color.HPPrimary.light)
                     .symbol(by: .value("", ""))
                     .symbolSize(113)
@@ -153,8 +152,7 @@ extension StatisticTabGraph {
                 /// 최저 값과 최고 값 차이의 1/4 간격으로 설정합니다.
                 AxisMarks(position: .leading, values: Array(stride(
                     from: range[selectedSegment].first!,
-                    to: range[selectedSegment].last! +
-                    (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
+                    through: range[selectedSegment].last!,
                     by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
                 ))) { value in
                     AxisValueLabel(centered: false) {
@@ -167,6 +165,14 @@ extension StatisticTabGraph {
                         )
                         .systemFont(.caption2, weight: .medium)
                         .foregroundStyle(Color.HPTextStyle.base)
+                        .onAppear {
+                            print(Array(stride(
+                                from: range[selectedSegment].first!,
+                                to: range[selectedSegment].last! +
+                                (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
+                                by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                            )))
+                        }
                         .padding(.trailing, 18)
                     }
                     AxisGridLine()
