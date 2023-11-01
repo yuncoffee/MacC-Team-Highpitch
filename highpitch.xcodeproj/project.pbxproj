@@ -74,6 +74,7 @@
 		1DBF14672AE1623E00B28CED /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1DBF14662AE1623E00B28CED /* SettingsAccess */; };
 		1DDB9D012AEF1F95001CA7CC /* HPListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D002AEF1F95001CA7CC /* HPListCell.swift */; };
 		1DDB9D052AF25013001CA7CC /* ScriptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D042AF25013001CA7CC /* ScriptCell.swift */; };
+		1DDB9D072AF2B1D4001CA7CC /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D062AF2B1D4001CA7CC /* SystemManager.swift */; };
 		1DE82ACE2AEDF2FD009925FC /* MenubarExtraFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */; };
 		1DE8B6452AECD0C500E0746E /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6442AECD0C500E0746E /* HPButton.swift */; };
 		1DE8B64C2AECD4C400E0746E /* BaseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */; };
@@ -175,6 +176,7 @@
 		1DBF14632AE1391F00B28CED /* MenubarExtraContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraContent.swift; sourceTree = "<group>"; };
 		1DDB9D002AEF1F95001CA7CC /* HPListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPListCell.swift; sourceTree = "<group>"; };
 		1DDB9D042AF25013001CA7CC /* ScriptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCell.swift; sourceTree = "<group>"; };
+		1DDB9D062AF2B1D4001CA7CC /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
 		1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraFooter.swift; sourceTree = "<group>"; };
 		1DE8B6442AECD0C500E0746E /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
 		1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStyle.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */,
 				10C7D1F72ADD8E6A008691CD /* AuthManager.swift */,
 				1DBF145B2AE0A75600B28CED /* PracticeManager.swift */,
+				1DDB9D062AF2B1D4001CA7CC /* SystemManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				1D9894212AE61A4B00DE57A1 /* PracticeListCell.swift in Sources */,
 				1DF659C52AD5992C00AE5601 /* SettingsView.swift in Sources */,
 				43556EAB2ADE80A900B3E7B7 /* UtteranceModel.swift in Sources */,
+				1DDB9D072AF2B1D4001CA7CC /* SystemManager.swift in Sources */,
 				1DDB9D052AF25013001CA7CC /* ScriptCell.swift in Sources */,
 				43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */,
 				1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */,

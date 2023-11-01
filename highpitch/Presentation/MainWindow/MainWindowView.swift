@@ -19,6 +19,7 @@ struct MainWindowView: View {
     private var mediaManager
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(\.colorScheme) var colorScheme
     
     // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
@@ -26,8 +27,16 @@ struct MainWindowView: View {
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
+    @Query(
+        filter: #Predicate<PracticeModel> { !$0.isVisited },
+        sort: \PracticeModel.creatAt,
+        order: .reverse)
+    var unVisitedPractices: [PracticeModel] = []
+    
     @State
     private var columnVisibility = NavigationSplitViewVisibility.all
+    
+    
     
     @ObservedObject var notiManager = NotificationManager.shared
     
@@ -55,15 +64,30 @@ struct MainWindowView: View {
             receiveNotificationAndRouting()
             setup()
         }
+        .onChange(of: colorScheme, { _, newValue in
+            if newValue == ColorScheme.dark {
+                SystemManager.shared.isDarkMode = true
+            } else {
+                SystemManager.shared.isDarkMode = false
+            }
+        })
     }
 }
 
 extension MainWindowView {
     private func setup() {
 //        쿼리해온 데이터에서 맨 앞 데이터 선택
+        if !unVisitedPractices.isEmpty {
+            SystemManager.shared.hasUnVisited = true
+        }
         if !projects.isEmpty {
             projectManager.projects = projects
             projectManager.current = projects[0]
+        }
+        if colorScheme == ColorScheme.dark {
+            SystemManager.shared.isDarkMode = true
+        } else {
+            SystemManager.shared.isDarkMode = false
         }
     }
     private func receiveNotificationAndRouting() {

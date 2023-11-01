@@ -10,7 +10,6 @@ import Foundation
 @Observable
 final class PracticeManager {
     static var shared = PracticeManager()
-    var isAnalyzing = true
 }
 
 extension PracticeManager {
@@ -122,6 +121,8 @@ extension PracticeManager {
             }
         }
         updateSummary(practice: practice)
+        SystemManager.shared.isAnalyzing = false
+        SystemManager.shared.hasUnVisited = true
         print("분석 완료")
     }
 }

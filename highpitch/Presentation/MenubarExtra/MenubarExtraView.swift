@@ -72,7 +72,8 @@ struct MenubarExtraView: View {
                 .background(Color.HPComponent.Detail.background)
             }
             .frame(alignment: .top)
-            .onChange(of: refreshable, { _, _ in
+            .onChange(of: refreshable, { _, newValue in
+                print(newValue)
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
             })

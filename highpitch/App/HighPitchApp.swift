@@ -31,9 +31,23 @@ struct HighpitchApp: App {
     private var practiceManager = PracticeManager()
     @State
     private var isMenuPresented: Bool = false
-
+        
     @State
     var refreshable = false
+    
+    @State
+    var menubarAnimationCount = 0 {
+        didSet {
+            print("!!!!!!!!!!!!!!!")
+            if menubarAnimationCount > 6 {
+                menubarAnimationCount = 0
+            } else if SystemManager.shared.isAnalyzing {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    menubarAnimationCount += 1
+                }
+            }
+        }
+    }
     
     #endif
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -87,17 +101,38 @@ struct HighpitchApp: App {
                 .introspectMenuBarExtraWindow { window in
                     window.animationBehavior = .utilityWindow
                 }
-                .onAppear(perform: {
-                    practiceManager.isAnalyzing = false
-                })
         } label: {
-            Label("MenubarExtra", image : .menubarextra)
+            if SystemManager.shared.isDarkMode {
+                if SystemManager.shared.isAnalyzing {
+                    Label("MenubarExtra", image: "menubar-loading-dark-\(menubarAnimationCount)")
+                } else if SystemManager.shared.hasUnVisited {
+                    Label("MenubarExtra", image: "menubar-noti-dark")
+                } else {
+                    Label("MenubarExtra", image: "menubar-loading-dark-7")
+                }
+                
+            } else {
+                if SystemManager.shared.isAnalyzing {
+                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
+                } else if SystemManager.shared.hasUnVisited {
+                    Label("MenubarExtra", image: "menubar-noti-light")
+                } else {
+                    Label("MenubarExtra", image: "menubar-loading-light-7")
+                }
+            }
         }
+        .menuBarExtraStyle(.window)
+        .menuBarExtraAccess(isPresented: $isMenuPresented)
+        .commandsRemoved()
         .onChange(of: isMenuPresented, { _, newValue in
             refreshable = newValue
         })
-        .menuBarExtraStyle(.window)
-        .commandsRemoved()
+        .onChange(of: mediaManager.isRecording, { _, newValue in
+            print("TEST!!!!")
+            if !newValue {
+                menubarAnimationCount += 1
+            }
+        })
         #endif
     }
     func updateWeatherData() async {

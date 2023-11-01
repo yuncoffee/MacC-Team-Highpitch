@@ -199,6 +199,7 @@ extension MenubarExtraFooter {
             } else {
                 unVisitedPractices.forEach { $0.isVisited = true }
             }
+            SystemManager.shared.hasUnVisited = false
         }
     }
     
