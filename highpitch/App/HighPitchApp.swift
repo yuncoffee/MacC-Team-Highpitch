@@ -12,6 +12,9 @@ import SettingsAccess
 
 @main
 struct HighpitchApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.openWindow) var openWindow
+    
     // MARK: - 데이터 컨트롤을 위한 매니저 객체 선언(전역 싱글 인스턴스)
     @State
     private var fileSystemManager = FileSystemManager()
@@ -28,6 +31,10 @@ struct HighpitchApp: App {
     private var practiceManager = PracticeManager()
     @State
     private var isMenuPresented: Bool = false
+
+    @State
+    var refreshable = false
+    
     #endif
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -42,14 +49,6 @@ struct HighpitchApp: App {
     }
 
     var body: some Scene {
-        #if os(iOS)
-        /// iOS Sample
-        WindowGroup {
-            VStack(content: {
-                Text("Placeholder")
-            })
-        }
-        #endif
         #if os(macOS)
         // MARK: - MainWindow Scene
         Window("mainwindow", id: "main") {
@@ -71,15 +70,13 @@ struct HighpitchApp: App {
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .modelContainer(container)
+                .onAppear(perform: {
+                    print("On..!")
+                })
         }
         // MARK: - MenubarExtra Scene
-        MenuBarExtra("MenubarExtra", 
-//                     image: practiceManager.isAnalyzing
-//                     ? .ESC
-//                     : .menubarextra
-                     image : .menubarextra
-        ) {
-            MenubarExtraView(isMenuPresented: $isMenuPresented)
+        MenuBarExtra {
+            MenubarExtraView(refreshable: $refreshable)
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
                 .environment(keynoteManager)
@@ -87,16 +84,18 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .openSettingsAccess()
                 .modelContainer(container)
+                .introspectMenuBarExtraWindow { window in
+                    window.animationBehavior = .utilityWindow
+                }
                 .onAppear(perform: {
                     practiceManager.isAnalyzing = false
                 })
+        } label: {
+            Label("MenubarExtra", image : .menubarextra)
         }
-//        .onChange(of: practiceManager.isAnalyzing, { oldValue, newValue in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                practiceManager.isAnalyzing.toggle()
-//            }
-//        })
-        .menuBarExtraAccess(isPresented: $isMenuPresented)
+        .onChange(of: isMenuPresented, { _, newValue in
+            refreshable = newValue
+        })
         .menuBarExtraStyle(.window)
         .commandsRemoved()
         #endif

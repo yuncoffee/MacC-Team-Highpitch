@@ -27,7 +27,7 @@ struct MainWindowView: View {
     var projects: [ProjectModel]
     
     @State
-    private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+    private var columnVisibility = NavigationSplitViewVisibility.all
     
     @ObservedObject var notiManager = NotificationManager.shared
     
@@ -43,8 +43,12 @@ struct MainWindowView: View {
         }
         .toolbarBackground(.hidden)
         .navigationTitle("Sidebar")
-        .frame(minWidth: 1000, minHeight: 600)
-        .frame(maxWidth: 1512, maxHeight: .infinity)
+        .frame(
+            minWidth: 1080,
+            maxWidth: 1512,
+            minHeight: 600,
+            maxHeight: .infinity
+        )
         .background(Color.HPComponent.Sidebar.background)
         .onAppear {
             NotificationManager.shared.requestAuthorization()
