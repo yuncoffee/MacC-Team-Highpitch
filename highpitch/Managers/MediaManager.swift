@@ -85,6 +85,7 @@ extension MediaManager: AudioPlayable  {
     func playAt(atTime: Double) {
         let offset = atTime/1000
         audioPlayer?.currentTime = offset
+        currentTime = offset
     }
     ///
     func playAfter(second: Double) {
