@@ -110,6 +110,7 @@ extension UsagePercentChart {
     /// 이전 습관어 비율
     private func getPrevFillerRate() -> Double {
         if let current = projectManager.current {
+<<<<<<< HEAD
             var answer = -100.0
             let practices = current.practices.sorted(by: {$0.creatAt < $1.creatAt})
             for practice in practices {
@@ -118,6 +119,11 @@ extension UsagePercentChart {
                 } else { break }
             }
             return answer
+=======
+            if !current.practices.isEmpty {
+                return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage
+            }
+>>>>>>> 7781890cb7c693df4676dc9c04742304bc3889a2
         }
         return -100
     }
