@@ -35,9 +35,7 @@ struct MainWindowView: View {
     
     @State
     private var columnVisibility = NavigationSplitViewVisibility.all
-    
-    
-    
+
     @ObservedObject var notiManager = NotificationManager.shared
     
     private var selected: ProjectModel? {

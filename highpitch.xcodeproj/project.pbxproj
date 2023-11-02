@@ -75,6 +75,7 @@
 		1DDB9D012AEF1F95001CA7CC /* HPListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D002AEF1F95001CA7CC /* HPListCell.swift */; };
 		1DDB9D052AF25013001CA7CC /* ScriptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D042AF25013001CA7CC /* ScriptCell.swift */; };
 		1DDB9D072AF2B1D4001CA7CC /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D062AF2B1D4001CA7CC /* SystemManager.swift */; };
+		1DDB9D0A2AF3147B001CA7CC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDB9D092AF3147B001CA7CC /* OverlayView.swift */; };
 		1DE82ACE2AEDF2FD009925FC /* MenubarExtraFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */; };
 		1DE8B6452AECD0C500E0746E /* HPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B6442AECD0C500E0746E /* HPButton.swift */; };
 		1DE8B64C2AECD4C400E0746E /* BaseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */; };
@@ -177,6 +178,7 @@
 		1DDB9D002AEF1F95001CA7CC /* HPListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPListCell.swift; sourceTree = "<group>"; };
 		1DDB9D042AF25013001CA7CC /* ScriptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCell.swift; sourceTree = "<group>"; };
 		1DDB9D062AF2B1D4001CA7CC /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
+		1DDB9D092AF3147B001CA7CC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		1DE82ACD2AEDF2FD009925FC /* MenubarExtraFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarExtraFooter.swift; sourceTree = "<group>"; };
 		1DE8B6442AECD0C500E0746E /* HPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPButton.swift; sourceTree = "<group>"; };
 		1DE8B64B2AECD4C400E0746E /* BaseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStyle.swift; sourceTree = "<group>"; };
@@ -525,6 +527,14 @@
 			path = HPList;
 			sourceTree = "<group>";
 		};
+		1DDB9D082AF3146A001CA7CC /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				1DDB9D092AF3147B001CA7CC /* OverlayView.swift */,
+			);
+			path = Overlay;
+			sourceTree = "<group>";
+		};
 		1DE82ACF2AEDF30B009925FC /* MenubarExtraFooter */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,6 +655,7 @@
 		1DF659BC2AD595E100AE5601 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				1DDB9D082AF3146A001CA7CC /* Overlay */,
 				1DF659C62AD5998000AE5601 /* MenubarExtra */,
 				1DF659BF2AD5961A00AE5601 /* Settings */,
 				1DF659BE2AD5960100AE5601 /* MainWindow */,
@@ -918,6 +929,7 @@
 				10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */,
 				1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */,
 				1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */,
+				1DDB9D0A2AF3147B001CA7CC /* OverlayView.swift in Sources */,
 				1D09AFB12ADAD08E00C1400E /* FileSystemManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
