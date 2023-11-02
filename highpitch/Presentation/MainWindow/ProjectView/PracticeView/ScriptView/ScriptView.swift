@@ -69,7 +69,6 @@ struct ScriptView: View {
                                 .onTapGesture {
                                     nowSentece = word.sentenceIndex
                                     play(startAt: Double(sentences[nowSentece!].startAt), index: nowSentece!)
-                                    mediaManager.isPlaying = true
                                 }
                                 .id(width == 0.0 ? word.sentenceIndex : -1)
                                 .alignmentGuide(.leading) { item in
