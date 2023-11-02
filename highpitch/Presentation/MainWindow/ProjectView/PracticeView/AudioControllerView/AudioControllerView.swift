@@ -51,6 +51,8 @@ struct AudioControllerView: View {
             }
         }.onChange(of: audioPlayer.isPlaying) { _, newValue in
             isPlaying = newValue
+        }.onDisappear {
+            audioPlayer.stopPlaying()
         }
     }
 }

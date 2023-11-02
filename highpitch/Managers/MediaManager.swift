@@ -81,8 +81,10 @@ extension MediaManager: AudioPlayable  {
     func play() {
         audioPlayer?.play()
         isPlaying = true
-        timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
-            self.currentTime = self.audioPlayer?.currentTime ?? 0
+        if !(timer?.isValid ?? false) {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
+                self.currentTime = self.audioPlayer?.currentTime ?? 0
+            }
         }
     }
     func playAt(atTime: Double) {
