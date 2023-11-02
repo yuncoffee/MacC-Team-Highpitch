@@ -10,8 +10,6 @@ import SwiftUI
 struct AudioControllerView: View {
     private var audioPlayer : AudioPlayable
     private var audioPath: URL
-    @State var timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
-    private var callback: ((TimeInterval) -> Void)?
     @State var currentTime = 0.0
     @State var isPlaying = false
     @State var isDragging = false
@@ -19,12 +17,10 @@ struct AudioControllerView: View {
     
     init(
         audioPlayer: AudioPlayable,
-        audioPath: URL,
-        callback: ((TimeInterval) -> Void)? = nil
+        audioPath: URL
     ) {
         self.audioPlayer = audioPlayer
         self.audioPath = audioPath
-        self.callback = callback
     }
     var body: some View {
         VStack(spacing: 0) {
@@ -39,10 +35,9 @@ struct AudioControllerView: View {
         .border(.HPComponent.stroke, width: 1, edges: [.top])
         .onAppear {
             settingAudio(filePath: audioPath)
-        }.onReceive(timer) { _ in
-            callback?(currentTime)
+        }.onChange(of: audioPlayer.currentTime) { _ , newValue in
             if !isDragging {
-                update()
+                self.currentTime = newValue
             } else {
                 audioPlayer.setCurrentTime(time: currentTime)
             }
@@ -56,11 +51,8 @@ struct AudioControllerView: View {
             }
         }.onChange(of: audioPlayer.isPlaying) { _, newValue in
             isPlaying = newValue
-            if newValue {
-                timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
-            } else {
-                timer.upstream.connect().cancel()
-            }
+        }.onDisappear {
+            audioPlayer.stopPlaying()
         }
     }
 }
@@ -73,9 +65,6 @@ extension AudioControllerView {
         } catch {
             print(error.localizedDescription)
         }
-    }
-    private func update() {
-        self.currentTime = audioPlayer.getCurrentTime()
     }
     private func play() {
         audioPlayer.play()

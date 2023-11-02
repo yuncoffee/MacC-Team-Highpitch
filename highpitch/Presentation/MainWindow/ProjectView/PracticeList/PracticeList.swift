@@ -87,7 +87,6 @@ extension PracticeList {
                 if isEditMode && !selectedPractices.isEmpty {
                     selectedPractices.forEach { item in
                         let index = projectManager.current?.practices.firstIndex(of: item)
-                        let modelIndex = practiceModels.firstIndex(of: item)
                         if let index = index {
                             projectManager.current?.practices.remove(at: index)
                         }

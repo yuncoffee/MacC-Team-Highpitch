@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import HotKey
 
 struct MenubarExtraHeader: View {
     @Environment(\.openSettings)
@@ -31,11 +30,6 @@ struct MenubarExtraHeader: View {
     @Binding
     var isRecording: Bool
     
-    // HotKeys
-    let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
-    let hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
-    let hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
-    
     var body: some View {
         HStack(spacing: 0) {
             leftButtonGroup
@@ -45,18 +39,6 @@ struct MenubarExtraHeader: View {
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(minHeight: 60, maxHeight: 60)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
-        .onAppear {
-            // onAppear를 통해서 hotKey들의 동작 함수들을 등록해준다.
-            hotkeyStart.keyDownHandler = playPractice
-            hotkeyPause.keyDownHandler = pausePractice
-            hotkeySave.keyDownHandler = {
-                Task {
-                    await MainActor.run {
-                        stopPractice()
-                    }
-                }
-            }
-        }
     }
 }
 

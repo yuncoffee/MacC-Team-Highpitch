@@ -32,10 +32,6 @@ struct MenubarExtraView: View {
     @State
     private var keynoteOptions: [OpendKeynote] = []
     @State
-    private var selectedProject: ProjectModel?
-    @State
-    private var selectedKeynote: OpendKeynote?
-    @State
     private var isRecording = false
     
     @Binding

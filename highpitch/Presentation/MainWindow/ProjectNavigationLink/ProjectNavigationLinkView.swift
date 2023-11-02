@@ -23,23 +23,36 @@ struct ProjectNavigationLink: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
-            VStack {
-                ForEach(projects, id: \.id) { project in
-                    ProjectLinkItem(
-                        title : project.projectName,
-                        isSelected: checkIsSelected(project.projectName)) {
-                            if !projectManager.path.isEmpty {
-                                projectManager.path.removeLast()
-                            }
-                            projectManager.current = project
+            ForEach(projects, id: \.id) { project in
+                ProjectLinkItem(
+                    title : project.projectName,
+                    isSelected: checkIsSelected(project.projectName)) {
+                        if !projectManager.path.isEmpty {
+                            projectManager.path.removeLast()
                         }
-                        .contextMenu {
-                            Button("Delete") {
-                                modelContext.delete(project)
+                        projectManager.current = project
+                    }
+                    .contextMenu {
+                        Button("Delete") {
+                            // 해당 프로젝트 밑에 연습들 경로 하나하나 조회 -> 해당 경로를 통해서 녹음본 삭제
+                            for practice in project.practices {
+                                guard let fileURL = practice.audioPath else {
+                                    print("[프로젝트 삭제] 연습 음성파일 URL이 nil입니다.")
+                                    return
+                                }
+                                
+                                let fileManager = FileManager.default
+                                do {
+                                    try fileManager.removeItem(at: fileURL)
+                                    print("[프로젝트 삭제] 연습 파일 삭제 성공: \(fileURL.path)")
+                                } catch {
+                                    print("[프로젝트 삭제] 연습 파일 삭제 실패: \(error.localizedDescription)")
+                                }
                             }
+                            
+                            modelContext.delete(project)
                         }
-                }
-                .padding(.horizontal, .HPSpacing.xxxsmall)
+                    }
             }
         }
         .padding(.bottom, .HPSpacing.xxlarge)

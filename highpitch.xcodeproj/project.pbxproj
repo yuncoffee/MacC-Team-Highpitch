@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		107034FE2AF258070097A685 /* FeedbackSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107034FD2AF258070097A685 /* FeedbackSettingView.swift */; };
+		107035002AF258390097A685 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107034FF2AF258390097A685 /* GeneralSettingView.swift */; };
 		10C7D1B02ADCD42F008691CD /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */; };
 		10C7D1B22ADCD4AB008691CD /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */; };
 		10C7D1F82ADD8E6A008691CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7D1F72ADD8E6A008691CD /* AuthManager.swift */; };
@@ -114,6 +116,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		107034FD2AF258070097A685 /* FeedbackSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettingView.swift; sourceTree = "<group>"; };
+		107034FF2AF258390097A685 /* GeneralSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingView.swift; sourceTree = "<group>"; };
 		10C7D1AF2ADCD42F008691CD /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		10C7D1B12ADCD4AB008691CD /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		10C7D1F72ADD8E6A008691CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -677,6 +681,8 @@
 			isa = PBXGroup;
 			children = (
 				1DF659C42AD5992C00AE5601 /* SettingsView.swift */,
+				107034FD2AF258070097A685 /* FeedbackSettingView.swift */,
+				107034FF2AF258390097A685 /* GeneralSettingView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -908,6 +914,7 @@
 				1DDB9D052AF25013001CA7CC /* ScriptCell.swift in Sources */,
 				43556EA92ADE809F00B3E7B7 /* PracticeModel.swift in Sources */,
 				1D7A3ED82ADC0FBD0084E962 /* OpendKeynote.swift in Sources */,
+				107035002AF258390097A685 /* GeneralSettingView.swift in Sources */,
 				1DBF14612AE1380D00B28CED /* MenubarExtraHeader.swift in Sources */,
 				1D0ECD7A2ADDA35400B95A74 /* HPTopToolbar.swift in Sources */,
 				1D09AFA02ADA767000C1400E /* ScriptView.swift in Sources */,
@@ -930,6 +937,7 @@
 				1DB132342AD78752006711B9 /* ReturnzeroAPI.swift in Sources */,
 				1D8C5AF52AD7BEDB00B01F10 /* Utterance.swift in Sources */,
 				1DDB9D0A2AF3147B001CA7CC /* OverlayView.swift in Sources */,
+				107034FE2AF258070097A685 /* FeedbackSettingView.swift in Sources */,
 				1D09AFB12ADAD08E00C1400E /* FileSystemManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

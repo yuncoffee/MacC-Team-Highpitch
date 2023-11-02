@@ -30,9 +30,9 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     /// 음성메모 재생 관련 프로퍼티
     /// audioPlayer.currentTime을 통해서 음성 이동하기
     var audioPlayer: AVAudioPlayer?
-    
+    var timer: Timer?
+    var currentTime: TimeInterval = 0
     var fileName: String = ""
-    var currentTime: TimeInterval = 0.0
     var stopPoint: TimeInterval?
 }
 
@@ -81,6 +81,11 @@ extension MediaManager: AudioPlayable  {
     func play() {
         audioPlayer?.play()
         isPlaying = true
+        if !(timer?.isValid ?? false) {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
+                self.currentTime = self.audioPlayer?.currentTime ?? 0
+            }
+        }
     }
     func playAt(atTime: Double) {
         let offset = atTime/1000
@@ -95,11 +100,13 @@ extension MediaManager: AudioPlayable  {
     func stopPlaying() {
         audioPlayer?.stop()
         isPlaying = false
+        timer?.invalidate()
     }
     
     func pausePlaying() {
         audioPlayer?.pause()
         isPlaying = false
+        timer?.invalidate()
     }
     
     func resumePlaying() {
@@ -114,9 +121,6 @@ extension MediaManager: AudioPlayable  {
     }
     func setCurrentTime(time: TimeInterval) {
         audioPlayer?.currentTime = time
-    }
-    func getCurrentTime() -> TimeInterval {
-        return audioPlayer?.currentTime ?? 0
     }
     func getPath(fileName: String) -> URL {
         let dataPath = getDocumentsDirectory()
@@ -146,6 +150,7 @@ protocol Recordable {
 }
 protocol AudioPlayable {
     var isPlaying: Bool { get set }
+    var currentTime: TimeInterval { get set }
     func registerAudio(url: URL) throws
     func play()
     func playAfter(second: Double)
@@ -153,6 +158,5 @@ protocol AudioPlayable {
     func pausePlaying()
     func getState() -> Bool
     func setCurrentTime(time: TimeInterval)
-    func getCurrentTime() -> Double
     func getDuration() -> Double
 }

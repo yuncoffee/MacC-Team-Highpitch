@@ -67,9 +67,7 @@ struct PracticeView: View {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
                 if let audioPath = practice.audioPath {
-                    AudioControllerView(audioPlayer: mediaManager, audioPath: audioPath) { time in
-                        mediaManager.currentTime = time
-                    }
+                    AudioControllerView(audioPlayer: mediaManager, audioPath: audioPath)
                 }
             }
         }
