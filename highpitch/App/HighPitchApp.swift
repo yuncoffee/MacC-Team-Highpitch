@@ -13,6 +13,9 @@ import HotKey
 
 @main
 struct HighpitchApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.openWindow) var openWindow
+    
     // MARK: - 데이터 컨트롤을 위한 매니저 객체 선언(전역 싱글 인스턴스)
     @State
     private var fileSystemManager = FileSystemManager()
@@ -29,6 +32,23 @@ struct HighpitchApp: App {
     private var practiceManager = PracticeManager()
     @State
     private var isMenuPresented: Bool = false
+        
+    @State
+    var refreshable = false
+    
+    @State
+    var menubarAnimationCount = 0 {
+        didSet {
+            if menubarAnimationCount > 6 {
+                menubarAnimationCount = 0
+            } else if SystemManager.shared.isAnalyzing {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    menubarAnimationCount += 1
+                }
+            }
+        }
+    }
+    
     #endif
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -53,16 +73,32 @@ struct HighpitchApp: App {
     }
 
     var body: some Scene {
-        #if os(iOS)
-        /// iOS Sample
-        WindowGroup {
-            VStack(content: {
-                Text("Placeholder")
-            })
-        }
-        #endif
         #if os(macOS)
         // MARK: - MainWindow Scene
+//        Window("overlay", id: "overlay") {
+//            @Bindable var systemManager = SystemManager.shared
+//            if systemManager.isOverlayView1Active {
+//                OverlayView(isActive: $systemManager.isOverlayView1Active)
+//            }
+//        }
+//        .windowResizability(.contentSize)
+//        Window("overlay2", id: "overlay2") {
+//            @Bindable var systemManager = SystemManager.shared
+//            if systemManager.isOverlayView2Active {
+//                OverlayView(isActive: $systemManager.isOverlayView2Active)
+//            }
+//        }
+//        .windowResizability(.contentSize)
+//        Window("overlay3", id: "overlay3") {
+//            @Bindable var systemManager = SystemManager.shared
+//            if systemManager.isOverlayView3Active {
+//                OverlayView(isActive: $systemManager.isOverlayView3Active)
+//            }
+//        }
+//        .windowResizability(.contentSize)
+//        .defaultPosition(.bottomTrailing)
+//        .windowResizability(.contentSize)
+//        .commandsRemoved()
         Window("mainwindow", id: "main") {
             MainWindowView()
                 .environment(appleScriptManager)
@@ -89,14 +125,9 @@ struct HighpitchApp: App {
                 .modelContainer(container)
         }
         // MARK: - MenubarExtra Scene
-        MenuBarExtra("MenubarExtra", 
-//                     image: practiceManager.isAnalyzing
-//                     ? .ESC
-//                     : .menubarextra
-                     image : .menubarextra
-        ) {
+        MenuBarExtra {
             MenubarExtraView(
-                isMenuPresented: $isMenuPresented,
+                refreshable: $refreshable,
                 selectedProject: $selectedProject,
                 selectedKeynote: $selectedKeynote
             )
@@ -107,18 +138,41 @@ struct HighpitchApp: App {
                 .environment(projectManager)
                 .openSettingsAccess()
                 .modelContainer(container)
-                .onAppear(perform: {
-                    practiceManager.isAnalyzing = false
-                })
+                .introspectMenuBarExtraWindow { window in
+                    window.animationBehavior = .utilityWindow
+                }
+        } label: {
+            if SystemManager.shared.isDarkMode {
+                if SystemManager.shared.isAnalyzing {
+                    Label("MenubarExtra", image: "menubar-loading-dark-\(menubarAnimationCount)")
+                } else if SystemManager.shared.hasUnVisited {
+                    Label("MenubarExtra", image: "menubar-noti-dark")
+                } else {
+                    Label("MenubarExtra", image: "menubar-loading-dark-7")
+                }
+                
+            } else {
+                if SystemManager.shared.isAnalyzing {
+                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
+                } else if SystemManager.shared.hasUnVisited {
+                    Label("MenubarExtra", image: "menubar-noti-light")
+                } else {
+                    Label("MenubarExtra", image: "menubar-loading-light-7")
+                }
+            }
         }
-//        .onChange(of: practiceManager.isAnalyzing, { oldValue, newValue in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                practiceManager.isAnalyzing.toggle()
-//            }
-//        })
-        .menuBarExtraAccess(isPresented: $isMenuPresented)
         .menuBarExtraStyle(.window)
+        .menuBarExtraAccess(isPresented: $isMenuPresented)
         .commandsRemoved()
+        .onChange(of: isMenuPresented, { _, newValue in
+            refreshable = newValue
+        })
+        .onChange(of: mediaManager.isRecording, { _, newValue in
+            print("TEST!!!!")
+            if !newValue {
+                menubarAnimationCount += 1
+            }
+        })
         #endif
     }
     func updateWeatherData() async {

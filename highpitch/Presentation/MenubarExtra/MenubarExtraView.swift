@@ -35,14 +35,14 @@ struct MenubarExtraView: View {
     private var isRecording = false
     
     @Binding
-    var isMenuPresented: Bool
+    var refreshable: Bool
     @Binding
     var selectedProject: ProjectModel?
     @Binding
     var selectedKeynote: OpendKeynote?
     
+    
     var body: some View {
-        if isMenuPresented {
             ZStack {
                 Text("  ")
                     .frame(width: 45, height: 1)
@@ -56,7 +56,6 @@ struct MenubarExtraView: View {
                     MenubarExtraHeader(
                         selectedProject: $selectedProject,
                         selectedKeynote: $selectedKeynote,
-                        isMenuPresented: $isMenuPresented,
                         isRecording: $isRecording
                     )
                     MenubarExtraContent(
@@ -74,10 +73,11 @@ struct MenubarExtraView: View {
                 .background(Color.HPComponent.Detail.background)
             }
             .frame(alignment: .top)
-            .onAppear {
+            .onChange(of: refreshable, { _, newValue in
+                print(newValue)
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
-            }
+            })
             .onChange(of: keynoteManager.isKeynoteProcessOpen, { _, newValue in
                 if newValue {
                     updateOpendKeynotes()
@@ -101,7 +101,6 @@ struct MenubarExtraView: View {
             .onDisappear {
                 
             }
-        }
     }
 }
 
@@ -157,12 +156,11 @@ extension MenubarExtraView {
     }
 }
 
-//#Preview {
-//    @State var value: Bool = true
-//    return MenubarExtraView(isMenuPresented: $value)
+// #Preview {
+//    return MenubarExtraView()
 //        .environment(AppleScriptManager())
 //        .environment(MediaManager())
 //        .environment(KeynoteManager())
 //        .frame(maxWidth: 360, maxHeight: 480)
-//}
+// }
 #endif

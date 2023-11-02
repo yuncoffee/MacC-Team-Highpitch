@@ -23,13 +23,6 @@ struct ProjectNavigationLink: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
-            Text("프로젝트 이름")
-                .systemFont(.body, weight: .semibold)
-                .foregroundStyle(Color.HPTextStyle.darker)
-                .padding(.top, .HPSpacing.small)
-                .padding(.horizontal, .HPSpacing.xxsmall)
-                .padding(.bottom, .HPSpacing.xsmall)
-
             ForEach(projects, id: \.id) { project in
                 ProjectLinkItem(
                     title : project.projectName,
@@ -60,15 +53,11 @@ struct ProjectNavigationLink: View {
                             modelContext.delete(project)
                         }
                     }
+                    .padding(.leading, .HPSpacing.xxxsmall)
+                    .padding(.trailing, .HPSpacing.xxsmall)
             }
-            .padding(.leading, 8)
-            .padding(.trailing, 12)
         }
-        .frame(
-            maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
+        .padding(.bottom, .HPSpacing.xxlarge)
     }
     
 }

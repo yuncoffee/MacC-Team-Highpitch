@@ -19,6 +19,7 @@ struct MainWindowView: View {
     private var mediaManager
     @Environment(ProjectManager.self)
     private var projectManager
+    @Environment(\.colorScheme) var colorScheme
     
     // MARK: - 데이터 저장을 위한 컨텍스트 객체
     @Environment(\.modelContext)
@@ -26,9 +27,15 @@ struct MainWindowView: View {
     @Query(sort: \ProjectModel.creatAt)
     var projects: [ProjectModel]
     
-    @State
-    private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+    @Query(
+        filter: #Predicate<PracticeModel> { !$0.isVisited },
+        sort: \PracticeModel.creatAt,
+        order: .reverse)
+    var unVisitedPractices: [PracticeModel] = []
     
+    @State
+    private var columnVisibility = NavigationSplitViewVisibility.all
+
     @ObservedObject var notiManager = NotificationManager.shared
     
     private var selected: ProjectModel? {
@@ -43,26 +50,45 @@ struct MainWindowView: View {
         }
         .toolbarBackground(.hidden)
         .navigationTitle("Sidebar")
-        .frame(minWidth: 1000, minHeight: 600)
-        .frame(maxWidth: 1512, maxHeight: .infinity)
+        .frame(
+            minWidth: 1080,
+            maxWidth: 1512,
+            minHeight: 600,
+            maxHeight: .infinity
+        )
         .background(Color.HPComponent.Sidebar.background)
         .onAppear {
             NotificationManager.shared.requestAuthorization()
             receiveNotificationAndRouting()
             setup()
         }
+        .onChange(of: colorScheme, { _, newValue in
+            if newValue == ColorScheme.dark {
+                SystemManager.shared.isDarkMode = true
+            } else {
+                SystemManager.shared.isDarkMode = false
+            }
+        })
     }
 }
 
 extension MainWindowView {
     private func setup() {
 //        쿼리해온 데이터에서 맨 앞 데이터 선택
+        if !unVisitedPractices.isEmpty {
+            SystemManager.shared.hasUnVisited = true
+        }
         if !projects.isEmpty {
             projectManager.projects = projects
             projectManager.current = projects[0]
         }
+        if colorScheme == ColorScheme.dark {
+            SystemManager.shared.isDarkMode = true
+        } else {
+            SystemManager.shared.isDarkMode = false
+        }
     }
-    private func receiveNotificationAndRouting(){
+    private func receiveNotificationAndRouting() {
         NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
                                                object: nil, queue: nil) { value in
             if let practices = projectManager.current?.practices.sorted() {
@@ -94,14 +120,23 @@ extension MainWindowView {
     // MARK: - navigationSidebar
     @ViewBuilder
     var navigationSidebar: some View {
-        LazyVGrid(columns: [GridItem()], alignment: .leading) {
-            ProjectNavigationLink()
+        VStack(alignment: .leading, spacing: 0) {
+            Text("프로젝트 이름")
+                .systemFont(.body, weight: .semibold)
+                .foregroundStyle(Color.HPTextStyle.darker)
+                .padding(.bottom, .HPSpacing.xsmall)
+                .padding(.horizontal, .HPSpacing.xxsmall)
+            ScrollView {
+                LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                    ProjectNavigationLink()
+                }
+            }
         }
+        .frame(alignment: .topLeading)
+        .navigationSplitViewColumnWidth(200)
         .padding(.top, .HPSpacing.medium)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             Color.HPComponent.Sidebar.background)
-        .navigationSplitViewColumnWidth(200)
     }
     
     // MARK: - navigationDetails

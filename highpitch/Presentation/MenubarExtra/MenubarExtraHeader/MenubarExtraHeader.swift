@@ -28,8 +28,6 @@ struct MenubarExtraHeader: View {
     @Binding
     var selectedKeynote: OpendKeynote?
     @Binding
-    var isMenuPresented: Bool
-    @Binding
     var isRecording: Bool
     
     var body: some View {

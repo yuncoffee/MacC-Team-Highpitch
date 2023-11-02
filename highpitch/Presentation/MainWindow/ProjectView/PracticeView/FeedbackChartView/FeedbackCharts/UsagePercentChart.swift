@@ -108,7 +108,9 @@ extension UsagePercentChart {
     /// 이전 습관어 비율
     private func getPrevFillerRate() -> Double {
         if let current = projectManager.current {
-            return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage
+            if !current.practices.isEmpty {
+                return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage
+            }
         }
         return -100
     }
