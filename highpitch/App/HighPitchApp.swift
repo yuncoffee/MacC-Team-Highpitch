@@ -125,31 +125,12 @@ struct HighpitchApp: App {
                 .modelContainer(container)
         }
         // MARK: - MenubarExtra Scene
-        MenuBarExtra("MenubarExtra", 
-//                     image: practiceManager.isAnalyzing
-//                     ? .ESC
-//                     : .menubarextra
-                     image : .menubarextra
-        ) {
+        MenuBarExtra {
             MenubarExtraView(
-                isMenuPresented: $isMenuPresented,
+                refreshable: $refreshable,
                 selectedProject: $selectedProject,
                 selectedKeynote: $selectedKeynote
             )
-                .environment(appleScriptManager)
-                .environment(fileSystemManager)
-                .environment(keynoteManager)
-                .environment(mediaManager)
-                .environment(projectManager)
-                .openSettingsAccess()
-                .modelContainer(container)
-                .onAppear(perform: {
-                    print("On..!")
-                })
-        }
-        // MARK: - MenubarExtra Scene
-        MenuBarExtra {
-            MenubarExtraView(refreshable: $refreshable)
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
                 .environment(keynoteManager)

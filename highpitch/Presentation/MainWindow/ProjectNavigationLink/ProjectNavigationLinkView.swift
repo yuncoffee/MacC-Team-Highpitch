@@ -53,6 +53,8 @@ struct ProjectNavigationLink: View {
                             modelContext.delete(project)
                         }
                     }
+                    .padding(.leading, .HPSpacing.xxxsmall)
+                    .padding(.trailing, .HPSpacing.xxsmall)
             }
         }
         .padding(.bottom, .HPSpacing.xxlarge)

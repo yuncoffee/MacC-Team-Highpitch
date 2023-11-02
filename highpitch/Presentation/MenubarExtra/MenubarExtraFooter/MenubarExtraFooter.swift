@@ -204,6 +204,9 @@ extension MenubarExtraFooter {
     }
     
     private func openSelectedPractice(practice: PracticeModel) {
+        if unVisitedPractices.count == 1 {
+            SystemManager.shared.hasUnVisited = false
+        }
         projectManager.current = selectedProject
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
@@ -212,6 +215,7 @@ extension MenubarExtraFooter {
         Task {
             await appendPractice(practice: practice)
             projectManager.path.append(practice)
+            
         }
     }
     

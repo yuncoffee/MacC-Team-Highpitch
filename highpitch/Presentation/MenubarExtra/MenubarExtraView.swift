@@ -36,6 +36,11 @@ struct MenubarExtraView: View {
     
     @Binding
     var refreshable: Bool
+    @Binding
+    var selectedProject: ProjectModel?
+    @Binding
+    var selectedKeynote: OpendKeynote?
+    
     
     var body: some View {
             ZStack {
