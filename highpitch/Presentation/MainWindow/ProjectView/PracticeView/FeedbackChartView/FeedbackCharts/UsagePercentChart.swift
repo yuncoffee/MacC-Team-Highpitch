@@ -9,8 +9,8 @@
  막대 차트
  */
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 enum EnumFillerUsagePercent: CaseIterable {
     case empty
@@ -34,7 +34,7 @@ enum EnumFillerUsagePercent: CaseIterable {
     var label: String {
         switch self {
         case .empty:
-            "지난 연습이\n표시됩니다!"
+            "지난 연습이 없어요\n"
         case .prev:
             "지난 연습\n습관어 사용 비율"
         case .current:
@@ -76,7 +76,7 @@ struct UsagePercentChart: View {
                         )
                     }
                     chartBar(
-                        usagePercent: (summary.fillerWordPercentage ?? 0),
+                        usagePercent: (summary.fillerWordPercentage),
                         type: .current,
                         maxHeight: 125
                     )
@@ -133,26 +133,25 @@ extension UsagePercentChart {
     
     @ViewBuilder
     private var header: some View {
-        // MARK: 수정 필요
-        // nn%, 늘었어요, 적절했어요 로직 추가되어야 합니다.
-        // 지난 연습과 상위 10% 결과 반환하는 로직 추가되어야 합니다.
-        // 지난 연습과 상위 10% 결과를 바탕으로 높이를 연산하는 로직 추가되어야 합니다.
+        let difference = fillerWordDifference()
+        
         Text("습관어 사용 비율")
             .systemFont(.subTitle, weight: .bold)
             .foregroundStyle(Color.HPTextStyle.darker)
             .padding(.bottom, .HPSpacing.xxxsmall)
-        if (data.index != 0) {
+        if (data.index != 0 && difference != 0) {
             Group {
                 Text("지난 연습 대비 습관어 사용 비율이 ")
-                + Text("\(abs(fillerWordDifference()), specifier: "%.1f")%P ")
+                + Text("\(abs(difference), specifier: "%.1f")%P ")
                     .foregroundStyle(Color.HPPrimary.dark)
                     .bold()
-                + Text(fillerWordDifference() > 0 ? "늘었어요." : "감소했어요.")
+                + Text(difference > 0 ? "늘었어요." : "감소했어요.")
                     .foregroundStyle(Color.HPPrimary.dark)
                     .bold()
             }.systemFont(.body)
                 .foregroundStyle(Color.HPTextStyle.dark)
         }
+        // TODO: 적절했어요 로직 추가되어야 합니다.
         Group {
             Text("이번 연습에서 습관어 사용 비율은 ")
             + Text("적절했어요.")
@@ -165,7 +164,7 @@ extension UsagePercentChart {
     }
     
     func getMaxPercentage() -> Double {
-        var answer = max(getTopTierFillerRate(), data.summary.fillerWordPercentage)
+        let answer = max(getTopTierFillerRate(), data.summary.fillerWordPercentage)
         if let current = projectManager.current {
             if data.index != 0 {
                 return max(answer, current.practices.sorted()[data.index - 1].summary.fillerWordPercentage)
@@ -216,8 +215,3 @@ extension UsagePercentChart {
         .frame(width: 105)
     }
 }
-
-// #Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return UsagePercentChart(data: $practice)
-// }

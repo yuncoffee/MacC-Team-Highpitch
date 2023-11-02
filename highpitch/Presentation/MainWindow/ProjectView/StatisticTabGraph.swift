@@ -19,8 +19,15 @@ struct StatisticTabGraph: View {
     @State
     var rawSelectedRange: ClosedRange<Int>?
     
+    @State
+    var isActive = true {
+        didSet {
+            DispatchQueue.main.asyncAfter(deadline: .now()) { self.isActive = true }
+        }
+    }
+    
     var body: some View {
-        let title: [String] = ["레벨", "습관어", "발화 속도"]
+        let title: [String] = ["레벨", "습관어", "말 빠르기"]
         VStack(spacing: 16) {
             HStack(alignment: .top, spacing: 0) {
                 HStack(spacing: .HPSpacing.small) {
@@ -42,6 +49,9 @@ struct StatisticTabGraph: View {
         .background(Color.HPComponent.Section.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
+        .onChange(of: selectedSegment) { _, _ in
+            if isActive { isActive = false }
+        }
     }
 }
 
@@ -49,8 +59,8 @@ extension StatisticTabGraph {
     // MARK: - 그래프 컨테이너
     @ViewBuilder
     var graphContainer: some View {
-        let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
-        if let practices = practices {
+        let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt })
+        if let practices = practices, isActive {
             /// 그래프 종류
             let title: [String] = ["레벨", "습관어", "발화 속도"]
             /// 그래프에 그려질 YAxis 범위
@@ -124,7 +134,9 @@ extension StatisticTabGraph {
             /// 호버 control
             .chartXSelection(value: $rawSelected)
             .chartXSelection(range: $rawSelectedRange)
+            /// chart의 scroll을 설정합니다.
             .chartScrollableAxes(.horizontal)
+            .chartScrollPosition(initialX: practices.count)
             /// 화면에 13회차까지의 연습을 표출합니다.
             .chartXVisibleDomain(length: 13)
             /// y축은 최저 값과 최고 값 차이의 1/8까지 표출합니다.
@@ -156,12 +168,19 @@ extension StatisticTabGraph {
                     by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
                 ))) { value in
                     AxisValueLabel(centered: false) {
+                        let fillerAxisValue =
+                            Double(value.index)
+                            * (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                            + range[selectedSegment].first!
+                        let rateAxisValue = Double(value.index)
+                            * (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                            + range[selectedSegment].first!
                         Text(
                             selectedSegment == 0
                             ? "LV.\(value.index + 1)"
                             : selectedSegment == 1
-                            ? "\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")%"
-                            : "\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")EPM"
+                            ? "\(fillerAxisValue, specifier: "%.1f")%"
+                            : "\(rateAxisValue, specifier: "%.1f")EPM"
                         )
                         .systemFont(.caption2, weight: .medium)
                         .foregroundStyle(Color.HPTextStyle.base)

@@ -19,8 +19,9 @@ struct StatisticsTabItem: View {
         if let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt }) {
             if (practices.count != 0) {
                 /// 연습 진행 기간
-                let practiceDuration =
-                "\(Date().createAtToYMD(input: practices.first!.creatAt)) - \(Date().createAtToYMD(input: practices.last!.creatAt))"
+                let startDate = Date().createAtToYMD(input: practices.first!.creatAt)
+                let endDate = Date().createAtToYMD(input: practices.last!.creatAt)
+                let practiceDuration = "\(startDate) - \(endDate)"
                 
                 VStack(alignment:.leading, spacing: 0) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -59,7 +60,6 @@ extension StatisticsTabItem {
     @ViewBuilder
     var averageLevelCard: some View {
         let projectLevel = getProjectLevel()
-        let tier = 34.description
         let MAX_LEVEL = 5.description
         /// 결과 요약
         VStack(alignment: .leading, spacing: 0) {
@@ -85,7 +85,7 @@ extension StatisticsTabItem {
                     }
                     .frame(alignment: .bottom)
                     HStack(spacing: 0) {
-                        HPStyledLabel(content: "상위 \(tier)%")
+                        HPStyledLabel(content: "상위 ??%")
                     }
                     .frame(alignment: .center)
                 }
@@ -327,7 +327,7 @@ extension StatisticsTabItem {
                         Text("내 최고 연습 회차는 ")
                             .systemFont(.body)
                             .foregroundStyle(Color.HPTextStyle.darker)
-                        Text("\(bestPractice.index + 1)번째 연습")
+                        Text("\(bestPractice.practiceName)")
                             .systemFont(.body, weight: .bold)
                             .foregroundStyle(Color.HPPrimary.base)
                         Text("이에요")
@@ -395,9 +395,8 @@ extension StatisticsTabItem {
             }
             answer /= Double(practices.count)
             return answer
-        } else {
-            return -1
         }
+        return -1
     }
     
     /// 최고 연습 회차를 반환한다.
