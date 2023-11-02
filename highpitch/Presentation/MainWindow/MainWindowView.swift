@@ -11,6 +11,8 @@ import SwiftData
 
 struct MainWindowView: View {
     // MARK: - 데이터 컨트롤을 위한 매니저 객체
+    @Environment(AppleScriptManager.self)
+    private var appleScriptManager
     @Environment(FileSystemManager.self)
     private var fileSystemManager
     @Environment(KeynoteManager.self)
@@ -176,7 +178,15 @@ extension MainWindowView {
     @ViewBuilder
     var projectToolbar: some View {
         if let projectName = projectManager.current?.projectName {
-            HPTopToolbar(title: projectName)
+            HPTopToolbar(title: projectName) {
+                if let path = projectManager.current?.keynotePath {
+                    let _path = path.absoluteString.components(separatedBy: "://")
+                    Task {
+                        await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
+                    }
+                    
+                }
+            }
         }
     }
 }

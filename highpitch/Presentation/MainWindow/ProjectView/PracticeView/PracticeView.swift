@@ -62,7 +62,9 @@ struct PracticeView: View {
             let title = practice.practiceName.description
             let date = Date().createAtToYMD(input: practice.creatAt.description) +
             " | " + Date().createAtToHMS(input: practice.creatAt.description)
-            HPTopToolbar(title: title, subTitle: date)
+            HPTopToolbar(title: title, subTitle: date) {
+                
+            }
             ZStack(alignment: .bottom) {
                 practiceContentsContainer
                 /// 오디오 컨트롤 뷰
