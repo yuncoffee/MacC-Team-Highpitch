@@ -49,6 +49,8 @@ struct UsagePercentChart: View {
     @Binding
     var practiceModel: PracticeModel
     var projectManager: ProjectManager
+    @State
+    var prevFillerRate = 0.0
     
     var body: some View {
         let maxHeight: CGFloat = 422
@@ -90,6 +92,9 @@ struct UsagePercentChart: View {
                 alignment: .center
             )
         }
+        .onAppear {
+            self.prevFillerRate = getPrevFillerRate()
+        }
         .padding(.bottom, .HPSpacing.xxlarge)
         .padding(.trailing, .HPSpacing.medium)
         .frame(
@@ -106,7 +111,7 @@ extension UsagePercentChart {
     private func getPrevFillerRate() -> Double {
         if let current = projectManager.current {
             var answer = -100.0
-            var practices = current.practices.sorted(by: {$0.creatAt < $1.creatAt})
+            let practices = current.practices.sorted(by: {$0.creatAt < $1.creatAt})
             for practice in practices {
                 if practice.creatAt < practiceModel.creatAt {
                     answer = practice.summary.fillerWordPercentage
@@ -167,8 +172,9 @@ extension UsagePercentChart {
     ) -> some View {
         VStack(spacing: 0) {
             let barHeight =
+                type == .toptier ? 45 :
                 125.0 * usagePercent
-            / max(getPrevFillerRate(), practiceModel.summary.fillerWordPercentage, 0.1)
+            / max(getPrevFillerRate(), practiceModel.summary.fillerWordPercentage, 0.01)
             /// decorater
             let decorater = if type == .empty {
                 "?? "
@@ -181,7 +187,7 @@ extension UsagePercentChart {
             Rectangle()
                 .frame(
                     width: 50,
-                    height: type == .toptier ? 45 : barHeight
+                    height: barHeight
                 )
                 .foregroundStyle(type.color.bar)
                 .clipShape(

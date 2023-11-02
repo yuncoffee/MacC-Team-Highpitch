@@ -13,103 +13,88 @@ import Charts
 
 struct UsageTopTierChart: View {
     var summary: PracticeSummaryModel
-    let epmtyData = [FillerCountData(
-        index: 0,
-        value: 1,
-        word: "",
-        color: Color("F1EDFF")
-    )]
+    @State
+    var data: [FillerCountData] = []
+    @State
+    var fillerOffset: [FillerCountOffset] = []
+    @State
+    var fillerTypeCount = 0
 
     var body: some View {
         let maxHeight: CGFloat = 500
         VStack(alignment:.leading, spacing: 0) {
             header
             GeometryReader { geometry in
-                let breakPoint: (chartSize: CGFloat, offset: CGFloat) = if geometry.size.width < 320 {
-                    (chartSize: maxHeight * 0.5, offset: geometry.size.height/3)
-                } else if geometry.size.width < 500 {
+                let breakPoint: (chartSize: CGFloat, offset: CGFloat) =
+                if geometry.size.width < 500 {
                     (chartSize: maxHeight * 0.5, offset: geometry.size.height * 0.37)
-                } else if geometry.size.width > 999 {
-                    (chartSize: maxHeight, offset: geometry.size.height * 0.5)
                 } else {
                     (chartSize: maxHeight * 0.6, offset: geometry.size.height * 0.45)
                 }
                 
-                if (summary.fillerWordCount > 0) {
-                    ZStack {
+                ZStack {
+                    if (summary.fillerWordCount > 0) {
                         VStack(spacing: 0) {
-                            Text("\(getFillerTypeCount())가지")
+                            Text("\(fillerTypeCount)가지")
                                 .systemFont(.title)
                                 .foregroundStyle(Color.HPPrimary.base)
                             Text("습관어")
                                 .systemFont(.footnote)
                                 .foregroundStyle(Color.HPTextStyle.base)
                         }
-                        Chart(Array(getFillerCount().enumerated()), id: \.1.id) { _, each in
-                            if let color = each.color {
-                                SectorMark(
-                                    angle: .value("count", each.value),
-                                    innerRadius: .ratio(0.618),
-                                    outerRadius: .ratio(0.8)
-                                )
-                                .foregroundStyle(color)
-                            }
-                        }
-                        .scaledToFit()
-                        .frame(
-                            maxWidth: breakPoint.chartSize,
-                            maxHeight: breakPoint.chartSize,
-                            alignment: .center
-                        )
-                        ForEach(fillerWordOffset(size: breakPoint.offset)) {each in
-                            VStack(alignment: .center, spacing: 0) {
-                                Text("\(each.word)")
-                                    .systemFont(.title)
-                                    .foregroundStyle(Color.HPTextStyle.dark)
-                                Text("\(each.value)회")
-                                    .systemFont(.footnote)
-                                    .foregroundStyle(Color.HPTextStyle.dark)
-                                
-                            }
-                            .offset(CGSize(width: each.offset.width, height: each.offset.height))
-                        }
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: geometry.size.height,
-                        alignment: .center
-                    )
-                } else {
-                    ZStack {
-                            Text("사용된 습관어가\n없어요!")
+                    } else {
+                        Text("사용된 습관어가\n없어요!")
                             .multilineTextAlignment(.center)
-                                .systemFont(.footnote)
-                                .foregroundStyle(Color.HPTextStyle.base)
-                    Chart(Array(epmtyData.enumerated()), id: \.1.id) { _, each in
-                            if let color = each.color {
-                                SectorMark(
-                                    angle: .value("count", each.value),
-                                    innerRadius: .ratio(0.618),
-                                    outerRadius: .ratio(0.8)
-                                )
-                                .foregroundStyle(color)
-                            }
-                        }
-                        .scaledToFit()
-                        .frame(
-                            maxWidth: breakPoint.chartSize,
-                            maxHeight: breakPoint.chartSize,
-                            alignment: .center
-                        )
+                            .systemFont(.footnote)
+                            .foregroundStyle(Color.HPTextStyle.base)
                     }
+                    Chart(Array(data.enumerated()), id: \.1.id) { _, each in
+                        if let color = each.color {
+                            SectorMark(
+                                angle: .value("count", each.value),
+                                innerRadius: .ratio(0.618),
+                                outerRadius: .ratio(0.8)
+                            )
+                            .foregroundStyle(color)
+                        }
+                    }
+                    .scaledToFit()
                     .frame(
-                        maxWidth: .infinity,
-                        maxHeight: geometry.size.height,
+                        maxWidth: breakPoint.chartSize,
+                        maxHeight: breakPoint.chartSize,
                         alignment: .center
                     )
+                    /// annotation을 설정합니다.
+                    ForEach(fillerOffset) {each in
+                        VStack(alignment: .center, spacing: 0) {
+                            Text("\(each.word)")
+                                .systemFont(.title)
+                                .foregroundStyle(Color.HPTextStyle.dark)
+                            Text("\(each.value)회")
+                                .systemFont(.footnote)
+                                .foregroundStyle(Color.HPTextStyle.dark)
+                            
+                        }
+                        .offset(CGSize(width: each.offset.width, height: each.offset.height))
+                    }
                 }
+                .onChange(of: breakPoint.offset, { _, newValue in
+                    self.fillerOffset = fillerWordOffset(size: newValue)
+                })
+                .onAppear {
+                    self.fillerOffset = fillerWordOffset(size: breakPoint.offset)
+                    self.fillerTypeCount = getFillerTypeCount()
+                }
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: geometry.size.height,
+                    alignment: .center
+                )
             }
             
+        }
+        .onAppear {
+            self.data = getFillerCount()
         }
         .padding(.bottom, .HPSpacing.medium)
         .padding(.trailing, .HPSpacing.large + .HPSpacing.xxxxsmall)
@@ -159,6 +144,15 @@ extension UsageTopTierChart {
     
     /// 습관어 사용 횟수를 '순서대로' 반환합니다.
     func getFillerCount() -> [FillerCountData] {
+        if summary.fillerWordCount == 0 {
+            return [FillerCountData(
+                index: 0,
+                value: 1,
+                word: "",
+                color: Color.HPPrimary.lightness
+            )]
+        }
+        
         let eachFillerCount = summary.eachFillerWordCount
             .sorted(by: { $0.count > $1.count })
         var returnFillerCount: [FillerCountData] = []
@@ -190,7 +184,7 @@ extension UsageTopTierChart {
             } else if rightIndex == 2 {
                 returnFillerCount[rightIndex].color = Color.HPPrimary.lighter
             } else if rightIndex == 3 {
-                returnFillerCount[rightIndex].color = Color("E1DAFF")
+                returnFillerCount[rightIndex].color = Color.HPPrimary.lightness
             } else {
                 returnFillerCount[rightIndex].color = Color.HPPrimary.lightnest
             }
@@ -210,6 +204,10 @@ extension UsageTopTierChart {
     
     /// annotation의 offset을 반환합니다.
     func fillerWordOffset(size: CGFloat) -> [FillerCountOffset] {
+        if summary.fillerWordCount == 0 {
+            return []
+        }
+        
         let fillerCnt = getFillerCount()
         var sumValue = 0
         for index in fillerCnt { sumValue += index.value }
