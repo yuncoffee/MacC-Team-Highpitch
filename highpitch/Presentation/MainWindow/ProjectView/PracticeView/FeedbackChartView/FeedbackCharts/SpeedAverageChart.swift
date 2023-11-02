@@ -156,7 +156,7 @@ extension SpeedAverageChart {
         let rate =  if practice.summary.epmAverage > 288 &&
         practice.summary.epmAverage < 422.4 {"적절"} else {"부적절"}
         VStack(alignment: .leading, spacing: 8) {
-            Text("평균 발화 속도")
+            Text("평균 말 빠르기")
                 .systemFont(.subTitle)
                 .foregroundStyle(Color.HPTextStyle.darker)
             HStack(spacing: 0) {

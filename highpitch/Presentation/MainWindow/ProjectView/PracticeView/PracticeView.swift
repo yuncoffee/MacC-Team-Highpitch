@@ -105,17 +105,3 @@ extension PracticeView {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
-
-//extension PracticeView {
-//    private func updateProgress() {
-//        guard let player = mediaManager.audioPlayer else { return }
-//        mediaManager.currentTime = player.currentTime
-//    }
-//}
-
-// #Preview {
-//    @State
-//    var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//
-//    return PracticeView(practice: practice)
-// }

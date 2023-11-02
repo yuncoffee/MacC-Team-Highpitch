@@ -40,7 +40,7 @@ struct StatisticsTabItem: View {
                         bestLevelPracticeCard
                     }
                     .padding(.bottom, .HPSpacing.xxsmall)
-                    /// [레벨, 습관어, 발화 속도] 그래프
+                    /// [레벨, 습관어, 말 빠르기] 그래프
                     StatisticTabGraph()
                 }
             } else { emptyView }
@@ -359,7 +359,7 @@ extension StatisticsTabItem {
                     HStack(spacing: 0) {
                         HPStyledLabel(
                             content:
-                                "습관어 \(bestPractice.summary.fillerWordCount)회 • 발화 속도"
+                                "습관어 \(bestPractice.summary.fillerWordCount)회 • 말 빠르기 "
                                 + String(format: "%.1f", bestPractice.summary.epmAverage) + "EPM")
                     }
                 }

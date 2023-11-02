@@ -62,7 +62,7 @@ extension StatisticTabGraph {
         let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt })
         if let practices = practices, isActive {
             /// 그래프 종류
-            let title: [String] = ["레벨", "습관어", "발화 속도"]
+            let title: [String] = ["레벨", "습관어", "말 빠르기"]
             /// 그래프에 그려질 YAxis 범위
             let range: [[Double]] = [levelRange(), fillerWordRange(), epmValueRange()]
             Chart {
@@ -280,7 +280,7 @@ extension StatisticTabGraph {
         }
         return []
     }
-    /// 발화 속도 그래프에 그려질 YAxis 범위
+    /// 말 빠르기 그래프에 그려질 YAxis 범위
     func epmValueRange() -> [Double] {
         let practices = projectManager.current?.practices.sorted(
             by: { $0.summary.epmAverage < $1.summary.epmAverage }
