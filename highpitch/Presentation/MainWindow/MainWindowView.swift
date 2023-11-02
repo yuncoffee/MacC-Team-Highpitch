@@ -184,7 +184,6 @@ extension MainWindowView {
                     Task {
                         await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
                     }
-                    
                 }
             }
         }
