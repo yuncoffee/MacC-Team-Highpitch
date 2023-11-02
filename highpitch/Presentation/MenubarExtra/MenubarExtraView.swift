@@ -32,14 +32,14 @@ struct MenubarExtraView: View {
     @State
     private var keynoteOptions: [OpendKeynote] = []
     @State
-    private var selectedProject: ProjectModel?
-    @State
-    private var selectedKeynote: OpendKeynote?
-    @State
     private var isRecording = false
     
     @Binding
     var isMenuPresented: Bool
+    @Binding
+    var selectedProject: ProjectModel?
+    @Binding
+    var selectedKeynote: OpendKeynote?
     
     var body: some View {
         if isMenuPresented {
@@ -157,12 +157,12 @@ extension MenubarExtraView {
     }
 }
 
-#Preview {
-    @State var value: Bool = true
-    return MenubarExtraView(isMenuPresented: $value)
-        .environment(AppleScriptManager())
-        .environment(MediaManager())
-        .environment(KeynoteManager())
-        .frame(maxWidth: 360, maxHeight: 480)
-}
+//#Preview {
+//    @State var value: Bool = true
+//    return MenubarExtraView(isMenuPresented: $value)
+//        .environment(AppleScriptManager())
+//        .environment(MediaManager())
+//        .environment(KeynoteManager())
+//        .frame(maxWidth: 360, maxHeight: 480)
+//}
 #endif
