@@ -69,10 +69,12 @@ extension MediaManager: Recordable {
 }
 
 // MARK: - 음성메모 재생 관련 메서드
-extension MediaManager: AudioPlayable  {
+extension MediaManager: AudioPlayable {
     func registerAudio(url: URL) throws {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
+            // MARK: 음성 녹음 및 재생 볼륨 설정
+            audioPlayer?.volume = 10.0
             audioPlayer?.delegate = self
         } catch {
             print("재생 중 오류 발생: \(error.localizedDescription)")
