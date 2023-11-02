@@ -41,7 +41,6 @@ struct MenubarExtraView: View {
     @Binding
     var selectedKeynote: OpendKeynote?
     
-    
     var body: some View {
             ZStack {
                 Text("  ")
@@ -63,7 +62,9 @@ struct MenubarExtraView: View {
                         selectedKeynote: $selectedKeynote,
                         keynoteOptions: $keynoteOptions
                     )
-                    MenubarExtraFooter(selectedProject: $selectedProject)
+                    if projectManager.current != nil {
+                        MenubarExtraFooter(selectedProject: $selectedProject)
+                    }
                 }
                 .frame(
                     width: isRecording ? 0 : 400,

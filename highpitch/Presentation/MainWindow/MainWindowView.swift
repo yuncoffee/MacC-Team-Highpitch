@@ -69,6 +69,12 @@ struct MainWindowView: View {
                 SystemManager.shared.isDarkMode = false
             }
         })
+        .onChange(of: projects) { oldValue, newValue in
+            if !newValue.isEmpty {
+                projectManager.projects = newValue
+                projectManager.current = newValue[0]
+            }
+        }
     }
 }
 
