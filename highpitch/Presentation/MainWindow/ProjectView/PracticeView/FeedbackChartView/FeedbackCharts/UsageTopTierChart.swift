@@ -13,27 +13,12 @@ import Charts
 
 struct UsageTopTierChart: View {
     var summary: PracticeSummaryModel
-    let fillerWordList = FillerWordList()
-    var epmtyData = [FillerCountData(
+    let epmtyData = [FillerCountData(
         index: 0,
         value: 1,
         word: "",
         color: Color("F1EDFF")
     )]
-    
-//    @State
-//    var selectedIndex: Double?
-//    
-//    @State
-//    var cumulativeRangesForStyles: [(index: Int, range: Range<Double>)]?
-//    
-//    var selectedStyle: (name: String, selected: Int)? {
-//        if let selectedIndex = selectedIndex {
-//            let _selected = cumulativeRangesForStyles?.firstIndex(where: { $0.range.contains(selectedIndex) })
-//            return (name: self.fillerWordList.defaultList[_selected ?? 0], selected: Int(_selected ?? 0))
-//        }
-//        return nil
-//    }
 
     var body: some View {
         let maxHeight: CGFloat = 500
@@ -68,10 +53,8 @@ struct UsageTopTierChart: View {
                                     outerRadius: .ratio(0.8)
                                 )
                                 .foregroundStyle(color)
-//                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
                             }
                         }
-//                        .chartAngleSelection(value: $selectedIndex)
                         .scaledToFit()
                         .frame(
                             maxWidth: breakPoint.chartSize,
@@ -110,10 +93,8 @@ struct UsageTopTierChart: View {
                                     outerRadius: .ratio(0.8)
                                 )
                                 .foregroundStyle(color)
-//                                .opacity(selectedStyle?.selected == index ? 0.5 : 1)
                             }
                         }
-//                        .chartAngleSelection(value: $selectedIndex)
                         .scaledToFit()
                         .frame(
                             maxWidth: breakPoint.chartSize,
@@ -138,15 +119,6 @@ struct UsageTopTierChart: View {
             maxHeight: maxHeight,
             alignment: .topLeading
         )
-//        .onAppear {
-//            var cumulative = 0.0
-//            cumulativeRangesForStyles = getFillerCount().enumerated().map {
-//                let newCumulative = cumulative + Double($1.value)
-//                let result = (index: $0, range: cumulative ..< newCumulative)
-//                cumulative = newCumulative
-//                return result
-//            }
-//        }
     }
 }
 
@@ -165,7 +137,7 @@ extension UsageTopTierChart {
     }
 }
 
-// 각 습관어의 사용 횟수를 기록하기 위한 구조체입니다.
+/// 각 습관어의 사용 횟수를 기록하기 위한 구조체입니다.
 struct FillerCountData: Identifiable {
     var id = UUID()
     var index: Int
@@ -174,7 +146,7 @@ struct FillerCountData: Identifiable {
     var color: Color?
 }
 
-// donut chart의 annotation offset을 설정하기 위한 구조체입니다.
+/// donut chart의 annotation offset을 설정하기 위한 구조체입니다.
 struct FillerCountOffset: Identifiable {
     var id = UUID()
     var index: Int
@@ -185,7 +157,7 @@ struct FillerCountOffset: Identifiable {
 
 extension UsageTopTierChart {
     
-    // 습관어 사용 횟수를 '순서대로' 반환합니다.
+    /// 습관어 사용 횟수를 '순서대로' 반환합니다.
     func getFillerCount() -> [FillerCountData] {
         let eachFillerCount = summary.eachFillerWordCount
             .sorted(by: { $0.count > $1.count })
@@ -212,21 +184,21 @@ extension UsageTopTierChart {
         }
         for rightIndex in 0..<returnFillerCount.count {
             if rightIndex == 0 {
-                returnFillerCount[rightIndex].color = Color("8B6DFF")
+                returnFillerCount[rightIndex].color = Color.HPPrimary.base
             } else if rightIndex == 1 {
-                returnFillerCount[rightIndex].color = Color("AD99FF")
+                returnFillerCount[rightIndex].color = Color.HPPrimary.light
             } else if rightIndex == 2 {
-                returnFillerCount[rightIndex].color = Color("D0C5FF")
+                returnFillerCount[rightIndex].color = Color.HPPrimary.lighter
             } else if rightIndex == 3 {
                 returnFillerCount[rightIndex].color = Color("E1DAFF")
             } else {
-                returnFillerCount[rightIndex].color = Color("F1EDFF")
+                returnFillerCount[rightIndex].color = Color.HPPrimary.lightnest
             }
         }
         return returnFillerCount
     }
     
-    // 사용된 습관어의 종류 수를 반환합니다.
+    /// 사용된 습관어의 종류 수를 반환합니다.
     func getFillerTypeCount() -> Int {
         var fillerTypeCnt = 0
         let eachFillerCount = summary.eachFillerWordCount
@@ -236,7 +208,7 @@ extension UsageTopTierChart {
         return fillerTypeCnt
     }
     
-    // annotation의 offset을 반환합니다.
+    /// annotation의 offset을 반환합니다.
     func fillerWordOffset(size: CGFloat) -> [FillerCountOffset] {
         let fillerCnt = getFillerCount()
         var sumValue = 0
