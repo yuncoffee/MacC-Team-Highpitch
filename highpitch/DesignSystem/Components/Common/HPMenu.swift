@@ -37,7 +37,7 @@ struct HPMenu: View {
                     .frame(width: 16, height: 16)
             }
             .frame(alignment: .leading)
-            NSPopUpButtonView(selectedOption: $selected, options: options)
+            NSPopUpButtonView(selectedOption: $selected, options: $options)
         }
         .padding(.vertical, 3)
         .padding(.leading, 7)
@@ -67,7 +67,7 @@ struct MenubarExtraMenuStyle: MenuStyle {
 
 struct NSPopUpButtonView: NSViewRepresentable {
     @Binding var selectedOption: String
-    var options: [String]
+    @Binding var options: [String]
     
     func makeNSView(context: Context) -> NSPopUpButton {
         let popUpButton = NSPopUpButton(frame: .zero, pullsDown: false)
@@ -99,6 +99,10 @@ struct NSPopUpButtonView: NSViewRepresentable {
             string: selectedMenuItem?.title ?? "",
             attributes: attributes
         )
+        
+        nsView.menu?.removeAllItems()
+        nsView.addItems(withTitles: options)
+
         nsView.selectItem(withTitle: selectedOption)
     }
     

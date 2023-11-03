@@ -40,6 +40,9 @@ struct MainWindowView: View {
 
     @ObservedObject var notiManager = NotificationManager.shared
     
+    @State
+    private var localProjectName = ""
+    
     private var selected: ProjectModel? {
         projectManager.current
     }
@@ -75,6 +78,11 @@ struct MainWindowView: View {
             if !newValue.isEmpty {
                 projectManager.projects = newValue
                 projectManager.current = newValue[0]
+            }
+        }
+        .onChange(of: projectManager.current) { _, newValue in
+            if let currnet = newValue {
+                localProjectName = currnet.projectName
             }
         }
     }
@@ -184,6 +192,40 @@ extension MainWindowView {
                     Task {
                         await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
                     }
+                }
+            } popOverContent: {
+                VStack(alignment: .leading, spacing: .HPSpacing.xxxxsmall) {
+                    Text("프로젝트 명 변경하기")
+                        .systemFont(.caption2)
+                    VStack(spacing: .HPSpacing.xxxxsmall) {
+                        TextField("set your ProjectName", text: $localProjectName)
+                            .systemFont(.caption)
+                        Button(action: {
+                            projectManager.current?.projectName = localProjectName
+                            print("projectName: \(localProjectName)")
+                            Task {
+                                await MainActor.run {
+                                    do {
+                                        try modelContext.save()
+                                        print("변경됨")
+                                    } catch {
+                                        print("error: 변경 실패")
+                                    }
+                                }
+                            }
+                        }, label: {
+                            Text("변경하기")
+                        })
+                    }
+                }
+                .padding(.vertical, .HPSpacing.xxxsmall)
+                .padding(.horizontal, .HPSpacing.xsmall)
+                .frame(minWidth: 200)
+                .onAppear(perform: {
+                    localProjectName = projectName
+                })
+                .onDisappear {
+                    localProjectName = projectName
                 }
             }
         }
