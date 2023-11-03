@@ -43,6 +43,9 @@ struct MainWindowView: View {
     @State
     private var localProjectName = ""
     
+    @State
+    private var isAlertActive = false
+    
     private var selected: ProjectModel? {
         projectManager.current
     }
@@ -74,7 +77,7 @@ struct MainWindowView: View {
                 SystemManager.shared.isDarkMode = false
             }
         })
-        .onChange(of: projects) { oldValue, newValue in
+        .onChange(of: projects) { _, newValue in
             if !newValue.isEmpty {
                 projectManager.projects = newValue
                 projectManager.current = newValue[0]
@@ -91,6 +94,15 @@ struct MainWindowView: View {
 extension MainWindowView {
     private func setup() {
 //        쿼리해온 데이터에서 맨 앞 데이터 선택
+//        if mediaManager.checkMicrophonePermission() {
+//            print("Hello")
+//            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")
+//            {
+//                 NSWorkspace.shared.open(url)
+//             }
+//        } else {
+//            
+//        }
         if !unVisitedPractices.isEmpty {
             SystemManager.shared.hasUnVisited = true
         }
