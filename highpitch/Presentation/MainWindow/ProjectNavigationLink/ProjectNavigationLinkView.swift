@@ -23,7 +23,7 @@ struct ProjectNavigationLink: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: .HPSpacing.xxsmall) {
-            ForEach(projects, id: \.id) { project in
+            ForEach(projects.sorted(by: {$0.creatAt > $1.creatAt}), id: \.id) { project in
                 ProjectLinkItem(
                     title : project.projectName,
                     isSelected: checkIsSelected(project.projectName)) {

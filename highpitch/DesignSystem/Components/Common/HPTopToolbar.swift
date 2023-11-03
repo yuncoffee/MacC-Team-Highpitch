@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct HPTopToolbar: View {
-    
+struct HPTopToolbar<T: View>: View {
     var title: String
     var subTitle: String?
     var backButtonCompletion: (() -> Void)?
     var completion: (() -> Void)
+    var popOverContent: (() -> T)?
+    
+    @State
+    private var isPopoverActive = false
     
     var body: some View {
         ZStack {
@@ -39,6 +42,17 @@ struct HPTopToolbar: View {
                 Text("\(title)")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPTextStyle.darkness)
+                    .onTapGesture {
+                        if !isPopoverActive {
+                            isPopoverActive = true
+                        }
+                    }
+                    .popover(isPresented: $isPopoverActive, arrowEdge: .bottom) {
+                        if let popOverContent {
+                            popOverContent()
+                        }
+                    }
+                    
                 if let subTitle {
                     Text("\(subTitle)")
                         .systemFont(.caption)
@@ -70,6 +84,48 @@ struct HPTopToolbar: View {
         .frame(maxWidth: .infinity, minHeight: 64)
         .background(Color.HPGray.systemWhite)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
+    }
+}
+
+extension HPTopToolbar where T == EmptyView {
+    init(
+        title: String,
+        subTitle: String?,
+        backButtonCompletion: (() -> Void)?,
+        completion: @escaping (() -> Void)
+    ) {
+        self.init(
+            title: title,
+            subTitle: subTitle,
+            backButtonCompletion: backButtonCompletion,
+            completion: completion,
+            popOverContent: { EmptyView() }
+        )
+    }
+    init(
+        title: String,
+        subTitle: String?,
+        completion: @escaping (() -> Void)
+    ) {
+        self.init(
+            title: title,
+            subTitle: subTitle,
+            backButtonCompletion: nil,
+            completion: completion,
+            popOverContent: { EmptyView() }
+        )
+    }
+    init(
+        title: String,
+        completion: @escaping (() -> Void)
+    ) {
+        self.init(
+            title: title,
+            subTitle: nil,
+            backButtonCompletion: nil,
+            completion: completion,
+            popOverContent: { EmptyView() }
+        )
     }
 }
 

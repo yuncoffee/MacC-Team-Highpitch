@@ -21,7 +21,7 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     
     /// 음성 녹음 진행 중인 여부 확인용
     var isRecording = false
-    
+    var isPause = false
     var isPlaying = false
     
     /// 음성메모 녹음 관련 프로퍼티
@@ -38,11 +38,12 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
 
 // MARK: - 음성메모 녹음 관련 메서드
 extension MediaManager: Recordable {
-    func checkMicrophonePermission() {
+    func checkMicrophonePermission() -> Bool {
         switch AVCaptureDevice.authorizationStatus(for: .audio) {
         case .authorized:
             // 이미 권한을 얻은 경우
             print("마이크 녹음 권한이 승인되었습니다.")
+            return true
         case .notDetermined:
             // 아직 사용자에게 권한을 요청하지 않은 경우
             AVCaptureDevice.requestAccess(for: .audio) { granted in
@@ -52,12 +53,25 @@ extension MediaManager: Recordable {
                     print("마이크 녹음 권한이 거부되었습니다.")
                 }
             }
+            return false
         case .denied, .restricted:
             // 사용자가 권한을 거부하거나 앱 사용을 제한한 경우
             print("마이크 녹음 권한이 거부되었거나 제한되었습니다.")
+            return false
         }
     }
     func startRecording() {
+        if isRecording {
+            audioRecorder?.record()
+            isPause = false
+        } else {
+            prepareRecording()
+            audioRecorder?.record()
+            isRecording = true
+        }
+    }
+    
+    func prepareRecording() {
         // MARK: 파일 이름 전략은 -> YYYYMMDDHHMMSS.m4a
         let fileURL = getPath(fileName: fileName)
         let settings = [
@@ -66,14 +80,16 @@ extension MediaManager: Recordable {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
-        
         do {
             audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
-            audioRecorder?.record()
-            isRecording = true
         } catch {
             print("녹음 중 오류 발생: \(error.localizedDescription)")
         }
+    }
+    
+    func pauseRecording() {
+        audioRecorder?.pause()
+        isPause = true
     }
     
     func stopRecording() {
