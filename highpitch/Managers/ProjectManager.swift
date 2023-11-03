@@ -94,7 +94,7 @@ extension ProjectManager {
                 current = tempProject
             }
             NotificationManager.shared.sendNotification(
-                name: newPracticeModel.practiceName
+                name: newPracticeModel.creatAt
             )
         }
     }
