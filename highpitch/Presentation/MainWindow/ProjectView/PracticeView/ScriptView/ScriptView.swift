@@ -15,14 +15,16 @@ final class ScriptVM {
 struct ScriptView: View {
     @Environment(MediaManager.self)
     private var mediaManager
+    @Environment(PracticeManager.self)
+    private var practiceManager
     var sentences: [SentenceModel]
     var words: [WordModel]
+    @Binding
+    var practice: PracticeModel
     @State
     private var wordSizes: [CGSize] = []
     @State
     private var range: [(start: Int, end: Int)] = []
-    @State
-    var nowSentece = 0
     @State
     private var startIndex = 0
     
@@ -45,7 +47,7 @@ struct ScriptView: View {
                         Text("연습했던 해당 회차의 녹음본을 토대로 추출된 스크립트에요.")
                             .systemFont(.caption)
                             .foregroundStyle(Color.HPTextStyle.darker)
-                        Text("스크립트 내에 보라색 표시 글씨는 내가 사용한 습관어를, 형광펜 밑줄은 빠르게 말한 구간을 나타내요.")
+                        Text("스크립트 내에 보라색 표시 글씨는 내가 사용한 습관어를, 형광펜 밑줄은 빠르게 혹은 느리게 말한 구간을 나타내요.")
                             .fixedSize(horizontal: false, vertical: true)
                             .systemFont(.caption, weight: .semibold)
                             .foregroundStyle(Color.HPTextStyle.darker)
@@ -71,13 +73,16 @@ struct ScriptView: View {
                                     startAt: range[index].start,
                                     endAt: range[index].end,
                                     containerWidth: SCRIPT_CONTAINER_WIDTH,
-                                    isFastSentence: sentence.epmValue > 422.4,
-                                    nowSentece: nowSentece,
+                                    isFastSentence: 
+                                        practice.summary.fastSentenceIndex.contains(sentence.index),
+                                    isSlowSentence:
+                                        practice.summary.slowSentenceIndex.contains(sentence.index),
+                                    nowSentece: practiceManager.nowSentence,
                                     sentenceIndex: index
                                 ) { sentenceIndex in
                                     mediaManager.pausePlaying()
                                     mediaManager.playAt(atTime: Double(sentences[sentenceIndex].startAt))
-                                    nowSentece = sentenceIndex
+                                    practiceManager.nowSentence = sentenceIndex
                                     mediaManager.play()
                                 }
                                 .id(sentence.index)
@@ -91,7 +96,7 @@ struct ScriptView: View {
                     )
                     .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
                     .padding(.horizontal, .HPSpacing.medium)
-                    .onChange(of: nowSentece) { _, newValue in
+                    .onChange(of: practiceManager.nowSentence) { _, newValue in
                         withAnimation {
                             scrollViewProxy.scrollTo(newValue, anchor: .center)
                         }
@@ -102,6 +107,7 @@ struct ScriptView: View {
         }
         .border(Color.HPComponent.stroke, width: 1, edges: [.leading])
         .onAppear {
+            practiceManager.nowSentence = 0
             sentences.forEach { sentence in
                 var result = (start: 0, end: 0)
                 result.start = startIndex
@@ -121,9 +127,9 @@ struct ScriptView: View {
         .onChange(of: mediaManager.currentTime, { _, newValue in
             
             print(#line, newValue)
-            if nowSentece < sentences.count {
-                if newValue > Double(sentences[nowSentece].endAt)/1000 {
-                    nowSentece += 1
+            if practiceManager.nowSentence < sentences.count {
+                if newValue > Double(sentences[practiceManager.nowSentence].endAt)/1000 {
+                    practiceManager.nowSentence += 1
                 }
             }
         })
@@ -133,6 +139,5 @@ struct ScriptView: View {
 extension ScriptView {
     private func play(startAt: Double, index: Int) {
         mediaManager.pausePlaying()
-        
     }
 }
