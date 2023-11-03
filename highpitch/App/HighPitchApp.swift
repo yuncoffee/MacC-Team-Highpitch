@@ -64,6 +64,13 @@ struct HighpitchApp: App {
     
     let container: ModelContainer
     
+    @State 
+    private var recordStartCommand: String = UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Default Value"
+    @State
+    private var recordPauseCommand: String = UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Default Value"
+    @State
+    private var recordSaveCommand: String = UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Default Value"
+    
     init() {
         do {
             container = try ModelContainer(for: ProjectModel.self, configurations: ModelConfiguration())
