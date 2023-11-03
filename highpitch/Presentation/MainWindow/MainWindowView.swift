@@ -99,24 +99,18 @@ extension MainWindowView {
     private func receiveNotificationAndRouting() {
         NotificationCenter.default.addObserver(forName: Notification.Name("projectName"),
                                                object: nil, queue: nil) { value in
-            if let practices = projectManager.current?.practices.sorted() {
+            
+            let thisPractice = projects.flatMap{$0.practices}
+                .first(where: {$0.creatAt == value.object as! String})
+            if let practice = thisPractice {
                 projectManager.currentTabItem = 1
                 if !projectManager.path.isEmpty {
                   projectManager.path.removeLast()
                 }
-                if let practiceName = value.object as? String {
-                    if practiceName != "err" {
-                        let latestPractice = practices.first { practice in
-                            practice.practiceName == practiceName
-                        }
-                        guard let appendablePractice = latestPractice else {
-                            return
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                          projectManager.path.append(appendablePractice)
-                        }
-                    }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                  projectManager.path.append(practice)
                 }
+                
             }
         }
     }
