@@ -29,31 +29,34 @@ struct FastSentReplay: View {
                     }
                 }
             if isDetailActive {
-                
-                ForEach(
-                    Array(practice.sentences.sorted(by: {$0.index < $1.index }).enumerated()),
-                    id: \.1.id
-                ) { index, each in
-                    if practice.summary.fastSentenceIndex.contains(each.index) {
-                        FastSentReplayCell(
-                            sentenceIndex: each.index,
-                            index: index,
-                            startAt: Double(each.startAt),
-                            endAt: Double(each.endAt),
-                            sentence: each.sentence,
-                            isLast: index == practice.sentences.count - 1,
-                            selectedIndex: $selectedIndex
-                        )
-                        .padding(.horizontal, 2)
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(
+                            Array(practice.sentences.sorted(by: {$0.index < $1.index }).enumerated()),
+                            id: \.1.id
+                        ) { index, each in
+                            if practice.summary.fastSentenceIndex.contains(each.index) {
+                                FastSentReplayCell(
+                                    sentenceIndex: each.index,
+                                    index: index,
+                                    startAt: Double(each.startAt),
+                                    endAt: Double(each.endAt),
+                                    sentence: each.sentence,
+                                    isLast: index == practice.sentences.count - 1,
+                                    selectedIndex: $selectedIndex
+                                )
+                                .padding(.horizontal, 2)
+                            }
+                        }
                     }
                 }
-                
             }
         }
         .frame(
             minWidth: 388,
             maxWidth: 388,
             minHeight: 70,
+            maxHeight: 332,
             alignment: .top
         )
         .background(
