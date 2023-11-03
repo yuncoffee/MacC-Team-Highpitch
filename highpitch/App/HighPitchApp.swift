@@ -109,7 +109,7 @@ struct HighpitchApp: App {
                 .modelContainer(container)
                 .onAppear {
                     hotkeyStart.keyDownHandler = playPractice
-                    hotkeyPause.keyDownHandler = projectManager.pausePractice
+                    hotkeyPause.keyDownHandler = pausePractice
                     hotkeySave.keyDownHandler = stopPractice
                 }
         }
@@ -195,6 +195,10 @@ extension HighpitchApp {
             keynoteManager: keynoteManager,
             mediaManager: mediaManager
         )
+    }
+    
+    func pausePractice() {
+        projectManager.pausePractice(mediaManager: mediaManager)
     }
     
     func stopPractice() {

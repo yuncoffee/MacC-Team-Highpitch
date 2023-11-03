@@ -21,7 +21,7 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
     
     /// 음성 녹음 진행 중인 여부 확인용
     var isRecording = false
-    
+    var isPause = false
     var isPlaying = false
     
     /// 음성메모 녹음 관련 프로퍼티
@@ -39,6 +39,17 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
 // MARK: - 음성메모 녹음 관련 메서드
 extension MediaManager: Recordable {
     func startRecording() {
+        if isRecording {
+            audioRecorder?.record()
+            isPause = false
+        } else {
+            prepareRecording()
+            audioRecorder?.record()
+            isRecording = true
+        }
+    }
+    
+    func prepareRecording() {
         // MARK: 파일 이름 전략은 -> YYYYMMDDHHMMSS.m4a
         let fileURL = getPath(fileName: fileName)
         let settings = [
@@ -47,14 +58,16 @@ extension MediaManager: Recordable {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
-        
         do {
             audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
-            audioRecorder?.record()
-            isRecording = true
         } catch {
             print("녹음 중 오류 발생: \(error.localizedDescription)")
         }
+    }
+    
+    func pauseRecording() {
+        audioRecorder?.pause()
+        isPause = true
     }
     
     func stopRecording() {

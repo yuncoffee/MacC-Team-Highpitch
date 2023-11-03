@@ -28,21 +28,25 @@ extension ProjectManager {
         keynoteManager: KeynoteManager,
         mediaManager: MediaManager
     ) {
-        if let selectedKeynote = selectedKeynote {
-            Task {
-                await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
-            }
+        if mediaManager.isRecording {
+            mediaManager.startRecording()
         } else {
-            /// 선택된 키노트가 없을 때
+            if let selectedKeynote = selectedKeynote {
+                Task {
+                    await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
+                }
+            } else {
+                /// 선택된 키노트가 없을 때
+            }
+            temp = selectedProject?.persistentModelID
+            keynoteManager.temp = selectedKeynote
+            mediaManager.fileName = Date().makeM4aFileName()
+            mediaManager.startRecording()
         }
-        temp = selectedProject?.persistentModelID
-        keynoteManager.temp = selectedKeynote
-        mediaManager.fileName = Date().makeM4aFileName()
-        mediaManager.startRecording()
     }
     
-    func pausePractice() {
-        print("pause!")
+    func pausePractice(mediaManager: MediaManager) {
+        mediaManager.pauseRecording()
     }
     
     @MainActor
