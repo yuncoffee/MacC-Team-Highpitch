@@ -158,6 +158,7 @@ extension StatisticTabGraph {
                     AxisValueLabel(centered: false) {
                         Text("\(value.index + 1)회차")
                             .offset(x: -17)
+                            .fixedSize()
                             .systemFont(.caption2, weight: .medium)
                             .foregroundStyle(Color.HPTextStyle.base)
                             .padding(.trailing, 18)
