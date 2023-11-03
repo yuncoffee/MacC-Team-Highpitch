@@ -25,6 +25,9 @@ final class AppleScriptManager {
         case .startPresentation(fileName: let fileName):
             startPresentation(filePath: fileName)
             result = .voidResult
+        case .openKeynote(fileName: let fileName):
+            openKeynote(filePath: fileName)
+            result = .voidResult
         }
         return result
     }
@@ -102,6 +105,25 @@ extension AppleScriptManager {
             end tell
         end tell
         """
+        if let script = NSAppleScript(source: scriptSource) {
+            var error: NSDictionary?
+            script.executeAndReturnError(&error)
+            if error != nil {
+                fatalError("This Script Has Error")
+            }
+        }
+    }
+    
+    /// 키노트 열기
+    private func openKeynote(filePath: String) {
+        let scriptSource = """
+        tell application "Keynote"
+            open POSIX file "\(filePath)"
+        end tell
+        """
+        
+        print(filePath)
+        
         if let script = NSAppleScript(source: scriptSource) {
             var error: NSDictionary?
             script.executeAndReturnError(&error)

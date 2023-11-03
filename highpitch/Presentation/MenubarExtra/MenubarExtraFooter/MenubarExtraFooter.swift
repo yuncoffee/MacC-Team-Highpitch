@@ -99,7 +99,7 @@ extension MenubarExtraFooter {
                                     : filtered[0].projectName,
                                     practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         } else {
@@ -114,7 +114,7 @@ extension MenubarExtraFooter {
                                    : filtered[0].projectName,
                                    practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         }
@@ -130,7 +130,7 @@ extension MenubarExtraFooter {
                                : filtered[0].projectName,
                                practice: practice
                             ) {
-                                openSelectedPractice(practice: practice)
+                                openSelectedPractice(project:filtered[0], practice: practice)
                             }
                         }
                     }
@@ -203,11 +203,13 @@ extension MenubarExtraFooter {
         }
     }
     
-    private func openSelectedPractice(practice: PracticeModel) {
+    private func openSelectedPractice(project: ProjectModel, practice: PracticeModel) {
         if unVisitedPractices.count == 1 {
             SystemManager.shared.hasUnVisited = false
         }
-        projectManager.current = selectedProject
+        print("projectManager.current:", projectManager.current)
+        projectManager.current = project
+        
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()

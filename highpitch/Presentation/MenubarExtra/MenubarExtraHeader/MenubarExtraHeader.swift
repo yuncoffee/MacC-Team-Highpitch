@@ -197,6 +197,8 @@ extension MenubarExtraHeader {
                 }
                 openWindow(id: "main")
             }
+        } else {
+            print("zz?")
         }
     }
     

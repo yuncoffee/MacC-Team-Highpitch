@@ -144,20 +144,23 @@ struct HighpitchApp: App {
         } label: {
             if SystemManager.shared.isDarkMode {
                 if SystemManager.shared.isAnalyzing {
-                    Label("MenubarExtra", image: "menubar-loading-dark-\(menubarAnimationCount)")
+                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
                 } else if SystemManager.shared.hasUnVisited {
                     Label("MenubarExtra", image: "menubar-noti-dark")
                 } else {
-                    Label("MenubarExtra", image: "menubar-loading-dark-7")
+                    Label("MenubarExtra", image: "menubarextra")
                 }
                 
             } else {
                 if SystemManager.shared.isAnalyzing {
                     Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
                 } else if SystemManager.shared.hasUnVisited {
-                    Label("MenubarExtra", image: "menubar-noti-light")
+//                    Image(systemName: "note.text.badge.plus")
+                    Image("test-noti")
+                        .renderingMode(.template)
+                        .foregroundStyle(.red, .blendMode(.overlay))
                 } else {
-                    Label("MenubarExtra", image: "menubar-loading-light-7")
+                    Label("MenubarExtra", image: "menubarextra")
                 }
             }
         }
