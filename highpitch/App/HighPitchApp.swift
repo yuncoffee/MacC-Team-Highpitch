@@ -142,26 +142,14 @@ struct HighpitchApp: App {
                     window.animationBehavior = .utilityWindow
                 }
         } label: {
-            if SystemManager.shared.isDarkMode {
-                if SystemManager.shared.isAnalyzing {
-                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
-                } else if SystemManager.shared.hasUnVisited {
-                    Label("MenubarExtra", image: "menubar-noti-dark")
-                } else {
-                    Label("MenubarExtra", image: "menubarextra")
-                }
-                
+            if SystemManager.shared.isAnalyzing {
+                Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
+            } else if SystemManager.shared.hasUnVisited {
+                Image("menubar-noti")
+                    .renderingMode(.template)
+                    .foregroundStyle(.red, .blendMode(.overlay))
             } else {
-                if SystemManager.shared.isAnalyzing {
-                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
-                } else if SystemManager.shared.hasUnVisited {
-//                    Image(systemName: "note.text.badge.plus")
-                    Image("test-noti")
-                        .renderingMode(.template)
-                        .foregroundStyle(.red, .blendMode(.overlay))
-                } else {
-                    Label("MenubarExtra", image: "menubarextra")
-                }
+                Label("MenubarExtra", image: "menubarextra")
             }
         }
         .menuBarExtraStyle(.window)
