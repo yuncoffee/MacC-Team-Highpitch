@@ -29,7 +29,7 @@ extension PracticeManager {
     
     /// eachFillerWordCount를 초기화한다.
     static func initializer(practice: PracticeModel) {
-        for fillerWord in FillerWordList().defaultList {
+        for fillerWord in FillerWordList.userFillerWordList {
             practice.summary.eachFillerWordCount.append(FillerWordModel(fillerWord: fillerWord, count: 0))
         }
     }
