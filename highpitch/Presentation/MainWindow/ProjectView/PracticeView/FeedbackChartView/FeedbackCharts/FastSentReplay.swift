@@ -68,6 +68,8 @@ struct FastSentReplay: View {
         .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
         .padding(.trailing, .HPSpacing.xxxlarge)
         .onChange(of: mediaManager.currentTime) { _, newValue in
+            //1. 말한 부분 끝나면 끝나기
+            //2. 지금 말하고 있는 구간 따라가기
             if mediaManager.stopPoint != nil {
                 if newValue > (mediaManager.stopPoint!)/1000 {
                     mediaManager.stopPoint = nil
@@ -123,22 +125,16 @@ struct FastSentReplayCell: View {
     var isPlay = false
     
     @Binding
-    var selectedIndex: Int {
-        didSet {
-            if selectedIndex == index {
-                isPlay = mediaManager.isPlaying
-            }
-        }
-    }
+    var selectedIndex: Int
 
     var body: some View {
         HStack(alignment: .top, spacing: .HPSpacing.xsmall) {
             Button {
-                selectedIndex == index && isPlay 
+                isPlay
                 ? puase()
                 : play(sentenceIndex: sentenceIndex,startAt: startAt, endAt: endAt)
             } label: {
-                Label("play", systemImage: selectedIndex == index && isPlay ? "pause.fill" : "play.fill")
+                Label("play", systemImage: isPlay ? "pause.fill" : "play.fill")
                     .labelStyle(.iconOnly)
                     .systemFont(.body)
                     .foregroundStyle(Color.HPPrimary.base)
@@ -168,7 +164,12 @@ struct FastSentReplayCell: View {
         .background(isPlay && selectedIndex == index ? Color.HPComponent.Section.point : .clear)
         .onChange(of: mediaManager.currentTime) { _, newValue in
             if startAt.isLessThanOrEqualTo(newValue*1000), !endAt.isLess(than: newValue*1000) {
-                selectedIndex = index
+                isPlay = mediaManager.isPlaying
+            } else {
+                isPlay = false
+            }
+        }.onChange(of: mediaManager.isPlaying) { oldValue, newValue in
+            if startAt.isLessThanOrEqualTo(mediaManager.currentTime*1000), !endAt.isLess(than: mediaManager.currentTime*1000) {
                 isPlay = mediaManager.isPlaying
             }
         }

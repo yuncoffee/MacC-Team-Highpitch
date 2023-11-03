@@ -38,6 +38,25 @@ final class MediaManager: NSObject, AVAudioPlayerDelegate {
 
 // MARK: - 음성메모 녹음 관련 메서드
 extension MediaManager: Recordable {
+    func checkMicrophonePermission() {
+        switch AVCaptureDevice.authorizationStatus(for: .audio) {
+        case .authorized:
+            // 이미 권한을 얻은 경우
+            print("마이크 녹음 권한이 승인되었습니다.")
+        case .notDetermined:
+            // 아직 사용자에게 권한을 요청하지 않은 경우
+            AVCaptureDevice.requestAccess(for: .audio) { granted in
+                if granted {
+                    print("마이크 녹음 권한이 승인되었습니다.")
+                } else {
+                    print("마이크 녹음 권한이 거부되었습니다.")
+                }
+            }
+        case .denied, .restricted:
+            // 사용자가 권한을 거부하거나 앱 사용을 제한한 경우
+            print("마이크 녹음 권한이 거부되었거나 제한되었습니다.")
+        }
+    }
     func startRecording() {
         // MARK: 파일 이름 전략은 -> YYYYMMDDHHMMSS.m4a
         let fileURL = getPath(fileName: fileName)
