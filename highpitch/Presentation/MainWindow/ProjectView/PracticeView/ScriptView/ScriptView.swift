@@ -19,6 +19,8 @@ struct ScriptView: View {
     private var practiceManager
     var sentences: [SentenceModel]
     var words: [WordModel]
+    @Binding
+    var practice: PracticeModel
     @State
     private var wordSizes: [CGSize] = []
     @State
@@ -71,7 +73,10 @@ struct ScriptView: View {
                                     startAt: range[index].start,
                                     endAt: range[index].end,
                                     containerWidth: SCRIPT_CONTAINER_WIDTH,
-                                    isFastSentence: sentence.epmValue > 422.4,
+                                    isFastSentence: 
+                                        practice.summary.fastSentenceIndex.contains(sentence.index),
+                                    isSlowSentence:
+                                        practice.summary.slowSentenceIndex.contains(sentence.index),
                                     nowSentece: practiceManager.nowSentence,
                                     sentenceIndex: index
                                 ) { sentenceIndex in

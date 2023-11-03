@@ -77,6 +77,9 @@ struct FeedbackChartView: View {
                 if (!practice.summary.fastSentenceIndex.isEmpty) {
                     FastSentReplay(practice: practice)
                 }
+                if (!practice.summary.slowSentenceIndex.isEmpty) {
+                    SlowSentReplay(practice: practice)
+                }
             }
             .padding(.bottom, 100)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)

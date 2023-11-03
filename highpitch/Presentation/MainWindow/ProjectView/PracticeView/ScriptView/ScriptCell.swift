@@ -13,6 +13,7 @@ struct ScriptCell: View {
     var endAt: Int
     var containerWidth: CGFloat
     var isFastSentence: Bool
+    var isSlowSentence: Bool
     var nowSentece: Int
     var sentenceIndex: Int
     var completion: (_ sentenceIndex: Int) -> Void
@@ -68,7 +69,7 @@ struct ScriptCell: View {
                                 : 4
                             )
                             .foregroundStyle(
-                                isFastSentence
+                                isFastSentence || isSlowSentence
                                 ? Color.HPComponent.highlight
                                 : Color.clear
                             )
