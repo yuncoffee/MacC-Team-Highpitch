@@ -10,6 +10,7 @@ import Foundation
 @Observable
 final class PracticeManager {
     static var shared = PracticeManager()
+    var nowSentence = 0
 }
 
 extension PracticeManager {
@@ -28,21 +29,28 @@ extension PracticeManager {
     
     /// eachFillerWordCount를 초기화한다.
     static func initializer(practice: PracticeModel) {
-        for fillerWord in FillerWordList().defaultList {
+        for fillerWord in FillerWordList.userFillerWordList {
             practice.summary.eachFillerWordCount.append(FillerWordModel(fillerWord: fillerWord, count: 0))
         }
     }
     
     /// summary에 들어가는 data를 업데이트한다.
     static func updateSummary(practice: PracticeModel) {
-        practice.summary.fastSpeechRate =
-        Double(practice.summary.fastSpeechTime * 100) / Double(practice.summary.durationSum)
-        practice.summary.slowSpeechRate =
-        Double(practice.summary.slowSpeechTime * 100) / Double(practice.summary.durationSum)
         practice.summary.fillerWordPercentage =
         Double(practice.summary.fillerWordCount * 100) / Double(practice.summary.wordCount)
         practice.summary.epmAverage =
         Double(practice.summary.syllableSum * 60000) / Double(practice.summary.durationSum)
+        
+        /// sentences 중 epmAverage와의 오차가 60 이상인 경우 저장한다.
+        for sentence in practice.sentences {
+            if sentence.epmValue < practice.summary.epmAverage - 100.0 {
+                practice.summary.slowSentenceIndex.append(sentence.index)
+            }
+            if sentence.epmValue > practice.summary.epmAverage + 100.0 {
+                practice.summary.fastSentenceIndex.append(sentence.index)
+            }
+        }
+        
         practice.summary.level = 0
         practice.summary.level += 5 - min(ceil(max(practice.summary.fillerWordPercentage - 3.5, 0.0)), 4)
     }
@@ -106,16 +114,6 @@ extension PracticeManager {
                 tempSentences[sentenceIndex].epmValue =
                 Double(sentenceSyllable[sentenceIndex] * 60000) / Double(sentenceDuration[sentenceIndex])
                 
-                // sentence와 관련한 값을 업데이트합니다.
-                if tempSentences[sentenceIndex].epmValue >= 422.4 {
-                    practice.summary.fastSpeechTime += sentenceDuration[sentenceIndex]
-                    practice.summary.fastSentenceIndex.append(sentenceIndex)
-                }
-                
-                if tempSentences[sentenceIndex].epmValue <= 288 {
-                    practice.summary.slowSpeechTime += sentenceDuration[sentenceIndex]
-                    practice.summary.slowSentenceIndex.append(sentenceIndex)
-                }
                 _ = tempWords.last!.word.popLast()
                 for tempWord in tempWords { practice.words.append(tempWord) }
                 tempWords.removeAll()

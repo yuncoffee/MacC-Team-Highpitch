@@ -102,6 +102,12 @@ extension MenubarExtraHeader {
                 image: "play.fill",
                 color: Color.HPPrimary.dark
             )
+        } else if mediaManager.isPause {
+            (
+                label:"연습 시작",
+                image: "play.fill",
+                color: Color.HPPrimary.dark
+            )
         } else {
             (
                 label:"일시 정지",
@@ -110,9 +116,15 @@ extension MenubarExtraHeader {
             )
         }
         HPButton(type: .text, size: .medium, color: labels.color) {
+            print("HEEE")
             if !mediaManager.isRecording {
+                print("11111")
+                playPractice()
+            } else if mediaManager.isPause {
+                print("22222")
                 playPractice()
             } else {
+                print("33333")
                 pausePractice()
             }
         } label: { type, size, color, expandable in
@@ -174,7 +186,7 @@ extension MenubarExtraHeader {
     
     // MARK: - 연습 일시중지
     private func pausePractice() {
-        projectManager.pausePractice()
+        projectManager.pausePractice(mediaManager: mediaManager)
     }
     
     // MARK: - 연습 끝내기

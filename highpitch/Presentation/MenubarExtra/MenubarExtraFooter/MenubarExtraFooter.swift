@@ -84,6 +84,15 @@ extension MenubarExtraFooter {
         let practices = unVisitedPractices + visitedPractices
         if !practices.isEmpty {
             ScrollView {
+                if SystemManager.shared.isAnalyzing {
+                    let filtered = projectModels.filter({$0.persistentModelID == projectManager.temp})
+                    
+                    if !filtered.isEmpty {
+                        loaderCell(projectName: filtered[0].projectName)
+                    } else {
+                        loaderCell(projectName: "새 프로젝트")
+                    }
+                }
                 LazyVGrid(columns: [GridItem()], spacing: 0) {
                     if !checkUnVisitedPracticesCount() {
                         if practices.count > MAX_PRACTICE_NOTI_COUNT {
@@ -135,8 +144,9 @@ extension MenubarExtraFooter {
                         }
                     }
                 }
+                .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
             }
-            .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+            
         } else {
             emptyContent
         }
@@ -173,6 +183,28 @@ extension MenubarExtraFooter {
                 }
             }
         }
+    
+    @ViewBuilder
+    private func loaderCell(projectName: String) -> some View {
+        HPListCell(
+            title: "연습기록을 분석 중이에요...",
+            subTitle: {
+                HStack(spacing: 0) {
+                    Text("\(projectName)")
+                        .lineLimit(1)
+                    Text(" • ")
+                    Text("방금 전")
+                }
+            },
+            notification: {
+                Circle().foregroundStyle(.clear)
+            },
+            button: {
+                ProgressView()
+            })
+            .padding(.leading, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
+            .background(Color.HPComponent.Section.point)
+    }
     
     @ViewBuilder
     private var emptyContent: some View {

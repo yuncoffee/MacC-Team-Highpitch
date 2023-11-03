@@ -11,6 +11,7 @@ protocol ListComposable {}
 
 extension HPButton: ListComposable {}
 extension EmptyView: ListComposable {}
+extension ProgressView: ListComposable {}
 
 struct HPListCell<S: View, N: View, B: View>: View where B: ListComposable {
     var title: String
@@ -82,19 +83,20 @@ extension HPListCell where S == EmptyView, N == EmptyView, B == EmptyView {
                 Circle()
                     .foregroundStyle(Color.blue)
             }, button: {
-                HPButton(type: .text, size: .small, color: .HPTextStyle.base) {
-                    print("Hello")
-                } label: { type, size, color, expandable in
-                    HPLabel(
-                        content: ("확인하기", "chevron.right"),
-                        type: type,
-                        size: size,
-                        color: color,
-                        alignStyle: .textWithIcon,
-                        expandable: expandable,
-                        fontStyle: .system(.caption)
-                    )
-                }
+                ProgressView()
+//                HPButton(type: .text, size: .small, color: .HPTextStyle.base) {
+//                    print("Hello")
+//                } label: { type, size, color, expandable in
+//                    HPLabel(
+//                        content: ("확인하기", "chevron.right"),
+//                        type: type,
+//                        size: size,
+//                        color: color,
+//                        alignStyle: .textWithIcon,
+//                        expandable: expandable,
+//                        fontStyle: .system(.caption)
+//                    )
+//                }
             }
         )
         HPListCell(title: "Hello")

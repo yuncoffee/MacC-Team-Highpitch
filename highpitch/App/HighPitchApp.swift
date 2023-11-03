@@ -102,6 +102,7 @@ struct HighpitchApp: App {
             MainWindowView()
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
+                .environment(practiceManager)
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)
@@ -111,7 +112,7 @@ struct HighpitchApp: App {
                     print("바끼니??")
                 })
                 .onChange(of: systemManager.recordPauseCommand, { oldValue, newValue in
-                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
+//                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
                     print("바끼니??")
                 })
                 .onChange(of: systemManager.recordSaveCommand, { oldValue, newValue in
@@ -120,7 +121,7 @@ struct HighpitchApp: App {
                 })
                 .onAppear {
                     systemManager.hotkeyStart.keyDownHandler = playPractice
-                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
+//                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
                     systemManager.hotkeySave.keyDownHandler = stopPractice
                     
 //                    hotkeyStart.keyDownHandler = playPractice
@@ -157,26 +158,14 @@ struct HighpitchApp: App {
                     window.animationBehavior = .utilityWindow
                 }
         } label: {
-            if SystemManager.shared.isDarkMode {
-                if SystemManager.shared.isAnalyzing {
-                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
-                } else if SystemManager.shared.hasUnVisited {
-                    Label("MenubarExtra", image: "menubar-noti-dark")
-                } else {
-                    Label("MenubarExtra", image: "menubarextra")
-                }
-                
+            if SystemManager.shared.isAnalyzing {
+                Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
+            } else if SystemManager.shared.hasUnVisited {
+                Image("menubar-noti")
+                    .renderingMode(.template)
+                    .foregroundStyle(.red, .blendMode(.overlay))
             } else {
-                if SystemManager.shared.isAnalyzing {
-                    Label("MenubarExtra", image: "menubar-loading-light-\(menubarAnimationCount)")
-                } else if SystemManager.shared.hasUnVisited {
-//                    Image(systemName: "note.text.badge.plus")
-                    Image("test-noti")
-                        .renderingMode(.template)
-                        .foregroundStyle(.red, .blendMode(.overlay))
-                } else {
-                    Label("MenubarExtra", image: "menubarextra")
-                }
+                Label("MenubarExtra", image: "menubarextra")
             }
         }
         .menuBarExtraStyle(.window)
@@ -224,6 +213,10 @@ extension HighpitchApp {
         )
     }
     
+    func pausePractice() {
+        projectManager.pausePractice(mediaManager: mediaManager)
+    }
+    
     func stopPractice() {
         Task {
             await MainActor.run {
@@ -235,6 +228,4 @@ extension HighpitchApp {
             }
         }
     }
-    
-    
 }

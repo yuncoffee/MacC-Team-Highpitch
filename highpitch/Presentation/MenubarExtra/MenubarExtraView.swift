@@ -75,7 +75,6 @@ struct MenubarExtraView: View {
             }
             .frame(alignment: .top)
             .onChange(of: refreshable, { _, newValue in
-                print(newValue)
                 getIsActiveKeynoteApp()
                 updateOpendKeynotes()
             })
@@ -100,7 +99,7 @@ struct MenubarExtraView: View {
                 }
             }
             .onDisappear {
-                
+                refreshable = false
             }
     }
 }
