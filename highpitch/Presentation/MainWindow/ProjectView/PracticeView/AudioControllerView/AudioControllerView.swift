@@ -35,11 +35,11 @@ struct AudioControllerView: View {
         .border(.HPComponent.stroke, width: 1, edges: [.top])
         .onAppear {
             settingAudio(filePath: audioPath)
-        }.onChange(of: audioPlayer.currentTime) { _ , newValue in
-            if !isDragging {
-                self.currentTime = newValue
-            } else {
-                audioPlayer.setCurrentTime(time: currentTime)
+        }.onChange(of: audioPlayer.currentTime) { oldValue , newValue in
+            self.currentTime = newValue
+            if newValue == 0 {
+                
+                audioPlayer.pausePlaying()
             }
         }.onChange(of: isDragging) { _, newValue in
             if newValue {
@@ -90,6 +90,7 @@ extension AudioControllerView {
                     prevState = isPlaying
                 } else {
                     isDragging = false
+                    audioPlayer.setCurrentTime(time: currentTime)
                 }
             }
             .tint(Color.HPPrimary.base)
