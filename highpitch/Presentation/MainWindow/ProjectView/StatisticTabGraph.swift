@@ -83,7 +83,7 @@ extension StatisticTabGraph {
                     .symbol {
                         Circle()
                             .strokeBorder(Color.HPPrimary.lighter, lineWidth: 3)
-                            .background(Circle().fill(Color.HPGray.systemWhite))
+                            .background(Circle().fill(Color.HPComponent.Dot.background))
                             .frame(width: 12, height: 12)
                     }
                     .lineStyle(StrokeStyle(lineWidth: 3))
@@ -125,11 +125,11 @@ extension StatisticTabGraph {
                                 .foregroundStyle(Color.HPTextStyle.dark)
                             Text("\(Date().createAtToHMS(input: practices[selected].creatAt))")
                                 .systemFont(.caption, weight: .regular)
-                                .foregroundStyle(Color.HPTextStyle.dark)
+                                .foregroundStyle(Color.HPTextStyle.light)
                                 .zIndex(5)
                         }
                         .padding(.horizontal, .HPSpacing.xxxsmall)
-                        .background(Color.white)
+                        .background(Color.HPGray.systemWhite)
                         .cornerRadius(5)
                         .shadow(color: .HPComponent.shadowBlackColor, radius: 8)
                         .frame(width: 90, height: 52)
@@ -158,6 +158,7 @@ extension StatisticTabGraph {
                     AxisValueLabel(centered: false) {
                         Text("\(value.index + 1)회차")
                             .offset(x: -17)
+                            .fixedSize()
                             .systemFont(.caption2, weight: .medium)
                             .foregroundStyle(Color.HPTextStyle.base)
                             .padding(.trailing, 18)
@@ -211,7 +212,7 @@ extension StatisticTabGraph {
                     .padding(.bottom, .HPSpacing.xxxxsmall)
                 HStack(spacing: 0) {
                     Text("이 프로젝트에서 연습한 ").fontWeight(.regular)
-                    + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 발화 속도의 추이").bold()
+                    + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 말 빠르기의 추이").bold()
                     + Text("를 한 눈에 볼 수 있게 각각 차트로 나타냈어요.").fontWeight(.regular)
                 }
                 .fixedSize(horizontal: false, vertical: true)

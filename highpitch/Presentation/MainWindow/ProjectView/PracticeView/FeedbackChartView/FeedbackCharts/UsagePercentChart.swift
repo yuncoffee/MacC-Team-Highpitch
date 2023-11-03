@@ -23,7 +23,7 @@ enum EnumFillerUsagePercent: CaseIterable {
         case .empty:
             (bar: Color.HPTextStyle.lighter, decorater: Color.HPTextStyle.base)
         case .prev:
-            (bar: Color.HPTextStyle.lighter, decorater: Color.HPTextStyle.base)
+            (bar: Color.HPGray.system400, decorater: Color.HPTextStyle.base)
         case .current:
             (bar: Color.HPPrimary.base, decorater: Color.HPPrimary.dark)
         case .toptier:

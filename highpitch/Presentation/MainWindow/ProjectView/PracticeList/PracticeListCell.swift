@@ -65,7 +65,7 @@ struct PracticeListCell: View {
                         .padding(.vertical, .HPSpacing.xxsmall)
                         .padding(.horizontal, .HPSpacing.small)
                         .frame(maxWidth: 160)
-                        .background(Color.HPComponent.Section.background)
+                        .background(Color.HPComponent.Section.point)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         HStack(spacing: 0) {
                             VStack(spacing: 0) {

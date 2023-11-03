@@ -33,7 +33,7 @@ struct SpeedAverageChart: View {
                             practice.summary.epmAverage - 100.0
                     ))
                 )
-                .foregroundStyle(Color("FFD3AC").opacity(0.4))
+                .foregroundStyle(Color.HPComponent.highlight)
                 RectangleMark(
                     xStart: .value("", 0.5),
                     xEnd: .value("", Double(sentences.count) + 0.5),
@@ -41,7 +41,7 @@ struct SpeedAverageChart: View {
                                            practice.summary.epmAverage + 100.0)),
                     yEnd: .value("", epmRange.last! + 10.0)
                 )
-                .foregroundStyle(Color("FFD3AC").opacity(0.4))
+                .foregroundStyle(Color.HPComponent.highlight)
                 
                 /// 한 문장만 녹음했을 때
                 if (sentences.count == 1) {
@@ -75,7 +75,7 @@ struct SpeedAverageChart: View {
             }
             .chartPlotStyle { plotArea in
                 plotArea
-                    .border(Color("EAEAEA"), width: 1)
+                    .border(Color.HPComponent.stroke)
                 
             }
             .chartXAxis {
