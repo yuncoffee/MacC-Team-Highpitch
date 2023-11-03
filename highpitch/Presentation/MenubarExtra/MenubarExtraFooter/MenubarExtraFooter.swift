@@ -107,7 +107,7 @@ extension MenubarExtraFooter {
                                 let filtered = projectModels
                                     .filter { $0.practices.contains {
                                         $0.persistentModelID == practice.persistentModelID
-                                    }
+                                        }
                                     }
                                 practiceResultCell(projectName: filtered.isEmpty
                                    ? "임시"
@@ -207,9 +207,7 @@ extension MenubarExtraFooter {
         if unVisitedPractices.count == 1 {
             SystemManager.shared.hasUnVisited = false
         }
-        print("projectManager.current:", projectManager.current)
         projectManager.current = project
-        
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()

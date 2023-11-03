@@ -63,6 +63,6 @@ struct HPSegmentedControl: View {
     @State var selectedSegment = 0
     return HPSegmentedControl(
         selectedSegment: $selectedSegment,
-        options: ["레벨", "습관어", "발화 속도"]
+        options: ["레벨", "습관어", "말 빠르기"]
     ).frame(width: 300)
 }
