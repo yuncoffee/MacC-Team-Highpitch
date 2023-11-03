@@ -168,7 +168,7 @@ extension StatisticsTabItem {
                                 .systemFont(.caption2, weight: .medium)
                                 .foregroundStyle(Color.HPTextStyle.base)
                                 .frame(maxWidth: .infinity)
-                                .background(Color.HPPrimary.lightnest)
+                                .background(Color.sectionpoint)
                                 .border(.HPComponent.stroke, width: 1, edges: [.top, .bottom])
                                 HStack(spacing: 0) {
                                     VStack(spacing: 0) {

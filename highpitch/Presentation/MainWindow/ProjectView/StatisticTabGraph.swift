@@ -83,7 +83,7 @@ extension StatisticTabGraph {
                     .symbol {
                         Circle()
                             .strokeBorder(Color.HPPrimary.lighter, lineWidth: 3)
-                            .background(Circle().fill(Color.HPGray.systemWhite))
+                            .background(Circle().fill(Color.HPComponent.Dot.background))
                             .frame(width: 12, height: 12)
                     }
                     .lineStyle(StrokeStyle(lineWidth: 3))
@@ -125,11 +125,11 @@ extension StatisticTabGraph {
                                 .foregroundStyle(Color.HPTextStyle.dark)
                             Text("\(Date().createAtToHMS(input: practices[selected].creatAt))")
                                 .systemFont(.caption, weight: .regular)
-                                .foregroundStyle(Color.HPTextStyle.dark)
+                                .foregroundStyle(Color.HPTextStyle.light)
                                 .zIndex(5)
                         }
                         .padding(.horizontal, .HPSpacing.xxxsmall)
-                        .background(Color.white)
+                        .background(Color.HPGray.systemWhite)
                         .cornerRadius(5)
                         .shadow(color: .HPComponent.shadowBlackColor, radius: 8)
                         .frame(width: 90, height: 52)
