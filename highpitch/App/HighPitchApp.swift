@@ -103,6 +103,7 @@ struct HighpitchApp: App {
             MainWindowView()
                 .environment(appleScriptManager)
                 .environment(fileSystemManager)
+                .environment(practiceManager)
                 .environment(keynoteManager)
                 .environment(mediaManager)
                 .environment(projectManager)

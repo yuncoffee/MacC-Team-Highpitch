@@ -8,45 +8,46 @@
 import SwiftUI
 
 struct FastSentReplay: View {
+    
     @Environment(MediaManager.self)
     private var mediaManager
     var practice: PracticeModel
-    
     @State
     var isDetailActive = false
-    
     @State
     var selectedIndex = -1
+    @Environment(PracticeManager.self)
+    private var practiceManager
         
     var body: some View {
         VStack(spacing: 0) {
-            if !practice.summary.fastSentenceIndex.isEmpty {
-                header
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        withAnimation {
-                            isDetailActive.toggle()
-                        }
-                    }
-                if isDetailActive {
-                    ForEach(
-                        Array(practice.sentences.sorted(by: {$0.epmValue < $1.epmValue }).enumerated()),
-                        id: \.1.id
-                    ) { index, each in
-                        if each.epmValue > 422.4 {
-                            FastSentReplayCell(
-                                index: index,
-                                isOdd: index % 2 == 0,
-                                startAt: Double(each.startAt),
-                                endAt: Double(each.endAt),
-                                sentence: each.sentence,
-                                isLast: index == practice.sentences.count - 1,
-                                selectedIndex: $selectedIndex
-                            )
-                            .padding(.horizontal, 2)
-                        }
+            header
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation {
+                        isDetailActive.toggle()
                     }
                 }
+            if isDetailActive {
+                
+                ForEach(
+                    Array(practice.sentences.sorted(by: {$0.index < $1.index }).enumerated()),
+                    id: \.1.id
+                ) { index, each in
+                    if practice.summary.fastSentenceIndex.contains(each.index) {
+                        FastSentReplayCell(
+                            sentenceIndex: each.index,
+                            index: index,
+                            startAt: Double(each.startAt),
+                            endAt: Double(each.endAt),
+                            sentence: each.sentence,
+                            isLast: index == practice.sentences.count - 1,
+                            selectedIndex: $selectedIndex
+                        )
+                        .padding(.horizontal, 2)
+                    }
+                }
+                
             }
         }
         .frame(
@@ -106,8 +107,10 @@ extension FastSentReplay {
 struct FastSentReplayCell: View {
     @Environment(MediaManager.self)
     private var mediaManager
+    @Environment(PracticeManager.self)
+    private var practiceManager
+    var sentenceIndex: Int
     var index: Int
-    var isOdd: Bool
     var startAt: Double
     var endAt: Double
     var sentence: String
@@ -126,11 +129,11 @@ struct FastSentReplayCell: View {
     }
 
     var body: some View {
-        HStack(spacing: .HPSpacing.xsmall) {
+        HStack(alignment: .top, spacing: .HPSpacing.xsmall) {
             Button {
-                selectedIndex == index && isPlay ?
-                mediaManager.pausePlaying() :
-                play(startAt: startAt, endAt: endAt)
+                selectedIndex == index && isPlay 
+                ? puase()
+                : play(sentenceIndex: sentenceIndex,startAt: startAt, endAt: endAt)
             } label: {
                 Label("play", systemImage: selectedIndex == index && isPlay ? "pause.fill" : "play.fill")
                     .labelStyle(.iconOnly)
@@ -159,9 +162,9 @@ struct FastSentReplayCell: View {
         )
         .padding(.horizontal, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(isOdd ? Color.HPComponent.Section.background : .clear)
+        .background(isPlay && selectedIndex == index ? Color.HPComponent.Section.point : .clear)
         .onChange(of: mediaManager.currentTime) { _, newValue in
-            if startAt.isLessThanOrEqualTo(newValue*1000), !endAt.isLess(than: newValue*1000){
+            if startAt.isLessThanOrEqualTo(newValue*1000), !endAt.isLess(than: newValue*1000) {
                 selectedIndex = index
                 isPlay = mediaManager.isPlaying
             }
@@ -170,15 +173,16 @@ struct FastSentReplayCell: View {
 }
 
 extension FastSentReplayCell {
-    private func play(startAt: Double, endAt: Double) {
+    private func play(sentenceIndex: Int, startAt: Double, endAt: Double) {
         mediaManager.playAt(atTime: startAt)
         mediaManager.play()
         mediaManager.stopPoint = endAt
         selectedIndex = index
+        practiceManager.nowSentence = sentenceIndex
+    }
+    
+    private func puase() {
+        mediaManager.pausePlaying()
+        isPlay = false
     }
 }
-
-// #Preview {
-//    @State var practice = Practice(audioPath: Bundle.main.bundleURL, utterances: [])
-//    return FastSentReplay(data: $practice)
-// }
