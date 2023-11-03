@@ -60,7 +60,8 @@ extension StatisticTabGraph {
     @ViewBuilder
     var graphContainer: some View {
         let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt })
-        if let practices = practices, isActive {
+        if let practices = practices, isActive,
+           !practices.isEmpty {
             /// 그래프 종류
             let title: [String] = ["레벨", "습관어", "말 빠르기"]
             /// 그래프에 그려질 YAxis 범위
@@ -79,8 +80,12 @@ extension StatisticTabGraph {
                             : practice.summary.epmAverage)
                     )
                     .foregroundStyle(Color.HPPrimary.light)
-                    .symbol(by: .value("", ""))
-                    .symbolSize(113)
+                    .symbol {
+                        Circle()
+                            .strokeBorder(Color.HPPrimary.lighter, lineWidth: 3)
+                            .background(Circle().fill(Color.HPGray.systemWhite))
+                            .frame(width: 12, height: 12)
+                    }
                     .lineStyle(StrokeStyle(lineWidth: 3))
                 }
                 /// 가장 최근의 연습은 PointMark를 추가합니다.
@@ -94,6 +99,7 @@ extension StatisticTabGraph {
                         ? practices.last!.summary.fillerWordPercentage
                         : practices.last!.summary.epmAverage)
                 )
+                .symbolSize(113)
                 .foregroundStyle(Color.HPPrimary.base)
                 /// 호버 효과
                 if let selected {
@@ -265,7 +271,7 @@ extension StatisticTabGraph {
         let practices = projectManager.current?.practices.sorted(
             by: { $0.summary.fillerWordPercentage < $1.summary.fillerWordPercentage }
         )
-        if let practices = practices {
+        if let practices = practices, !practices.isEmpty {
             if ( practices.first!.summary.fillerWordPercentage ==
                  practices.last!.summary.fillerWordPercentage) {
                 return [
@@ -285,7 +291,7 @@ extension StatisticTabGraph {
         let practices = projectManager.current?.practices.sorted(
             by: { $0.summary.epmAverage < $1.summary.epmAverage }
         )
-        if let practices = practices {
+        if let practices = practices, !practices.isEmpty {
             if ( practices.first!.summary.epmAverage ==
                  practices.last!.summary.epmAverage) {
                 return [

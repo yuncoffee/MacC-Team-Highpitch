@@ -39,7 +39,7 @@ struct FeedbackChartView: View {
                     )
                     UsageTopTierChart(summary: practice.summary)
                     if (practice.summary.fillerWordCount > 0) {
-                        FillerWordDetail(data: $practice)
+                        FillerWordDetail(practiceModel: $practice)
                             .padding(.bottom, .HPSpacing.medium)
                     }
                 }

@@ -99,7 +99,7 @@ extension MenubarExtraFooter {
                                     : filtered[0].projectName,
                                     practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(practice: practice, current: filtered[0])
                                 }
                             }
                         } else {
@@ -107,14 +107,14 @@ extension MenubarExtraFooter {
                                 let filtered = projectModels
                                     .filter { $0.practices.contains {
                                         $0.persistentModelID == practice.persistentModelID
-                                    }
+                                        }
                                     }
                                 practiceResultCell(projectName: filtered.isEmpty
                                    ? "임시"
                                    : filtered[0].projectName,
                                    practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(practice: practice, current: filtered[0])
                                 }
                             }
                         }
@@ -130,7 +130,7 @@ extension MenubarExtraFooter {
                                : filtered[0].projectName,
                                practice: practice
                             ) {
-                                openSelectedPractice(practice: practice)
+                                openSelectedPractice(practice: practice, current: filtered[0])
                             }
                         }
                     }
@@ -203,11 +203,11 @@ extension MenubarExtraFooter {
         }
     }
     
-    private func openSelectedPractice(practice: PracticeModel) {
+    private func openSelectedPractice(practice: PracticeModel, current: ProjectModel) {
         if unVisitedPractices.count == 1 {
             SystemManager.shared.hasUnVisited = false
         }
-        projectManager.current = selectedProject
+        projectManager.current = current
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()

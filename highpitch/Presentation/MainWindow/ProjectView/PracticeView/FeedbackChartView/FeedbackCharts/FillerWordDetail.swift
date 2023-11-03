@@ -9,15 +9,13 @@ import SwiftUI
 
 struct FillerWordDetail: View {
     @Binding
-    var data: PracticeModel
-    let fillerWordList = FillerWordList()
-    @State 
+    var practiceModel: PracticeModel
+    @State
     var isDetailActive = false
     
     var body: some View {
-        let summary = data.summary
         VStack(spacing: 0) {
-            if (summary.fillerWordCount > 0) {
+            if (practiceModel.summary.fillerWordCount > 0) {
                 header
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -28,7 +26,7 @@ struct FillerWordDetail: View {
                 if isDetailActive {
                     ScrollView {
                         ForEach(
-                            Array(summary.eachFillerWordCount.sorted(by: {
+                            Array(practiceModel.summary.eachFillerWordCount.sorted(by: {
                                 $0.count > $1.count
                             }).enumerated()),
                             id: \.element.id) { index, each in
@@ -98,7 +96,7 @@ struct FillerWordDetailCell: View {
         .padding(.vertical, .HPSpacing.xsmall + .HPSpacing.xxxxsmall)
         .padding(.horizontal, .HPSpacing.medium)
         .frame(width: 348)
-        .background(!isOdd ? Color.HPComponent.Section.background : .clear)
+        .background(!isOdd ? Color.HPComponent.Section.point : .clear)
         .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

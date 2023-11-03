@@ -49,8 +49,6 @@ struct UsagePercentChart: View {
     @Binding
     var practiceModel: PracticeModel
     var projectManager: ProjectManager
-    @State
-    var prevFillerRate = 0.0
     
     var body: some View {
         let maxHeight: CGFloat = 422
@@ -92,9 +90,6 @@ struct UsagePercentChart: View {
                 alignment: .center
             )
         }
-        .onAppear {
-            self.prevFillerRate = getPrevFillerRate()
-        }
         .padding(.bottom, .HPSpacing.xxlarge)
         .padding(.trailing, .HPSpacing.medium)
         .frame(
@@ -110,8 +105,7 @@ extension UsagePercentChart {
     /// 이전 습관어 비율
     private func getPrevFillerRate() -> Double {
         if let current = projectManager.current {
-<<<<<<< HEAD
-            var answer = -100.0
+            var answer = 0.0
             let practices = current.practices.sorted(by: {$0.creatAt < $1.creatAt})
             for practice in practices {
                 if practice.creatAt < practiceModel.creatAt {
@@ -119,13 +113,8 @@ extension UsagePercentChart {
                 } else { break }
             }
             return answer
-=======
-            if !current.practices.isEmpty {
-                return current.practices.sorted()[data.index - 1].summary.fillerWordPercentage
-            }
->>>>>>> 7781890cb7c693df4676dc9c04742304bc3889a2
         }
-        return -100
+        return 0.0
     }
 }
 
@@ -134,7 +123,9 @@ extension UsagePercentChart {
     @ViewBuilder
     private var header: some View {
         let difference =
-        practiceModel.summary.fillerWordPercentage - getPrevFillerRate()
+            projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt })
+            .first?.persistentModelID != practiceModel.persistentModelID
+        ? practiceModel.summary.fillerWordPercentage - getPrevFillerRate() : 0.0
         
         Text("습관어 사용 비율")
             .systemFont(.subTitle, weight: .bold)
