@@ -155,23 +155,14 @@ extension SpeedAverageChart {
     var header: some View {
         let rate =  if practice.summary.epmAverage > 288 &&
         practice.summary.epmAverage < 422.4 {"적절"} else {"부적절"}
-        VStack(alignment: .leading, spacing: 8) {
-            Text("평균 발화 속도")
-                .systemFont(.subTitle)
-                .foregroundStyle(Color.HPTextStyle.darker)
+        VStack(alignment: .leading, spacing: 0) {
+            Text("내 평균 페이스 대비 속도가")
             HStack(spacing: 0) {
-                Text("이번 연습의 평균 속도는 ")
-                    .systemFont(.body)
-                    .foregroundStyle(Color.HPTextStyle.dark)
-                Text("\(String(format: "%.0f", practice.summary.epmAverage))EPM")
+                Text("빠른/느린 구간은")
                     .systemFont(.body)
                     .foregroundStyle(Color.HPPrimary.dark)
-                Text(" 으로 ")
-                    .systemFont(.body)
-                    .foregroundStyle(Color.HPTextStyle.dark)
-                Text("\(rate)했어요.")
-                    .systemFont(.body)
-                    .foregroundStyle(Color.HPPrimary.dark)
+                Text("nn번")
+                Text("있었어요.")
             }
         }
         .padding(.top, .HPSpacing.xsmall)

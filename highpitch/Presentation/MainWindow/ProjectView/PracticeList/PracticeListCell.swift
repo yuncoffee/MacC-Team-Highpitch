@@ -44,7 +44,7 @@ struct PracticeListCell: View {
                 .padding(.trailing, .HPSpacing.medium)
                 .border(.HPComponent.stroke, width: 1, edges: [.trailing])
                 ZStack(alignment: .topTrailing) {
-                    // 평균 레벨, 습관어, 발화 속도
+                    // 평균 레벨, 습관어, 말 빠르기
                     HStack(spacing: .HPSpacing.xlarge) {
                         VStack(spacing: 0) {
                             Text("평균 레벨")
@@ -85,7 +85,7 @@ struct PracticeListCell: View {
                             .padding(.trailing, .HPSpacing.small)
                             .border(.HPComponent.stroke, width: 1, edges: [.trailing])
                             VStack(spacing: 0) {
-                                Text("발화속도")
+                                Text("말 빠르기")
                                     .systemFont(.caption, weight: .semibold)
                                     .foregroundStyle(Color.HPTextStyle.darker)
                                 HStack(spacing: 0) {

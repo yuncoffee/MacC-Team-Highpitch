@@ -103,7 +103,7 @@ struct SpeechSpeedBox: View {
     var body: some View {
         /// 결과 요약
         VStack(alignment: .center, spacing: 0) {
-            Text("발화 속도")
+            Text("말 빠르기")
                 .systemFont(.caption, weight: .semibold)
                 .foregroundStyle(Color.text900)
             HStack(alignment: .lastTextBaseline, spacing: 0) {

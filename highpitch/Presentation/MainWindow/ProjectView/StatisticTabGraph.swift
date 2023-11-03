@@ -19,8 +19,15 @@ struct StatisticTabGraph: View {
     @State
     var rawSelectedRange: ClosedRange<Int>?
     
+    @State
+    var isActive = true {
+        didSet {
+            DispatchQueue.main.asyncAfter(deadline: .now()) { self.isActive = true }
+        }
+    }
+    
     var body: some View {
-        let title: [String] = ["레벨", "습관어", "발화 속도"]
+        let title: [String] = ["레벨", "습관어", "말 빠르기"]
         VStack(spacing: 16) {
             HStack(alignment: .top, spacing: 0) {
                 HStack(spacing: .HPSpacing.small) {
@@ -42,6 +49,9 @@ struct StatisticTabGraph: View {
         .background(Color.HPComponent.Section.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: Color.HPComponent.shadowColor ,radius: 10, y: 4)
+        .onChange(of: selectedSegment) { _, _ in
+            if isActive { isActive = false }
+        }
     }
 }
 
@@ -49,10 +59,11 @@ extension StatisticTabGraph {
     // MARK: - 그래프 컨테이너
     @ViewBuilder
     var graphContainer: some View {
-        let practices = projectManager.current?.practices.sorted(by: { $0.index < $1.index })
-        if let practices = practices {
+        let practices = projectManager.current?.practices.sorted(by: { $0.creatAt < $1.creatAt })
+        if let practices = practices, isActive,
+           !practices.isEmpty {
             /// 그래프 종류
-            let title: [String] = ["레벨", "습관어", "발화 속도"]
+            let title: [String] = ["레벨", "습관어", "말 빠르기"]
             /// 그래프에 그려질 YAxis 범위
             let range: [[Double]] = [levelRange(), fillerWordRange(), epmValueRange()]
             Chart {
@@ -68,10 +79,13 @@ extension StatisticTabGraph {
                             ? practice.summary.fillerWordPercentage
                             : practice.summary.epmAverage)
                     )
-                    .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color.HPPrimary.light)
-                    .symbol(by: .value("", ""))
-                    .symbolSize(113)
+                    .symbol {
+                        Circle()
+                            .strokeBorder(Color.HPPrimary.lighter, lineWidth: 3)
+                            .background(Circle().fill(Color.HPGray.systemWhite))
+                            .frame(width: 12, height: 12)
+                    }
                     .lineStyle(StrokeStyle(lineWidth: 3))
                 }
                 /// 가장 최근의 연습은 PointMark를 추가합니다.
@@ -85,6 +99,7 @@ extension StatisticTabGraph {
                         ? practices.last!.summary.fillerWordPercentage
                         : practices.last!.summary.epmAverage)
                 )
+                .symbolSize(113)
                 .foregroundStyle(Color.HPPrimary.base)
                 /// 호버 효과
                 if let selected {
@@ -125,7 +140,9 @@ extension StatisticTabGraph {
             /// 호버 control
             .chartXSelection(value: $rawSelected)
             .chartXSelection(range: $rawSelectedRange)
+            /// chart의 scroll을 설정합니다.
             .chartScrollableAxes(.horizontal)
+            .chartScrollPosition(initialX: practices.count)
             /// 화면에 13회차까지의 연습을 표출합니다.
             .chartXVisibleDomain(length: 13)
             /// y축은 최저 값과 최고 값 차이의 1/8까지 표출합니다.
@@ -153,17 +170,23 @@ extension StatisticTabGraph {
                 /// 최저 값과 최고 값 차이의 1/4 간격으로 설정합니다.
                 AxisMarks(position: .leading, values: Array(stride(
                     from: range[selectedSegment].first!,
-                    to: range[selectedSegment].last! +
-                    (range[selectedSegment].last! - range[selectedSegment].first!) / 4,
+                    through: range[selectedSegment].last!,
                     by: (range[selectedSegment].last! - range[selectedSegment].first!) / 4
                 ))) { value in
                     AxisValueLabel(centered: false) {
+                        let fillerAxisValue =
+                            Double(value.index)
+                            * (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                            + range[selectedSegment].first!
+                        let rateAxisValue = Double(value.index)
+                            * (range[selectedSegment].last! - range[selectedSegment].first!) / 4
+                            + range[selectedSegment].first!
                         Text(
                             selectedSegment == 0
                             ? "LV.\(value.index + 1)"
                             : selectedSegment == 1
-                            ? "\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")%"
-                            : "\(Double(value.index) * (range[selectedSegment].last! - range[selectedSegment].first!) / 4 + range[selectedSegment].first!, specifier: "%.1f")EPM"
+                            ? "\(fillerAxisValue, specifier: "%.1f")%"
+                            : "\(rateAxisValue, specifier: "%.1f")EPM"
                         )
                         .systemFont(.caption2, weight: .medium)
                         .foregroundStyle(Color.HPTextStyle.base)
@@ -248,7 +271,7 @@ extension StatisticTabGraph {
         let practices = projectManager.current?.practices.sorted(
             by: { $0.summary.fillerWordPercentage < $1.summary.fillerWordPercentage }
         )
-        if let practices = practices {
+        if let practices = practices, !practices.isEmpty {
             if ( practices.first!.summary.fillerWordPercentage ==
                  practices.last!.summary.fillerWordPercentage) {
                 return [
@@ -263,12 +286,12 @@ extension StatisticTabGraph {
         }
         return []
     }
-    /// 발화 속도 그래프에 그려질 YAxis 범위
+    /// 말 빠르기 그래프에 그려질 YAxis 범위
     func epmValueRange() -> [Double] {
         let practices = projectManager.current?.practices.sorted(
             by: { $0.summary.epmAverage < $1.summary.epmAverage }
         )
-        if let practices = practices {
+        if let practices = practices, !practices.isEmpty {
             if ( practices.first!.summary.epmAverage ==
                  practices.last!.summary.epmAverage) {
                 return [
