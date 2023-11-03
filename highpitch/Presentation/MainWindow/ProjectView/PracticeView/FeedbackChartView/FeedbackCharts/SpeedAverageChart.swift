@@ -52,6 +52,8 @@ struct SpeedAverageChart: View {
                     .foregroundStyle(Color.HPPrimary.base)
                     .lineStyle(StrokeStyle(lineWidth: 2))
                 }
+                
+                /// LineChart
                 ForEach(sentences) { sentence in
                     LineMark(
                         x: .value("문장 번호", sentence.index + 1),
