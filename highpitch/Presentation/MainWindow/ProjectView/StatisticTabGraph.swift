@@ -212,7 +212,7 @@ extension StatisticTabGraph {
                     .padding(.bottom, .HPSpacing.xxxxsmall)
                 HStack(spacing: 0) {
                     Text("이 프로젝트에서 연습한 ").fontWeight(.regular)
-                    + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 발화 속도의 추이").bold()
+                    + Text("모든 회차들의 레벨 변화와 습관어 사용 비율 변화, 평균 말 빠르기의 추이").bold()
                     + Text("를 한 눈에 볼 수 있게 각각 차트로 나타냈어요.").fontWeight(.regular)
                 }
                 .fixedSize(horizontal: false, vertical: true)
