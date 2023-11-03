@@ -64,7 +64,8 @@ struct FeedbackChartView: View {
                     )
                     SpeedAverageChart(
                         sentences: practice.sentences,
-                        practice: practice
+                        practice: practice,
+                        epmRange: getEpmRange()
                     )
                 }
                 .padding(.top, .HPSpacing.medium)
@@ -86,6 +87,15 @@ struct FeedbackChartView: View {
 }
 
 extension FeedbackChartView {
+    
+    func getEpmRange() -> [Double] {
+        let sortedSentences = practice.sentences.sorted(by: { $0.epmValue < $1.epmValue })
+        return [
+            sortedSentences.first!.epmValue,
+            sortedSentences.last!.epmValue
+        ]
+    }
+    
     @ViewBuilder
     private var header: some View {
         VStack(spacing: 0) {
