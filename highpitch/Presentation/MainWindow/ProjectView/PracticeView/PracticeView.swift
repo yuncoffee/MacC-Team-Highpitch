@@ -105,7 +105,8 @@ extension PracticeView {
             /// 스크립트 뷰
             ScriptView(
                 sentences: practice.sentences.sorted(by: { $0.index < $1.index }),
-                words: practice.words.sorted(by: { $0.index < $1.index })
+                words: practice.words.sorted(by: { $0.index < $1.index }),
+                practice: $practice
             )
         }
         .padding(.top, .HPSpacing.small)
