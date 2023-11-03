@@ -8,7 +8,24 @@
 import Foundation
 
 struct FillerWordList {
-    let defaultList = [
+    private static let fillerWordStore = UserDefaults.standard
+    static var userFillerWordList: [String] {
+        get {
+            if let fillerWords = loadFromUserDefaults() {
+                return fillerWords
+            } else {
+                saveToUserDefaults(defaultList)
+                return defaultList
+            }
+        }
+        set {
+            saveToUserDefaults(newValue)
+        }
+    }
+    static func resetFillerWordList() {
+        userFillerWordList = defaultList
+    }
+    private static let defaultList = [
         "음",
         "어",
         "아",
@@ -31,4 +48,23 @@ struct FillerWordList {
         "그니깐",
         "그러니까"
     ]
+    private static func saveToUserDefaults(_ data: [String]) {
+        do {
+            let fillerWords = data
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(fillerWords) {
+                UserDefaults.standard.set(encoded, forKey: "fillerWords")
+            }
+        }
+    }
+
+    private static func loadFromUserDefaults() -> [String]? {
+        if let fillerWords = UserDefaults.standard.data(forKey: "fillerWords") {
+            let decoder = JSONDecoder()
+            if let decoded = try? decoder.decode([String].self, from: fillerWords) {
+                return decoded
+            }
+        }
+        return nil
+    }
 }
