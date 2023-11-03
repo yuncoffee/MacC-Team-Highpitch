@@ -13,10 +13,15 @@ struct GeneralSettingView: View {
     @State private var isChecked2 = false
     @State private var isChecked3 = false
     
+    //
+    var userDefaultsName = ["recordStartCommand", "recordPauseCommand", "recordSaveCommand"]
     @State var keyPressedArray = ["Text1", "Text2", "Text3"]
     @State var clickIndex = 0
     @State var isMonitoringEnabled = false
     @State var nsevent: Any?
+    
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     var body: some View {
         VStack(alignment: .leading, spacing: .HPSpacing.small) {
@@ -102,28 +107,51 @@ struct GeneralSettingView: View {
             if let characters = event.charactersIgnoringModifiers {
                 var keyChar = characters.unicodeScalars.first!.description.uppercased()
                 var keyDescription = ""
+                var settingKeyDescription = ""
                 
                 keyChar = isKoreanCharacter(char: keyChar)
 
                 if event.modifierFlags.contains(.command) {
                     keyDescription += "Command + "
+                    settingKeyDescription += "⌘"
                 }
                 if event.modifierFlags.contains(.option) {
                     keyDescription += "Option + "
+                    settingKeyDescription += "⌥"
                 }
                 if event.modifierFlags.contains(.control) {
                     keyDescription += "Control + "
+                    settingKeyDescription += "⌃"
                 }
                 if event.modifierFlags.contains(.shift) {
                     keyDescription += "Shift + "
+                    settingKeyDescription += "⇧"
+                }
+                if event.keyCode == 53 { // 53 is the key code for the Escape key
+                    keyDescription += "Esc"
+                    settingKeyDescription += "Esc"
+                } else if event.keyCode == 49 { // 49 is the key code for the Space Bar
+                    keyDescription += "Space"
+                    settingKeyDescription += "Space"
+                } else if event.keyCode >= 96 && event.keyCode <= 107 { // Key codes for F2 to F12
+                    keyDescription += "F\(event.keyCode - 95)"
+                    settingKeyDescription += "F\(event.keyCode - 95)"
+                } else {
+                    if let characters = event.charactersIgnoringModifiers {
+                        keyDescription += characters
+                        settingKeyDescription += characters
+                    }
                 }
 
-                keyDescription += "\(keyChar)"
+//                keyDescription += "\(keyChar)"
+//                settingKeyDescription += "\(keyChar)"
                 if clickIndex >= 0 && clickIndex <= 2 {
-                    keyPressedArray[clickIndex] = keyDescription
+                    keyPressedArray[clickIndex] = settingKeyDescription
+                    UserDefaults.standard.set(keyDescription, forKey: userDefaultsName[clickIndex])
+                    systemManager.recordStartCommand = keyPressedArray[clickIndex]
                 }
 
-                //return event
+                // return event
             }
             return event
                 

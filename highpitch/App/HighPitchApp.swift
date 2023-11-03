@@ -10,6 +10,7 @@ import SwiftData
 import MenuBarExtraAccess
 import SettingsAccess
 import HotKey
+import Combine
 
 @main
 struct HighpitchApp: App {
@@ -57,19 +58,10 @@ struct HighpitchApp: App {
     @State
     private var selectedKeynote: OpendKeynote?
     
-    // HotKeys
-    let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
-    let hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
-    let hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     let container: ModelContainer
-    
-    @State 
-    private var recordStartCommand: String = UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Default Value"
-    @State
-    private var recordPauseCommand: String = UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Default Value"
-    @State
-    private var recordSaveCommand: String = UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Default Value"
     
     init() {
         do {
@@ -114,10 +106,26 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
                 .modelContainer(container)
+                .onChange(of: systemManager.recordStartCommand, { oldValue, newValue in
+                    systemManager.hotkeyStart.keyDownHandler = playPractice
+                    print("바끼니??")
+                })
+                .onChange(of: systemManager.recordPauseCommand, { oldValue, newValue in
+                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
+                    print("바끼니??")
+                })
+                .onChange(of: systemManager.recordSaveCommand, { oldValue, newValue in
+                    systemManager.hotkeySave.keyDownHandler = stopPractice
+                    print("바끼니??")
+                })
                 .onAppear {
-                    hotkeyStart.keyDownHandler = playPractice
-                    hotkeyPause.keyDownHandler = projectManager.pausePractice
-                    hotkeySave.keyDownHandler = stopPractice
+                    systemManager.hotkeyStart.keyDownHandler = playPractice
+                    systemManager.hotkeyPause.keyDownHandler = projectManager.pausePractice
+                    systemManager.hotkeySave.keyDownHandler = stopPractice
+                    
+//                    hotkeyStart.keyDownHandler = playPractice
+//                    hotkeyPause.keyDownHandler = projectManager.pausePractice
+//                    hotkeySave.keyDownHandler = stopPractice
                 }
         }
         .defaultSize(width: 1080, height: 600)
@@ -227,4 +235,6 @@ extension HighpitchApp {
             }
         }
     }
+    
+    
 }
