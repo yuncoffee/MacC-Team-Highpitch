@@ -39,20 +39,23 @@ struct HPTopToolbar<T: View>: View {
                 }
             }
             VStack(spacing: 0) {
-                Text("\(title)")
-                    .systemFont(.body)
-                    .foregroundStyle(Color.HPTextStyle.darkness)
-                    .onTapGesture {
-                        if !isPopoverActive {
-                            isPopoverActive = true
+                if let popOverContent = popOverContent {
+                    Text("\(title)")
+                        .systemFont(.body)
+                        .foregroundStyle(Color.HPTextStyle.darkness)
+                        .onTapGesture {
+                            if !isPopoverActive {
+                                isPopoverActive = true
+                            }
                         }
-                    }
-                    .popover(isPresented: $isPopoverActive, arrowEdge: .bottom) {
-                        if let popOverContent {
+                        .popover(isPresented: $isPopoverActive, arrowEdge: .bottom) {
                             popOverContent()
                         }
-                    }
-                    
+                } else {
+                    Text("\(title)")
+                        .systemFont(.body)
+                        .foregroundStyle(Color.HPTextStyle.darkness)
+                }
                 if let subTitle {
                     Text("\(subTitle)")
                         .systemFont(.caption)
@@ -99,7 +102,7 @@ extension HPTopToolbar where T == EmptyView {
             subTitle: subTitle,
             backButtonCompletion: backButtonCompletion,
             completion: completion,
-            popOverContent: { EmptyView() }
+            popOverContent: nil
         )
     }
     init(
@@ -112,7 +115,7 @@ extension HPTopToolbar where T == EmptyView {
             subTitle: subTitle,
             backButtonCompletion: nil,
             completion: completion,
-            popOverContent: { EmptyView() }
+            popOverContent: nil
         )
     }
     init(
@@ -124,7 +127,7 @@ extension HPTopToolbar where T == EmptyView {
             subTitle: nil,
             backButtonCompletion: nil,
             completion: completion,
-            popOverContent: { EmptyView() }
+            popOverContent: nil
         )
     }
 }
