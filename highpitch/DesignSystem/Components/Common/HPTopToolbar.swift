@@ -12,6 +12,7 @@ struct HPTopToolbar: View {
     var title: String
     var subTitle: String?
     var backButtonCompletion: (() -> Void)?
+    var completion: (() -> Void)
     
     var body: some View {
         ZStack {
@@ -48,6 +49,8 @@ struct HPTopToolbar: View {
             HStack(spacing: 0) {
                 HPButton(color: .HPSecondary.base) {
                     print("키노트 열기")
+                    completion()
+
                 } label: { type, size, color, expandable in
                     HPLabel(
                         content: (label: "키노트 열기", icon: nil),
@@ -71,5 +74,7 @@ struct HPTopToolbar: View {
 }
 
 #Preview {
-    HPTopToolbar(title: "프로젝트 이름")
+    HPTopToolbar(title: "프로젝트 이름") {
+        print("Hello")
+    }
 }

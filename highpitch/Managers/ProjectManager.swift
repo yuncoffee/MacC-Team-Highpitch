@@ -56,6 +56,7 @@ extension ProjectManager {
         }
         print("녹음 종료")
         mediaManager.stopRecording()
+        SystemManager.shared.isAnalyzing = true
         /// mediaManager.fileName에 음성 파일이 저장되어있을거다!!
         /// 녹음본 파일 위치 : /Users/{사용자이름}/Documents/HighPitch/Audio.YYYYMMDDHHMMSS.m4a
         /// ReturnZero API를 이용해서 UtteranceModel완성
@@ -64,6 +65,7 @@ extension ProjectManager {
             /// 아무말도 하지 않았을 경우 종료한다.
             if newUtteranceModels.isEmpty {
                 print("none of words!")
+                SystemManager.shared.isAnalyzing = false
                 return
             }
             /// 시작할 때 프로젝트 세팅이 안되어 있을 경우, 새 프로젝트를 생성 하고, temp에 반영한다.
@@ -152,7 +154,7 @@ extension ProjectManager {
             let latestIndex = project.practices.sorted(by: {$0.creatAt > $1.creatAt}).first?.index
             if let latestIndex = latestIndex {
                 result.index = latestIndex + 1
-                result.practiceName = indexToOrdinalNumber(index: latestIndex + 1)
+                result.practiceName = indexToOrdinalNumber(index: latestIndex + 1) + "번째 연습"
             }
         }
         return result

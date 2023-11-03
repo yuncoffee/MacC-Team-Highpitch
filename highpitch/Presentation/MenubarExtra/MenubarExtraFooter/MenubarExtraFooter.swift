@@ -99,7 +99,7 @@ extension MenubarExtraFooter {
                                     : filtered[0].projectName,
                                     practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         } else {
@@ -107,14 +107,14 @@ extension MenubarExtraFooter {
                                 let filtered = projectModels
                                     .filter { $0.practices.contains {
                                         $0.persistentModelID == practice.persistentModelID
-                                    }
+                                        }
                                     }
                                 practiceResultCell(projectName: filtered.isEmpty
                                    ? "임시"
                                    : filtered[0].projectName,
                                    practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice)
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         }
@@ -130,7 +130,7 @@ extension MenubarExtraFooter {
                                : filtered[0].projectName,
                                practice: practice
                             ) {
-                                openSelectedPractice(practice: practice)
+                                openSelectedPractice(project:filtered[0], practice: practice)
                             }
                         }
                     }
@@ -199,11 +199,15 @@ extension MenubarExtraFooter {
             } else {
                 unVisitedPractices.forEach { $0.isVisited = true }
             }
+            SystemManager.shared.hasUnVisited = false
         }
     }
     
-    private func openSelectedPractice(practice: PracticeModel) {
-        projectManager.current = selectedProject
+    private func openSelectedPractice(project: ProjectModel, practice: PracticeModel) {
+        if unVisitedPractices.count == 1 {
+            SystemManager.shared.hasUnVisited = false
+        }
+        projectManager.current = project
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()
@@ -211,6 +215,7 @@ extension MenubarExtraFooter {
         Task {
             await appendPractice(practice: practice)
             projectManager.path.append(practice)
+            
         }
     }
     

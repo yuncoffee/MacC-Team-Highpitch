@@ -7,17 +7,30 @@
 
 import SwiftUI
 
+@Observable
+final class ScriptVM {
+    var offsetX = 0.0
+}
+
 struct ScriptView: View {
     @Environment(MediaManager.self)
     private var mediaManager
     var sentences: [SentenceModel]
     var words: [WordModel]
-    @State var nowSentece: Int?
+    @State
+    private var wordSizes: [CGSize] = []
+    @State
+    private var range: [(start: Int, end: Int)] = []
+    @State
+    var nowSentece = 0
+    @State
+    private var startIndex = 0
+    
+    private let SCRIPT_CONTAINER_WIDTH: CGFloat = 279
+    
+    var scriptVM = ScriptVM()
     
     var body: some View {
-        var width = 0.0
-        var height = 0.0
-        var currentSent = 0
         VStack(alignment: .leading, spacing: .HPSpacing.small) {
             HStack(alignment:.top, spacing: .HPSpacing.xxxxsmall) {
                 Text("내 연습 다시보기")
@@ -50,48 +63,32 @@ struct ScriptView: View {
             .padding(.horizontal, .HPSpacing.small)
             ScrollView {
                 ScrollViewReader { scrollViewProxy in
-                    ZStack(alignment: .topLeading) {
-                        ForEach(words) { word in
-                            Text(word.word)
-                                .font(word.sentenceIndex == nowSentece ? .custom(
-                                    FoundationTypoSystemFont.FontWeight.semibold.fontName,
-                                    size: 20) : .custom(
-                                        FoundationTypoSystemFont.FontWeight.semibold.fontName,
-                                        size: 18))
-                                .foregroundStyle(
-                                    word.isFillerWord ?
-                                    Color.HPPrimary.base : word.sentenceIndex == nowSentece ?
-                                    Color.HPTextStyle.darker : Color.HPTextStyle.base)
-                                .background(
-                                    sentences[word.sentenceIndex].epmValue > 422.4 ?
-                                    Color.HPComponent.highlight : Color.clear
-                                )
-                                .onTapGesture {
-                                    nowSentece = word.sentenceIndex
-                                    play(startAt: Double(sentences[nowSentece!].startAt), index: nowSentece!)
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(Array(sentences.enumerated()), id: \.1.id) { index, sentence in
+                            if !range.isEmpty {
+                                ScriptCell(
+                                    words: words[range[index].start...range[index].end],
+                                    startAt: range[index].start,
+                                    endAt: range[index].end,
+                                    containerWidth: SCRIPT_CONTAINER_WIDTH,
+                                    isFastSentence: sentence.epmValue > 422.4,
+                                    nowSentece: nowSentece,
+                                    sentenceIndex: index
+                                ) { sentenceIndex in
+                                    mediaManager.pausePlaying()
+                                    mediaManager.playAt(atTime: Double(sentences[sentenceIndex].startAt))
+                                    nowSentece = sentenceIndex
+                                    mediaManager.play()
                                 }
-                                .id(width == 0.0 ? word.sentenceIndex : -1)
-                                .alignmentGuide(.leading) { item in
-                                    if abs(width - item.width) > 279 || word.sentenceIndex != currentSent {
-                                        width = 0.0; height -= item.height + 13
-                                        currentSent = word.sentenceIndex
-                                    }
-                                    let result = width
-                                    if word.index == words.count - 1 {
-                                        width = 0
-                                    } else { width -= item.width }
-                                    return result
-                                }
-                                .alignmentGuide(.top) { _ in
-                                    let result = height
-                                    if word.index == words.count - 1 {
-                                        height = 0
-                                    }
-                                    return result
-                                }
+                                .id(sentence.index)
+                            }
                         }
                     }
-                    .frame(minWidth: 279, maxWidth: 279, alignment: .topLeading)
+                    .frame(
+                        minWidth: SCRIPT_CONTAINER_WIDTH,
+                        maxWidth: SCRIPT_CONTAINER_WIDTH,
+                        maxHeight:.infinity, alignment: .topLeading
+                    )
                     .padding(.bottom, .HPSpacing.xxxlarge + .HPSpacing.xxxsmall)
                     .padding(.horizontal, .HPSpacing.medium)
                     .onChange(of: nowSentece) { _, newValue in
@@ -103,49 +100,39 @@ struct ScriptView: View {
             }
             .padding(.bottom, 100)
         }
-        .frame(
-            minWidth:343,
-            maxWidth: 343,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
         .border(Color.HPComponent.stroke, width: 1, edges: [.leading])
         .onAppear {
-            sentences.forEach { item in
-                print("item: ", item.sentence)
-            }
-            words.forEach { item in
-                print("item: ", item.word)
-            }
-        }
-        .onChange(of: mediaManager.currentTime, { _, newValue in
-            if nowSentece != nil {
-                if nowSentece! < sentences.count {
-                    if nowSentece != -1 {
-                        if newValue > Double(sentences[nowSentece!].endAt)/1000 {
-                            nowSentece! += 1
-                        }
+            sentences.forEach { sentence in
+                var result = (start: 0, end: 0)
+                result.start = startIndex
+                let lastWord = sentence.sentence.components(separatedBy: " ").reversed().first
+                
+                if let lastWord = lastWord,
+                    let lastIndex = words[startIndex...].firstIndex(where: {$0.word == lastWord}) {
+                    result.end = lastIndex
+                    if lastIndex < words.count - 1 {
+                        startIndex = lastIndex + 1
                     }
                 }
-            } else {
-                nowSentece = 0
+                range.append(result)
             }
-            if mediaManager.stopPoint != nil {
-                if mediaManager.currentTime > (mediaManager.stopPoint!)/1000 {
-                    mediaManager.stopPoint = nil
-                    nowSentece = -1
-                    mediaManager.pausePlaying()
+            
+        }
+        .onChange(of: mediaManager.currentTime, { _, newValue in
+            
+            print(#line, newValue)
+            if nowSentece < sentences.count {
+                if newValue > Double(sentences[nowSentece].endAt)/1000 {
+                    nowSentece += 1
                 }
             }
         })
-
     }
 }
 
 extension ScriptView {
     private func play(startAt: Double, index: Int) {
-        mediaManager.playAt(atTime: startAt)
-        mediaManager.play()
-        nowSentece = index
+        mediaManager.pausePlaying()
+        
     }
 }

@@ -30,7 +30,6 @@ struct FillerWordList {
         "어",
         "아",
         "흠",
-        "그",
         "막",
         "뭐",
         "뭔가",

@@ -10,7 +10,6 @@ import Foundation
 @Observable
 final class PracticeManager {
     static var shared = PracticeManager()
-    var isAnalyzing = true
 }
 
 extension PracticeManager {
@@ -38,16 +37,17 @@ extension PracticeManager {
     static func updateSummary(practice: PracticeModel) {
         practice.summary.fastSpeechRate =
         Double(practice.summary.fastSpeechTime * 100) / Double(practice.summary.durationSum)
+        practice.summary.slowSpeechRate =
+        Double(practice.summary.slowSpeechTime * 100) / Double(practice.summary.durationSum)
         practice.summary.fillerWordPercentage =
         Double(practice.summary.fillerWordCount * 100) / Double(practice.summary.wordCount)
         practice.summary.epmAverage =
         Double(practice.summary.syllableSum * 60000) / Double(practice.summary.durationSum)
         practice.summary.level = 0
-        practice.summary.level += 5 - min(ceil(practice.summary.fillerWordPercentage / 0.03), 4)
-        practice.summary.level += (abs(practice.summary.epmAverage - 356.7) < 20.7 ? 5 : 4 - min(ceil((abs(practice.summary.epmAverage - 356.7) - 20.7) / 25.0), 3))
-        practice.summary.level /= 2.0
+        practice.summary.level += 5 - min(ceil(max(practice.summary.fillerWordPercentage - 3.5, 0.0)), 4)
     }
     
+    // swiftlint:disable function_body_length
     static func getPracticeDetail(practice: PracticeModel) {
         print("분석 시작")
 
@@ -60,7 +60,6 @@ extension PracticeManager {
         var tempSentences: [SentenceModel] = []
         
         for (index, utterance) in practice.utterances.sorted().enumerated() {
-            let messageLenght = utterance.message.components(separatedBy: " ").count
             for word in utterance.message.components(separatedBy: " ") {
                 /// word와 관련한 값을 업데이트한다.
                 practice.summary.wordCount += 1
@@ -112,6 +111,11 @@ extension PracticeManager {
                     practice.summary.fastSpeechTime += sentenceDuration[sentenceIndex]
                     practice.summary.fastSentenceIndex.append(sentenceIndex)
                 }
+                
+                if tempSentences[sentenceIndex].epmValue <= 288 {
+                    practice.summary.slowSpeechTime += sentenceDuration[sentenceIndex]
+                    practice.summary.slowSentenceIndex.append(sentenceIndex)
+                }
                 _ = tempWords.last!.word.popLast()
                 for tempWord in tempWords { practice.words.append(tempWord) }
                 tempWords.removeAll()
@@ -122,6 +126,9 @@ extension PracticeManager {
             }
         }
         updateSummary(practice: practice)
+        SystemManager.shared.isAnalyzing = false
+        SystemManager.shared.hasUnVisited = true
         print("분석 완료")
     }
+    // swiftlint:enable function_body_length
 }
