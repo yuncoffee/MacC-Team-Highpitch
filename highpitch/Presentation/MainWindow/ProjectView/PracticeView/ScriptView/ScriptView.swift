@@ -80,6 +80,7 @@ struct ScriptView: View {
                                     nowSentece = sentenceIndex
                                     mediaManager.play()
                                 }
+                                .id(sentence.index)
                             }
                         }
                     }

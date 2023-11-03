@@ -99,7 +99,7 @@ extension MenubarExtraFooter {
                                     : filtered[0].projectName,
                                     practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice, current: filtered[0])
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         } else {
@@ -114,7 +114,7 @@ extension MenubarExtraFooter {
                                    : filtered[0].projectName,
                                    practice: practice
                                 ) {
-                                    openSelectedPractice(practice: practice, current: filtered[0])
+                                    openSelectedPractice(project:filtered[0], practice: practice)
                                 }
                             }
                         }
@@ -130,7 +130,7 @@ extension MenubarExtraFooter {
                                : filtered[0].projectName,
                                practice: practice
                             ) {
-                                openSelectedPractice(practice: practice, current: filtered[0])
+                                openSelectedPractice(project:filtered[0], practice: practice)
                             }
                         }
                     }
@@ -203,11 +203,11 @@ extension MenubarExtraFooter {
         }
     }
     
-    private func openSelectedPractice(practice: PracticeModel, current: ProjectModel) {
+    private func openSelectedPractice(project: ProjectModel, practice: PracticeModel) {
         if unVisitedPractices.count == 1 {
             SystemManager.shared.hasUnVisited = false
         }
-        projectManager.current = current
+        projectManager.current = project
         projectManager.currentTabItem = 1
         if !projectManager.path.isEmpty {
             projectManager.path.removeLast()

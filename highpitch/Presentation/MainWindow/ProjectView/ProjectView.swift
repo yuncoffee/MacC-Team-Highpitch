@@ -7,20 +7,6 @@
 
 import SwiftUI
 
-/**
- 전체 연습 통계
- 전체 연습 통계 UI 그리기
- 프로젝트 불러오기
- 특정 키노트 열기
- 연습 횟수 불러오기
- 연습 기간 불러오기
- 평균 레벨 출력하기
- 가장 높게 평가된 연습 회차 정보로 이동 버튼 기능
- 평균 레벨 추이 그래프
- 필러워드 그래프
- 말 빠르기 그래프
- */
-
 struct ProjectView: View {
     @Environment(ProjectManager.self)
     private var projectManager
@@ -31,9 +17,6 @@ struct ProjectView: View {
             tabBarContentContainer
         }
         .onAppear {
-            /// [임시] currnetTabItem을 0로 실행 후
-            /// 최초 버튼 클릭 시 NavigationStackView가 무거운지 상태는 변경되지만 뷰 갱신이 안됨.
-            /// 이후 한번 더 클릭 시는 뷰가 잘 갱신되긴함. 그래서 우선 1로 렌더링 후 0으로 변경 하였음.
             projectManager.currentTabItem = 0
         }
     }
