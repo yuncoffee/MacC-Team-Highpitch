@@ -13,7 +13,7 @@ struct GeneralSettingView: View {
     @State private var isChecked2 = false
     @State private var isChecked3 = false
     
-    //
+    // UserDefaults에서 조회할때 쓰는 Key값들
     var userDefaultsName = ["recordStartCommand", "recordPauseCommand", "recordSaveCommand"]
     @State var keyPressedArray = ["Text1", "Text2", "Text3"]
     @State var clickIndex = 0
@@ -100,10 +100,16 @@ struct GeneralSettingView: View {
             print("isMonitorEnabled = false")
             isMonitoringEnabled = false
         }
+        .onAppear {
+            keyPressedArray[0] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Command + Control + 5")
+            keyPressedArray[1] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Command + Control + Space")
+            keyPressedArray[2] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Command + Control + Esc")
+        }
     }
     
     private func startMonitoring() {
         nsevent = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+            
             if let characters = event.charactersIgnoringModifiers {
                 var keyChar = characters.unicodeScalars.first!.description.uppercased()
                 var keyDescription = ""
@@ -137,24 +143,27 @@ struct GeneralSettingView: View {
                     keyDescription += "F\(event.keyCode - 95)"
                     settingKeyDescription += "F\(event.keyCode - 95)"
                 } else {
-                    if let characters = event.charactersIgnoringModifiers {
-                        keyDescription += characters
-                        settingKeyDescription += characters
+                    keyDescription += keyChar
+                    settingKeyDescription += keyChar
+                }
+
+                if clickIndex >= 0 && clickIndex <= 2 {
+                    // 세팅뷰 버튼안에 써져있는 글자 바꾼다.
+                    keyPressedArray[clickIndex] = settingKeyDescription
+
+                    // systemManager에 있는 키조합 변경.
+                    if clickIndex == 0 {
+                        systemManager.recordStartCommand = keyDescription
+                    } else if clickIndex == 1 {
+                        systemManager.recordPauseCommand = keyDescription
+                    } else if clickIndex == 2 {
+                        systemManager.recordSaveCommand = keyDescription
                     }
                 }
-
-//                keyDescription += "\(keyChar)"
-//                settingKeyDescription += "\(keyChar)"
-                if clickIndex >= 0 && clickIndex <= 2 {
-                    keyPressedArray[clickIndex] = settingKeyDescription
-                    UserDefaults.standard.set(keyDescription, forKey: userDefaultsName[clickIndex])
-                    systemManager.recordStartCommand = keyPressedArray[clickIndex]
-                }
-
-                // return event
+                
+                return event
             }
             return event
-                
         }
     }
 
@@ -162,8 +171,29 @@ struct GeneralSettingView: View {
         NSEvent.removeMonitor(nsevent!)
     }
     
+    // MARK: UserDefault에 저장된 키조합을 String 형태로 받아오면 적절한 문자들로 변환해서 출력
+    private func userDefaultsCommandToString(input: String) -> String {
+        var tempArray = input.split(separator: "+").map { String($0.trimmingCharacters(in: .whitespaces)) }
+        
+        var returnString = ""
+        for index in 0..<tempArray.count - 1 {
+            if tempArray[index] == "Command" {
+                returnString += "⌘"
+            } else if tempArray[index] == "Control" {
+                returnString += "⌃"
+            } else if tempArray[index] == "Option" {
+                returnString += "⌥"
+            } else if tempArray[index] == "Shift" {
+                returnString += "⇧"
+            }
+        }
+        returnString.append(tempArray.last!)
+        
+        return returnString
+    }
+    
+    // MARK: 한글 문자 -> 영어 대문자로 바꿔주는 함수
     private func isKoreanCharacter(char: String) -> String {
-        // 한글 자음 범위로 제한
         let koreanConsonants: [String:String] = [
             "ㅂ":"Q", "ㅈ":"W", "ㄷ":"E", "ㄱ":"R", "ㅅ":"T",
             "ㅛ":"Y", "ㅕ":"U", "ㅑ":"I", "ㅐ":"O", "ㅔ":"P",
