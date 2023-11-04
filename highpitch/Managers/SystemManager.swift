@@ -21,12 +21,14 @@ final class SystemManager {
     var isOverlayView2Active = true
     var isOverlayView3Active = true
     
-    var recordStartCommand: String = UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Command + Control + 5"
+    var recordStartCommand: String = 
+        UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Command + Control + P"
+    var recordPauseCommand: String =
+        UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Command + Control + Space"
+    var recordSaveCommand: String = 
+        UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Command + Control + Esc"
     
-    var recordPauseCommand: String = UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Command + Control + Space"
-    var recordSaveCommand: String = UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Command + Control + Esc"
-    
-    var hotkeyStart = HotKey(key: .five, modifiers: [.command, .control])
+    var hotkeyStart = HotKey(key: .p, modifiers: [.command, .control])
     var hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
     var hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
 }

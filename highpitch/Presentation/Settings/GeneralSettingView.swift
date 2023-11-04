@@ -15,10 +15,14 @@ struct GeneralSettingView: View {
     
     // UserDefaults에서 조회할때 쓰는 Key값들
     var userDefaultsName = ["recordStartCommand", "recordPauseCommand", "recordSaveCommand"]
-    @State var keyPressedArray = ["Text1", "Text2", "Text3"]
+    @State var keyComboNameArray = [
+        "Command + Control + P",
+        "Command + Control + Space",
+        "Command + Control + Esc"
+    ]
     @State var clickIndex = 0
-    @State var isMonitoringEnabled = false
     @State var nsevent: Any?
+    @State var isMonitoringEnabled = false
     
     @State
     private var systemManager: SystemManager = SystemManager.shared
@@ -59,7 +63,12 @@ struct GeneralSettingView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
-                    HotKeySettingButton1(textString: $keyPressedArray[0], clickIndexHere: $clickIndex, isMonitoringEnabled: $isMonitoringEnabled)
+                    StartKeyComboButton(
+                        textString: $keyComboNameArray[0],
+                        clickIndexHere: $clickIndex,
+                        isMonitoringEnabled: $isMonitoringEnabled,
+                        keyComboNameArray: $keyComboNameArray
+                    )
                 }
                 HStack {
                     Text("연습 녹음 일시정지")
@@ -70,7 +79,12 @@ struct GeneralSettingView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
-                    HotKeySettingButton2(textString: $keyPressedArray[1], clickIndexHere: $clickIndex, isMonitoringEnabled: $isMonitoringEnabled)
+                    PauseKeyComboButton(
+                        textString: $keyComboNameArray[1],
+                        clickIndexHere: $clickIndex,
+                        isMonitoringEnabled: $isMonitoringEnabled,
+                        keyComboNameArray: $keyComboNameArray
+                    )
                 }
                 HStack {
                     Text("연습 녹음 저장")
@@ -81,7 +95,12 @@ struct GeneralSettingView: View {
                         .scaledToFit()
                         .foregroundStyle(Color.gray600)
                         .frame(width: 16, height: 16)
-                    HotKeySettingButton3(textString: $keyPressedArray[2], clickIndexHere: $clickIndex, isMonitoringEnabled: $isMonitoringEnabled)
+                    SaveKeyComboButton(
+                        textString: $keyComboNameArray[2],
+                        clickIndexHere: $clickIndex,
+                        isMonitoringEnabled: $isMonitoringEnabled,
+                        keyComboNameArray: $keyComboNameArray
+                    )
                 }
             }
             
@@ -96,14 +115,23 @@ struct GeneralSettingView: View {
                 stopMonitoring()
             }
         }
-        .onTapGesture {
-            print("isMonitorEnabled = false")
+        .onChange(of: systemManager.recordStartCommand, { _, _ in
             isMonitoringEnabled = false
-        }
+            print("recordStartCommand 바뀌어서 isMonitoringEnabled false")
+        })
+        .onChange(of: systemManager.recordPauseCommand, { _, _ in
+            isMonitoringEnabled = false
+            print("recordPauseCommand 바뀌어서 isMonitoringEnabled false")
+
+        })
+        .onChange(of: systemManager.recordSaveCommand, { _, _ in
+            isMonitoringEnabled = false
+            print("recordSaveCommand 바뀌어서 isMonitoringEnabled false")
+        })
         .onAppear {
-            keyPressedArray[0] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Command + Control + 5")
-            keyPressedArray[1] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Command + Control + Space")
-            keyPressedArray[2] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Command + Control + Esc")
+            keyComboNameArray[0] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordStartCommand") ?? "Command + Control + P")
+            keyComboNameArray[1] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordPauseCommand") ?? "Command + Control + Space")
+            keyComboNameArray[2] = userDefaultsCommandToString(input: UserDefaults.standard.string(forKey: "recordSaveCommand") ?? "Command + Control + Esc")
         }
     }
     
@@ -146,10 +174,20 @@ struct GeneralSettingView: View {
                     keyDescription += keyChar
                     settingKeyDescription += keyChar
                 }
-
-                if clickIndex >= 0 && clickIndex <= 2 {
+                
+                // 특수키가 없는 설정 변경은 불가
+                let hasModifiers =
+                event.modifierFlags.contains(.command) ||
+                event.modifierFlags.contains(.option) ||
+                event.modifierFlags.contains(.control) ||
+                event.modifierFlags.contains(.shift)
+                if !hasModifiers {
+                    return nil
+                }
+                
+                else if clickIndex >= 0 && clickIndex <= 2 {
                     // 세팅뷰 버튼안에 써져있는 글자 바꾼다.
-                    keyPressedArray[clickIndex] = settingKeyDescription
+                    keyComboNameArray[clickIndex] = settingKeyDescription
 
                     // systemManager에 있는 키조합 변경.
                     if clickIndex == 0 {
@@ -253,17 +291,22 @@ struct RightRoundedRectangle: Shape {
     }
 }
 
-struct HotKeySettingButton1: View {
+struct StartKeyComboButton: View {
     @Binding var textString: String
     @Binding var clickIndexHere: Int
     @Binding var isMonitoringEnabled: Bool
+    
+    @Binding var keyComboNameArray : [String]
+    
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     var body: some View {
         HStack(spacing:0) {
             Button(action: {
                 clickIndexHere = 0
                 isMonitoringEnabled = true
-                print("isMonitorEnabled = false -> 0")
+                print("isMonitorEnabled = true -> 0")
             }, label: {
                 ZStack {
                     LeftRoundedRectangle(cornerRadius: 4)
@@ -274,32 +317,52 @@ struct HotKeySettingButton1: View {
                         .foregroundStyle(Color.HPTextStyle.darker)
                 }
             }).buttonStyle(.plain)
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+            Button(action: {
+                if systemManager.recordStartCommand != "Command + Control + P" {
+                    // 세팅뷰 버튼안에 써져있는 글자 바꾼다.
+                    keyComboNameArray[0] = "⌘⌃P"
+                    // systemManager에 있는 키조합 변경.
+                    systemManager.recordStartCommand = "Command + Control + P"
+                }
+            }, label: {
                 ZStack {
                     RightRoundedRectangle(cornerRadius: 4)
                         .stroke(Color.HPGray.system600,lineWidth: 1)
                         .frame(width: 20,height: 20)
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width:8.1,height: 8.1)
-                        .foregroundStyle(Color.HPGray.system600)
+                    
+                    if systemManager.recordStartCommand != "Command + Control + P" {
+                        Image(systemName: "arrow.2.circlepath")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    } else {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    }
                 }
             }).buttonStyle(.plain)
         }.padding(.horizontal, 20)
     }
 }
 
-struct HotKeySettingButton2: View {
+struct PauseKeyComboButton: View {
     @Binding var textString: String
     @Binding var clickIndexHere: Int
     @Binding var isMonitoringEnabled: Bool
+    
+    @Binding var keyComboNameArray : [String]
+    
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     var body: some View {
         HStack(spacing:0) {
             Button(action: {
                 clickIndexHere = 1
                 isMonitoringEnabled = true
-                print("isMonitorEnabled = false -> 1")
+                print("isMonitorEnabled = true -> 1")
             }, label: {
                 ZStack {
                     LeftRoundedRectangle(cornerRadius: 4)
@@ -308,33 +371,54 @@ struct HotKeySettingButton2: View {
                     Text(textString)
                         .systemFont(.caption2,weight: .semibold)
                         .foregroundStyle(Color.HPTextStyle.darker)
+                        .frame(width: 140,height: 20)
                 }
             }).buttonStyle(.plain)
-            Button(action: {}, label: {
+            Button(action: {
+                if systemManager.recordPauseCommand != "Command + Control + Space" {
+                    // 세팅뷰 버튼안에 써져있는 글자 바꾼다.
+                    keyComboNameArray[1] = "⌘⌃Space"
+                    // systemManager에 있는 키조합 변경.
+                    systemManager.recordPauseCommand = "Command + Control + Space"
+                }
+            }, label: {
                 ZStack {
                     RightRoundedRectangle(cornerRadius: 4)
                         .stroke(Color.HPGray.system600,lineWidth: 1)
                         .frame(width: 20,height: 20)
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width:8.1,height: 8.1)
-                        .foregroundStyle(Color.HPGray.system600)
+                    
+                    if systemManager.recordPauseCommand != "Command + Control + Space" {
+                        Image(systemName: "arrow.2.circlepath")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    } else {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    }
                 }
             }).buttonStyle(.plain)
         }.padding(.horizontal, 20)
     }
 }
 
-struct HotKeySettingButton3: View {
+struct SaveKeyComboButton: View {
     @Binding var textString: String
     @Binding var clickIndexHere: Int
     @Binding var isMonitoringEnabled: Bool
+    
+    @Binding var keyComboNameArray : [String]
+    
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     var body: some View {
         HStack(spacing:0) {
             Button(action: {
                 clickIndexHere = 2
-                print("isMonitorEnabled = false -> 2")
+                print("isMonitorEnabled = true -> 2")
                 isMonitoringEnabled = true
             }, label: {
                 ZStack {
@@ -346,21 +430,36 @@ struct HotKeySettingButton3: View {
                         .foregroundStyle(Color.HPTextStyle.darker)
                 }
             }).buttonStyle(.plain)
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+            Button(action: {
+                if systemManager.recordSaveCommand != "Command + Control + Esc" {
+                    // 세팅뷰 버튼안에 써져있는 글자 바꾼다.
+                    keyComboNameArray[2] = "⌘⌃Esc"
+                    // systemManager에 있는 키조합 변경.
+                    systemManager.recordSaveCommand = "Command + Control + Esc"
+                }
+            }, label: {
                 ZStack {
                     RightRoundedRectangle(cornerRadius: 4)
                         .stroke(Color.HPGray.system600,lineWidth: 1)
                         .frame(width: 20,height: 20)
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width:8.1,height: 8.1)
-                        .foregroundStyle(Color.HPGray.system600)
+                    
+                    if systemManager.recordSaveCommand != "Command + Control + Esc" {
+                        Image(systemName: "arrow.2.circlepath")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    } else {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width:8.1,height: 8.1)
+                            .foregroundStyle(Color.HPGray.system600)
+                    }
                 }
             }).buttonStyle(.plain)
         }.padding(.horizontal, 20)
     }
 }
 
-#Preview {
-    GeneralSettingView()
-}
+//#Preview {
+//    GeneralSettingView()
+//}

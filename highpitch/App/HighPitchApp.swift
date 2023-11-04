@@ -71,7 +71,7 @@ struct HighpitchApp: App {
         
         // UserDefaults에 저장된 것이 없으면 기본값으로 세팅해준다.
         if UserDefaults.standard.string(forKey: "recordStartCommand") == nil {
-            UserDefaults.standard.set("Command + Control + 5", forKey: "recordStartCommand")
+            UserDefaults.standard.set("Command + Control + P", forKey: "recordStartCommand")
         }
         if UserDefaults.standard.string(forKey: "recordPauseCommand") == nil {
             UserDefaults.standard.set("Command + Control + Space", forKey: "recordPauseCommand")
@@ -126,29 +126,38 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
                 .modelContainer(container)
-                .onChange(of: systemManager.recordStartCommand, { oldValue, newValue in
+                .onChange(of: systemManager.recordStartCommand, { _, _ in
                     // 변경된 명령어들로 hotKey재설정
                     systemManager.hotkeyStart = stringToHotKeySetting(input: systemManager.recordStartCommand)
                     systemManager.hotkeyStart.keyDownHandler = playPractice
                     
                     // UserDefaults에 해당 명령어들로 저장
-                    UserDefaults.standard.setValue(systemManager.recordStartCommand, forKey: "recordStartCommand")
+                    UserDefaults.standard.setValue(
+                        systemManager.recordStartCommand,
+                        forKey: "recordStartCommand"
+                    )
                 })
-                .onChange(of: systemManager.recordPauseCommand, { oldValue, newValue in
+                .onChange(of: systemManager.recordPauseCommand, { _, _ in
                     // 변경된 명령어들로 hotKey재설정
                     systemManager.hotkeyPause = stringToHotKeySetting(input: systemManager.recordPauseCommand)
                     systemManager.hotkeyPause.keyDownHandler = pausePractice
                     
                     // UserDefaults에 해당 명령어들로 저장
-                    UserDefaults.standard.setValue(systemManager.recordPauseCommand, forKey: "recordPauseCommand")
+                    UserDefaults.standard.setValue(
+                        systemManager.recordPauseCommand,
+                        forKey: "recordPauseCommand"
+                    )
                 })
-                .onChange(of: systemManager.recordSaveCommand, { oldValue, newValue in
+                .onChange(of: systemManager.recordSaveCommand, { _, _ in
                     // 변경된 명령어들로 hotKey재설정
                     systemManager.hotkeySave = stringToHotKeySetting(input: systemManager.recordSaveCommand)
                     systemManager.hotkeySave.keyDownHandler = stopPractice
                     
                     // UserDefaults에 해당 명령어들로 저장
-                    UserDefaults.standard.setValue(systemManager.recordSaveCommand, forKey: "recordSaveCommand")
+                    UserDefaults.standard.setValue(
+                        systemManager.recordSaveCommand,
+                        forKey: "recordSaveCommand"
+                    )
                 })
                 .onAppear {
                     systemManager.hotkeyStart.keyDownHandler = playPractice
