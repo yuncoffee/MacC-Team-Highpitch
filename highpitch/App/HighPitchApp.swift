@@ -57,10 +57,8 @@ struct HighpitchApp: App {
     @State
     private var selectedKeynote: OpendKeynote?
     
-    // HotKeys
-    let hotkeyStart = HotKey(key: .f5, modifiers: [.command, .control])
-    let hotkeyPause = HotKey(key: .space, modifiers: [.command, .control])
-    let hotkeySave = HotKey(key: .escape, modifiers: [.command, .control])
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
     
     let container: ModelContainer
     
@@ -70,6 +68,26 @@ struct HighpitchApp: App {
         } catch {
             fatalError("Could not initialize ModelContainer")
         }
+        
+        // UserDefaults에 저장된 것이 없으면 기본값으로 세팅해준다.
+        if UserDefaults.standard.string(forKey: "recordStartCommand") == nil {
+            UserDefaults.standard.set("Command + Control + P", forKey: "recordStartCommand")
+        }
+        if UserDefaults.standard.string(forKey: "recordPauseCommand") == nil {
+            UserDefaults.standard.set("Command + Control + Space", forKey: "recordPauseCommand")
+        }
+        if UserDefaults.standard.string(forKey: "recordSaveCommand") == nil {
+            UserDefaults.standard.set("Command + Control + Esc", forKey: "recordSaveCommand")
+        }
+        
+        // UserDefaults에서 명령어조합 가져와서 hotKey로 세팅. 초기 함수 연결은 onAppear에서 한다.
+        systemManager.hotkeyStart = stringToHotKeySetting(input: systemManager.recordStartCommand)
+        systemManager.hotkeyPause = stringToHotKeySetting(input: systemManager.recordPauseCommand)
+        systemManager.hotkeySave = stringToHotKeySetting(input: systemManager.recordSaveCommand)
+        
+        print("시작할때 Start 키콤보: ",systemManager.hotkeyStart.keyCombo)
+        print("시작할때 Pause 키콤보: ",systemManager.hotkeyPause.keyCombo)
+        print("시작할때 Save 키콤보: ",systemManager.hotkeySave.keyCombo)
     }
 
     var body: some Scene {
@@ -108,10 +126,43 @@ struct HighpitchApp: App {
                 .environment(mediaManager)
                 .environment(projectManager)
                 .modelContainer(container)
+                .onChange(of: systemManager.recordStartCommand, { _, _ in
+                    // 변경된 명령어들로 hotKey재설정
+                    systemManager.hotkeyStart = stringToHotKeySetting(input: systemManager.recordStartCommand)
+                    systemManager.hotkeyStart.keyDownHandler = playPractice
+                    
+                    // UserDefaults에 해당 명령어들로 저장
+                    UserDefaults.standard.setValue(
+                        systemManager.recordStartCommand,
+                        forKey: "recordStartCommand"
+                    )
+                })
+                .onChange(of: systemManager.recordPauseCommand, { _, _ in
+                    // 변경된 명령어들로 hotKey재설정
+                    systemManager.hotkeyPause = stringToHotKeySetting(input: systemManager.recordPauseCommand)
+                    systemManager.hotkeyPause.keyDownHandler = pausePractice
+                    
+                    // UserDefaults에 해당 명령어들로 저장
+                    UserDefaults.standard.setValue(
+                        systemManager.recordPauseCommand,
+                        forKey: "recordPauseCommand"
+                    )
+                })
+                .onChange(of: systemManager.recordSaveCommand, { _, _ in
+                    // 변경된 명령어들로 hotKey재설정
+                    systemManager.hotkeySave = stringToHotKeySetting(input: systemManager.recordSaveCommand)
+                    systemManager.hotkeySave.keyDownHandler = stopPractice
+                    
+                    // UserDefaults에 해당 명령어들로 저장
+                    UserDefaults.standard.setValue(
+                        systemManager.recordSaveCommand,
+                        forKey: "recordSaveCommand"
+                    )
+                })
                 .onAppear {
-                    hotkeyStart.keyDownHandler = playPractice
-                    hotkeyPause.keyDownHandler = pausePractice
-                    hotkeySave.keyDownHandler = stopPractice
+                    systemManager.hotkeyStart.keyDownHandler = playPractice
+                    systemManager.hotkeyPause.keyDownHandler = pausePractice
+                    systemManager.hotkeySave.keyDownHandler = stopPractice
                 }
         }
         .defaultSize(width: 1080, height: 600)
@@ -212,5 +263,36 @@ extension HighpitchApp {
                 )
             }
         }
+    }
+    
+    func stringToHotKeySetting(input: String) -> HotKey {
+        
+        var keyMap: [String : Key] =
+        ["1":Key.one, "2":Key.two, "3":Key.three, "4":Key.four, "5":Key.five,
+         "6":Key.six, "7":Key.seven, "8":Key.eight, "9":Key.nine, "0":Key.zero,
+         "Q":Key.q, "W":Key.w, "E":Key.e, "R":Key.r, "T":Key.t,
+         "Y":Key.y, "U":Key.u, "I":Key.i, "O":Key.o, "P":Key.p,
+         "A":Key.a, "S":Key.s, "D":Key.d, "F":Key.f, "G":Key.g,
+         "H":Key.h, "J":Key.j, "K":Key.k, "L":Key.l, "Z":Key.z,
+         "X":Key.x, "C":Key.c, "V":Key.v, "B":Key.b, "N":Key.n,
+         "M":Key.m, "Esc": Key.escape, "Space":Key.space]
+        
+        var tempArray = input.split(separator: "+").map { String($0.trimmingCharacters(in: .whitespaces)) }
+        
+        var tempKey: Key = keyMap[tempArray.last!] ?? Key.escape
+        var tempModifiers = NSEvent.modifierFlags
+        for index in 0..<tempArray.count - 1 {
+            if tempArray[index] == "Command" {
+                tempModifiers.insert(.command)
+            } else if tempArray[index] == "Control" {
+                tempModifiers.insert(.control)
+            } else if tempArray[index] == "Option" {
+                tempModifiers.insert(.option)
+            } else if tempArray[index] == "Shift" {
+                tempModifiers.insert(.shift)
+            }
+        }
+        
+        return HotKey(key: tempKey, modifiers: tempModifiers)
     }
 }

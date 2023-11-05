@@ -18,6 +18,9 @@ struct SettingsView: View {
     @State private var selectedTab = 0
     @State private var isAlertActive = false
     
+    @State
+    private var systemManager: SystemManager = SystemManager.shared
+    
     var body: some View {
 
         TabView(selection: $selectedTab) {
