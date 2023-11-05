@@ -65,12 +65,13 @@ struct PracticeView: View {
             let date = Date().createAtToYMD(input: practice.creatAt.description) +
             " | " + Date().createAtToHMS(input: practice.creatAt.description)
             HPTopToolbar(title: title, subTitle: date) {
-                if let path = projectManager.current?.keynotePath {
-                    let _path = path.absoluteString.components(separatedBy: "://")
-                    Task {
-                        await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
-                    }
-                }
+                // MARK: - AppleScript Remove
+//                if let path = projectManager.current?.keynotePath {
+//                    let _path = path.absoluteString.components(separatedBy: "://")
+//                    Task {
+//                        await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
+//                    }
+//                }
             }
             ZStack(alignment: .bottom) {
                 practiceContentsContainer

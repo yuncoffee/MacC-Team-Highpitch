@@ -64,23 +64,24 @@ struct HPTopToolbar<T: View>: View {
             }
             .frame(maxWidth: .infinity)
             HStack(spacing: 0) {
-                HPButton(color: .HPSecondary.base) {
-                    print("키노트 열기")
-                    completion()
-
-                } label: { type, size, color, expandable in
-                    HPLabel(
-                        content: (label: "키노트 열기", icon: nil),
-                        type: type,
-                        size: size,
-                        color: color,
-                        expandable: expandable, 
-                        fontStyle: .system(.body)
-                    )
-                }
-                .frame(width: 120)
-                .padding(.trailing, .HPSpacing.medium)
-                .frame(maxWidth: .infinity, alignment: .trailing)
+                // MARK: - AppleScript Remove
+//                HPButton(color: .HPSecondary.base) {
+//                    print("키노트 열기")
+//                    completion()
+//
+//                } label: { type, size, color, expandable in
+//                    HPLabel(
+//                        content: (label: "키노트 열기", icon: nil),
+//                        type: type,
+//                        size: size,
+//                        color: color,
+//                        expandable: expandable, 
+//                        fontStyle: .system(.body)
+//                    )
+//                }
+//                .frame(width: 120)
+//                .padding(.trailing, .HPSpacing.medium)
+//                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .frame(maxWidth: .infinity)
         }

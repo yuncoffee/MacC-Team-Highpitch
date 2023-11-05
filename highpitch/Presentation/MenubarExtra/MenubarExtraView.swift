@@ -13,8 +13,9 @@ struct MenubarExtraView: View {
     @Environment(\.openWindow)
     private var openWindow
     
-    @Environment(AppleScriptManager.self)
-    private var appleScriptManager
+    // MARK: - AppleScript Remove
+//    @Environment(AppleScriptManager.self)
+//    private var appleScriptManager
     @Environment(FileSystemManager.self)
     private var fileSystemManager
     @Environment(KeynoteManager.self)
@@ -106,28 +107,30 @@ struct MenubarExtraView: View {
 
 // MARK: - Methods
 extension MenubarExtraView {
+    // MARK: - AppleScript Remove
     /// 키노트가 열려있는지 조회 후 상태 처리
     private func getIsActiveKeynoteApp() {
-        Task {
-            let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
-            if case .boolResult(let isKeynoteOpen) = result {
-                keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
-            }
-        }
+//        Task {
+//            let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
+//            if case .boolResult(let isKeynoteOpen) = result {
+//                keynoteManager.isKeynoteProcessOpen = isKeynoteOpen
+//            }
+//        }
     }
     
+    // MARK: - AppleScript Remove
     private func updateOpendKeynotes() {
-        Task {
-            if keynoteManager.isKeynoteProcessOpen {
-                let result = await appleScriptManager.runScript(.getOpendKeynotes)
-                if case .stringArrayResult(let keynotePaths) = result {
-                    let opendKeynotes = keynotePaths.map { path in
-                        OpendKeynote(path: path, creation: fileSystemManager.getCreationMetadata(path))
-                    }
-                    keynoteManager.opendKeynotes = opendKeynotes
-                }
-            }
-        }
+//        Task {
+//            if keynoteManager.isKeynoteProcessOpen {
+//                let result = await appleScriptManager.runScript(.getOpendKeynotes)
+//                if case .stringArrayResult(let keynotePaths) = result {
+//                    let opendKeynotes = keynotePaths.map { path in
+//                        OpendKeynote(path: path, creation: fileSystemManager.getCreationMetadata(path))
+//                    }
+//                    keynoteManager.opendKeynotes = opendKeynotes
+//                }
+//            }
+//        }
     }
     
     private func updateCurrentProject() {

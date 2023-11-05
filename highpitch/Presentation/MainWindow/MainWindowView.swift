@@ -193,12 +193,13 @@ extension MainWindowView {
     var projectToolbar: some View {
         if let projectName = projectManager.current?.projectName {
             HPTopToolbar(title: projectName) {
-                if let path = projectManager.current?.keynotePath {
-                    let _path = path.absoluteString.components(separatedBy: "://")
-                    Task {
-                        await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
-                    }
-                }
+                // MARK: - AppleScript Remove
+//                if let path = projectManager.current?.keynotePath {
+//                    let _path = path.absoluteString.components(separatedBy: "://")
+//                    Task {
+//                        await appleScriptManager.runScript(.openKeynote(fileName: _path[1].replacingOccurrences(of: "%20", with: " ")))
+//                    }
+//                }
             } popOverContent: {
                 VStack(alignment: .leading, spacing: .HPSpacing.xxxxsmall) {
                     Text("프로젝트 명 변경하기")

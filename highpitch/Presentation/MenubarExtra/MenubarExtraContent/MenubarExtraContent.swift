@@ -158,14 +158,15 @@ extension MenubarExtraContent {
             /// 키노트가 열려있는 경우,
             if isDetilsActive {
                 VStack(spacing: .HPSpacing.xsmall) {
-                    HStack {
-                        Text("발표 연습을 진행 할 키노트")
-                            .systemFont(.caption2, weight: .semibold)
-                            .foregroundStyle(Color.HPTextStyle.darker)
-                        Spacer()
-                        // MARK: - 키노트옵션이 비어있을 때 처리 어떻게 할지?
-                        HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
-                    }
+                    // MARK: - AppleScript Remove
+//                    HStack {
+//                        Text("발표 연습을 진행 할 키노트")
+//                            .systemFont(.caption2, weight: .semibold)
+//                            .foregroundStyle(Color.HPTextStyle.darker)
+//                        Spacer()
+//                        // MARK: - 키노트옵션이 비어있을 때 처리 어떻게 할지?
+//                        HPMenu(selected: $selectedKeynoteName, options: $keynoteNameOptions)
+//                    }
                     HStack {
                         Text("해당 연습을 저장할 프로젝트")
                             .systemFont(.caption2, weight: .semibold)
@@ -180,7 +181,9 @@ extension MenubarExtraContent {
                 .frame(maxHeight: .infinity)
             }
         }
-        .frame(height: isDetilsActive ? 133 : 45, alignment: .topLeading)
+        // MARK: - AppleScript Remove
+//        .frame(height: isDetilsActive ? 133 : 45, alignment: .topLeading)
+        .frame(height: isDetilsActive ? 96 : 45, alignment: .topLeading)
         .border(.HPComponent.stroke, width: 1, edges: [.bottom])
         .clipped()
     }

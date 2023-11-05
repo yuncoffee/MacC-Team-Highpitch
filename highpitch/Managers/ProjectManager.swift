@@ -31,13 +31,14 @@ extension ProjectManager {
         if mediaManager.isRecording {
             mediaManager.startRecording()
         } else {
-            if let selectedKeynote = selectedKeynote {
-                Task {
-                    await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
-                }
-            } else {
-                /// 선택된 키노트가 없을 때
-            }
+            // MARK: - AppleScript Remove
+//            if let selectedKeynote = selectedKeynote {
+//                Task {
+//                    await appleScriptManager.runScript(.startPresentation(fileName: selectedKeynote.path))
+//                }
+//            } else {
+//                /// 선택된 키노트가 없을 때
+//            }
             temp = selectedProject?.persistentModelID
             keynoteManager.temp = selectedKeynote
             mediaManager.fileName = Date().makeM4aFileName()

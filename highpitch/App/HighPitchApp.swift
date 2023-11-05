@@ -237,19 +237,20 @@ struct HighpitchApp: App {
 }
 extension HighpitchApp {
     private func setupInit() {
-        #if os(macOS)
-        Task {
-            let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
-            if case .boolResult(let isKeynoteOpen) = result {
-                // logic 1
-                if isKeynoteOpen {
-                    print("열려있습니다")
-                } else {
-                    print("닫혀있습니다")
-                }
-            }
-        }
-        #endif
+        // MARK: - AppleScript Remove
+//        #if os(macOS)
+//        Task {
+//            let result = await appleScriptManager.runScript(.isActiveKeynoteApp)
+//            if case .boolResult(let isKeynoteOpen) = result {
+//                // logic 1
+//                if isKeynoteOpen {
+//                    print("열려있습니다")
+//                } else {
+//                    print("닫혀있습니다")
+//                }
+//            }
+//        }
+//        #endif
     }
     
     func playPractice() {
