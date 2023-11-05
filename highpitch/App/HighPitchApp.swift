@@ -169,13 +169,13 @@ struct HighpitchApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         // MARK: - Settings Scene
-        Settings {
-            SettingsView()
-                .environment(appleScriptManager)
-                .environment(keynoteManager)
-                .environment(mediaManager)
-                .modelContainer(container)
-        }
+//        Settings {
+//            SettingsView()
+//                .environment(appleScriptManager)
+//                .environment(keynoteManager)
+//                .environment(mediaManager)
+//                .modelContainer(container)
+//        }
         // MARK: - MenubarExtra Scene
         MenuBarExtra {
             MenubarExtraView(

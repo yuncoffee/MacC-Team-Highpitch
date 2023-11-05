@@ -48,7 +48,7 @@ extension MenubarExtraHeader {
     private var leftButtonGroup: some View {
         HStack(spacing: .HPSpacing.xxsmall) {
             openMainWindowButton
-            openSettingWindowButton
+//            openSettingWindowButton
         }
     }
     

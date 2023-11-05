@@ -102,7 +102,7 @@ extension ProjectManager {
     private func makeNewUtterances(mediaManager: MediaManager) async -> [UtteranceModel] {
         var result: [UtteranceModel] = []
         do {
-            let tempUtterances: [Utterance] = try await ReturnzeroAPI()
+            let tempUtterances: [Utterance] = try await ReturnzeroAPIV2()
                 .getResult(filePath: mediaManager.getPath(fileName: mediaManager.fileName).path())
             for tempUtterance in tempUtterances {
                 result.append(
