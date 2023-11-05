@@ -10,9 +10,19 @@ import SwiftData
 import MenuBarExtraAccess
 import SettingsAccess
 import HotKey
+import Firebase
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        print("set up.")
+        FirebaseApp.configure()
+    }
+}
 
 @main
 struct HighpitchApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openWindow) var openWindow
     
@@ -169,13 +179,13 @@ struct HighpitchApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         // MARK: - Settings Scene
-//        Settings {
-//            SettingsView()
-//                .environment(appleScriptManager)
-//                .environment(keynoteManager)
-//                .environment(mediaManager)
-//                .modelContainer(container)
-//        }
+        Settings {
+            SettingsView()
+                .environment(appleScriptManager)
+                .environment(keynoteManager)
+                .environment(mediaManager)
+                .modelContainer(container)
+        }
         // MARK: - MenubarExtra Scene
         MenuBarExtra {
             MenubarExtraView(
@@ -208,6 +218,9 @@ struct HighpitchApp: App {
         .menuBarExtraAccess(isPresented: $isMenuPresented)
         .commandsRemoved()
         .onChange(of: isMenuPresented, { _, newValue in
+            if newValue {
+                GAManager.shared.analyticsOnClick(.menubarClick)
+            }
             refreshable = newValue
         })
         .onChange(of: mediaManager.isRecording, { _, newValue in

@@ -55,6 +55,7 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {
         if let value = response.notification.request.content.userInfo["name"] as? String {
+            GAManager.shared.analyticsOnClick(.notification)
             NotificationCenter.default.post(name: Notification.Name("projectName"), object: value)
         }
         

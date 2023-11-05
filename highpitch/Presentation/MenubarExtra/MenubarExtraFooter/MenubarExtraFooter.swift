@@ -109,6 +109,7 @@ extension MenubarExtraFooter {
                                     practice: practice
                                 ) {
                                     openSelectedPractice(project:filtered[0], practice: practice)
+                                    GAManager.shared.analyticsOnClick(.history)
                                 }
                             }
                         } else {

@@ -48,13 +48,14 @@ extension MenubarExtraHeader {
     private var leftButtonGroup: some View {
         HStack(spacing: .HPSpacing.xxsmall) {
             openMainWindowButton
-//            openSettingWindowButton
+            openSettingWindowButton
         }
     }
     
     @ViewBuilder
     private var openMainWindowButton: some View {
         HPButton(type: .text, size: .medium, color: .HPGray.system800) {
+            GAManager.shared.analyticsOnClick(.home)
             openSelectedProject()
         } label: { type, size, color, expandable in
             HPLabel(
@@ -119,6 +120,7 @@ extension MenubarExtraHeader {
             print("HEEE")
             if !mediaManager.isRecording {
                 print("11111")
+                GAManager.shared.analyticsOnClick(.play)
                 playPractice()
             } else if mediaManager.isPause {
                 print("22222")
@@ -149,6 +151,7 @@ extension MenubarExtraHeader {
         HPButton(type: .text, size: .medium, color: .HPSecondary.base) {
             Task {
                 await MainActor.run {
+                    GAManager.shared.analyticsOnClick(.stop)
                     stopPractice()
                 }
             }
